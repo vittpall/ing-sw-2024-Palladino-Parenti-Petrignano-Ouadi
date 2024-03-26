@@ -4,7 +4,7 @@ package it.polimi.ingsw.model.enumeration;
  * This enums contains all possible Resources available on the cards
  */
 public enum Resource {
-    PLANT_KINGDOM("Plant Kingdom"), ANIMAL_KINGDOM("Animal Kingdom"), FUNGI_KINGDOM("Manuscript"), INSECT_KINGDOM("Quill");
+    PLANT_KINGDOM("Plant Kingdom"), ANIMAL_KINGDOM("Animal Kingdom"), FUNGI_KINGDOM("Fungi Kingdom"), INSECT_KINGDOM("Insect Kingdom");
 
     private final String text;
 
