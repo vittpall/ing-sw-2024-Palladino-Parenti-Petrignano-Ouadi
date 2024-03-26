@@ -22,7 +22,7 @@ public class ObjectiveCard {
      */
     public void verifyObjective()
     {
-        strategy.isSatisfied();
+        strategy.isSatisfied(PlayerDesk playerDesk);
     }
 
 }
