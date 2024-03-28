@@ -12,6 +12,7 @@ import java.util.ArrayList;
  * playerDesk is a reference to the assigned PlayerDesk
  */
 public class Player {
+    private String username
     private int points;
     private ArrayList<GameCard> playerHand;
     private ArrayList<ObjectiveCard> objectiveCards;
@@ -26,7 +27,7 @@ public class Player {
      *
      * @param color rapresents the color choosen for the player
      */
-    public Player(TokenColor color) {
+    public Player(TokenColor color, String username) {
     }
 
 
@@ -51,20 +52,24 @@ public class Player {
      * @return starterCard
      */
     public StarterCard getStarterCard() {
+        return starterCard;
     }
 
     /**
      *
      * @return objectiveCards
      */
-    public ArrayList<objectiveCard> getObjectiveCards() {
+    public ArrayList<ObjectiveCard> getObjectiveCards() {
+        return new arrayList<ObjectiveCard>(objectiveCards)
     }
 
     /**
      *
      * @return playerHard
      */
-    public ArrayList<PlayerHand> getPlayerHand() {
+    public ArrayList<GameCard> getPlayerHand() {
+        return new arrayList<GameCard>(playerHand)
+
     }
 
     /**
@@ -72,6 +77,7 @@ public class Player {
      * @return color
      */
     public TokenColor getTokenColor() {
+        return color
     }
 
     /**
@@ -79,6 +85,7 @@ public class Player {
      * @return playerDesk
      */
     public Desk getPlayerDesk() {
+        return playerDesk;
     }
 
     /**
