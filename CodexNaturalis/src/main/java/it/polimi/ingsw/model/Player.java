@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumeration.TokenColor;
+
 import java.util.ArrayList;
 
 /**
@@ -12,7 +14,7 @@ import java.util.ArrayList;
  * playerDesk is a reference to the assigned PlayerDesk
  */
 public class Player {
-    private String username
+    private String username;
     private int points;
     private ArrayList<GameCard> playerHand;
     private ArrayList<ObjectiveCard> objectiveCards;
@@ -60,7 +62,7 @@ public class Player {
      * @return objectiveCards
      */
     public ArrayList<ObjectiveCard> getObjectiveCards() {
-        return new arrayList<ObjectiveCard>(objectiveCards)
+        return new ArrayList<ObjectiveCard>(objectiveCards);
     }
 
     /**
@@ -68,7 +70,7 @@ public class Player {
      * @return playerHard
      */
     public ArrayList<GameCard> getPlayerHand() {
-        return new arrayList<GameCard>(playerHand)
+        return new ArrayList<GameCard>(playerHand);
 
     }
 
@@ -84,8 +86,8 @@ public class Player {
      *
      * @return playerDesk
      */
-    public Desk getPlayerDesk() {
-        return playerDesk;
+    public PlayerDesk getPlayerDesk() {
+        return PlayerDesk;
     }
 
     /**
@@ -115,7 +117,7 @@ public class Player {
      * @throws CardNotFoundException
      * @throws RequirementsNotMetException
      */
-    public void playCard(GameCard card, boolan faceDown int x, int y)
+    public void playCard(GameCard card, Boolean faceDown, int x, int y)
             throws CardNotFoundException, RequirementsNotMetException {
     }
 

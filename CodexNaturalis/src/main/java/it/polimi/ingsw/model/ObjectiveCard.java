@@ -20,9 +20,9 @@ public class ObjectiveCard {
     /**
      * Will call the method isSatisfied which will make override on the concrete strategies
      */
-    public void verifyObjective()
+    public boolean verifyObjective(PlayerDesk desk)
     {
-        strategy.isSatisfied(PlayerDesk playerDesk);
+        return strategy.isSatisfied(desk);
     }
 
 }

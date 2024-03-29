@@ -15,15 +15,12 @@ public class Deck {
     /**
      * Default constructor, it creates the deck randomly and takes two card from it and set them as visible ones.
      */
-    public Deck()
+    public Deck(ArrayList<GameCard> GetUsable)
     {
         UsableCard = new ArrayList<>();
         VisibleCard = new ArrayList<>();
 
-        for(int i = 0; i < 40; i++)
-        {
-            UsableCard.add(new GameCard());
-        }
+        UsableCard.addAll(GetUsable);
         Shuffle(UsableCard);
 
         VisibleCard.add(UsableCard.getLast());
