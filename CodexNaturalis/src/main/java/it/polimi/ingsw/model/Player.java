@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 
 /**
- * this class defined the player
+ * this class defines the player
  * points are the points that the player has
  * playerHand are the card that the player has but has not played yet
  * objectiveCards are the ObjectiveCard assigned to the player
@@ -24,10 +24,25 @@ public class Player {
      * costructor
      * it creates a list of 3 GameCard choosen randomly from the decks, a list of 2 ObjectiveCard
      * created randomly and the palyerDesk; it sets points to 0 and creates randomly the starterCard
-     *
-     * @param color rapresents the color choosen for the player
+     * @param color
+     * @param username
+     * @param resourceDeck
+     * @param goldDeck
      */
-    public Player(TokenColor color, String username) {
+    public Player(TokenColor color, String username, Deck resourceDeck, Deck goldDeck) {
+        ObjectiveCard objective;
+        GameCard card;
+        this.color=color;
+        this.username=username;
+        this.points=0;
+        this.objectiveCards=new ArrayList<ObjectiveCard>();
+        this.playerHand=new ArrayList<GameCard>();
+        for(int i=0;i<2;i++){
+            this.draw(resourceDeck);
+        }
+        this.draw(goldDeck);
+        this.playerDesk= new PlayerDesk();
+        //aggiungere objectiveCards e starterCard
     }
 
 
@@ -36,7 +51,11 @@ public class Player {
      *
      * @param choosenObjectiveCard
      */
-    public void setObjectiveCard(int choosenObjectiveCard) {
+    public void setObjectiveCard(ObjectiveCard choosenObjectiveCard) {
+        for(ObjectiveCard element: objectiveCards){
+            if(!(element.equals(choosenObjectiveCard)))
+                objectiveCards.remove(element);
+        }
     }
 
     /**
@@ -56,32 +75,28 @@ public class Player {
     }
 
     /**
-     *
      * @return objectiveCards
      */
     public ArrayList<ObjectiveCard> getObjectiveCards() {
-        return new arrayList<ObjectiveCard>(objectiveCards)
+        return new arrayList<ObjectiveCard>(objectiveCards);
     }
 
     /**
-     *
      * @return playerHard
      */
     public ArrayList<GameCard> getPlayerHand() {
-        return new arrayList<GameCard>(playerHand)
+        return new arrayList<GameCard>(playerHand);
 
     }
 
     /**
-     *
      * @return color
      */
     public TokenColor getTokenColor() {
-        return color
+        return color;
     }
 
     /**
-     *
      * @return playerDesk
      */
     public Desk getPlayerDesk() {
@@ -93,6 +108,9 @@ public class Player {
      * @param choosenDeck
      */
     public void draw(Deck choosenDeck) {
+        GameCard card;
+        card=choosenDeck.drawDeckCard();
+        playerHand.add(card);
     }
 
     /**
@@ -100,7 +118,10 @@ public class Player {
      * @param choosenDeck
      * @param choosenCard
      */
-    public void drawVisible(Deck choosenDeck, GameCard choosenCard) {
+    public void drawVisible(Deck choosenDeck, GameCard choosenCard) throws CardNotFoundException {
+        GameCard card;
+        card=choosenDeck.drawVisibleCard(choosenCard);
+        playerHand.add(card);
     }
 
 
@@ -133,8 +154,21 @@ public class Player {
      * to the player's points
      *
      * @param sharedObjectiveCard
-     * @return
+     * @return the player's total points
      */
     public int checkObjective(ArrayList<ObjectiveCard> sharedObjectiveCard) {
+        int pointsToAdd=0;
+        boolean objectiveMet;
+
+        objectiveMet=objectiveCards.get(0).verifyObjective(playerDesk);
+        if(objectiveMet==true)
+            pointsToAdd+=objectiveCards.get(0).getPoints();
+        for(ObjectiveCard element : sharedObjectiveCard){
+            objectiveMet=element.verifyObjective(playerDesk);
+            if(objectiveMet==true)
+                pointsToAdd+=element.getPoints();
+        }
+        this.setPoints(pointsToAdd);
+        return this.points;
     }
 }
