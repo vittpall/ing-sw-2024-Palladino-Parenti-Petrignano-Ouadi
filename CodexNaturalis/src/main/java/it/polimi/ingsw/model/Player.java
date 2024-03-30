@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumeration.TokenColor;
+
 import java.util.ArrayList;
 
 /**
@@ -12,7 +14,7 @@ import java.util.ArrayList;
  * playerDesk is a reference to the assigned PlayerDesk
  */
 public class Player {
-    private String username
+    private String username;
     private int points;
     private ArrayList<GameCard> playerHand;
     private ArrayList<ObjectiveCard> objectiveCards;
@@ -21,9 +23,9 @@ public class Player {
     private final PlayerDesk playerDesk;
 
     /**
-     * costructor
-     * it creates a list of 3 GameCard choosen randomly from the decks, a list of 2 ObjectiveCard
-     * created randomly and the palyerDesk; it sets points to 0 and creates randomly the starterCard
+     * constructor
+     * it creates a list of 3 GameCard chosen randomly from the decks, a list of 2 ObjectiveCard
+     * created randomly and the playerDesk; it sets points to 0 and creates randomly the starterCard
      * @param color
      * @param username
      * @param resourceDeck
@@ -49,11 +51,11 @@ public class Player {
     /**
      * eliminates the objectiveCard that the user had discarded
      *
-     * @param choosenObjectiveCard
+     * @param chosenObjectiveCard
      */
-    public void setObjectiveCard(ObjectiveCard choosenObjectiveCard) {
+    public void setObjectiveCard(ObjectiveCard chosenObjectiveCard) {
         for(ObjectiveCard element: objectiveCards){
-            if(!(element.equals(choosenObjectiveCard)))
+            if(!(element.equals(chosenObjectiveCard)))
                 objectiveCards.remove(element);
         }
     }
@@ -78,14 +80,14 @@ public class Player {
      * @return objectiveCards
      */
     public ArrayList<ObjectiveCard> getObjectiveCards() {
-        return new arrayList<ObjectiveCard>(objectiveCards);
+        return new ArrayList<ObjectiveCard>(objectiveCards);
     }
 
     /**
      * @return playerHard
      */
     public ArrayList<GameCard> getPlayerHand() {
-        return new arrayList<GameCard>(playerHand);
+        return new ArrayList<GameCard>(playerHand);
 
     }
 
@@ -99,44 +101,44 @@ public class Player {
     /**
      * @return playerDesk
      */
-    public Desk getPlayerDesk() {
+    public PlayerDesk getPlayerDesk() {
         return playerDesk;
     }
 
     /**
-     * draws a card from the choosenDeck and puts it into the playerHand
-     * @param choosenDeck
+     * draws a card from the chosenDeck and puts it into the playerHand
+     * @param chosenDeck
      */
-    public void draw(Deck choosenDeck) {
+    public void draw(Deck chosenDeck) {
         GameCard card;
-        card=choosenDeck.drawDeckCard();
+        card=chosenDeck.drawDeckCard();
         playerHand.add(card);
     }
 
     /**
-     * moves the choosenCard from the choosenDeck to the playerHand
-     * @param choosenDeck
-     * @param choosenCard
+     * moves the chosenCard from the chosenDeck to the playerHand
+     * @param chosenDeck
+     * @param chosenCard
      */
-    public void drawVisible(Deck choosenDeck, GameCard choosenCard) throws CardNotFoundException {
+    public void drawVisible(Deck chosenDeck, GameCard chosenCard) throws CardNotFoundException {
         GameCard card;
-        card=choosenDeck.drawVisibleCard(choosenCard);
+        card=chosenDeck.drawVisibleCard(chosenCard);
         playerHand.add(card);
     }
 
 
     /**
      * eliminates the card from the playerHand and puts it
-     * into the desk at the choosen position if the requirements are met
+     * into the desk at the chosen position if the requirements are met
      *
      * @param card is the card that the user chose from the playerHands
      * @param faceDown
-     * @param x    is the x-coordinate of the choosen position
-     * @param y    is the y-coordinate of the choosen position
+     * @param x    is the x-coordinate of the chosen position
+     * @param y    is the y-coordinate of the chosen position
      * @throws CardNotFoundException
      * @throws RequirementsNotMetException
      */
-    public void playCard(GameCard card, boolan faceDown int x, int y)
+    public void playCard(GameCard card, boolean faceDown, int x, int y)
             throws CardNotFoundException, RequirementsNotMetException {
     }
 
@@ -150,7 +152,7 @@ public class Player {
     }
 
     /**
-     * checks if the shared and secret objective are met and determines the corrisponding points to add
+     * checks if the shared and secret objective are met and determines the corresponding points to add
      * to the player's points
      *
      * @param sharedObjectiveCard

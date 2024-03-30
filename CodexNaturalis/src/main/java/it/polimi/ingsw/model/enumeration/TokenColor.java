@@ -9,7 +9,7 @@ public enum TokenColor{
 
     private String value;
     /**
-     * costructor
+     * constructor
      * @param value represents the name of the TokenColor
      */
     private TokenColor(String value){

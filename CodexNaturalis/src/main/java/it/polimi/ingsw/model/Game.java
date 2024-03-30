@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
+import it.polimi.ingsw.model.enumeration.TokenColor;
 
 public class Game {
     private final int gameId;
@@ -13,12 +14,12 @@ public class Game {
     private boolean isLastRoundStarted;
 
     /**
-     * costructor
+     * constructor
      * creates goldDeck, resourceDeck and sharedObjectiveCards
      * creates the list players and adds the first player with the username  usernamePlayer to it
      * sets gameId=id, nPlayer=n, isLastRoundStarted=0 and currentPlayerIndex=0
      * @param id
-     * @param nPlayer
+     * @param n
      * @param usernamePlayer
      */
     public Game(int id, int n, String usernamePlayer){}
@@ -105,7 +106,7 @@ public class Game {
     }
 
     /**
-     * plays the card card into the current player's desk
+     * plays card into the current player's desk
      * @param card
      */
     public void playCard(GameCard card){}
