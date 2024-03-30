@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Contains a reference to the possible objectives (strategies) in the game
  */
-public class ObjectiveCard {
+public class ObjectiveCard extends Card{
     ObjectiveStrategy strategy;
 
     /**
