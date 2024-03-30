@@ -75,10 +75,9 @@ public class Deck {
 
     /**
      *  Returns to the user a card taken from the UsableCard
-     * @param card
      * @return card
      */
-    public GameCard drawDeckCard(GameCard card)
+    public GameCard drawDeckCard()
     {
         GameCard LastCard;
         LastCard = UsableCard.getLast();
