@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
+
 import java.util.ArrayList;
 
 /**
@@ -15,15 +17,12 @@ public class Deck {
     /**
      * Default constructor, it creates the deck randomly and takes two card from it and set them as visible ones.
      */
-    public Deck()
+    public Deck(ArrayList<GameCard> GetUsable)
     {
         UsableCard = new ArrayList<>();
         VisibleCard = new ArrayList<>();
 
-        for(int i = 0; i < 40; i++)
-        {
-            UsableCard.add(new GameCard());
-        }
+        UsableCard.addAll(GetUsable);
         Shuffle(UsableCard);
 
         VisibleCard.add(UsableCard.getLast());
@@ -76,10 +75,9 @@ public class Deck {
 
     /**
      *  Returns to the user a card taken from the UsableCard
-     * @param card
      * @return card
      */
-    public GameCard drawDeckCard(GameCard card)
+    public GameCard drawDeckCard()
     {
         GameCard LastCard;
         LastCard = UsableCard.getLast();

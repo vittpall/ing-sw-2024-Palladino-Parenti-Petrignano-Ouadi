@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumeration.Resource;
+
 import java.util.ArrayList;
 
 public class DiagonalPatternStrategy {
