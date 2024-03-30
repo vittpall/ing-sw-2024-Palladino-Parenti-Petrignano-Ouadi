@@ -1,8 +1,11 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumeration.CornerObject;
+import it.polimi.ingsw.model.enumeration.Resource;
+
 /**
  * this class defines the card's corner
- * hidden is an attribute that is set as true if the corner can not be covered ans is set as false otherwise
+ * hidden is an attribute that is set as true if the corner can not be covered and is set as false otherwise
  * resource is an attribute that represents the corner's resource, if present
  * object is an attribute that represents the corner's object, if present
  */
@@ -13,8 +16,7 @@ public class Corner{
     private final CornerObject object;
 
     /**
-     * costructor
-     * costructor to call if the corner does not have resources or objects
+     * constructor to call if the corner does not have resources or objects
      * @param hidden
      */
     public Corner(boolean hidden){
@@ -24,8 +26,7 @@ public class Corner{
     }
 
     /**
-     * costructor
-     * costructor to call if the corner has a resource
+     * constructor to call if the corner has a resource
      * @param hidden
      * @param resource
      */
@@ -36,8 +37,7 @@ public class Corner{
     }
 
     /**
-     * costructor
-     * costructor to call if the corner has an object
+     * constructor to call if the corner has an object
      * @param hidden
      * @param object
      */

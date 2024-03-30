@@ -1,11 +1,13 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
+import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 
 import java.util.ArrayList;
 
 /**
- * this class defined the player
+ * this class defines the player
  * points are the points that the player has
  * playerHand are the card that the player has but has not played yet
  * objectiveCards are the ObjectiveCard assigned to the player
@@ -23,22 +25,41 @@ public class Player {
     private final PlayerDesk playerDesk;
 
     /**
-     * costructor
-     * it creates a list of 3 GameCard choosen randomly from the decks, a list of 2 ObjectiveCard
-     * created randomly and the palyerDesk; it sets points to 0 and creates randomly the starterCard
-     *
-     * @param color rapresents the color choosen for the player
+     * constructor
+     * it creates a list of 3 GameCard chosen randomly from the decks, a list of 2 ObjectiveCard
+     * created randomly and the playerDesk; it sets points to 0 and creates randomly the starterCard
+     * @param color
+     * @param username
+     * @param resourceDeck
+     * @param goldDeck
      */
-    public Player(TokenColor color, String username) {
+    public Player(TokenColor color, String username, Deck resourceDeck, Deck goldDeck) {
+        ObjectiveCard objective;
+        GameCard card;
+        this.color=color;
+        this.username=username;
+        this.points=0;
+        this.objectiveCards=new ArrayList<ObjectiveCard>();
+        this.playerHand=new ArrayList<GameCard>();
+        for(int i=0;i<2;i++){
+            this.draw(resourceDeck);
+        }
+        this.draw(goldDeck);
+        this.playerDesk= new PlayerDesk();
+        //aggiungere objectiveCards e starterCard
     }
 
 
     /**
      * eliminates the objectiveCard that the user had discarded
      *
-     * @param choosenObjectiveCard
+     * @param chosenObjectiveCard
      */
-    public void setObjectiveCard(int choosenObjectiveCard) {
+    public void setObjectiveCard(ObjectiveCard chosenObjectiveCard) {
+        for(ObjectiveCard element: objectiveCards){
+            if(!(element.equals(chosenObjectiveCard)))
+                objectiveCards.remove(element);
+        }
     }
 
     /**
@@ -58,7 +79,6 @@ public class Player {
     }
 
     /**
-     *
      * @return objectiveCards
      */
     public ArrayList<ObjectiveCard> getObjectiveCards() {
@@ -66,7 +86,6 @@ public class Player {
     }
 
     /**
-     *
      * @return playerHard
      */
     public ArrayList<GameCard> getPlayerHand() {
@@ -75,49 +94,53 @@ public class Player {
     }
 
     /**
-     *
      * @return color
      */
     public TokenColor getTokenColor() {
-        return color
+        return color;
     }
 
     /**
-     *
      * @return playerDesk
      */
     public PlayerDesk getPlayerDesk() {
-        return PlayerDesk;
+        return playerDesk;
     }
 
     /**
-     * draws a card from the choosenDeck and puts it into the playerHand
-     * @param choosenDeck
+     * draws a card from the chosenDeck and puts it into the playerHand
+     * @param chosenDeck
      */
-    public void draw(Deck choosenDeck) {
+    public void draw(Deck chosenDeck) {
+        GameCard card;
+        card=chosenDeck.drawDeckCard();
+        playerHand.add(card);
     }
 
     /**
-     * moves the choosenCard from the choosenDeck to the playerHand
-     * @param choosenDeck
-     * @param choosenCard
+     * moves the chosenCard from the chosenDeck to the playerHand
+     * @param chosenDeck
+     * @param chosenCard
      */
-    public void drawVisible(Deck choosenDeck, GameCard choosenCard) {
+    public void drawVisible(Deck chosenDeck, GameCard chosenCard) throws CardNotFoundException {
+        GameCard card;
+        card=chosenDeck.drawVisibleCard(chosenCard);
+        playerHand.add(card);
     }
 
 
     /**
      * eliminates the card from the playerHand and puts it
-     * into the desk at the choosen position if the requirements are met
+     * into the desk at the chosen position if the requirements are met
      *
      * @param card is the card that the user chose from the playerHands
      * @param faceDown
-     * @param x    is the x-coordinate of the choosen position
-     * @param y    is the y-coordinate of the choosen position
+     * @param x    is the x-coordinate of the chosen position
+     * @param y    is the y-coordinate of the chosen position
      * @throws CardNotFoundException
      * @throws RequirementsNotMetException
      */
-    public void playCard(GameCard card, Boolean faceDown, int x, int y)
+    public void playCard(GameCard card, boolean faceDown, int x, int y)
             throws CardNotFoundException, RequirementsNotMetException {
     }
 
@@ -131,12 +154,25 @@ public class Player {
     }
 
     /**
-     * checks if the shared and secret objective are met and determines the corrisponding points to add
+     * checks if the shared and secret objective are met and determines the corresponding points to add
      * to the player's points
      *
      * @param sharedObjectiveCard
-     * @return
+     * @return the player's total points
      */
     public int checkObjective(ArrayList<ObjectiveCard> sharedObjectiveCard) {
+        int pointsToAdd=0;
+        boolean objectiveMet;
+
+        objectiveMet=objectiveCards.get(0).verifyObjective(playerDesk);
+        if(objectiveMet==true)
+            pointsToAdd+=objectiveCards.get(0).getPoints();
+        for(ObjectiveCard element : sharedObjectiveCard){
+            objectiveMet=element.verifyObjective(playerDesk);
+            if(objectiveMet==true)
+                pointsToAdd+=element.getPoints();
+        }
+        this.setPoints(pointsToAdd);
+        return this.points;
     }
 }
