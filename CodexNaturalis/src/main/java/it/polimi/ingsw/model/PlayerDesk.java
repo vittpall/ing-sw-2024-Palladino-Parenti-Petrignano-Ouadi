@@ -9,11 +9,11 @@ import java.util.HashSet;
 
 public class PlayerDesk {
     private HashMap<int[], GameCard> desk;
-    private HashSet<int[]> avaiablePlaces;
+    private HashSet<int[]> availablePlaces;
 
     /**
      * costructor
-     * it creates desk and avaiablePlaces and adds the array (0,0) to avaiaplePlaces
+     * it creates desk and availablePlaces and adds the array (0,0) to availablePlaces
      */
     public PlayerDesk() {
     }
@@ -28,10 +28,10 @@ public class PlayerDesk {
 
     /**
      *
-     * @return the copy of the attribute avaiablePlaces
+     * @return the copy of the attribute availablePlaces
      */
-    public HashSet<int[]> getAvaiablePlaces(){
-        return new HashSet<int[]>(avaiablePlaces);
+    public HashSet<int[]> getAvailablePlaces(){
+        return new HashSet<int[]>(availablePlaces);
     }
 
     /**

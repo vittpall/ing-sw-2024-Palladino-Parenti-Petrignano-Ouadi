@@ -1,6 +1,8 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
+import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 
 import java.util.ArrayList;
 
