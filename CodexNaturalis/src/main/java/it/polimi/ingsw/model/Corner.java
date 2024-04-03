@@ -27,22 +27,20 @@ public class Corner{
 
     /**
      * constructor to call if the corner has a resource
-     * @param hidden
      * @param resource
      */
-    public Corner(boolean hidden, Resource resource){
-        this.hidden=hidden;
+    public Corner(Resource resource){
+        this.hidden=false;
         this.resource=resource;
         this.object=null;
     }
 
     /**
      * constructor to call if the corner has an object
-     * @param hidden
      * @param object
      */
-    public Corner(boolean hidden, CornerObject object){
-        this.hidden=hidden;
+    public Corner(CornerObject object){
+        this.hidden=false;
         this.resource=null;
         this.object=object;
     }

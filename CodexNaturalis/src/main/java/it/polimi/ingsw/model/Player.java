@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
  * playerDesk is a reference to the assigned PlayerDesk
  */
 public class Player {
-    private String username;
+    private final String username;
     private int points;
     private ArrayList<GameCard> playerHand;
     private ArrayList<ObjectiveCard> objectiveCards;
@@ -32,21 +33,24 @@ public class Player {
      * @param username
      * @param resourceDeck
      * @param goldDeck
+     * @param drawnObjectiveCard
+     * @param starter
      */
-    public Player(TokenColor color, String username, Deck resourceDeck, Deck goldDeck) {
-        ObjectiveCard objective;
-        GameCard card;
+    public Player(TokenColor color, String username, Deck resourceDeck, Deck goldDeck,
+                  ArrayList<ObjectiveCard> drawnObjectiveCard, StarterCard starter) {
         this.color=color;
         this.username=username;
         this.points=0;
-        this.objectiveCards=new ArrayList<ObjectiveCard>();
-        this.playerHand=new ArrayList<GameCard>();
+        this.starterCard=starter;
+
+        this.objectiveCards=new ArrayList<>(drawnObjectiveCard);
+
+        this.playerHand=new ArrayList<>();
         for(int i=0;i<2;i++){
             this.draw(resourceDeck);
         }
         this.draw(goldDeck);
         this.playerDesk= new PlayerDesk();
-        //aggiungere objectiveCards e starterCard
     }
 
 
@@ -142,6 +146,44 @@ public class Player {
      */
     public void playCard(GameCard card, boolean faceDown, int x, int y)
             throws CardNotFoundException, RequirementsNotMetException {
+        if(card instanceof GoldCard){
+            GoldCard goldCard=(GoldCard) card;
+            ArrayList<Resource> requirements= goldCard.getRequirements();
+            int nPlant=0, nAnimal=0, nFungi=0, nInsect=0;
+            for(Resource res:requirements){
+                if(res.equals(Resource.PLANT_KINGDOM)){
+                    nPlant++;
+                }else if(res.equals(Resource.ANIMAL_KINGDOM)){
+                    nAnimal++;
+                }else if(res.equals(Resource.FUNGI_KINGDOM)){
+                    nFungi++;
+                }else if(res.equals(Resource.INSECT_KINGDOM)){
+                    nInsect++;
+                }
+            }
+            boolean requirementsMet=true;
+            if(nPlant>0){
+                requirementsMet=playerDesk.checkRequirements(nPlant, Resource.PLANT_KINGDOM);
+                if(!requirementsMet) throw new RequirementsNotMetException("requirements not met");
+            }
+            if(nAnimal>0){
+                requirementsMet=playerDesk.checkRequirements(nAnimal, Resource.ANIMAL_KINGDOM);
+                if(!requirementsMet) throw new RequirementsNotMetException("requirements not met");
+            }
+            if(nFungi>0){
+                requirementsMet=playerDesk.checkRequirements(nFungi, Resource.FUNGI_KINGDOM);
+                if(!requirementsMet) throw new RequirementsNotMetException("requirements not met");
+            }
+            if(nInsect>0){
+                requirementsMet=playerDesk.checkRequirements(nInsect, Resource.INSECT_KINGDOM);
+                if(!requirementsMet) throw new RequirementsNotMetException("requirements not met");
+            }
+        }
+        boolean checkRemove=this.playerHand.remove(card);
+        if(!checkRemove) throw new CardNotFoundException("card not found");
+        card.setPlayedFaceDown(faceDown);
+        int pointsToAdd=playerDesk.addCard(card, x, y);
+        this.setPoints(pointsToAdd);
     }
 
     /**
@@ -149,7 +191,7 @@ public class Player {
      *
      * @param pointsToAdd
      */
-    public void setPoints(int pointsToAdd) {
+    private void setPoints(int pointsToAdd) {
         points += pointsToAdd;
     }
 
@@ -157,22 +199,24 @@ public class Player {
      * checks if the shared and secret objective are met and determines the corresponding points to add
      * to the player's points
      *
-     * @param sharedObjectiveCard
-     * @return the player's total points
+     * @param sharedObjectiveCard are the ObjectiveCard shared by all the players
+     * @return the number of objective that the player has met
      */
-    public int checkObjective(ArrayList<ObjectiveCard> sharedObjectiveCard) {
+    public int checkObjective(ObjectiveCard[] sharedObjectiveCard) {
         int pointsToAdd=0;
-        boolean objectiveMet;
+        int nObjectiveMet=0;
+        int objectiveMet;
 
-        objectiveMet=objectiveCards.get(0).verifyObjective(playerDesk);
-        if(objectiveMet==true)
-            pointsToAdd+=objectiveCards.get(0).getPoints();
+        objectiveMet=objectiveCards.getFirst().verifyObjective(playerDesk);
+        nObjectiveMet+=objectiveMet;
+        pointsToAdd+=((objectiveCards.getFirst().getPoints())*objectiveMet);
+
         for(ObjectiveCard element : sharedObjectiveCard){
             objectiveMet=element.verifyObjective(playerDesk);
-            if(objectiveMet==true)
-                pointsToAdd+=element.getPoints();
+            nObjectiveMet+=objectiveMet;
+            pointsToAdd+=((objectiveCards.getFirst().getPoints())*objectiveMet);
         }
         this.setPoints(pointsToAdd);
-        return this.points;
+        return nObjectiveMet;
     }
 }
