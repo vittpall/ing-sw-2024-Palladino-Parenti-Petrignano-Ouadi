@@ -20,7 +20,7 @@ public class ObjectiveCard extends Card{
     /**
      * Will call the method isSatisfied which will make override on the concrete strategies
      */
-    public boolean verifyObjective(PlayerDesk desk)
+    public int verifyObjective(PlayerDesk desk)
     {
         return strategy.isSatisfied(desk);
     }
