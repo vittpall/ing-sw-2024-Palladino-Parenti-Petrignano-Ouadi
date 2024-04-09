@@ -1,11 +1,9 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.Resource;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.HashSet;
-import java.util.ArrayList;
+import java.util.*;
 
 
 public class PlayerDesk {
@@ -36,7 +34,6 @@ public class PlayerDesk {
     }
 
     /**
-     *
      * @return the copy of the attribute availablePlaces
      */
     public HashSet<int[]> getAvailablePlaces(){
@@ -50,14 +47,34 @@ public class PlayerDesk {
         return new HashSet<>(forbiddenPlaces);
     }
 
-
+    public boolean checkTotalRequirements(EnumMap<Resource, Integer> requirements)
+            throws RequirementsNotMetException{
+        boolean requirementsMet=true;
+        if(requirements.get(Resource.PLANT_KINGDOM)!=null && requirements.get(Resource.PLANT_KINGDOM)>0){
+            requirementsMet=this.checkRequirements(requirements.get(Resource.PLANT_KINGDOM), Resource.PLANT_KINGDOM);
+            if(!requirementsMet) throw new RequirementsNotMetException("requirements not met");
+        }
+        if(requirements.get(Resource.ANIMAL_KINGDOM)!=null && requirements.get(Resource.ANIMAL_KINGDOM)>0){
+            requirementsMet=this.checkRequirements(requirements.get(Resource.ANIMAL_KINGDOM), Resource.ANIMAL_KINGDOM);
+            if(!requirementsMet) throw new RequirementsNotMetException("requirements not met");
+        }
+        if(requirements.get(Resource.FUNGI_KINGDOM)!=null && requirements.get(Resource.FUNGI_KINGDOM)>0){
+            requirementsMet=this.checkRequirements(requirements.get(Resource.FUNGI_KINGDOM), Resource.FUNGI_KINGDOM);
+            if(!requirementsMet) throw new RequirementsNotMetException("requirements not met");
+        }
+        if(requirements.get(Resource.INSECT_KINGDOM)!=null && requirements.get(Resource.INSECT_KINGDOM)>0){
+            requirementsMet=this.checkRequirements(requirements.get(Resource.INSECT_KINGDOM), Resource.INSECT_KINGDOM);
+            if(!requirementsMet) throw new RequirementsNotMetException("requirements not met");
+        }
+        return requirementsMet;
+    }
     /**
      * check if the user's desk has the requirements needed
      * @param numResourceNeeded represents the type of the resource required
      * @param resource represents how many resources are needed
      * @return true if the requirements are met; false is they are not
      */
-    public boolean checkRequirements(int numResourceNeeded, Resource resource) {
+    private boolean checkRequirements(int numResourceNeeded, Resource resource) {
         int nResourcesPresent=0;
         for(GameCard card : desk.values()){
             if(card.isPlayedFaceDown()){
@@ -115,7 +132,8 @@ public class PlayerDesk {
                 }
                 cornerToCover=(i+2)%4;
                 if(desk.containsKey(pos)){
-                    coverCorner(desk.get(pos), cornerToCover);
+                    int cardToCoverFacedDown=desk.get(pos).isPlayedFaceDown() ? 4 : 0;
+                    desk.get(pos).getCorners()[cornerToCover+cardToCoverFacedDown].coverCorner();
                 }else if(cardCorners[i+addIfFaceDown].isHidden()){
                     availablePlaces.remove(pos);
                     forbiddenPlaces.add(pos);
@@ -132,14 +150,8 @@ public class PlayerDesk {
      * @return the points that the player gains thanks to that card
      */
     private int getPointsToAdd(GameCard card){
-        //si potrebbe usare uno strategy pattern
+        //tenere traccia del numero di oggetti totali in un attributo del desk e fare gli if a
+        //seconda del PointType
     }
-    /**
-     * sets as hidden the corner of the card
-     * @param card
-     * @param corner
-     */
-    private void coverCorner(GameCard card, int corner){
-        card.getCorners()[corner].coverCorner();
-    }
+
 }

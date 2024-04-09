@@ -38,15 +38,21 @@ public class Game {
         isLastRoundStarted=false;
         gameStarted=false;
         currentPlayerIndex=0;
+
+        players=new ArrayList<>();
+        addPlayer(color, usernamePlayer);
+        //si creerà prima il player o prima il game? nel caso spostare il la creazione del player nel momento
+        //del suo login
+    }
+
+    public void setUpGame(){
         this.sharedObjectiveCards=new ObjectiveCard[2];
         double nRandom=Math.random()*objectiveCards.size();
         this.sharedObjectiveCards[0]=objectiveCards.remove((int)nRandom);
         nRandom=Math.random()*objectiveCards.size();
         this.sharedObjectiveCards[1]=objectiveCards.remove((int)nRandom);
-        players=new ArrayList<>();
-        addPlayer(color, usernamePlayer);
-
         //vanno creati i deck
+
     }
 
     /**
@@ -74,6 +80,7 @@ public class Game {
      * @return sharedObjectiveCards
      */
     public ObjectiveCard[] getSharedObjectiveCards() {return sharedObjectiveCards;}
+    //usare Array.copyOf
 
     /**
      * @return resourceDeck
@@ -128,8 +135,10 @@ public class Game {
         nRandom=Math.random()*objectiveCards.size();
         playerObjectiveCard.add(objectiveCards.remove((int)nRandom));
         players.add(new Player(color, username,resourceDeck, goldDeck, playerObjectiveCard, starter));
-        if(players.size()==nPlayer)
-            gameStarted=true;
+
+    }
+    public void setGameStarted(){
+        gameStarted=true;
     }
 
     /**

@@ -69,7 +69,7 @@ public class Corner{
     /**
      * sets hidden as true
      */
-    private void coverCorner(){
+    public void coverCorner(){
         this.hidden=true;
     }
 
