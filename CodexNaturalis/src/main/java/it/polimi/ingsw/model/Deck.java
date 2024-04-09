@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * This class defines the deck, which could be made of gold or resource card. The UsableCard represent the Deck itself while the VisibleCard are the two cards set next to the deck.
@@ -11,24 +12,24 @@ public class Deck {
     /**
      * Final prevent from changing the reference to UsableCard or VisibleCard
      */
-    private final ArrayList<GameCard> UsableCard;
-    private final ArrayList<GameCard> VisibleCard;
+    private final ArrayList<GameCard> UsableCards;
+    private final ArrayList<GameCard> VisibleCards;
 
     /**
      * Default constructor, it creates the deck randomly and takes two card from it and set them as visible ones.
      */
     public Deck(ArrayList<GameCard> GetUsable)
     {
-        UsableCard = new ArrayList<>();
-        VisibleCard = new ArrayList<>();
+        UsableCards = new ArrayList<>();
+        VisibleCards = new ArrayList<>();
 
-        UsableCard.addAll(GetUsable);
-        Shuffle(UsableCard);
+        UsableCards.addAll(GetUsable);
+        Shuffle(UsableCards);
 
-        VisibleCard.add(UsableCard.getLast());
-        UsableCard.removeLast();
-        VisibleCard.add(UsableCard.getLast());
-        UsableCard.removeLast();
+        VisibleCards.add(UsableCards.getLast());
+        UsableCards.removeLast();
+        VisibleCards.add(UsableCards.getLast());
+        UsableCards.removeLast();
     }
 
     /**
@@ -36,16 +37,7 @@ public class Deck {
      */
     private void Shuffle(ArrayList<GameCard> DeckToShuffle)
     {
-        GameCard TempCard;
-        int RandomPosition;
-
-        for(int i = 0; i < DeckToShuffle.size(); i++)
-        {
-            TempCard = DeckToShuffle.get(i);
-            RandomPosition = (int)Math.floor(Math.random()*40);
-            DeckToShuffle.add(i, DeckToShuffle.get(RandomPosition));
-            DeckToShuffle.add(RandomPosition, TempCard);
-        }
+        Collections.shuffle(DeckToShuffle);
     }
 
     /**
@@ -55,22 +47,12 @@ public class Deck {
      */
     public GameCard drawVisibleCard(GameCard card) throws CardNotFoundException
     {
-        int CardPosition = VisibleCard.indexOf(card);
-        GameCard ChosenCard;
-        GameCard NewVisibleCard;
-        //to define the Exception thrown
-        if(CardPosition == -1)
+        if(VisibleCards.indexOf(card) == -1)
             throw new CardNotFoundException("Card not found");
 
-        ChosenCard = VisibleCard.get(CardPosition);
-        VisibleCard.remove(card);
-
-        //get a random card from the deck
-        NewVisibleCard = UsableCard.getLast();
-        UsableCard.remove(NewVisibleCard);
-        VisibleCard.add(NewVisibleCard);
-
-        return ChosenCard;
+        VisibleCards.remove(card);
+        VisibleCards.add(UsableCards.removeLast());
+        return card;
     }
 
     /**
@@ -80,9 +62,16 @@ public class Deck {
     public GameCard drawDeckCard()
     {
         GameCard LastCard;
-        LastCard = UsableCard.getLast();
-        UsableCard.remove(LastCard);
+        LastCard = UsableCards.getLast();
+        UsableCards.remove(LastCard);
         return LastCard;
     }
 
+    public ArrayList<GameCard> getUsableCards() {
+        return UsableCards;
+    }
+
+    public ArrayList<GameCard> getVisibleCards() {
+        return VisibleCards;
+    }
 }

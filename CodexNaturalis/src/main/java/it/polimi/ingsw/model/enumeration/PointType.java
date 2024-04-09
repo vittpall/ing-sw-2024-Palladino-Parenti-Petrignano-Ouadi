@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.enumeration;
 
 /**
- * This enums contains the possible Type associated with the points given by the card
+ * This enums contains the possible Types associated with the points given by the card
  */
 public enum PointType {
     GENERAL("General"), CORNER("Corner"), MANUSCRIPT("Manuscript"), QUILL("Quill"), INKWELL("Inkewell");
