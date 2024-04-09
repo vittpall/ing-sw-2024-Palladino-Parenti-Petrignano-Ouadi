@@ -4,8 +4,8 @@ import it.polimi.ingsw.model.enumeration.Resource;
 
 import java.util.ArrayList;
 
-public class VerticalPatternStrategy {
-    private final ArrayList<Resource> resource;
+public class VerticalPatternStrategy implements ObjectiveStrategy{
+    private final ArrayList<Resource> resourceObjectiveCard;
 
     /**
      * this method will be recognized if the Resource cards

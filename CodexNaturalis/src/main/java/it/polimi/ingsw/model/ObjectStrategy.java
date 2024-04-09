@@ -4,9 +4,9 @@ import it.polimi.ingsw.model.enumeration.CornerObject;
 
 import java.util.ArrayList;
 
-public class ObjectStrategy {
+public class ObjectStrategy implements ObjectiveStrategy{
 
-    private final ArrayList<CornerObject> Object;
+    private final ArrayList<CornerObject> objectObjectiveCard;
 
     /**
      * this method will be recognized if the Resource cards

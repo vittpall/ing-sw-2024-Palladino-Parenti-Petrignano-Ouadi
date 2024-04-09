@@ -4,9 +4,9 @@ import it.polimi.ingsw.model.enumeration.Resource;
 
 import java.util.ArrayList;
 
-public class ResourceStrategy {
+public class ResourceStrategy implements ObjectiveStrategy{
 
-    private final ArrayList<Resource> resource;
+    private final ArrayList<Resource> resourceObjectiveCard;
 
 
     /**
