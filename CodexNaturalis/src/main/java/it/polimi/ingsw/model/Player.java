@@ -6,7 +6,6 @@ import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 
 /**
  * this class defines the player
@@ -34,11 +33,9 @@ public class Player {
      * @param username
      * @param resourceDeck
      * @param goldDeck
-     * @param drawnObjectiveCard
      * @param starter
      */
-    public Player(TokenColor color, String username, Deck resourceDeck, Deck goldDeck,
-                  ArrayList<ObjectiveCard> drawnObjectiveCard, StarterCard starter) {
+    public Player(TokenColor color, String username, Deck resourceDeck, Deck goldDeck, StarterCard starter) {
         this.color=color;
         this.username=username;
         this.points=0;
@@ -65,7 +62,6 @@ public class Player {
     }
 
     /**
-     *
      * @return points
      */
     public int getPoints() {
@@ -73,7 +69,6 @@ public class Player {
     }
 
     /**
-     *
      * @return starterCard
      */
     public StarterCard getStarterCard() {
@@ -81,10 +76,10 @@ public class Player {
     }
 
     /**
-     * @return objectiveCards
+     * @return objectiveCard
      */
-    public ArrayList<ObjectiveCard> getObjectiveCards() {
-        return new ArrayList<ObjectiveCard>(objectiveCards);
+    public ObjectiveCard getObjectiveCards() {
+        return new ObjectiveCard(objectiveCard);
     }
 
     /**
@@ -145,7 +140,7 @@ public class Player {
     public void playCard(GameCard card, boolean faceDown, int x, int y)
             throws CardNotFoundException, RequirementsNotMetException {
         if(card instanceof GoldCard goldCard){
-            playerDesk.checkTotalRequirements(goldCard.getRequirements());
+            playerDesk.checkRequirements(goldCard.getRequirements());
         }
         boolean checkRemove=this.playerHand.remove(card);
         if(!checkRemove) throw new CardNotFoundException("card not found");

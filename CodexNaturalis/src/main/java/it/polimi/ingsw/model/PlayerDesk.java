@@ -1,80 +1,95 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.enumeration.CornerObject;
 
+import java.awt.*;
 import java.util.*;
 
-
 public class PlayerDesk {
-    private HashMap<int[], GameCard> desk;
-    private HashSet<int[]> availablePlaces;
-    private HashSet<int[]> forbiddenPlaces;
+    private final HashMap<Point, GameCard> desk;
+    private final HashSet<Point> availablePlaces;
+    private final HashSet<Point> forbiddenPlaces;
+    private final EnumMap<Resource, Integer> totalResources;
+    private final EnumMap<CornerObject, Integer> totalObjects;
 
     /**
      * constructor
      * it creates desk, forbiddenPlaces and availablePlaces and adds the array (0,0) to availablePlaces
      */
     public PlayerDesk() {
-        int[] k= new int[2];
-        k[0]=0;
-        k[1]=0;
+        Point k= new Point(0,0);
         desk= new HashMap<>();
         forbiddenPlaces=new HashSet<>();
         availablePlaces= new HashSet<>();
         availablePlaces.add(k);
+        totalResources=new EnumMap<>(Resource.class);
+        totalObjects=new EnumMap<>(CornerObject.class);
     }
 
     /**
-     *
+     * @return totalResources
+     */
+    public EnumMap<Resource, Integer> getTotalResources() {
+        return new EnumMap<>(totalResources);
+    }
+
+    /**
+     * @return totalObjects
+     */
+    public EnumMap<CornerObject, Integer> getTotalObjects() {
+        return new EnumMap<>(totalObjects);
+    }
+
+    /**
      * @return a copy of the attribute desk
      */
-    public HashMap<int[], GameCard> getDesk(){
+    public HashMap<Point, GameCard> getDesk(){
         return new HashMap<>(desk);
     }
 
     /**
      * @return the copy of the attribute availablePlaces
      */
-    public HashSet<int[]> getAvailablePlaces(){
+    public HashSet<Point> getAvailablePlaces(){
         return new HashSet<>(availablePlaces);
     }
 
     /**
      * @return the copy of the attribute forbiddenPlaces
      */
-    public HashSet<int[]> getForbiddenPlaces(){
+    public HashSet<Point> getForbiddenPlaces(){
         return new HashSet<>(forbiddenPlaces);
     }
 
-    public boolean checkTotalRequirements(EnumMap<Resource, Integer> requirements)
-            throws RequirementsNotMetException{
-        boolean requirementsMet=true;
-        if(requirements.get(Resource.PLANT_KINGDOM)!=null && requirements.get(Resource.PLANT_KINGDOM)>0){
-            requirementsMet=this.checkRequirements(requirements.get(Resource.PLANT_KINGDOM), Resource.PLANT_KINGDOM);
-            if(!requirementsMet) throw new RequirementsNotMetException("requirements not met");
-        }
-        if(requirements.get(Resource.ANIMAL_KINGDOM)!=null && requirements.get(Resource.ANIMAL_KINGDOM)>0){
-            requirementsMet=this.checkRequirements(requirements.get(Resource.ANIMAL_KINGDOM), Resource.ANIMAL_KINGDOM);
-            if(!requirementsMet) throw new RequirementsNotMetException("requirements not met");
-        }
-        if(requirements.get(Resource.FUNGI_KINGDOM)!=null && requirements.get(Resource.FUNGI_KINGDOM)>0){
-            requirementsMet=this.checkRequirements(requirements.get(Resource.FUNGI_KINGDOM), Resource.FUNGI_KINGDOM);
-            if(!requirementsMet) throw new RequirementsNotMetException("requirements not met");
-        }
-        if(requirements.get(Resource.INSECT_KINGDOM)!=null && requirements.get(Resource.INSECT_KINGDOM)>0){
-            requirementsMet=this.checkRequirements(requirements.get(Resource.INSECT_KINGDOM), Resource.INSECT_KINGDOM);
-            if(!requirementsMet) throw new RequirementsNotMetException("requirements not met");
-        }
-        return requirementsMet;
-    }
     /**
-     * check if the user's desk has the requirements needed
-     * @param numResourceNeeded represents the type of the resource required
-     * @param resource represents how many resources are needed
-     * @return true if the requirements are met; false is they are not
+     * check if the requirements sent as a parameter are met into the player's desk
+      * @param requirements is a map of the requirements to check
+     * @throws RequirementsNotMetException if the requirements are not met
      */
-    private boolean checkRequirements(int numResourceNeeded, Resource resource) {
+    public void checkRequirements(EnumMap<Resource, Integer> requirements)
+            throws RequirementsNotMetException{
+        if(requirements.get(Resource.PLANT_KINGDOM)!=null &&
+           requirements.get(Resource.PLANT_KINGDOM)>totalResources.get(Resource.PLANT_KINGDOM)){
+            throw new RequirementsNotMetException("requirements not met");
+        }
+        if(requirements.get(Resource.ANIMAL_KINGDOM)!=null &&
+                requirements.get(Resource.ANIMAL_KINGDOM)>totalResources.get(Resource.ANIMAL_KINGDOM)){
+            throw new RequirementsNotMetException("requirements not met");
+        }
+        if(requirements.get(Resource.FUNGI_KINGDOM)!=null &&
+                requirements.get(Resource.FUNGI_KINGDOM)>totalResources.get(Resource.FUNGI_KINGDOM)){
+            throw new RequirementsNotMetException("requirements not met");
+        }
+        if(requirements.get(Resource.INSECT_KINGDOM)!=null &&
+                requirements.get(Resource.INSECT_KINGDOM)>totalResources.get(Resource.INSECT_KINGDOM)){
+            throw new RequirementsNotMetException("requirements not met");
+        }
+    }
+
+   /* private boolean checkRequirements(int numResourceNeeded, Resource resource) {
         int nResourcesPresent=0;
         for(GameCard card : desk.values()){
             if(card.isPlayedFaceDown()){
@@ -98,7 +113,7 @@ public class PlayerDesk {
             }
         }
         return false;
-    }
+    }*/
 
     /**
      * adds the couple <(x,y), card> into the desk and calls coverCorner
@@ -109,36 +124,65 @@ public class PlayerDesk {
      */
     public int addCard(GameCard card, Integer x, Integer y) {
         int pointsToAdd=0;
-        int[] k=new int[2];
-        k[0]=x;
-        k[1]=y;
+        Point k=new Point(x, y);
         if(availablePlaces.remove(k)) {
-            pointsToAdd = this.getPointsToAdd(card);
+            pointsToAdd = this.getPointsToAdd(card,k);
             desk.put(k, card);
             Corner[] cardCorners=card.getCorners();
             int addIfFaceDown= card.isPlayedFaceDown() ? 4 : 0;
             for(int i=0;i<4;i++){
-                int[]pos;
+                Point pos;
                 int cornerToCover;
                 switch(i){
                     case 0:
-                        pos= new int[]{x - 1, y - 1};
+                        pos= new Point(x - 1, y - 1);
                     case 1:
-                        pos=new int[]{x + 1, y - 1};
+                        pos= new Point(x + 1, y - 1);
                     case 2:
-                        pos=new int[]{x + 1, y + 1};
+                        pos= new Point(x + 1, y + 1);
                     default:
-                        pos=new int[]{x - 1, y + 1};
+                        pos= new Point(x - 1, y + 1);
                 }
                 cornerToCover=(i+2)%4;
                 if(desk.containsKey(pos)){
                     int cardToCoverFacedDown=desk.get(pos).isPlayedFaceDown() ? 4 : 0;
+                    if(desk.get(pos).getCorners()[cornerToCover+cardToCoverFacedDown].getObject()!=null) {
+                        int obj=totalObjects.get(desk.get(pos).getCorners()[cornerToCover+cardToCoverFacedDown].getObject());
+                        obj--;
+                        totalObjects.put(desk.get(pos).getCorners()[cornerToCover+cardToCoverFacedDown].getObject(), obj);
+                    }else if(desk.get(pos).getCorners()[cornerToCover+cardToCoverFacedDown].getResource()!=null) {
+                        int res=totalResources.get(desk.get(pos).getCorners()[cornerToCover+cardToCoverFacedDown].getResource());
+                        res--;
+                        totalResources.put(desk.get(pos).getCorners()[cornerToCover+cardToCoverFacedDown].getResource(), res);
+                    }
                     desk.get(pos).getCorners()[cornerToCover+cardToCoverFacedDown].coverCorner();
                 }else if(cardCorners[i+addIfFaceDown].isHidden()){
                     availablePlaces.remove(pos);
                     forbiddenPlaces.add(pos);
                 }else if(!forbiddenPlaces.contains(pos)){
                     availablePlaces.add(pos);
+
+                }
+                if(!card.isPlayedFaceDown() && !cardCorners[i+addIfFaceDown].isHidden()){
+                    if(cardCorners[i+addIfFaceDown].getResource()!=null) {
+                        int res = totalResources.get(cardCorners[i + addIfFaceDown].getResource());
+                        res++;
+                        totalResources.put(cardCorners[i + addIfFaceDown].getResource(), res);
+                    }else if(cardCorners[i+addIfFaceDown].getObject()!=null){
+                        int obj = totalObjects.get(cardCorners[i + addIfFaceDown].getObject());
+                        obj++;
+                        totalObjects.put(cardCorners[i + addIfFaceDown].getObject(), obj);                    }
+                }
+            }
+            if(card.isPlayedFaceDown()){
+                int res = totalResources.get(card.getCardResourceBack());
+                res++;
+                totalResources.put(card.getCardResourceBack(), res);
+            }else{
+                for(Resource resource : card.getCardResourcesFront()){
+                    int res = totalResources.get(resource);
+                    res++;
+                    totalResources.put(resource, res);
                 }
             }
         }
@@ -149,9 +193,21 @@ public class PlayerDesk {
      * @param card
      * @return the points that the player gains thanks to that card
      */
-    private int getPointsToAdd(GameCard card){
-        //tenere traccia del numero di oggetti totali in un attributo del desk e fare gli if a
-        //seconda del PointType
+    private int getPointsToAdd(GameCard card, Point p){
+        if(card.getPointType().equals(PointType.GENERAL))
+            return card.getPoints();
+        if(card.getPointType().equals(PointType.INKWELL))
+            return card.getPoints()*totalObjects.get(CornerObject.INKWELL);
+        if(card.getPointType().equals(PointType.MANUSCRIPT))
+            return card.getPoints()*totalObjects.get(CornerObject.MANUSCRIPT);
+        if(card.getPointType().equals(PointType.QUILL))
+            return card.getPoints()*totalObjects.get(CornerObject.QUILL);
+        int i=0;
+        if(desk.containsKey(new Point(p.x - 1, p.y - 1))) i++;
+        if(desk.containsKey(new Point(p.x + 1, p.y - 1))) i++;
+        if(desk.containsKey(new Point(p.x + 1, p.y + 1))) i++;
+        if(desk.containsKey(new Point(p.x - 1, p.y + 1))) i++;
+        return card.getPoints()*i;
     }
 
 }

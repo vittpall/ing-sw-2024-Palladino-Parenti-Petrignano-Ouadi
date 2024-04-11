@@ -10,7 +10,7 @@ public class Game {
     private final int gameId;
     private final int nPlayer;
     private ArrayList<Player> players;
-    private final ObjectiveCard[] sharedObjectiveCards;
+    private ObjectiveCard[] sharedObjectiveCards;
     private Deck resourceDeck;
     private Deck goldDeck;
     private int currentPlayerIndex;
@@ -134,7 +134,7 @@ public class Game {
         playerObjectiveCard.add(objectiveCards.remove((int)nRandom));
         nRandom=Math.random()*objectiveCards.size();
         playerObjectiveCard.add(objectiveCards.remove((int)nRandom));
-        players.add(new Player(color, username,resourceDeck, goldDeck, playerObjectiveCard, starter));
+        players.add(new Player(color, username,resourceDeck, goldDeck, starter));
 
     }
     public void setGameStarted(){
