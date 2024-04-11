@@ -4,7 +4,7 @@ package it.polimi.ingsw.model.enumeration;
  * This enums contains all possible elements available on the cards' corners
  */
 public enum CornerObject {
-    MANUSCRIPT("Manuscript"), QUILL("Quill"), INKWELL("Inkewell");
+    MANUSCRIPT("Manuscript"), QUILL("Quill"), INKWELL("Inkwell");
 
     private final String text;
 
