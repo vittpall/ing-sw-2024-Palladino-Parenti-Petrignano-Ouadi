@@ -14,11 +14,14 @@ abstract public class GameCard extends Card {
     private final String backImagePath;
     private final PointType pointType;
 
-    public GameCard(ArrayList<Resource> cardResourceFront, Resource cardResourceBack, PointType pointType, int points, String frontImagePath, String backImagePath) {
+    private final Corner[] corners;
+
+    public GameCard(ArrayList<Resource> cardResourceFront, Resource cardResourceBack, PointType pointType, int points, String frontImagePath, String backImagePath, Corner[] corners) {
         this.cardResourcesFront = cardResourceFront;
         this.cardResourceBack = cardResourceBack;
         this.frontImagePath = frontImagePath;
         this.backImagePath = backImagePath;
+        this.corners = corners;
         this.playedFaceDown = false;
         this.pointType = pointType;
         this.points = points;
@@ -60,5 +63,13 @@ abstract public class GameCard extends Card {
         this.points = points;
     }
 
+    public Corner getCorner(int index) {
+        return this.corners[index];
+    }
 
+    public Corner[] getCorners() {
+        Corner[] corners;
+        corners = this.corners;
+        return corners;
+    }
 }
