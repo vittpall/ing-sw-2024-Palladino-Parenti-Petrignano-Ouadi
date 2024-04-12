@@ -632,7 +632,7 @@
     },
     "requiredResources": {
       "Fungi Kingdom": 2,
-      "Animal Kingdom": 1
+      "Plant Kingdom": 1
     }
   },
   {
@@ -658,7 +658,7 @@
     "frontImageName": "img_44_fronte.png",
     "backImageName": "img_44_retro.png",
     "cardPoints": 2,
-    "pointType": "Manuscript",
+    "pointType": "Corner",
     "frontalResources": [],
     "corners": {
       "topLeft": "free",
@@ -686,7 +686,7 @@
     },
     "requiredResources": {
       "Fungi Kingdom": 3,
-      "Animal Kingdom": 1
+      "Plant Kingdom": 1
     }
   },
   {
@@ -762,7 +762,7 @@
     "backResource": "Fungi Kingdom",
     "frontImageName": "img_50_fronte.png",
     "backImageName": "img_50_retro.png",
-    "cardPoints": 3,
+    "cardPoints": 5,
     "pointType": "General",
     "frontalResources": [],
     "corners": {
@@ -938,7 +938,7 @@
     "backResource": "Plant Kingdom",
     "frontImageName": "img_60_fronte.png",
     "backImageName": "img_60_retro.png",
-    "cardPoints": 3,
+    "cardPoints": 5,
     "pointType": "General",
     "frontalResources": [],
     "corners": {
@@ -1114,7 +1114,7 @@
     "backResource": "Animal Kingdom",
     "frontImageName": "img_70_fronte.png",
     "backImageName": "img_70_retro.png",
-    "cardPoints": 3,
+    "cardPoints": 5,
     "pointType": "General",
     "frontalResources": [],
     "corners": {
@@ -1290,7 +1290,7 @@
     "backResource": "Insect Kingdom",
     "frontImageName": "img_80_fronte.png",
     "backImageName": "img_80_retro.png",
-    "cardPoints": 3,
+    "cardPoints": 5,
     "pointType": "General",
     "frontalResources": [],
     "corners": {
@@ -1373,8 +1373,8 @@
     "corners": {
       "topLeft": "free",
       "topRight": "free",
-      "bottomLeft": "free",
-      "bottomRight": "free"
+      "bottomLeft": "hidden",
+      "bottomRight": "hidden"
     },
     "requiredResources": {}
   },
@@ -1388,8 +1388,8 @@
     "corners": {
       "topLeft": "free",
       "topRight": "free",
-      "bottomLeft": "free",
-      "bottomRight": "free"
+      "bottomLeft": "hidden",
+      "bottomRight": "hidden"
     },
     "requiredResources": {}
   }
