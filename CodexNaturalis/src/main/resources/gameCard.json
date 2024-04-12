@@ -1,0 +1,1396 @@
+[
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_1_fronte.png",
+    "backImageName": "img_1_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Fungi Kingdom",
+      "topRight": "free",
+      "bottomLeft": "Fungi Kingdom",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_2_fronte.png",
+    "backImageName": "img_2_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Fungi Kingdom",
+      "topRight": "Fungi Kingdom",
+      "bottomLeft": "hidden",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_3_fronte.png",
+    "backImageName": "img_3_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "hidden",
+      "bottomLeft": "Fungi Kingdom",
+      "bottomRight": "Fungi Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_4_fronte.png",
+    "backImageName": "img_4_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "Fungi Kingdom",
+      "bottomLeft": "free",
+      "bottomRight": "Fungi Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_5_fronte.png",
+    "backImageName": "img_5_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "Quill",
+      "bottomLeft": "Plant Kingdom",
+      "bottomRight": "Fungi Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_6_fronte.png",
+    "backImageName": "img_6_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Inkwell",
+      "topRight": "Fungi Kingdom",
+      "bottomLeft": "hidden",
+      "bottomRight": "Animal Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_7_fronte.png",
+    "backImageName": "img_7_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Fungi Kingdom",
+      "topRight": "Insect Kingdom",
+      "bottomLeft": "Manuscript",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_8_fronte.png",
+    "backImageName": "img_8_retro.png",
+    "cardPoints": 1,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "Fungi Kingdom",
+      "bottomLeft": "free",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_9_fronte.png",
+    "backImageName": "img_9_retro.png",
+    "cardPoints": 1,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Fungi Kingdom",
+      "topRight": "hidden",
+      "bottomLeft": "free",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_10_fronte.png",
+    "backImageName": "img_10_retro.png",
+    "cardPoints": 1,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "free",
+      "bottomLeft": "Fungi Kingdom",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_11_fronte.png",
+    "backImageName": "img_11_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Plant Kingdom",
+      "topRight": "free",
+      "bottomLeft": "Plant Kingdom",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_12_fronte.png",
+    "backImageName": "img_12_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Plant Kingdom",
+      "topRight": "Plant Kingdom",
+      "bottomLeft": "hidden",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_13_fronte.png",
+    "backImageName": "img_13_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "hidden",
+      "bottomLeft": "Plant Kingdom",
+      "bottomRight": "Plant Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_14_fronte.png",
+    "backImageName": "img_14_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "Plant Kingdom",
+      "bottomLeft": "free",
+      "bottomRight": "Plant Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_15_fronte.png",
+    "backImageName": "img_15_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "Insect Kingdom",
+      "bottomLeft": "Quill",
+      "bottomRight": "Plant Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_16_fronte.png",
+    "backImageName": "img_16_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Fungi Kingdom",
+      "topRight": "Plant Kingdom",
+      "bottomLeft": "hidden",
+      "bottomRight": "Inkwell"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_17_fronte.png",
+    "backImageName": "img_17_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Manuscript",
+      "topRight": "hidden",
+      "bottomLeft": "Plant Kingdom",
+      "bottomRight": "Animal Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_18_fronte.png",
+    "backImageName": "img_18_retro.png",
+    "cardPoints": 1,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "Plant Kingdom",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_19_fronte.png",
+    "backImageName": "img_19_retro.png",
+    "cardPoints": 1,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "hidden",
+      "bottomRight": "Plant Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_20_fronte.png",
+    "backImageName": "img_20_retro.png",
+    "cardPoints": 1,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "Plant Kingdom",
+      "bottomLeft": "free",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_21_fronte.png",
+    "backImageName": "img_21_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Animal Kingdom",
+      "topRight": "Animal Kingdom",
+      "bottomLeft": "free",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_22_fronte.png",
+    "backImageName": "img_22_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "free",
+      "bottomLeft": "Animal Kingdom",
+      "bottomRight": "Animal Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_23_fronte.png",
+    "backImageName": "img_23_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Animal Kingdom",
+      "topRight": "hidden",
+      "bottomLeft": "Animal Kingdom",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_24_fronte.png",
+    "backImageName": "img_24_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "Animal Kingdom",
+      "bottomLeft": "hidden",
+      "bottomRight": "Animal Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_25_fronte.png",
+    "backImageName": "img_25_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "Insect Kingdom",
+      "bottomLeft": "Inkwell",
+      "bottomRight": "Animal Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_26_fronte.png",
+    "backImageName": "img_26_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Plant Kingdom",
+      "topRight": "Animal Kingdom",
+      "bottomLeft": "hidden",
+      "bottomRight": "Manuscript"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_27_fronte.png",
+    "backImageName": "img_27_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Quill",
+      "topRight": "hidden",
+      "bottomLeft": "Animal Kingdom",
+      "bottomRight": "Fungi Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_28_fronte.png",
+    "backImageName": "img_28_retro.png",
+    "cardPoints": 1,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "free",
+      "bottomLeft": "Animal Kingdom",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_29_fronte.png",
+    "backImageName": "img_29_retro.png",
+    "cardPoints": 1,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "hidden",
+      "bottomLeft": "free",
+      "bottomRight": "Animal Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_30_fronte.png",
+    "backImageName": "img_30_retro.png",
+    "cardPoints": 1,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "Animal Kingdom",
+      "bottomLeft": "free",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_31_fronte.png",
+    "backImageName": "img_31_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Insect Kingdom",
+      "topRight": "Insect Kingdom",
+      "bottomLeft": "free",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_32_fronte.png",
+    "backImageName": "img_32_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "free",
+      "bottomLeft": "Insect Kingdom",
+      "bottomRight": "Insect Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_33_fronte.png",
+    "backImageName": "img_33_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Insect Kingdom",
+      "topRight": "hidden",
+      "bottomLeft": "Insect Kingdom",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_34_fronte.png",
+    "backImageName": "img_34_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "Insect Kingdom",
+      "bottomLeft": "hidden",
+      "bottomRight": "Insect Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_35_fronte.png",
+    "backImageName": "img_35_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "Quill",
+      "bottomLeft": "Animal Kingdom",
+      "bottomRight": "Insect Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_36_fronte.png",
+    "backImageName": "img_36_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Manuscript",
+      "topRight": "Insect Kingdom",
+      "bottomLeft": "hidden",
+      "bottomRight": "Fungi Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_37_fronte.png",
+    "backImageName": "img_37_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Insect Kingdom",
+      "topRight": "Plant Kingdom",
+      "bottomLeft": "Inkwell",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_38_fronte.png",
+    "backImageName": "img_38_retro.png",
+    "cardPoints": 1,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Insect Kingdom",
+      "topRight": "hidden",
+      "bottomLeft": "free",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_39_fronte.png",
+    "backImageName": "img_39_retro.png",
+    "cardPoints": 1,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "hidden",
+      "bottomRight": "Insect Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_40_fronte.png",
+    "backImageName": "img_40_retro.png",
+    "cardPoints": 1,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "Insect Kingdom",
+      "bottomLeft": "free",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_41_fronte.png",
+    "backImageName": "img_41_retro.png",
+    "cardPoints": 1,
+    "pointType": "Quill",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "Quill"
+    },
+    "requiredResources": {
+      "Fungi Kingdom": 2,
+      "Animal Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_42_fronte.png",
+    "backImageName": "img_42_retro.png",
+    "cardPoints": 1,
+    "pointType": "Inkwell",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "Inkwell",
+      "bottomLeft": "hidden",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Fungi Kingdom": 2,
+      "Animal Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_43_fronte.png",
+    "backImageName": "img_43_retro.png",
+    "cardPoints": 1,
+    "pointType": "Manuscript",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Manuscript",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Fungi Kingdom": 2,
+      "Insect Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_44_fronte.png",
+    "backImageName": "img_44_retro.png",
+    "cardPoints": 2,
+    "pointType": "Manuscript",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "hidden",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Fungi Kingdom": 3,
+      "Animal Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_45_fronte.png",
+    "backImageName": "img_45_retro.png",
+    "cardPoints": 2,
+    "pointType": "Corner",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Fungi Kingdom": 3,
+      "Animal Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_46_fronte.png",
+    "backImageName": "img_46_retro.png",
+    "cardPoints": 2,
+    "pointType": "Corner",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "hidden",
+      "bottomLeft": "free",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Fungi Kingdom": 3,
+      "Insect Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_47_fronte.png",
+    "backImageName": "img_47_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "hidden",
+      "bottomLeft": "Inkwell",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Fungi Kingdom": 3
+    }
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_48_fronte.png",
+    "backImageName": "img_48_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Quill",
+      "topRight": "free",
+      "bottomLeft": "hidden",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Fungi Kingdom": 3
+    }
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_49_fronte.png",
+    "backImageName": "img_49_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "Manuscript",
+      "bottomLeft": "hidden",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Fungi Kingdom": 3
+    }
+  },
+  {
+    "backResource": "Fungi Kingdom",
+    "frontImageName": "img_50_fronte.png",
+    "backImageName": "img_50_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "hidden",
+      "bottomLeft": "free",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Fungi Kingdom": 5
+    }
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_51_fronte.png",
+    "backImageName": "img_51_retro.png",
+    "cardPoints": 1,
+    "pointType": "Quill",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Quill",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Plant Kingdom": 2,
+      "Insect Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_52_fronte.png",
+    "backImageName": "img_52_retro.png",
+    "cardPoints": 1,
+    "pointType": "Manuscript",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "Manuscript",
+      "bottomLeft": "hidden",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Plant Kingdom": 2,
+      "Fungi Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_53_fronte.png",
+    "backImageName": "img_53_retro.png",
+    "cardPoints": 1,
+    "pointType": "Inkwell",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "hidden",
+      "bottomLeft": "Inkwell",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Plant Kingdom": 2,
+      "Animal Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_54_fronte.png",
+    "backImageName": "img_54_retro.png",
+    "cardPoints": 2,
+    "pointType": "Corner",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Plant Kingdom": 3,
+      "Insect Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_55_fronte.png",
+    "backImageName": "img_55_retro.png",
+    "cardPoints": 2,
+    "pointType": "Corner",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Plant Kingdom": 3,
+      "Animal Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_56_fronte.png",
+    "backImageName": "img_56_retro.png",
+    "cardPoints": 2,
+    "pointType": "Corner",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "hidden",
+      "bottomLeft": "free",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Plant Kingdom": 3,
+      "Fungi Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_57_fronte.png",
+    "backImageName": "img_57_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "hidden",
+      "bottomLeft": "Quill",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Plant Kingdom": 3
+    }
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_58_fronte.png",
+    "backImageName": "img_58_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Manuscript",
+      "topRight": "free",
+      "bottomLeft": "hidden",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Plant Kingdom": 3
+    }
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_59_fronte.png",
+    "backImageName": "img_59_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "Inkwell",
+      "bottomLeft": "hidden",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Plant Kingdom": 3
+    }
+  },
+  {
+    "backResource": "Plant Kingdom",
+    "frontImageName": "img_60_fronte.png",
+    "backImageName": "img_60_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "hidden",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Plant Kingdom": 5
+    }
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_61_fronte.png",
+    "backImageName": "img_61_retro.png",
+    "cardPoints": 1,
+    "pointType": "Inkwell",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Inkwell",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Animal Kingdom": 2,
+      "Insect Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_62_fronte.png",
+    "backImageName": "img_62_retro.png",
+    "cardPoints": 1,
+    "pointType": "Manuscript",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "Manuscript"
+    },
+    "requiredResources": {
+      "Animal Kingdom": 2,
+      "Plant Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_63_fronte.png",
+    "backImageName": "img_63_retro.png",
+    "cardPoints": 1,
+    "pointType": "Quill",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "hidden",
+      "bottomLeft": "Quill",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Animal Kingdom": 2,
+      "Fungi Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_64_fronte.png",
+    "backImageName": "img_64_retro.png",
+    "cardPoints": 2,
+    "pointType": "Corner",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "hidden",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Animal Kingdom": 3,
+      "Insect Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_65_fronte.png",
+    "backImageName": "img_65_retro.png",
+    "cardPoints": 2,
+    "pointType": "Corner",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "hidden",
+      "bottomLeft": "free",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Animal Kingdom": 3,
+      "Fungi Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_66_fronte.png",
+    "backImageName": "img_66_retro.png",
+    "cardPoints": 2,
+    "pointType": "Corner",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Animal Kingdom": 3,
+      "Plant Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_67_fronte.png",
+    "backImageName": "img_67_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "hidden",
+      "bottomLeft": "Manuscript",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Animal Kingdom": 3
+    }
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_68_fronte.png",
+    "backImageName": "img_68_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "Inkwell",
+      "bottomLeft": "hidden",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Animal Kingdom": 3
+    }
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_69_fronte.png",
+    "backImageName": "img_69_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "free",
+      "bottomLeft": "hidden",
+      "bottomRight": "Quill"
+    },
+    "requiredResources": {
+      "Animal Kingdom": 3
+    }
+  },
+  {
+    "backResource": "Animal Kingdom",
+    "frontImageName": "img_70_fronte.png",
+    "backImageName": "img_70_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "free",
+      "bottomLeft": "hidden",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Animal Kingdom": 5
+    }
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_71_fronte.png",
+    "backImageName": "img_71_retro.png",
+    "cardPoints": 1,
+    "pointType": "Quill",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "Quill",
+      "bottomLeft": "hidden",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Insect Kingdom": 2,
+      "Plant Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_72_fronte.png",
+    "backImageName": "img_72_retro.png",
+    "cardPoints": 1,
+    "pointType": "Manuscript",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "hidden",
+      "bottomLeft": "Manuscript",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Insect Kingdom": 2,
+      "Animal Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_73_fronte.png",
+    "backImageName": "img_73_retro.png",
+    "cardPoints": 1,
+    "pointType": "Inkwell",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "Inkwell"
+    },
+    "requiredResources": {
+      "Insect Kingdom": 2,
+      "Fungi Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_74_fronte.png",
+    "backImageName": "img_74_retro.png",
+    "cardPoints": 2,
+    "pointType": "Corner",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "hidden",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Insect Kingdom": 3,
+      "Animal Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_75_fronte.png",
+    "backImageName": "img_75_retro.png",
+    "cardPoints": 2,
+    "pointType": "Corner",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Insect Kingdom": 3,
+      "Plant Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_76_fronte.png",
+    "backImageName": "img_76_retro.png",
+    "cardPoints": 2,
+    "pointType": "Corner",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "hidden",
+      "bottomLeft": "free",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Insect Kingdom": 3,
+      "Fungi Kingdom": 1
+    }
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_77_fronte.png",
+    "backImageName": "img_77_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Inkwell",
+      "topRight": "hidden",
+      "bottomLeft": "free",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Insect Kingdom": 3
+    }
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_78_fronte.png",
+    "backImageName": "img_78_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "Manuscript",
+      "bottomLeft": "hidden",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Insect Kingdom": 3
+    }
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_79_fronte.png",
+    "backImageName": "img_79_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "hidden",
+      "topRight": "hidden",
+      "bottomLeft": "Quill",
+      "bottomRight": "free"
+    },
+    "requiredResources": {
+      "Insect Kingdom": 3
+    }
+  },
+  {
+    "backResource": "Insect Kingdom",
+    "frontImageName": "img_80_fronte.png",
+    "backImageName": "img_80_retro.png",
+    "cardPoints": 3,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "hidden",
+      "bottomRight": "hidden"
+    },
+    "requiredResources": {
+      "Insect Kingdom": 5
+    }
+  },
+  {
+    "backResource": "",
+    "frontImageName": "img_81_fronte.png",
+    "backImageName": "img_81_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "Plant Kingdom",
+      "bottomLeft": "Insect Kingdom",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "",
+    "frontImageName": "img_82_fronte.png",
+    "backImageName": "img_82_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "Animal Kingdom",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "Fungi Kingdom"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "",
+    "frontImageName": "img_83_fronte.png",
+    "backImageName": "img_83_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "",
+    "frontImageName": "img_84_fronte.png",
+    "backImageName": "img_84_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "",
+    "frontImageName": "img_85_fronte.png",
+    "backImageName": "img_85_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  },
+  {
+    "backResource": "",
+    "frontImageName": "img_86_fronte.png",
+    "backImageName": "img_86_retro.png",
+    "cardPoints": 0,
+    "pointType": "General",
+    "frontalResources": [],
+    "corners": {
+      "topLeft": "free",
+      "topRight": "free",
+      "bottomLeft": "free",
+      "bottomRight": "free"
+    },
+    "requiredResources": {}
+  }
+]
