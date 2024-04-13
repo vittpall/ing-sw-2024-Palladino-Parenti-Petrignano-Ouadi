@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
 
@@ -14,16 +15,23 @@ class StarterCard extends GameCard {
 
     /**
      * This is the constructor for the StarterCard class.
-     * It initializes the cardResourceFront, cardResourceBack, pointType, points, imageFrontPath, imageBackPath from the superclass.
+     * It initializes the cardResourceFront, backSideResource, pointType, points, frontImagePath, backImagePath from the superclass.
      *
-     * @param cardResourcesFront The resources on the front of the card
-     * @param cardResourceBack The resource on the back of the card
-     * @param pointType The type that will be used to calculate points
-     * @param points The number of points the card gives
-     * @param imageFrontPath The path to the image for the front of the card
-     * @param imageBackPath The path to the image for the back of the card
+     * @param frontSideResources The resources on the front of the card
+     * @param backSideResource   The resource on the back of the card
+     * @param pointType          The type that will be used to calculate points
+     * @param points             The number of points the card gives
+     * @param frontImagePath     The path to the image for the front of the card
+     * @param backImagePath      The path to the image for the back of the card
      */
-    public StarterCard(ArrayList<Resource> cardResourcesFront, Resource cardResourceBack, PointType pointType, int points, String imageFrontPath, String imageBackPath) {
-        super(cardResourcesFront, cardResourceBack, pointType, points, imageFrontPath, imageBackPath);
+    public StarterCard(
+            @JsonProperty("backSideResource") Resource backSideResource,
+            @JsonProperty("frontImagePath") String frontImagePath,
+            @JsonProperty("backImagePath") String backImagePath,
+            @JsonProperty("points") int points,
+            @JsonProperty("pointType") PointType pointType,
+            @JsonProperty("frontSideResources") ArrayList<Resource> frontSideResources,
+            @JsonProperty("corners") Corner[] corners) {
+        super(backSideResource, frontImagePath, backImagePath, points, pointType, frontSideResources, corners);
     }
 }

@@ -91,12 +91,12 @@ public class PlayerDesk {
         int nResourcesPresent=0;
         for(GameCard card : desk.values()){
             if(card.isPlayedFaceDown()){
-                if(card.getCardResourceBack().equals(resource)) {
+                if(card.getbackSideResource().equals(resource)) {
                     nResourcesPresent++;
                     if(nResourcesPresent>=numResourceNeeded)return true;
                 }
             }else{
-                for(Resource res: card.getCardResourcesFront()){
+                for(Resource res: card.getfrontSideResources()){
                     if(res.equals(resource)){
                         nResourcesPresent++;
                         if(nResourcesPresent>=numResourceNeeded)return true;
@@ -179,11 +179,11 @@ public class PlayerDesk {
                 }
             }
             if (card.isPlayedFaceDown()) {
-                int res = totalResources.get(card.getCardResourceBack());
+                int res = totalResources.get(card.getbackSideResource());
                 res++;
-                totalResources.put(card.getCardResourceBack(), res);
+                totalResources.put(card.getbackSideResource(), res);
             } else {
-                for (Resource resource : card.getCardResourcesFront()) {
+                for (Resource resource : card.getfrontSideResources()) {
                     int res = totalResources.get(resource);
                     res++;
                     totalResources.put(resource, res);

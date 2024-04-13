@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
 
@@ -11,26 +13,35 @@ import java.util.EnumMap;
  * It extends the GameCard class and has an additional attribute, requirements.
  * The requirements attribute represents the resources required to play this card.
  */
-class GoldCard extends GameCard {
+public class GoldCard extends GameCard {
 
     // The resources required to obtain this card
     private final EnumMap<Resource, Integer> requirements;
 
     /**
      * This is the constructor for the GoldCard class.
-     * It initializes the cardResourceFront, cardResourceBack, pointType, points, imageFrontPath, imageBackPath from the superclass,
+     * It initializes the cardResourceFront, backSideResource, pointType, points, frontImagePath, backImagePath from the superclass,
      * and also initializes the requirements attribute.
      *
-     * @param cardResourcesFront The resources on the front of the card
-     * @param cardResourceBack   The resource on the back of the card
+     * @param frontSideResources The resources on the front of the card
+     * @param backSideResource   The resource on the back of the card
      * @param pointType          The type that will be used to calculate points
      * @param points             The number of points the card gives
-     * @param imageFrontPath     The path to the image for the front of the card
-     * @param imageBackPath      The path to the image for the back of the card
+     * @param frontImagePath     The path to the image for the front of the card
+     * @param backImagePath      The path to the image for the back of the card
      * @param requirements       The resources required to play this card
      */
-    public GoldCard(ArrayList<Resource> cardResourcesFront, Resource cardResourceBack, PointType pointType, int points, String imageFrontPath, String imageBackPath, EnumMap<Resource, Integer> requirements) {
-        super(cardResourcesFront, cardResourceBack, pointType, points, imageFrontPath, imageBackPath);
+    @JsonCreator
+    public GoldCard(
+            @JsonProperty("backSideResource") Resource backSideResource,
+            @JsonProperty("frontImagePath") String frontImagePath,
+            @JsonProperty("backImagePath") String backImagePath,
+            @JsonProperty("points") int points,
+            @JsonProperty("pointType") PointType pointType,
+            @JsonProperty("frontSideResources") ArrayList<Resource> frontSideResources,
+            @JsonProperty("corners") Corner[] corners,
+            @JsonProperty("requirements") EnumMap<Resource, Integer> requirements) {
+        super(backSideResource, frontImagePath, backImagePath, points, pointType, frontSideResources, corners);
         this.requirements = requirements != null ? requirements : new EnumMap<>(Resource.class);
     }
 
