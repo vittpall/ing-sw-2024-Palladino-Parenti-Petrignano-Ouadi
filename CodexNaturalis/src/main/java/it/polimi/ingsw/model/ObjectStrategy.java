@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 public class ObjectStrategy implements ObjectiveStrategy{
 
-    private final ArrayList<CornerObject> objectObjectiveCard;
+    private CornerObject ObjectStrategyToCheck;
+    private int NumOfCheck;
 
     /**
      * this method will be recognized if the Resource cards
@@ -15,6 +16,9 @@ public class ObjectStrategy implements ObjectiveStrategy{
      * @param desk
      */
     public void isSatisfied (PlayerDesk desk){
+
+        EnumMap<CornerObject, Integer>  TotaleObjects = desk.getTotalObjects();
+
 
     }
 
