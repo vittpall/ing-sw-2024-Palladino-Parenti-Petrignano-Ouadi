@@ -21,8 +21,12 @@ public class Player {
     private int points;
     private ArrayList<GameCard> playerHand;
     private ObjectiveCard objectiveCard;
+
+
+
+    private ArrayList<ObjectiveCard> drawnObjectiveCards;
     private final TokenColor color;
-    private final StarterCard starterCard;
+    private StarterCard starterCard;
     private final PlayerDesk playerDesk;
 
     /**
@@ -31,26 +35,32 @@ public class Player {
      * created randomly and the playerDesk; it sets points to 0 and creates randomly the starterCard
      * @param color
      * @param username
-     * @param resourceDeck
-     * @param goldDeck
-     * @param starter
+
      */
-    public Player(TokenColor color, String username, Deck resourceDeck, Deck goldDeck, StarterCard starter) {
+    public Player(TokenColor color, String username) {
         this.color=color;
         this.username=username;
         this.points=0;
-        this.starterCard=starter;
         this.objectiveCard=null;
-
+        this.starterCard=null;
         this.playerHand=new ArrayList<>();
+        this.playerDesk= new PlayerDesk();
+        this.drawnObjectiveCards=new ArrayList<>();
+    }
+
+    public void setPlayerHand(Deck resourceDeck, Deck goldDeck){
         for(int i=0;i<2;i++){
             this.draw(resourceDeck);
         }
         this.draw(goldDeck);
-        this.playerDesk= new PlayerDesk();
     }
 
-
+    public void setStarterCard(StarterCard starter){
+        this.starterCard=starter;
+    }
+    public void setDrawnObjectiveCards(ArrayList<ObjectiveCard> objectiveCards){
+        this.drawnObjectiveCards=objectiveCards;
+    }
     /**
      * sets objectiveCard as the parameter
      *
@@ -58,6 +68,7 @@ public class Player {
      */
     public void setObjectiveCard(ObjectiveCard chosenObjectiveCard) {
         this.objectiveCard=chosenObjectiveCard;
+        this.drawnObjectiveCards=null;
         //le carte 2 carte obiettivo da cui sceglierla si gestiscono nel game per ogni player
     }
 
@@ -78,10 +89,12 @@ public class Player {
     /**
      * @return objectiveCard
      */
-    public ObjectiveCard getObjectiveCards() {
+    public ObjectiveCard getObjectiveCard() {
         return new ObjectiveCard(objectiveCard);
     }
-
+    public ArrayList<ObjectiveCard> getDrawnObjectiveCards() {
+        return new ArrayList<>(drawnObjectiveCards);
+    }
     /**
      * @return playerHard
      */
