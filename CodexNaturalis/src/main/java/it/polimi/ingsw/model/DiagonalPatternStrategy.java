@@ -29,10 +29,10 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy{
         int i = 1;
         int NumberOfTimesVerifiedObjective = 0;
 
-        //iterate over desk until i found a position where the card's color is the primarysource
-        for(Point point : desk)
+        //iterate over desk until I found a position where the card's color is the primarySource
+        for(Point point : desk.getDesk().keySet())
         {
-            if (desk.get(point).getCardResourceBack().equals(PrimarySource))
+            if (desk.getDesk().get(point).getbackSideResource().equals(PrimarySource))
             {
                 if(PrimarySource.equals(Resource.INSECT_KINGDOM))
                 {
@@ -66,22 +66,22 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy{
         int i=0;
         if(this.PrimarySource.equals(ResourceToSearch))
         {
-            while(desk.contains(new Point(point.getX()+i, point.getY()-i)) && desk.get(new Point(point.getX()+i, point.getY()-i).getCardResourceBack().equals(ResourceToSearch)
+            while(desk.getDesk().containsKey(new Point((int)point.getX()+i, (int)point.getY()-i)) && desk.getDesk().get(new Point((int)point.getX()+i, (int)point.getY()-i)).getbackSideResource().equals(ResourceToSearch))
             {
-                //until i found the card on the left bottom corner which is different from the searched resource
+                //until I found the card on the left bottom corner which is different from the searched resource
                 i++;
             }
             i--;
-            if(desk.contains(new Point(point.getX()-i, point.getY()+i)) && desk.get(new Point(pnoint.getX()-i, point.getY()+i)).getCardResourceBack().equals(PrimarySource))
+            if(desk.getDesk().containsKey(new Point((int)point.getX()-i, (int)point.getY()+i)) && desk.getDesk().get(new Point((int)point.getX()-i, (int)point.getY()+i)).getbackSideResource().equals(PrimarySource))
             {
                 i++;
-                if(desk.contains(new Point(point.getX()-i, point.getY()+i)) &&  desk.get(new Point(point.getX()-i, point.getY()+i)).getCardResourceBack().equals(PrimarySource))
+                if(desk.getDesk().containsKey(new Point((int)point.getX()-i, (int)point.getY()+i)) &&  desk.getDesk().get(new Point((int)point.getX()-i, (int)point.getY()+i)).getbackSideResource().equals(PrimarySource))
                 {
                     i++;
-                    if(desk.contains(new Point(point.getX()-i, point.getY()+i)) && desk.get(new Point(point.getX()-i, point.getY()+i)).getCardResourceBack().equals(PrimarySource))
+                    if(desk.getDesk().containsKey(new Point((int)point.getX()-i, (int)point.getY()+i)) && desk.getDesk().get(new Point((int)point.getX()-i, (int)point.getY()+i)).getbackSideResource().equals(PrimarySource))
                     {
                         for(int j = 0; j <= 2; j++)
-                            desk.remove(new Point(point.getX()-i+j, point.getY()+i-j));
+                            desk.getDesk().remove(new Point((int)point.getX()-i+j,(int) point.getY()+i-j));
                     }
                     else
                         return false;
@@ -102,22 +102,22 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy{
         int i=0;
         if(this.PrimarySource.equals(ResourceToSearch))
         {
-            while(desk.contains(new Point(point.getX()-i, point.getY()+i)) && desk.get(new Point(point.getX()-i, point.getY()+i).getCardResourceBack().equals(ResourceToSearch)
+            while(desk.getDesk().containsKey(new Point((int)point.getX()-i, (int)point.getY()+i)) && desk.getDesk().get(new Point((int)point.getX()-i, (int)point.getY()+i)).getbackSideResource().equals(ResourceToSearch))
             {
                 //until i found the card on the left bottom corner which is different from the searched resource
                 i++;
             }
             i--;
-            if(desk.contains(new Point(point.getX()+i, point.getY()-i)) && desk.get(new Point(pnoint.getX()+i, point.getY()-i)).getCardResourceBack().equals(PrimarySource))
+            if(desk.getDesk().containsKey(new Point((int)point.getX()+i, (int)point.getY()-i)) && desk.getDesk().get(new Point((int)point.getX()+i, (int)point.getY()-i)).getbackSideResource().equals(PrimarySource))
             {
                 i++;
-                if(desk.contains(new Point(point.getX()+i, point.getY()-i)) &&  desk.get(new Point(point.getX()+i, point.getY()-i)).getCardResourceBack().equals(PrimarySource))
+                if(desk.getDesk().containsKey(new Point((int)point.getX()+i,(int) point.getY()-i)) &&  desk.getDesk().get(new Point((int)point.getX()+i,(int) point.getY()-i)).getbackSideResource().equals(PrimarySource))
                 {
                     i++;
-                    if(desk.contains(new Point(point.getX()+i, point.getY()-i)) && desk.get(new Point(point.getX()+i, point.getY()-i)).getCardResourceBack().equals(PrimarySource))
+                    if(desk.getDesk().containsKey(new Point((int)point.getX()+i, (int)point.getY()-i)) && desk.getDesk().get(new Point((int)point.getX()+i, (int)point.getY()-i)).getbackSideResource().equals(PrimarySource))
                     {
                         for(int j = 0; j <= 2; j++)
-                            desk.remove(new Point(point.getX()+i-j, point.getY()-i+j));
+                            desk.getDesk().remove(new Point((int)point.getX()+i-j,(int) point.getY()-i+j));
                     }
                     else
                         return false;

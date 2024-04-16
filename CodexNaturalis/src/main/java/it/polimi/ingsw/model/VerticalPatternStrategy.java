@@ -5,10 +5,11 @@ import it.polimi.ingsw.model.enumeration.Resource;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class VerticalPatternStrategy implements ObjectiveStrategy{
-    private Resource PrimarySource;
-    private Resource SecondarySource;
-    private int Points;
+public class VerticalPatternStrategy implements ObjectiveStrategy
+{
+    private final Resource PrimarySource;
+    private final Resource SecondarySource;
+    private final int Points;
 
     public VerticalPatternStrategy(Resource PrimarySource, Resource SecondarySource, int Points)
     {
@@ -25,12 +26,10 @@ public class VerticalPatternStrategy implements ObjectiveStrategy{
      */
     public int isSatisfied (PlayerDesk desk){
         int NumberOfTimesVerifiedObjective = 0;
-        //initial index
-        int i = 2;
-        //iterate over desk until i found a position where the card's color is the primarysource
-        for(Point point : desk)
+        //iterate over desk until I found a position where the card's color is the primarySource
+        for(Point point : desk.getDesk().keySet())
         {
-            if (desk.get(point).getCardResourceBack().equals(PrimarySource))
+            if (desk.getDesk().get(point).getbackSideResource().equals(PrimarySource))
             {
                 if(PrimarySource.equals(Resource.FUNGI_KINGDOM))
                 {
@@ -63,24 +62,24 @@ public class VerticalPatternStrategy implements ObjectiveStrategy{
         int i = 2;
         if(PrimarySource.equals(ResourceToSearch))
         {
-            while(desk.contains(new Point(point.getX(), point.getY()+i)) && desk.get(new Point(point.getX(), point.getY()+i).getCardResourceBack().equals(Resource.FUNGI_KINGDOM)
+            while(desk.getDesk().containsKey(new Point((int) point.getX(), (int) point.getY()+i)) && desk.getDesk().get(new Point((int) point.getX(), (int) point.getY()+i)).getbackSideResource().equals(Resource.FUNGI_KINGDOM))
             {
                 //it goes down until it finds a card with a different resource
                 i+=2;
             }
             //note: every card are space eachother of at least one cell
             i-=2;
-            //note this if is useless cause i already know that's the right card
-            if(desk.get(new Point(point.getX(), point.getY()+i)).getCardResourceBack().equals(PrimarySource))
+            //note this if is useless because I already know that's the right card
+            if(desk.getDesk().get(new Point((int) point.getX(), (int) point.getY()+i)).getbackSideResource().equals(PrimarySource))
             {
-                //check if the card on the bottom right corner has the secondary Resource
-                if(desk.get(new Point(point.getX()+1, point.getY()i+1)).getCardResourceBack().equals(SecondarySource))
+                //check if the card in the bottom right corner has the secondary Resource
+                if(desk.getDesk().get(new Point((int) point.getX()+1, (int) point.getY()i+1)).getbackSideResource().equals(SecondarySource))
                 {
                     i-=2;
-                    if(desk.get(new Point(point.getX(), point.getY()+i)).getCardResourceBack().equals(PrimarySource))
+                    if(desk.getDesk().get(new Point((int) point.getX(), (int) point.getY()+i)).getbackSideResource().equals(PrimarySource))
                     {
                         for(int j = 0; j <= 2; j = j + 2)
-                            desk.remove(new Point(point.getX(), point.getY()+i+j));
+                            desk.getDesk().remove(new Point((int) point.getX(), (int) point.getY()+i+j));
                     }
                     else
                         return false;
@@ -102,24 +101,24 @@ public class VerticalPatternStrategy implements ObjectiveStrategy{
         int i = 2;
         if(PrimarySource.equals(ResourceToSearch))
         {
-            while(desk.contains(new Point(point.getX(), point.getY()+i)) && desk.get(new Point(point.getX(), point.getY()+i).getCardResourceBack().equals(Resource.PLANT_KINGDOM)
+            while(desk.getDesk().containsKey(new Point((int) point.getX(), (int) point.getY()+i)) && desk.getDesk().get(new Point((int) point.getX(), (int)point.getY()+i)).getbackSideResource().equals(Resource.PLANT_KINGDOM))
             {
                 //it goes down until it finds a card with a different resource
                 i+=2;
             }
             //note: every card are space eachother of at least one cell
             i-=2;
-            //note this if is useless cause i already know that's the right card
-            if(desk.get(new Point(point.getX(), point.getY()+i)).getCardResourceBack().equals(PrimarySource))
+            //note this if is useless because I already know that's the right card
+            if(desk.getDesk().get(new Point((int)point.getX(), (int)point.getY()+i)).getbackSideResource().equals(PrimarySource))
             {
-                //check if the card on the bottom left corner has the secondary Resource
-                if(desk.get(new Point(point.getX()-1, point.getY()i+1)).getCardResourceBack().equals(SecondarySource))
+                //check if the card in the bottom left corner has the secondary Resource
+                if(desk.getDesk().get(new Point(point.getX()-1, point.getY()i+1)).getbackSideResource().equals(SecondarySource))
                 {
                     i-=2;
-                    if(desk.get(new Point(point.getX(), point.getY()+i)).getCardResourceBack().equals(PrimarySource))
+                    if(desk.getDesk().get(new Point((int)point.getX(), (int)point.getY()+i)).getbackSideResource().equals(PrimarySource))
                     {
                         for(int j = 0; j <= 2; j = j + 2)
-                            desk.remove(new Point(point.getX(), point.getY()+i+j));
+                            desk.getDesk().remove(new Point((int)point.getX(), (int)point.getY()+i+j));
                     }
                     else
                         return false;
@@ -141,24 +140,24 @@ public class VerticalPatternStrategy implements ObjectiveStrategy{
         int i = 2;
         if(PrimarySource.equals(ResourceToSearch))
         {
-            while(desk.contains(new Point(point.getX(), point.getY()+i)) && desk.get(new Point(point.getX(), point.getY()+i).getCardResourceBack().equals(Resource.ANIMAL_KINGDOM)
+            while(desk.getDesk().containsKey(new Point((int)point.getX(), (int)point.getY()+i)) && desk.getDesk().get(new Point((int)point.getX(), (int)point.getY()+i)).getbackSideResource().equals(Resource.ANIMAL_KINGDOM))
             {
                 //it goes down until it finds a card with a different resource
                 i-=2;
             }
             //note: every card are space eachother of at least one cell
             i+=2;
-            //note this if is useless cause i already know that's the right card
-            if(desk.get(new Point(point.getX(), point.getY()+i)).getCardResourceBack().equals(PrimarySource))
+            //note this if is useless because I already know that's the right card
+            if(desk.getDesk().get(new Point((int)point.getX(), (int)point.getY()+i)).getbackSideResource().equals(PrimarySource))
             {
-                //check if the card on the top right corner has the secondary Resource
-                if(desk.get(new Point(point.getX()+1, point.getY()+i-1)).getCardResourceBack().equals(SecondarySource))
+                //check if the card in the top right corner has the secondary Resource
+                if(desk.getDesk().get(new Point((int)point.getX()+1, (int)point.getY()+i-1)).getbackSideResource().equals(SecondarySource))
                 {
                     i-=2;
-                    if(desk.get(new Point(point.getX(), point.getY()+i)).getCardResourceBack().equals(PrimarySource))
+                    if(desk.getDesk().get(new Point((int)point.getX(), (int)point.getY()+i)).getbackSideResource().equals(PrimarySource))
                     {
                         for(int j = 0; j <= 2; j = j + 2)
-                            desk.remove(new Point(point.getX(), point.getY()+i+j));
+                            desk.getDesk().remove(new Point((int)point.getX(), (int)point.getY()+i+j));
                     }
                     else
                         return false;
@@ -173,32 +172,32 @@ public class VerticalPatternStrategy implements ObjectiveStrategy{
             return false;
         return true;
     }
-}
 
 
-private boolean CheckLeftTopCorner(PlayerDesk desk, Resource ResourceToSearch, Point point)
-{
+
+    private boolean CheckLeftTopCorner(PlayerDesk desk, Resource ResourceToSearch, Point point)
+    {
     int i = 2;
     if(PrimarySource.equals(ResourceToSearch))
     {
-        while(desk.contains(new Point(point.getX(), point.getY()+i)) && desk.get(new Point(point.getX(), point.getY()+i).getCardResourceBack().equals(Resource.INSECT_KINGDOM)
+        while(desk.getDesk().containsKey(new Point((int)point.getX(), (int)point.getY()+i)) && desk.getDesk().get(new Point((int)point.getX(), (int)point.getY()+i)).getbackSideResource().equals(Resource.INSECT_KINGDOM))
         {
             //it goes down until it finds a card with a different resource
             i-=2;
         }
         //note: every card are space eachother of at least one cell
         i+=2;
-        //note this if is useless cause i already know that's the right card
-        if(desk.get(new Point(point.getX(), point.getY()+i)).getCardResourceBack().equals(PrimarySource))
+        //note this if is useless because I already know that's the right card
+        if(desk.getDesk().get(new Point((int)point.getX(), (int)point.getY()+i)).getbackSideResource().equals(PrimarySource))
         {
-            //check if the card on the top left corner has the secondary Resource
-            if(desk.get(new Point(point.getX()+1, point.getY()i-1)).getCardResourceBack().equals(SecondarySource))
+            //check if the card in the top left corner has the secondary Resource
+            if(desk.getDesk().get(new Point(point.getX()+1, point.getY()i-1)).getbackSideResource().equals(SecondarySource))
             {
                 i-=2;
-                if(desk.get(new Point(point.getX(), point.getY()+i)).getCardResourceBack().equals(PrimarySource))
+                if(desk.getDesk().get(new Point((int)point.getX(), (int)point.getY()+i)).getbackSideResource().equals(PrimarySource))
                 {
                     for(int j = 0; j <= 2; j = j + 2)
-                        desk.remove(new Point(point.getX(), point.getY()+i+j));
+                        desk.getDesk().remove(new Point((int)point.getX(), (int)point.getY()+i+j));
                 }
                 else
                     return false;
@@ -212,4 +211,5 @@ private boolean CheckLeftTopCorner(PlayerDesk desk, Resource ResourceToSearch, P
     else
         return false;
     return true;
+}
 }
