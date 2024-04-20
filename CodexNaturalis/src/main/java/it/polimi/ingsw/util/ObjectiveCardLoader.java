@@ -17,6 +17,7 @@ public class ObjectiveCardLoader {
     public List<ObjectiveCard> loadObjectiveCards() {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
+        module.addDeserializer(ObjectiveCard.class, new ObjectiveCardDeserializer());
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         mapper.registerModule(module);
         List<ObjectiveCard> cards = new ArrayList<>();
