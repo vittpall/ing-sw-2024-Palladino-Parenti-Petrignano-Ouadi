@@ -1,0 +1,164 @@
+[
+  {
+    "strategy": "diagonalStrategy",
+    "resource": "FUNGI_KINGDOM",
+    "diagonalOffset": [
+      1,
+      1
+    ],
+    "points": 2,
+    "frontImagePath": "img_87_fronte.png",
+    "backImagePath": "img_87_retro.png"
+  },
+  {
+    "strategy": "diagonalStrategy",
+    "resource": "PLANT_KINGDOM",
+    "diagonalOffset": [
+      -1,
+      -1
+    ],
+    "points": 2,
+    "frontImagePath": "img_88_fronte.png",
+    "backImagePath": "img_88_retro.png"
+  },
+  {
+    "strategy": "diagonalStrategy",
+    "resource": "ANIMAL_KINGDOM",
+    "diagonalOffset": [
+      1,
+      1
+    ],
+    "points": 2,
+    "frontImagePath": "img_89_fronte.png",
+    "backImagePath": "img_89_retro.png"
+  },
+  {
+    "strategy": "diagonalStrategy",
+    "resource": "INSECT_KINGDOM",
+    "diagonalOffset": [
+      -1,
+      1
+    ],
+    "points": 2,
+    "frontImagePath": "img_90_fronte.png",
+    "backImagePath": "img_90_retro.png"
+  },
+  {
+    "strategy": "verticalStrategy",
+    "primaryResource": "FUNGI_KINGDOM",
+    "secondaryResource": "PLANT_KINGDOM",
+    "secondaryOffset": [
+      -1,
+      -1
+    ],
+    "points": 3,
+    "frontImagePath": "img_91_fronte.png",
+    "backImagePath": "img_91_retro.png"
+  },
+  {
+    "strategy": "verticalStrategy",
+    "primaryResource": "PLANT_KINGDOM",
+    "secondaryResource": "INSECT_KINGDOM",
+    "secondaryOffset": [
+      -1,
+      -1
+    ],
+    "points": 3,
+    "frontImagePath": "img_92_fronte.png",
+    "backImagePath": "img_92_retro.png"
+  },
+  {
+    "strategy": "verticalStrategy",
+    "primaryResource": "ANIMAL_KINGDOM",
+    "secondaryResource": "FUNGI_KINGDOM",
+    "secondaryOffset": [
+      1,
+      2
+    ],
+    "points": 3,
+    "frontImagePath": "img_93_fronte.png",
+    "backImagePath": "img_93_retro.png"
+  },
+  {
+    "strategy": "verticalStrategy",
+    "primaryResource": "INSECT_KINGDOM",
+    "secondaryResource": "ANIMAL_KINGDOM",
+    "secondaryOffset": [
+      -1,
+      2
+    ],
+    "points": 3,
+    "frontImagePath": "img_94_fronte.png",
+    "backImagePath": "img_94_retro.png"
+  },
+  {
+    "strategy": "resourceStrategy",
+    "resource": "FUNGI_KINGDOM",
+    "number": 3,
+    "points": 2,
+    "frontImagePath": "img_95_fronte.png",
+    "backImagePath": "img_95_retro.png"
+  },
+  {
+    "strategy": "resourceStrategy",
+    "resource": "PLANT_KINGDOM",
+    "number": 3,
+    "points": 2,
+    "frontImagePath": "img_96_fronte.png",
+    "backImagePath": "img_96_retro.png"
+  },
+  {
+    "strategy": "resourceStrategy",
+    "resource": "ANIMAL_KINGDOM",
+    "number": 3,
+    "points": 2,
+    "frontImagePath": "img_97_fronte.png",
+    "backImagePath": "img_97_retro.png"
+  },
+  {
+    "strategy": "resourceStrategy",
+    "resource": "INSECT_KINGDOM",
+    "number": 3,
+    "points": 2,
+    "frontImagePath": "img_98_fronte.png",
+    "backImagePath": "img_98_retro.png"
+  },
+  {
+    "strategy": "objectStrategy",
+    "objects": {
+      "QUILL": 1,
+      "INKWELL": 1,
+      "MANUSCRIPT": 1
+    },
+    "points": 3,
+    "frontImagePath": "img_99_fronte.png",
+    "backImagePath": "img_99_retro.png"
+  },
+  {
+    "strategy": "objectStrategy",
+    "objects": {
+      "MANUSCRIPT": 2
+    },
+    "points": 2,
+    "frontImagePath": "img_100_fronte.png",
+    "backImagePath": "img_100_retro.png"
+  },
+  {
+    "strategy": "objectStrategy",
+    "objects": {
+      "INKWELL": 2
+    },
+    "points": 2,
+    "frontImagePath": "img_101_fronte.png",
+    "backImagePath": "img_101_retro.png"
+  },
+  {
+    "strategy": "objectStrategy",
+    "objects": {
+      "QUILL": 2
+    },
+    "points": 2,
+    "frontImagePath": "img_102_fronte.png",
+    "backImagePath": "img_102_retro.png"
+  }
+]
