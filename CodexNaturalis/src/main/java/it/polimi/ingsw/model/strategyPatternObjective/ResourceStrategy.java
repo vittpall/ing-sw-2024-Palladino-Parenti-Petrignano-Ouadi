@@ -1,9 +1,14 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.strategyPatternObjective;
 
+import it.polimi.ingsw.model.PlayerDesk;
 import it.polimi.ingsw.model.enumeration.Resource;
 
-import java.util.ArrayList;
 import java.util.EnumMap;
+
+/**
+ * Concrete strategy of the strategy design pattern, check the resource objective
+ */
+
 
 public class ResourceStrategy implements ObjectiveStrategy{
 

@@ -1,4 +1,6 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.strategyPatternObjective;
+
+import it.polimi.ingsw.model.PlayerDesk;
 
 /**
  * interface of the design pattern strategy

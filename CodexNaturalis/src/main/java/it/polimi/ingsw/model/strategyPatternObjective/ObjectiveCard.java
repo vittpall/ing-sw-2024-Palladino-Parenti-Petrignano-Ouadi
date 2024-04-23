@@ -1,4 +1,7 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.strategyPatternObjective;
+
+import it.polimi.ingsw.model.Card;
+import it.polimi.ingsw.model.PlayerDesk;
 
 /**
  * Contains a reference to the possible objectives (strategies) in the game
