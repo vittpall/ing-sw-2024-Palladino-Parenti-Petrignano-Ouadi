@@ -1,10 +1,12 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.polimi.ingsw.model.Exceptions.*;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.util.GameCardLoader;
 
 public class Game {
     private final int gameId;
@@ -27,20 +29,16 @@ public class Game {
      * sets gameId=id, nPlayer=n, isLastRoundStarted=false, gameStarted=false and currentPlayerIndex=0
      * @param id
      * @param n
-     * @param usernamePlayer
-     * @param color
      */
-    public Game(int id, int n, String usernamePlayer, TokenColor color){
-        //inizializzare starterCards e objectiveCards inserendoci tutte le carte iniziali e obiettivo possibili
-        //queste carte andranno distribuite tra i giocatori e sul tavolo
+    public Game(int id, int n){
         nPlayer=n;
         gameId=id;
         isLastRoundStarted=false;
         gameStarted=false;
         currentPlayerIndex=0;
+        starterCards=new ArrayList<>();
 
         players=new ArrayList<>();
-        addPlayer(color, usernamePlayer);
         //si creerà prima il player o prima il game? nel caso spostare il la creazione del player nel momento
         //del suo login
     }
@@ -51,8 +49,31 @@ public class Game {
         this.sharedObjectiveCards[0]=objectiveCards.remove((int)nRandom);
         nRandom=Math.random()*objectiveCards.size();
         this.sharedObjectiveCards[1]=objectiveCards.remove((int)nRandom);
-        //vanno creati i deck
+        //vengono creati i deck
+        ArrayList<GameCard> usableGoldCard=new ArrayList<>();
+        ArrayList<GameCard> usableResourceCard=new ArrayList<>();
 
+        GameCardLoader gameCardLoader=new GameCardLoader();
+        for(GameCard card : gameCardLoader.loadGameCards()){
+            if(card instanceof GoldCard){
+                usableGoldCard.add(card);
+            }else if(card instanceof StarterCard){
+                starterCards.add((StarterCard) card);
+            }else if(card instanceof ResourceCard){
+                usableResourceCard.add(card);
+            }
+        }
+        resourceDeck=new Deck(usableResourceCard);
+        goldDeck=new Deck(usableGoldCard);
+        //viene settata la mano iniziale e la starter card del player
+        for(Player player : players){
+            player.setPlayerHand(resourceDeck, goldDeck);
+            nRandom=Math.random()*starterCards.size();
+            player.setStarterCard(starterCards.remove((int)nRandom));
+        }
+        //inizializzare  objectiveCards inserendoci tutte le carte obiettivo possibili
+        //setto per ogni giocatore drawnObjectiveCards con le 2 carte obiettivo da cui i giocatori sceglieranno quella specifica
+        //questa specifica viene settata chiamando setObjectiveCard dal controller su ogni player
     }
 
     /**
@@ -122,20 +143,11 @@ public class Game {
      * if old(players.size())<nPlayer, creates the players and adds it into players
      * if old(players.size())+1=nPlayer, starts the game
      *
-     * @param color
-     * @param username
+     * @param playerToAdd
      */
-    public void addPlayer(TokenColor color, String username){
+    public void addPlayer(Player playerToAdd){
         //si può chiamare solo se gameStarted==false
-        double nRandom=Math.random()*starterCards.size();
-        StarterCard starter = starterCards.remove((int)nRandom);
-        ArrayList<ObjectiveCard> playerObjectiveCard= new ArrayList<>();
-        nRandom=Math.random()*objectiveCards.size();
-        playerObjectiveCard.add(objectiveCards.remove((int)nRandom));
-        nRandom=Math.random()*objectiveCards.size();
-        playerObjectiveCard.add(objectiveCards.remove((int)nRandom));
-        players.add(new Player(color, username,resourceDeck, goldDeck, starter));
-
+        players.add(playerToAdd);
     }
     public void setGameStarted(){
         gameStarted=true;
