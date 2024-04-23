@@ -10,43 +10,41 @@ public class ResourceStrategy implements ObjectiveStrategy{
     private final Resource ResourceStrategyToCheck;
     private final int NumOfResourceToCheck;
 
-    private final int Points;
-
     /**
      * Constructor which assigns the Strategy that needs to be checked inside the class ResourceStrategy (i.g. The ObjcetiveCard requires two elements of type insect)
      * @param ResourceStrategyToCheck
+     * @param NumResource
      */
 
-    public ResourceStrategy(Resource ResourceStrategyToCheck, int NumResource, int Points)
+    public ResourceStrategy(Resource ResourceStrategyToCheck, int NumResource)
     {
         this.ResourceStrategyToCheck = ResourceStrategyToCheck;
         this.NumOfResourceToCheck = NumResource;
-        this.Points = Points;
+
     }
 
     //enum map è una mappa che contiene ha come chiave la risorsa mentre come valore il numero di risorse. Quello che bisogna fare è vedere quale è il tipo di risorsa della strategy da controllare(c'è l'attributo privato apposta) prendere dalla mappa il numero di volte e restituire quante volte sono verificati. stessa cosa succeda in resource strategy
 
     /**
-     * this method will be recognized if the Resource cards
-     * on the PlayerDesk meet the requirements of the objective card.
+     *this method will be recognized if the Resource cards
+     *on the PlayerDesk meet the requirements of the objective card.
      * in this case it will analyze the objective that requires a specific sequence of resources
      * @param desk
+     * @return NumberOfTimesVerifiedObjective
      */
     public int isSatisfied (PlayerDesk desk) {
         EnumMap<Resource, Integer> TotalResources = desk.getTotalResources();
-        int NumberOfTimesVerifiedObjective=0;
-        int PointsOnDesk = 0;
+        int NumberOfTimesVerifiedObjective = 0;
+        int ResourcesOnDesk = 0;
 
-        if(ResourceStrategyToCheck.equals(Resource.FUNGI_KINGDOM))
+
+        ResourcesOnDesk=TotalResources.get(ResourceStrategyToCheck);
+        if(ResourcesOnDesk>=NumOfResourceToCheck)
         {
-            PointsOnDesk=TotalResources.get(Resource.FUNGI_KINGDOM);
-            if(PointsOnDesk>=NumOfResourceToCheck)
-            {
-                NumberOfTimesVerifiedObjective = PointsOnDesk/NumOfResourceToCheck;
-            }
-
+            NumberOfTimesVerifiedObjective = ResourcesOnDesk/NumOfResourceToCheck;
         }
-        return NumberOfTimesVerifiedObjective * this.Points;
+
+        return NumberOfTimesVerifiedObjective;
     }
 
 }
