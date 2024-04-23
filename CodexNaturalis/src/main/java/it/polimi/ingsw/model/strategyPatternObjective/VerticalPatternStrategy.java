@@ -12,16 +12,16 @@ import java.util.HashMap;
  */
 
 public class VerticalPatternStrategy implements ObjectiveStrategy {
-    private final Resource PrimarySource;
-    private final Resource SecondarySource;
-    private final int Points;
-    private Point WhichCorner;
+    private final Resource primarySource;
+    private final Resource secondarySource;
+    private final int points;
+    private Point whichCorner;
 
-    public VerticalPatternStrategy(Resource PrimarySource, Resource SecondarySource, int Points, Point WhichCorner) {
-        this.PrimarySource = PrimarySource;
-        this.SecondarySource = SecondarySource;
-        this.Points = Points;
-        this.WhichCorner = WhichCorner;
+    public VerticalPatternStrategy(Resource primarySource, Resource secondarySource, int points, Point whichCorner) {
+        this.primarySource = primarySource;
+        this.secondarySource = secondarySource;
+        this.points = points;
+        this.whichCorner = whichCorner;
     }
 
     /**
@@ -32,16 +32,16 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
      * @param desk
      */
     public int isSatisfied(PlayerDesk desk) {
-        int NumberOfTimesVerifiedObjective = 0;
+        int numberOfTimesVerifiedObjective = 0;
         //iterate over desk until I found a position where the card's color is the primarySource
         for (Point point : desk.getDesk().keySet()) {
             if (desk.getDesk().get(point).getbackSideResource().equals(PrimarySource)) {
                 //instead of mapping the color to the corner that needs to be checked, it'll use the parameter WhichCorner
                 if (CheckCorner(desk, point))
-                    NumberOfTimesVerifiedObjective++;
+                    numberOfTimesVerifiedObjective++;
             }
         }
-        return NumberOfTimesVerifiedObjective * this.Points;
+        return numberOfTimesVerifiedObjective * this.points;
     }
 
     private boolean CheckCorner(PlayerDesk desk, Point StartingPoint) {
@@ -56,10 +56,10 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
 
         Point LowerCard = new Point(StartingPoint.x, StartingPoint.y + i);
         Point UpperCard = new Point(StartingPoint.x, StartingPoint.y + i - 2);
-        Point CornerCard = new Point(StartingPoint.x + WhichCorner.x, StartingPoint.y + WhichCorner.y);
+        Point CornerCard = new Point(StartingPoint.x + whichCorner.x, StartingPoint.y + whichCorner.y);
 
-        if (deskToUse.containsKey(LowerCard) && deskToUse.get(LowerCard).getbackSideResource() == PrimarySource && deskToUse.containsKey(UpperCard) && deskToUse.get(UpperCard).getbackSideResource() == PrimarySource) {
-            if (deskToUse.containsKey(CornerCard) && deskToUse.get(CornerCard).getbackSideResource() == SecondarySource)
+        if (deskToUse.containsKey(LowerCard) && deskToUse.get(LowerCard).getbackSideResource() == primarySource && deskToUse.containsKey(UpperCard) && deskToUse.get(UpperCard).getbackSideResource() == primarySource) {
+            if (deskToUse.containsKey(CornerCard) && deskToUse.get(CornerCard).getbackSideResource() == secondarySource)
                 IsVerified = true;
         }
 

@@ -13,13 +13,13 @@ import java.awt.Point;
 
 public class DiagonalPatternStrategy implements ObjectiveStrategy {
 
-    private Resource PrimarySource;
-    private int Points;
+    private Resource primarySource;
+    private int points;
     private Point diagonalOffset;
 
     public DiagonalPatternStrategy(Resource PrimarySource, int Points, Point diagonalOffset) {
-        this.PrimarySource = PrimarySource;
-        this.Points = Points;
+        this.primarySource = PrimarySource;
+        this.points = Points;
         this.diagonalOffset = diagonalOffset;
     }
 
@@ -34,13 +34,13 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
     public int isSatisfied(PlayerDesk desk) {
 
         int i = 1;
-        int NumberOfTimesVerifiedObjective = 0;
+        int numberOfTimesVerifiedObjective = 0;
 
         //iterate over desk until I found a position where the card's color is the primarySource
         for (Point point : desk.getDesk().keySet()) {
             CheckDiagonal(desk, point);
         }
-        return NumberOfTimesVerifiedObjective * this.Points;
+        return numberOfTimesVerifiedObjective * this.points;
     }
 
 
@@ -48,7 +48,7 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
         int i = 0;
         HashMap<Point, GameCard> deskToUse = desk.getDesk();
 
-            while (desk.getDesk().containsKey(new Point(startingPoint.x + i, startingPoint.y - i)) && desk.getDesk().get(new Point((startingPoint.x + i, startingPoint.y - i)).getbackSideResource().equals(ResourceToSearch)) {
+            while (desk.getDesk().containsKey(new Point(startingPoint.x + i, startingPoint.y - i)) && desk.getDesk().get(new Point((startingPoint.x + i, startingPoint.y - i)).getbackSideResource().equals(primarySource)) {
                 i++;
 
 
@@ -56,7 +56,7 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
             Point secondPoint = new Point(firstPoint.x+diagonalOffset.x, firstPoint.y+diagonalOffset.y);
             Point thirdPoint = new Point(secondPoint.x + diagonalOffset.x, secondPoint.y + diagonalOffset.y);
 
-            if(deskToUse.containsKey(firstPoint) && deskToUse.get(firstPoint).getbackSideResource() == PrimarySource && deskToUse.containsKey(secondPoint) && deskToUse.get(secondPoint).getbackSideResource() == PrimarySource && deskToUse.containsKey(thirdPoint) && deskToUse.get(thirdPoint).getbackSideResource() == PrimarySource)
+            if(deskToUse.containsKey(firstPoint) && deskToUse.get(firstPoint).getbackSideResource() == primarySource && deskToUse.containsKey(secondPoint) && deskToUse.get(secondPoint).getbackSideResource() == primarySource && deskToUse.containsKey(thirdPoint) && deskToUse.get(thirdPoint).getbackSideResource() == primarySource)
             {
                 return true;
             }
