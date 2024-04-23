@@ -49,6 +49,7 @@ public class ResourceStrategy implements ObjectiveStrategy{
             NumberOfTimesVerifiedObjective = ResourcesOnDesk/NumOfResourceToCheck;
         }
 
+
         return NumberOfTimesVerifiedObjective;
     }
 

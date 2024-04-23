@@ -44,6 +44,8 @@ public class ObjectStrategy implements ObjectiveStrategy{
             if( temporaryNumberOfTimes  < numberOfTimesVerifiedObjective || numberOfTimesVerifiedObjective == -1)
                 numberOfTimesVerifiedObjective = temporaryNumberOfTimes ;
         }
+
+
         
         return numberOfTimesVerifiedObjective;
     }
