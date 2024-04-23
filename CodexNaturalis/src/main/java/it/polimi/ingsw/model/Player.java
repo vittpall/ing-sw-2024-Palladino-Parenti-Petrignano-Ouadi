@@ -21,9 +21,6 @@ public class Player {
     private int points;
     private ArrayList<GameCard> playerHand;
     private ObjectiveCard objectiveCard;
-
-
-
     private ArrayList<ObjectiveCard> drawnObjectiveCards;
     private final TokenColor color;
     private StarterCard starterCard;

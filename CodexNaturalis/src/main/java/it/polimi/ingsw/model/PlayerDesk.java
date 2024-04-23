@@ -26,7 +26,13 @@ public class PlayerDesk {
         availablePlaces = new HashSet<>();
         availablePlaces.add(k);
         totalResources = new EnumMap<>(Resource.class);
+        for(Resource res : Resource.values()){
+            totalResources.put(res, 0);
+        }
         totalObjects = new EnumMap<>(CornerObject.class);
+        for(CornerObject obj : CornerObject.values()){
+            totalObjects.put(obj, 0);
+        }
     }
 
     /**
@@ -87,32 +93,6 @@ public class PlayerDesk {
         }
     }
 
-   /* private boolean checkRequirements(int numResourceNeeded, Resource resource) {
-        int nResourcesPresent=0;
-        for(GameCard card : desk.values()){
-            if(card.isPlayedFaceDown()){
-                if(card.getbackSideResource().equals(resource)) {
-                    nResourcesPresent++;
-                    if(nResourcesPresent>=numResourceNeeded)return true;
-                }
-            }else{
-                for(Resource res: card.getfrontSideResources()){
-                    if(res.equals(resource)){
-                        nResourcesPresent++;
-                        if(nResourcesPresent>=numResourceNeeded)return true;
-                    }
-                }
-                for(Corner cardCorner: card.getCorners()){
-                    if((!cardCorner.isHidden())&&cardCorner.getResource().equals(resource)){
-                        nResourcesPresent++;
-                        if(nResourcesPresent>=numResourceNeeded)return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }*/
-
     /**
      * adds the couple <(x,y), card> into the desk and calls coverCorner
      *
@@ -125,7 +105,7 @@ public class PlayerDesk {
         int pointsToAdd = 0;
         Point k = new Point(x, y);
         if (availablePlaces.remove(k)) {
-            pointsToAdd = this.getPointsToAdd(card, k);
+            pointsToAdd = card.isPlayedFaceDown() ? 0 : this.getPointsToAdd(card, k);
             desk.put(k, card);
             Corner[] cardCorners = card.getCorners();
             int addIfFaceDown = card.isPlayedFaceDown() ? 4 : 0;
@@ -212,6 +192,7 @@ public class PlayerDesk {
         if (desk.containsKey(new Point(p.x + 1, p.y + 1))) i++;
         if (desk.containsKey(new Point(p.x - 1, p.y + 1))) i++;
         return card.getPoints() * i;
+
     }
 
 }
