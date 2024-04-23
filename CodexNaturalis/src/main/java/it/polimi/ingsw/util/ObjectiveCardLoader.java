@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import it.polimi.ingsw.model.ObjectiveCard;
+import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.io.File;
 import java.io.IOException;
