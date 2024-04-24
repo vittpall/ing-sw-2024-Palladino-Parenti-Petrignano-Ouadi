@@ -18,8 +18,6 @@ abstract public class GameCard extends Card {
     private final ArrayList<Resource> frontSideResources;
     private final Resource backSideResource;
     private boolean playedFaceDown;
-    private final String frontImagePath;
-    private final String backImagePath;
     private final PointType pointType;
 
     private final Corner[] corners;
@@ -35,13 +33,7 @@ abstract public class GameCard extends Card {
         this.points = points;
     }
 
-    public String getImageFrontPath() {
-        return frontImagePath;
-    }
 
-    public String getImageBackPath() {
-        return backImagePath;
-    }
 
     public void setPlayedFaceDown(boolean playedFaceDown) {
         this.playedFaceDown = playedFaceDown;
