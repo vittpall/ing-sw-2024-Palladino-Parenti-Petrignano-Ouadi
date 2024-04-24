@@ -10,6 +10,7 @@ import java.util.EnumMap;
  */
 
 
+
 public class ResourceStrategy implements ObjectiveStrategy{
 
     private final Resource ResourceStrategyToCheck;
