@@ -17,6 +17,12 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
     private int points;
     private Point diagonalOffset;
 
+    /**
+     * Constructor which assigns the Strategy that needs to be checked inside the class DiagonalPatternStrategy (the required resource, the number of points of the objectiveCard and the direction of the diagonal)
+     * @param PrimarySource
+     * @param Points
+     * @param diagonalOffset
+     */
     public DiagonalPatternStrategy(Resource PrimarySource, int Points, Point diagonalOffset) {
         this.primarySource = PrimarySource;
         this.points = Points;
@@ -49,9 +55,9 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
         int i = 0;
         HashMap<Point, GameCard> deskToUse = desk.getDesk();
 
-            while (desk.getDesk().containsKey(new Point(startingPoint.x + i, startingPoint.y - i)) && desk.getDesk().get(new Point((startingPoint.x + i, startingPoint.y - i)).getbackSideResource().equals(primarySource)) {
+            while (desk.getDesk().containsKey(new Point(startingPoint.x + i, startingPoint.y - i)) && desk.getDesk().get(new Point(startingPoint.x + i, startingPoint.y - i)).getbackSideResource().equals(primarySource)) {
                 i++;
-
+            }
 
             Point firstPoint = new Point(startingPoint.x+i-1, startingPoint.y-i-1);
             Point secondPoint = new Point(firstPoint.x+diagonalOffset.x, firstPoint.y+diagonalOffset.y);
@@ -63,5 +69,5 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
             }
             return false;
         }
-    }
+
 }

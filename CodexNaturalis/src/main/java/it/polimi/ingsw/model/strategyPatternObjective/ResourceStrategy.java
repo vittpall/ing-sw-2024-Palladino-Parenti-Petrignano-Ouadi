@@ -28,9 +28,9 @@ public class ResourceStrategy implements ObjectiveStrategy{
 
     }
 
-    //enum map è una mappa che contiene ha come chiave la risorsa mentre come valore il numero di risorse. Quello che bisogna fare è vedere quale è il tipo di risorsa della strategy da controllare(c'è l'attributo privato apposta) prendere dalla mappa il numero di volte e restituire quante volte sono verificati. stessa cosa succeda in resource strategy
-
     /**
+     * enum map is a map where thw key is Resource and the integer is the number of times the resource is on the playerDesk.
+
      *this method will be recognized if the Resource cards
      *on the PlayerDesk meet the requirements of the objective card.
      * in this case it will analyze the objective that requires a specific sequence of resources
