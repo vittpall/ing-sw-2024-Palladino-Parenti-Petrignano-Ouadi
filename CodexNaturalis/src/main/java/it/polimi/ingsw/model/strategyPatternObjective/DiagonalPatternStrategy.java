@@ -38,7 +38,8 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
 
         //iterate over desk until I found a position where the card's color is the primarySource
         for (Point point : desk.getDesk().keySet()) {
-            CheckDiagonal(desk, point);
+            if(CheckDiagonal(desk, point))
+                numberOfTimesVerifiedObjective++;
         }
         return numberOfTimesVerifiedObjective * this.points;
     }
