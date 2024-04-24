@@ -1,15 +1,12 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
-import java.util.List;
-
+import java.util.Arrays;
 import it.polimi.ingsw.model.Exceptions.*;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.util.GameCardLoader;
 import it.polimi.ingsw.util.ObjectiveCardLoader;
-
 public class Game {
     private final int gameId;
     private final int nPlayer;
@@ -22,7 +19,6 @@ public class Game {
     private boolean gameStarted;
     private final ArrayList<StarterCard> starterCards;
     private ArrayList<ObjectiveCard> objectiveCards;
-
     /**
      * constructor
      * creates goldDeck, resourceDeck and sharedObjectiveCards
@@ -41,7 +37,6 @@ public class Game {
         players=new ArrayList<>();
         objectiveCards=new ArrayList<>();
     }
-
     public void setUpGame(){
         this.sharedObjectiveCards=new ObjectiveCard[2];
         double nRandom=Math.random()*objectiveCards.size();
@@ -64,11 +59,9 @@ public class Game {
         }
         resourceDeck=new Deck(usableResourceCard);
         goldDeck=new Deck(usableGoldCard);
-
         //inizializzazione objectiveCard che conterrà tutte le carte obiettivo possibili
         ObjectiveCardLoader objectiveCardLoader = new ObjectiveCardLoader();
         objectiveCards.addAll(objectiveCardLoader.loadObjectiveCards());
-
         //viene settata la mano iniziale e la starter card del player
         for(Player player : players){
             player.setPlayerHand(resourceDeck, goldDeck);
@@ -84,69 +77,61 @@ public class Game {
             player.setDrawnObjectiveCards(playerObjCards);
         }
     }
-
     /**
      * @return gameId
      */
     public int getGameId() {
         return gameId;
     }
-
     /**
      * @return nPlayer
      */
     public int getnPlayer() {
         return nPlayer;
     }
-
     /**
      * @return players
      */
     public ArrayList<Player> getPlayers() {
         return new ArrayList<Player>(players);
     }
-
     /**
      * @return sharedObjectiveCards
      */
-    public ObjectiveCard[] getSharedObjectiveCards() {return sharedObjectiveCards;}
+    public ObjectiveCard[] getSharedObjectiveCards() {
+        return Arrays.copyOf(sharedObjectiveCards, sharedObjectiveCards.length);
+    }
     //usare Array.copyOf
-
     /**
      * @return resourceDeck
      */
     public Deck getResourceDeck() {
         return resourceDeck;
     }
-
     /**
      * @return goldDeck
      */
     public Deck getGoldDeck() {
         return goldDeck;
     }
-
     /**
      * @return currentPlayerIndex
      */
     public int getCurrentPlayerIndex() {
         return currentPlayerIndex;
     }
-
     /**
      * @return isLastRoundStarted
      */
     public boolean getIsLastRoundStarted() {
         return isLastRoundStarted;
     }
-
     /**
      * @return gameStarted
      */
     public boolean isGameStarted() {
         return gameStarted;
     }
-
 
     /**
      * if old(players.size())<nPlayer, creates the players and adds it into players
@@ -161,7 +146,6 @@ public class Game {
     public void setGameStarted(){
         gameStarted=true;
     }
-
     /**
      * plays card into the current player's desk
      * @param card
@@ -175,7 +159,6 @@ public class Game {
             //da fare
         }
     }
-
     /**
      * draws a card and puts it into the current player's hand
      * @param deck
@@ -188,7 +171,6 @@ public class Game {
         getNextPlayer();
         return players.get(currentPlayerIndex).getPoints();
     }
-
     /**
      * draws the card sent as a parameter and puts it into the current player's hand
      * @param deck
@@ -206,14 +188,12 @@ public class Game {
         getNextPlayer();
         return players.get(currentPlayerIndex).getPoints();
     }
-
     /**
      * change the currentPlayerIndex
      */
     private void getNextPlayer(){
         currentPlayerIndex=(currentPlayerIndex+1)%nPlayer;
     }
-
     /**
      * calculates if the players' objectives are met and adds the points to the players
      * calculates the winner and ends the game
