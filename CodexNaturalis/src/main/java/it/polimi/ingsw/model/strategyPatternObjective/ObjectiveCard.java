@@ -36,7 +36,10 @@ public class ObjectiveCard extends Card {
         return strategy.isSatisfied(desk);
     }
 
-
+    /**
+     * standart getter to return strategy
+     * @return
+     */
     public ObjectiveStrategy getStrategy() {
         return strategy;
     }

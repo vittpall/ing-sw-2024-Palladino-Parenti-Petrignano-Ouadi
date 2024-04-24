@@ -50,7 +50,12 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
         return numberOfTimesVerifiedObjective * this.points;
     }
 
-
+    /**
+     * scan the entire board (hashmap) until it founds a matching pattern and then return true if the pattern complete the objective otherwise will return false
+     * @param desk
+     * @param startingPoint
+     * @return
+     */
     private boolean CheckDiagonal(PlayerDesk desk, Point startingPoint) {
         int i = 0;
         HashMap<Point, GameCard> deskToUse = desk.getDesk();
