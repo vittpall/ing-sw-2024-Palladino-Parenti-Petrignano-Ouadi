@@ -19,13 +19,13 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
 
     /**
      * Constructor which assigns the Strategy that needs to be checked inside the class DiagonalPatternStrategy (the required resource, the number of points of the objectiveCard and the direction of the diagonal)
-     * @param PrimarySource
-     * @param Points
+     * @param primarySource
+     * @param points
      * @param diagonalOffset
      */
-    public DiagonalPatternStrategy(Resource PrimarySource, int Points, Point diagonalOffset) {
-        this.primarySource = PrimarySource;
-        this.points = Points;
+    public DiagonalPatternStrategy(Resource primarySource, int points, Point diagonalOffset) {
+        this.primarySource = primarySource;
+        this.points = points;
         this.diagonalOffset = diagonalOffset;
     }
 
