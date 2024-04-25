@@ -178,7 +178,7 @@ public class PlayerDesk {
             res++;
             totalResources.put(card.getbackSideResource(), res);
         } else {
-            for (Resource resource : card.getfrontSideResources()) {
+            for (Resource resource : card.getFrontSideResources()) {
                 int res = totalResources.get(resource);
                 res++;
                 totalResources.put(resource, res);
