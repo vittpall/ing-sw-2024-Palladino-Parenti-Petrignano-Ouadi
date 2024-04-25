@@ -23,7 +23,7 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
      * @param secondarySource
      * @param whichCorner
      */
-    public VerticalPatternStrategy(Resource primarySource, Resource secondarySource,  Point whichCorner) {
+    public VerticalPatternStrategy(Resource primarySource, Resource secondarySource, Point whichCorner) {
         this.primarySource = primarySource;
         this.secondarySource = secondarySource;
         this.whichCorner = whichCorner;
@@ -57,17 +57,17 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
      * @return
      */
     private boolean CheckCorner(PlayerDesk desk, Point StartingPoint) {
-        int i = 2;
+        int i = -2;
         HashMap<Point, GameCard> deskToUse = desk.getDesk();
         boolean IsVerified = false;
 
         while (desk.getDesk().containsKey(new Point(StartingPoint.x, StartingPoint.y + i)) && desk.getDesk().get(new Point(StartingPoint.x, StartingPoint.y + i)).getbackSideResource().equals(primarySource))
-            i += 2;
+            i -= 2;
 
-        i -= 2;
+        i += 2;
 
         Point LowerCard = new Point(StartingPoint.x, StartingPoint.y + i);
-        Point UpperCard = new Point(StartingPoint.x, StartingPoint.y + i - 2);
+        Point UpperCard = new Point(StartingPoint.x, StartingPoint.y + i + 2);
         Point CornerCard = new Point(StartingPoint.x + whichCorner.x, StartingPoint.y + whichCorner.y);
 
         if (deskToUse.containsKey(LowerCard) && deskToUse.get(LowerCard).getbackSideResource() == primarySource && deskToUse.containsKey(UpperCard) && deskToUse.get(UpperCard).getbackSideResource() == primarySource) {
