@@ -56,20 +56,35 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
      */
     private boolean CheckDiagonal(PlayerDesk desk, Point startingPoint) {
         int i = 0;
+        int changeDiagonal = 1;
+        boolean isVerified = false;
         HashMap<Point, GameCard> deskToUse = desk.getDesk();
 
-        while (desk.getDesk().containsKey(new Point(startingPoint.x + i, startingPoint.y - i)) && desk.getDesk().get(new Point(startingPoint.x + i, startingPoint.y - i)).getbackSideResource().equals(primarySource)) {
+        if(diagonalOffset.equals(new Point(1,1))){
+            changeDiagonal = 1;
+        }
+        if(diagonalOffset.equals(new Point(1,-1))){
+            changeDiagonal = -1;
+        }
+
+        while (desk.getDesk().containsKey(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y + i)) && desk.getDesk().get(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y - i)).getbackSideResource().equals(primarySource)) {
             i++;
         }
+        i--;
 
-        Point firstPoint = new Point(startingPoint.x + i - 1, startingPoint.y - i - 1);
-        Point secondPoint = new Point(firstPoint.x + diagonalOffset.x, firstPoint.y + diagonalOffset.y);
-        Point thirdPoint = new Point(secondPoint.x + diagonalOffset.x, secondPoint.y + diagonalOffset.y);
+        Point firstPoint = new Point(startingPoint.x + i*changeDiagonal, startingPoint.y + i);
+        Point secondPoint = new Point(firstPoint.x - changeDiagonal, firstPoint.y - 1);
+        Point thirdPoint = new Point(secondPoint.x - changeDiagonal, secondPoint.y -1);
 
         if (deskToUse.containsKey(firstPoint) && deskToUse.get(firstPoint).getbackSideResource() == primarySource && deskToUse.containsKey(secondPoint) && deskToUse.get(secondPoint).getbackSideResource() == primarySource && deskToUse.containsKey(thirdPoint) && deskToUse.get(thirdPoint).getbackSideResource() == primarySource) {
-            return true;
+            isVerified = true;
         }
-        return false;
+
+        deskToUse.remove(firstPoint);
+        deskToUse.remove(secondPoint);
+        deskToUse.remove(thirdPoint);
+
+        return isVerified;
     }
 
 }
