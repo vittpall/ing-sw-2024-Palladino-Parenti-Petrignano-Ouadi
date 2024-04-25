@@ -1,10 +1,13 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+
+import java.awt.*;
 import java.util.ArrayList;
+
 /**
  * this class defines the player
  * points are the points that the player has
@@ -24,6 +27,7 @@ public class Player {
     private final TokenColor color;
     private StarterCard starterCard;
     private final PlayerDesk playerDesk;
+
     /**
      * constructor
      * it sets points to 0 and assigned the player's token and username. it creates the objectiveCard, starterCard,
@@ -42,6 +46,7 @@ public class Player {
         this.playerDesk = new PlayerDesk();
         this.drawnObjectiveCards = new ArrayList<>();
     }
+
     /**
      * put into the playerHand two resourceCard and one goldCard randomly chosen from the decks
      *
@@ -54,6 +59,7 @@ public class Player {
         }
         this.draw(goldDeck);
     }
+
     /**
      * set starterCard as the parameter passed
      *
@@ -62,6 +68,7 @@ public class Player {
     public void setStarterCard(StarterCard starter) {
         this.starterCard = starter;
     }
+
     /**
      * set drawnObjectiveCard as the list passed as a parameter
      *
@@ -70,6 +77,7 @@ public class Player {
     public void setDrawnObjectiveCards(ArrayList<ObjectiveCard> objectiveCards) {
         this.drawnObjectiveCards = objectiveCards;
     }
+
     /**
      * sets objectiveCard as the parameter and set drawnObjectiveCards as null
      *
@@ -80,48 +88,56 @@ public class Player {
         this.drawnObjectiveCards = null;
         //le carte 2 carte obiettivo da cui sceglierla si gestiscono nel game per ogni player
     }
+
     /**
      * @return points
      */
     public int getPoints() {
         return points;
     }
+
     /**
      * @return starterCard
      */
     public StarterCard getStarterCard() {
         return starterCard;
     }
+
     /**
      * @return objectiveCard
      */
     public ObjectiveCard getObjectiveCard() {
         return new ObjectiveCard(objectiveCard);
     }
+
     /**
      * @return drawnObjectiveCards
      */
     public ArrayList<ObjectiveCard> getDrawnObjectiveCards() {
         return new ArrayList<>(drawnObjectiveCards);
     }
+
     /**
      * @return playerHard
      */
     public ArrayList<GameCard> getPlayerHand() {
         return new ArrayList<>(playerHand);
     }
+
     /**
      * @return color
      */
     public TokenColor getTokenColor() {
         return color;
     }
+
     /**
      * @return playerDesk
      */
     public PlayerDesk getPlayerDesk() {
         return playerDesk;
     }
+
     /**
      * draws a card from the chosenDeck and puts it into the playerHand
      *
@@ -132,6 +148,7 @@ public class Player {
         card = chosenDeck.drawDeckCard();
         playerHand.add(card);
     }
+
     /**
      * moves the chosenCard from the chosenDeck to the playerHand
      *
@@ -143,6 +160,7 @@ public class Player {
         card = chosenDeck.drawVisibleCard(chosenCard);
         playerHand.add(card);
     }
+
     /**
      * eliminates the card from the playerHand and puts it
      * into the desk at the chosen position if the requirements are met
@@ -163,10 +181,11 @@ public class Player {
         boolean checkRemove = this.playerHand.remove(card);
         if (!checkRemove) throw new CardNotFoundException("card not found");
         card.setPlayedFaceDown(faceDown);
-        int pointsToAdd = playerDesk.addCard(card, x, y);
+        int pointsToAdd = playerDesk.addCard(card, new Point(x, y));
         this.setPoints(pointsToAdd);
         playerDesk.updateDesk(card, x, y);
     }
+
     /**
      * adds the pointsToAdd to points
      *
@@ -175,6 +194,7 @@ public class Player {
     private void setPoints(int pointsToAdd) {
         points += pointsToAdd;
     }
+
     /**
      * checks if the shared and secret objective are met and, if it happens, it adds the corresponding
      * point to the player's points

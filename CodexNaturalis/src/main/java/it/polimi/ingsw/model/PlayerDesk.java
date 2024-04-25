@@ -1,11 +1,16 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.enumeration.CornerObject;
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
-import it.polimi.ingsw.model.enumeration.CornerObject;
+
 import java.awt.*;
-import java.util.*;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+
 /**
  * this class represents the player's desk.
  * desk represents the position of every card that the player has played
@@ -20,6 +25,7 @@ public class PlayerDesk {
     private final HashSet<Point> forbiddenPlaces;
     private final EnumMap<Resource, Integer> totalResources;
     private final EnumMap<CornerObject, Integer> totalObjects;
+
     /**
      * constructor
      * it creates desk, forbiddenPlaces and availablePlaces and adds the Pint (0,0) to availablePlaces
@@ -40,36 +46,42 @@ public class PlayerDesk {
             totalObjects.put(obj, 0);
         }
     }
+
     /**
      * @return totalResources
      */
     public EnumMap<Resource, Integer> getTotalResources() {
         return new EnumMap<>(totalResources);
     }
+
     /**
      * @return totalObjects
      */
     public EnumMap<CornerObject, Integer> getTotalObjects() {
         return new EnumMap<>(totalObjects);
     }
+
     /**
      * @return desk
      */
     public HashMap<Point, GameCard> getDesk() {
         return new HashMap<>(desk);
     }
+
     /**
      * @return availablePlaces
      */
     public HashSet<Point> getAvailablePlaces() {
         return new HashSet<>(availablePlaces);
     }
+
     /**
      * @return forbiddenPlaces
      */
     public HashSet<Point> getForbiddenPlaces() {
         return new HashSet<>(forbiddenPlaces);
     }
+
     /**
      * check if the requirements sent as a parameter are met into the player's desk
      *
@@ -90,23 +102,23 @@ public class PlayerDesk {
             }
         }
     }
+
     /**
      * adds the couple <(x,y), card> into the desk
      *
-     * @param card
-     * @param x
-     * @param y
+     * @param card  The GameCard to be added to the desk.
+     * @param point The point on the desk where the card is to be added.
      * @return the points that the player gains after the move
      */
-    public int addCard(GameCard card, Integer x, Integer y) {
+    public int addCard(GameCard card, Point point) {
         int pointsToAdd = 0;
-        Point k = new Point(x, y);
-        if (availablePlaces.remove(k)) {
-            pointsToAdd = card.isPlayedFaceDown() ? 0 : this.getPointsToAdd(card, k);
-            desk.put(k, card);
+        if (availablePlaces.remove(point)) {
+            pointsToAdd = card.isPlayedFaceDown() ? 0 : this.getPointsToAdd(card, point);
+            desk.put(point, card);
         }
         return pointsToAdd;
     }
+
     /**
      * update the desk when a new card is put:
      * covers the card's adjacent corners
@@ -173,6 +185,7 @@ public class PlayerDesk {
             }
         }
     }
+
     /**
      * it calculates the points to give to the player thanks to the placing of the card
      *
