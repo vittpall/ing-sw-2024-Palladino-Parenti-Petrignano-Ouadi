@@ -18,14 +18,15 @@ public class Deck {
     /**
      * Default constructor, it creates the deck randomly and takes two card from it and set them as visible ones.
      */
-    public Deck(ArrayList<GameCard> GetUsable)
-    {
+    public Deck(ArrayList<GameCard> GetUsable) {
         UsableCards = new ArrayList<>();
         VisibleCards = new ArrayList<>();
 
         UsableCards.addAll(GetUsable);
         Shuffle(UsableCards);
+    }
 
+    public void makeTopCardsVisible() {
         VisibleCards.add(UsableCards.getLast());
         UsableCards.removeLast();
         VisibleCards.add(UsableCards.getLast());
@@ -35,19 +36,18 @@ public class Deck {
     /**
      * Shuffle Randomly the Deck created in the constructor
      */
-    private void Shuffle(ArrayList<GameCard> DeckToShuffle)
-    {
+    private void Shuffle(ArrayList<GameCard> DeckToShuffle) {
         Collections.shuffle(DeckToShuffle);
     }
 
     /**
      * Returns one of the visible cards to the user and sets another one taking it from the UsableCard
+     *
      * @param card
      * @return the VisibleCard chosen
      */
-    public GameCard drawVisibleCard(GameCard card) throws CardNotFoundException
-    {
-        if(VisibleCards.indexOf(card) == -1)
+    public GameCard drawVisibleCard(GameCard card) throws CardNotFoundException {
+        if (VisibleCards.indexOf(card) == -1)
             throw new CardNotFoundException("Card not found");
 
         VisibleCards.remove(card);
@@ -56,11 +56,11 @@ public class Deck {
     }
 
     /**
-     *  Returns to the user a card taken from the UsableCard
+     * Returns to the user a card taken from the UsableCard
+     *
      * @return card
      */
-    public GameCard drawDeckCard()
-    {
+    public GameCard drawDeckCard() {
         GameCard LastCard;
         LastCard = UsableCards.getLast();
         UsableCards.remove(LastCard);
