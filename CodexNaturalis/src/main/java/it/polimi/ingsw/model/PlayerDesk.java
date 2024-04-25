@@ -137,24 +137,24 @@ public class PlayerDesk {
             Point pos;
             int cornerToCover;
             pos = switch (i) {
-                case 0 -> new Point(point.x - 1, point.y - 1);
-                case 1 -> new Point(point.x + 1, point.y - 1);
-                case 2 -> new Point(point.x + 1, point.y + 1);
-                default -> new Point(point.x - 1, point.y + 1);
+                case 0 -> new Point(point.x - 1, point.y + 1);
+                case 1 -> new Point(point.x + 1, point.y + 1);
+                case 2 -> new Point(point.x + 1, point.y - 1);
+                default -> new Point(point.x - 1, point.y - 1);
             };
             cornerToCover = (i + 2) % 4;
             if (desk.containsKey(pos)) {
                 int cardToCoverFacedDown = desk.get(pos).isPlayedFaceDown() ? 4 : 0;
-                if (desk.get(pos).getCorners()[cornerToCover + cardToCoverFacedDown].getObject() != null) {
-                    int obj = totalObjects.get(desk.get(pos).getCorners()[cornerToCover + cardToCoverFacedDown].getObject());
+                if (desk.get(pos).getCorner(cornerToCover + cardToCoverFacedDown).getObject() != null) {
+                    int obj = totalObjects.get(desk.get(pos).getCorner(cornerToCover + cardToCoverFacedDown).getObject());
                     obj--;
-                    totalObjects.put(desk.get(pos).getCorners()[cornerToCover + cardToCoverFacedDown].getObject(), obj);
-                } else if (desk.get(pos).getCorners()[cornerToCover + cardToCoverFacedDown].getResource() != null) {
-                    int res = totalResources.get(desk.get(pos).getCorners()[cornerToCover + cardToCoverFacedDown].getResource());
+                    totalObjects.put(desk.get(pos).getCorner(cornerToCover + cardToCoverFacedDown).getObject(), obj);
+                } else if (desk.get(pos).getCorner(cornerToCover + cardToCoverFacedDown).getResource() != null) {
+                    int res = totalResources.get(desk.get(pos).getCorner(cornerToCover + cardToCoverFacedDown).getResource());
                     res--;
-                    totalResources.put(desk.get(pos).getCorners()[cornerToCover + cardToCoverFacedDown].getResource(), res);
+                    totalResources.put(desk.get(pos).getCorner(cornerToCover + cardToCoverFacedDown).getResource(), res);
                 }
-                desk.get(pos).getCorners()[cornerToCover + cardToCoverFacedDown].coverCorner();
+                desk.get(pos).getCorner(cornerToCover + cardToCoverFacedDown).coverCorner();
             } else if (cardCorners[i + addIfFaceDown].isHidden()) {
                 availablePlaces.remove(pos);
                 forbiddenPlaces.add(pos);
@@ -203,10 +203,10 @@ public class PlayerDesk {
         if (card.getPointType().equals(PointType.QUILL))
             return card.getPoints() * totalObjects.get(CornerObject.QUILL);
         int i = 0;
-        if (desk.containsKey(new Point(p.x - 1, p.y - 1))) i++;
-        if (desk.containsKey(new Point(p.x + 1, p.y - 1))) i++;
-        if (desk.containsKey(new Point(p.x + 1, p.y + 1))) i++;
         if (desk.containsKey(new Point(p.x - 1, p.y + 1))) i++;
+        if (desk.containsKey(new Point(p.x + 1, p.y + 1))) i++;
+        if (desk.containsKey(new Point(p.x + 1, p.y - 1))) i++;
+        if (desk.containsKey(new Point(p.x - 1, p.y - 1))) i++;
         return card.getPoints() * i;
     }
 }
