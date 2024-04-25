@@ -4,7 +4,7 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.PlayerDesk;
 import it.polimi.ingsw.model.enumeration.Resource;
 
-import java.awt.Point;
+import java.awt.*;
 import java.util.HashMap;
 
 /**
@@ -14,20 +14,18 @@ import java.util.HashMap;
 public class VerticalPatternStrategy implements ObjectiveStrategy {
     private final Resource primarySource;
     private final Resource secondarySource;
-    private final int points;
     private final Point whichCorner;
 
     /**
-     *  Constructor which assigns the Strategy that needs to be checked inside the class VerticalPatternStrategy (which requires two resources, the number of points of the objective card and the position of the secondary resource)
+     * Constructor which assigns the Strategy that needs to be checked inside the class VerticalPatternStrategy (which requires two resources, the number of points of the objective card and the position of the secondary resource)
+     *
      * @param primarySource
      * @param secondarySource
-     * @param points
      * @param whichCorner
      */
-    public VerticalPatternStrategy(Resource primarySource, Resource secondarySource, int points, Point whichCorner) {
+    public VerticalPatternStrategy(Resource primarySource, Resource secondarySource,  Point whichCorner) {
         this.primarySource = primarySource;
         this.secondarySource = secondarySource;
-        this.points = points;
         this.whichCorner = whichCorner;
     }
 
@@ -53,6 +51,7 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
 
     /**
      * Scan the map until it finds at least a card matching the color of the research objective, then it checks if the pattern is verified and will return false otherwise will return false.
+     *
      * @param desk
      * @param StartingPoint
      * @return
@@ -62,7 +61,7 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
         HashMap<Point, GameCard> deskToUse = desk.getDesk();
         boolean IsVerified = false;
 
-        while (desk.getDesk().containsKey(new Point(StartingPoint.x, (int) StartingPoint.y + i)) && desk.getDesk().get(new Point(StartingPoint.x, (int) StartingPoint.y + i)).getbackSideResource().equals(primarySource))
+        while (desk.getDesk().containsKey(new Point(StartingPoint.x, StartingPoint.y + i)) && desk.getDesk().get(new Point(StartingPoint.x, StartingPoint.y + i)).getbackSideResource().equals(primarySource))
             i += 2;
 
         i -= 2;
@@ -80,8 +79,6 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
         deskToUse.remove(LowerCard);
         deskToUse.remove(UpperCard);
 
-        if(IsVerified)
-            return true;
-        return false;
+        return IsVerified;
     }
 }
