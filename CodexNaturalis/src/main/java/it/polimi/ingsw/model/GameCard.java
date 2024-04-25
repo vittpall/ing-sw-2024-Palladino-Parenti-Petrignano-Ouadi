@@ -47,7 +47,7 @@ abstract public class GameCard extends Card {
         return playedFaceDown;
     }
 
-    public ArrayList<Resource> getfrontSideResources() {
+    public ArrayList<Resource> getFrontSideResources() {
         return frontSideResources;
     }
 
