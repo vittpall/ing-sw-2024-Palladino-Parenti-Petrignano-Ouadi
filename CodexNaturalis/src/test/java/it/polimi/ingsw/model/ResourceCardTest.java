@@ -20,10 +20,10 @@ class ResourceCardTest {
         String imageFrontPath = "path/to/front/image";
         String imageBackPath = "path/to/back/image";
 
-        ResourceCard card = new ResourceCard(resourcesFront, resourceBack, pointType, points, imageFrontPath, imageBackPath);
+        ResourceCard card = new ResourceCard(resourceBack, imageFrontPath, imageBackPath, points, pointType, resourcesFront, null);
 
-        assertEquals(resourcesFront, card.getCardResourcesFront());
-        assertEquals(resourceBack, card.getCardResourceBack());
+        assertEquals(resourcesFront, card.getFrontSideResources());
+        assertEquals(resourceBack, card.getbackSideResource());
         assertEquals(pointType, card.getPointType());
         assertEquals(points, card.getPoints());
         assertEquals(imageFrontPath, card.getImageFrontPath());
