@@ -48,7 +48,7 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
                     numberOfTimesVerifiedObjective++;
             }
         }
-        return numberOfTimesVerifiedObjective * this.points;
+        return numberOfTimesVerifiedObjective;
     }
 
     /**

@@ -47,7 +47,7 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
             if(CheckDiagonal(desk, point))
                 numberOfTimesVerifiedObjective++;
         }
-        return numberOfTimesVerifiedObjective * this.points;
+        return numberOfTimesVerifiedObjective;
     }
 
     /**
