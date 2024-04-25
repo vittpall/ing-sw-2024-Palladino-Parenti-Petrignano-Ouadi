@@ -1,7 +1,6 @@
 package it.polimi.ingsw.util;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import it.polimi.ingsw.model.Corner;
@@ -12,7 +11,7 @@ import java.io.IOException;
 
 public class CornerDeserializer extends JsonDeserializer<Corner> {
     @Override
-    public Corner deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException{
+    public Corner deserialize(JsonParser jp, DeserializationContext context) throws IOException{
         String value = jp.getValueAsString();
         if ("hidden".equalsIgnoreCase(value)) {
             return new Corner(true);

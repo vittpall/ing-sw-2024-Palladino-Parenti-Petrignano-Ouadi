@@ -10,8 +10,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ObjectiveCardLoader {
+    private static final Logger LOGGER = Logger.getLogger(ObjectiveCardLoader.class.getName());
 
 
     public List<ObjectiveCard> loadObjectiveCards() {
@@ -25,7 +28,7 @@ public class ObjectiveCardLoader {
             cards = mapper.readValue(new File("src/main/resources/objectiveCard.json"), new TypeReference<>() {
             });
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loading objective cards", e);
         }
         return cards;
     }

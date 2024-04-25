@@ -11,8 +11,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class GameCardLoader {
+    private static final Logger LOGGER = Logger.getLogger(GameCardLoader.class.getName());
+
     public GameCardLoader() {
     }
 
@@ -28,8 +32,7 @@ public class GameCardLoader {
             cards = mapper.readValue(new File("src/main/resources/gameCard.json"), new TypeReference<>() {
             });
         } catch (IOException e) {
-            e.printStackTrace();
-            // Qui puoi anche gestire l'eccezione in modo più sofisticato o lanciare una runtime exception personalizzata
+            LOGGER.log(Level.SEVERE, "Error loading game cards", e);
         }
         return cards;
     }
