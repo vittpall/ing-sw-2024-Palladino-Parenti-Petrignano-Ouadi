@@ -2,23 +2,33 @@ package it.polimi.ingsw.model.enumeration;
 
 /**
  * this enum contains the possible colors that can be associated to the players' token
- *  @author Carolina Parenti
+ *
+ * @author Carolina Parenti
  */
-public enum TokenColor{
+public enum TokenColor {
     RED("Red"), BLUE("Blue"), YELLOW("Yellow"), GREEN("Green");
 
-    private String value;
+    private final String value;
+
     /**
      * constructor
+     *
      * @param value represents the name of the TokenColor
      */
-    private TokenColor(String value){
-        this.value=value;
+    TokenColor(String value) {
+        this.value = value;
     }
 
     /**
-     *
-     * @return value of private attribute value
+     * Returns the value of the string representing the TokenColor
      */
-    public String getValue(){return this.value;}
+
+    public String get() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }
