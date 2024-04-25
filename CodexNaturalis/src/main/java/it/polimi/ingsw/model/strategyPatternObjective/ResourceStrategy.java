@@ -13,19 +13,19 @@ import java.util.EnumMap;
 
 public class ResourceStrategy implements ObjectiveStrategy{
 
-    private final Resource ResourceStrategyToCheck;
-    private final int NumOfResourceToCheck;
+    private final Resource resourceStrategyToCheck;
+    private final int numOfResourceToCheck;
 
     /**
      * Constructor which assigns the Strategy that needs to be checked inside the class ResourceStrategy (i.g. The ObjcetiveCard requires two elements of type insect)
-     * @param ResourceStrategyToCheck
-     * @param NumResource
+     * @param resourceStrategyToCheck
+     * @param numResource
      */
 
-    public ResourceStrategy(Resource ResourceStrategyToCheck, int NumResource)
+    public ResourceStrategy(Resource resourceStrategyToCheck, int numResource)
     {
-        this.ResourceStrategyToCheck = ResourceStrategyToCheck;
-        this.NumOfResourceToCheck = NumResource;
+        this.resourceStrategyToCheck = resourceStrategyToCheck;
+        this.numOfResourceToCheck = numResource;
 
     }
 
@@ -39,19 +39,19 @@ public class ResourceStrategy implements ObjectiveStrategy{
      * @return NumberOfTimesVerifiedObjective
      */
     public int isSatisfied (PlayerDesk desk) {
-        EnumMap<Resource, Integer> TotalResources = desk.getTotalResources();
-        int NumberOfTimesVerifiedObjective = 0;
-        int ResourcesOnDesk = 0;
+        EnumMap<Resource, Integer> totalResources = desk.getTotalResources();
+        int numberOfTimesVerifiedObjective = 0;
+        int resourcesOnDesk = 0;
 
 
-        ResourcesOnDesk=TotalResources.get(ResourceStrategyToCheck);
-        if(ResourcesOnDesk>=NumOfResourceToCheck)
+        resourcesOnDesk=totalResources.get(resourceStrategyToCheck);
+        if(resourcesOnDesk>=numOfResourceToCheck)
         {
-            NumberOfTimesVerifiedObjective = ResourcesOnDesk/NumOfResourceToCheck;
+            numberOfTimesVerifiedObjective = resourcesOnDesk/numOfResourceToCheck;
         }
 
 
-        return NumberOfTimesVerifiedObjective;
+        return numberOfTimesVerifiedObjective;
     }
 
 }

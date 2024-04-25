@@ -51,6 +51,12 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
         return numberOfTimesVerifiedObjective * this.points;
     }
 
+    /**
+     * Scan the map until it finds at least a card matching the color of the research objective, then it checks if the pattern is verified and will return false otherwise will return false.
+     * @param desk
+     * @param StartingPoint
+     * @return
+     */
     private boolean CheckCorner(PlayerDesk desk, Point StartingPoint) {
         int i = 2;
         HashMap<Point, GameCard> deskToUse = desk.getDesk();
