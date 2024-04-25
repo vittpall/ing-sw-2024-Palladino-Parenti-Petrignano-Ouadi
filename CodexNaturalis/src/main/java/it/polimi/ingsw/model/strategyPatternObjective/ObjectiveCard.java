@@ -10,8 +10,8 @@ public class ObjectiveCard extends Card {
     ObjectiveStrategy strategy;
 
     public ObjectiveCard(ObjectiveCard copy) {
+        super(copy.getPoints(), copy.getImageFrontPath(), copy.getImageBackPath());
         this.strategy = copy.getStrategy();
-        this.points = copy.getPoints();
     }
 
     /**
@@ -20,10 +20,8 @@ public class ObjectiveCard extends Card {
      * @param strategy it's the strategy we want to use
      */
     public ObjectiveCard(ObjectiveStrategy strategy, int points, String backImagePath, String frontImagePath) {
+        super(points, backImagePath, frontImagePath);
         this.strategy = strategy;
-        this.points = points;
-        this.backImagePath = backImagePath;
-        this.frontImagePath = frontImagePath;
     }
 
     /**
@@ -37,7 +35,8 @@ public class ObjectiveCard extends Card {
     }
 
     /**
-     * standart getter to return strategy
+     * standard getter to return strategy
+     *
      * @return
      */
     public ObjectiveStrategy getStrategy() {
