@@ -1,12 +1,14 @@
 package it.polimi.ingsw.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import it.polimi.ingsw.model.Exceptions.*;
+import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.util.GameCardLoader;
 import it.polimi.ingsw.util.ObjectiveCardLoader;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * this class defines and describes the match
@@ -29,22 +31,24 @@ public class Game {
     private boolean gameStarted;
     private final ArrayList<StarterCard> starterCards;
     private final ArrayList<ObjectiveCard> objectiveCards;
+
     /**
      * constructor
      * creates the starterCards, players and objectiveCards lists as empty
      * sets gameId, nPlayer, isLastRoundStarted, gameStarted and currentPlayerIndex
+     *
      * @param id the gameId
-     * @param n the number of player chosen
+     * @param n  the number of player chosen
      */
-    public Game(int id, int n){
-        nPlayer=n;
-        gameId=id;
-        isLastRoundStarted=false;
-        gameStarted=false;
-        currentPlayerIndex=0;
-        starterCards=new ArrayList<>();
-        players=new ArrayList<>();
-        objectiveCards=new ArrayList<>();
+    public Game(int id, int n) {
+        nPlayer = n;
+        gameId = id;
+        isLastRoundStarted = false;
+        gameStarted = false;
+        currentPlayerIndex = 0;
+        starterCards = new ArrayList<>();
+        players = new ArrayList<>();
+        objectiveCards = new ArrayList<>();
     }
 
     /**
@@ -53,94 +57,103 @@ public class Game {
      * it initializes the sharedObjectiveCards and every player's hand, starterCard and drawnObjectiveCards
      * it is called when gameStarted is set as true
      */
-    public void setUpGame(){
-        this.sharedObjectiveCards=new ObjectiveCard[2];
-        double nRandom=Math.random()*objectiveCards.size();
-        this.sharedObjectiveCards[0]=objectiveCards.remove((int)nRandom);
-        nRandom=Math.random()*objectiveCards.size();
-        this.sharedObjectiveCards[1]=objectiveCards.remove((int)nRandom);
+    public void setUpGame() {
+        this.sharedObjectiveCards = new ObjectiveCard[2];
+        double nRandom = Math.random() * objectiveCards.size();
+        this.sharedObjectiveCards[0] = objectiveCards.remove((int) nRandom);
+        nRandom = Math.random() * objectiveCards.size();
+        this.sharedObjectiveCards[1] = objectiveCards.remove((int) nRandom);
         //vengono creati i deck
-        ArrayList<GameCard> usableGoldCard=new ArrayList<>();
-        ArrayList<GameCard> usableResourceCard=new ArrayList<>();
+        ArrayList<GameCard> usableGoldCard = new ArrayList<>();
+        ArrayList<GameCard> usableResourceCard = new ArrayList<>();
         //inizializzazione carte GameCard
-        GameCardLoader gameCardLoader=new GameCardLoader();
-        for(GameCard card : gameCardLoader.loadGameCards()){
-            if(card instanceof GoldCard){
+        GameCardLoader gameCardLoader = new GameCardLoader();
+        for (GameCard card : gameCardLoader.loadGameCards()) {
+            if (card instanceof GoldCard) {
                 usableGoldCard.add(card);
-            }else if(card instanceof StarterCard){
+            } else if (card instanceof StarterCard) {
                 starterCards.add((StarterCard) card);
-            }else if(card instanceof ResourceCard){
+            } else if (card instanceof ResourceCard) {
                 usableResourceCard.add(card);
             }
         }
-        resourceDeck=new Deck(usableResourceCard);
-        goldDeck=new Deck(usableGoldCard);
+        resourceDeck = new Deck(usableResourceCard);
+        goldDeck = new Deck(usableGoldCard);
         //inizializzazione objectiveCard che conterrà tutte le carte obiettivo possibili
         ObjectiveCardLoader objectiveCardLoader = new ObjectiveCardLoader();
         objectiveCards.addAll(objectiveCardLoader.loadObjectiveCards());
         //viene settata la mano iniziale e la starter card del player
-        for(Player player : players){
+        for (Player player : players) {
             player.setPlayerHand(resourceDeck, goldDeck);
-            nRandom=Math.random()*starterCards.size();
-            player.setStarterCard(starterCards.remove((int)nRandom));
+            nRandom = Math.random() * starterCards.size();
+            player.setStarterCard(starterCards.remove((int) nRandom));
             //playerObjCards le 2 carte obiettivo da cui i giocatori sceglieranno quella specifica
             //questa specifica viene settata chiamando setObjectiveCard dal controller su ogni player
             ArrayList<ObjectiveCard> playerObjCards = new ArrayList<>();
-            nRandom=Math.random()*objectiveCards.size();
-            playerObjCards.add(objectiveCards.remove((int)nRandom));
-            nRandom=Math.random()*objectiveCards.size();
-            playerObjCards.add(objectiveCards.remove((int)nRandom));
+            nRandom = Math.random() * objectiveCards.size();
+            playerObjCards.add(objectiveCards.remove((int) nRandom));
+            nRandom = Math.random() * objectiveCards.size();
+            playerObjCards.add(objectiveCards.remove((int) nRandom));
             player.setDrawnObjectiveCards(playerObjCards);
         }
     }
+
     /**
      * @return gameId
      */
     public int getGameId() {
         return gameId;
     }
+
     /**
      * @return nPlayer
      */
     public int getnPlayer() {
         return nPlayer;
     }
+
     /**
      * @return players
      */
     public ArrayList<Player> getPlayers() {
         return new ArrayList<Player>(players);
     }
+
     /**
      * @return sharedObjectiveCards
      */
     public ObjectiveCard[] getSharedObjectiveCards() {
         return Arrays.copyOf(sharedObjectiveCards, sharedObjectiveCards.length);
     }
+
     /**
      * @return resourceDeck
      */
     public Deck getResourceDeck() {
         return resourceDeck;
     }
+
     /**
      * @return goldDeck
      */
     public Deck getGoldDeck() {
         return goldDeck;
     }
+
     /**
      * @return currentPlayerIndex
      */
     public int getCurrentPlayerIndex() {
         return currentPlayerIndex;
     }
+
     /**
      * @return isLastRoundStarted
      */
     public boolean getIsLastRoundStarted() {
         return isLastRoundStarted;
     }
+
     /**
      * @return gameStarted
      */
@@ -154,40 +167,41 @@ public class Game {
      *
      * @param playerToAdd
      */
-    public void addPlayer(Player playerToAdd){
+    public void addPlayer(Player playerToAdd) {
         players.add(playerToAdd);
     }
 
     /**
      * sets gameStarted as true
      */
-    public void setGameStarted(){
-        gameStarted=true;
+    public void setGameStarted() {
+        gameStarted = true;
     }
 
     /**
      * places the card into the current player's desk at (x,y) position
      *
-     * @param card card the user wants to play
+     * @param card     card the user wants to play
      * @param faceDown how the user wants to play it
-     * @param x x-coordinates of desk where the user wants to play the card
-     * @param y y-coordinates of desk where the user wants to play the card
-     * @throws CardNotFoundException when the card sent is not part of the current player's hand
+     * @param point    coordinates of desk where the user wants to play the card
+     * @throws CardNotFoundException       when the card sent is not part of the current player's hand
      * @throws RequirementsNotMetException when the card's requirements are not met into the player's desk
      */
-    public void playCard(GameCard card, boolean faceDown, int x, int y)
-            throws CardNotFoundException, RequirementsNotMetException{
-            players.get(currentPlayerIndex).playCard(card, faceDown, x, y);
+    public void playCard(GameCard card, boolean faceDown, Point point)
+            throws CardNotFoundException, RequirementsNotMetException {
+        players.get(currentPlayerIndex).playCard(card, faceDown, point);
     }
+
     /**
      * draws a card and puts it into the current player's hand
+     *
      * @param deck
      * @return the current player's points
      */
-    public int drawCard(Deck deck){
+    public int drawCard(Deck deck) {
         players.get(currentPlayerIndex).draw(deck);
-        if(players.get(currentPlayerIndex).getPoints()>=20)
-            isLastRoundStarted=true;
+        if (players.get(currentPlayerIndex).getPoints() >= 20)
+            isLastRoundStarted = true;
         getNextPlayer();
         return players.get(currentPlayerIndex).getPoints();
     }
@@ -200,10 +214,10 @@ public class Game {
      * @return the current player's points
      * @throws CardNotFoundException when card is not part of the deck's visible cards list
      */
-    public int drawVisibleCard(Deck deck, GameCard card) throws CardNotFoundException{
-            players.get(currentPlayerIndex).drawVisible(deck, card);
-        if(players.get(currentPlayerIndex).getPoints()>=20)
-            isLastRoundStarted=true;
+    public int drawVisibleCard(Deck deck, GameCard card) throws CardNotFoundException {
+        players.get(currentPlayerIndex).drawVisible(deck, card);
+        if (players.get(currentPlayerIndex).getPoints() >= 20)
+            isLastRoundStarted = true;
         getNextPlayer();
         return players.get(currentPlayerIndex).getPoints();
     }
@@ -211,26 +225,28 @@ public class Game {
     /**
      * change the currentPlayerIndex as the next one
      */
-    private void getNextPlayer(){
-        currentPlayerIndex=(currentPlayerIndex+1)%nPlayer;
+    private void getNextPlayer() {
+        currentPlayerIndex = (currentPlayerIndex + 1) % nPlayer;
     }
+
     /**
      * calculates if the players' objectives are met and adds the points of the met objectives  to the players
      * calculates the winner and ends the game
+     *
      * @return the winner of the game
      */
-    public Player endGame(){
-        int pointsMax=0;
-        int nObjectiveMetWinner=0;
-        Player winner=null;
-        for(Player currentPlayer : players){
-            int nObjectiveMetPlayer=currentPlayer.checkObjective(sharedObjectiveCards);
-            int currentPlayerPoints= currentPlayer.getPoints();
-            if(currentPlayerPoints>pointsMax||
-                    (currentPlayerPoints==pointsMax&&nObjectiveMetPlayer>nObjectiveMetWinner)){
-                pointsMax=currentPlayerPoints;
-                nObjectiveMetWinner=nObjectiveMetPlayer;
-                winner=currentPlayer;
+    public Player endGame() {
+        int pointsMax = 0;
+        int nObjectiveMetWinner = 0;
+        Player winner = null;
+        for (Player currentPlayer : players) {
+            int nObjectiveMetPlayer = currentPlayer.checkObjective(sharedObjectiveCards);
+            int currentPlayerPoints = currentPlayer.getPoints();
+            if (currentPlayerPoints > pointsMax ||
+                    (currentPlayerPoints == pointsMax && nObjectiveMetPlayer > nObjectiveMetWinner)) {
+                pointsMax = currentPlayerPoints;
+                nObjectiveMetWinner = nObjectiveMetPlayer;
+                winner = currentPlayer;
             }
         }
         return winner;

@@ -168,12 +168,11 @@ public class Player {
      *
      * @param card     is the card that the user chose from the playerHands
      * @param faceDown defines if the card is played face down or not
-     * @param x        is the x-coordinate of the chosen position
-     * @param y        is the y-coordinate of the chosen position
+     * @param point    is the position where the user wants to put the card
      * @throws CardNotFoundException       if the card sent is not into the playerHand
      * @throws RequirementsNotMetException when the player puts a gold card and the requirements are not met
      */
-    public void playCard(GameCard card, boolean faceDown, int x, int y)
+    public void playCard(GameCard card, boolean faceDown, Point point)
             throws CardNotFoundException, RequirementsNotMetException {
         if (card instanceof GoldCard goldCard) {
             playerDesk.checkRequirements(goldCard.getRequirements());
@@ -181,9 +180,9 @@ public class Player {
         boolean checkRemove = this.playerHand.remove(card);
         if (!checkRemove) throw new CardNotFoundException("card not found");
         card.setPlayedFaceDown(faceDown);
-        int pointsToAdd = playerDesk.addCard(card, new Point(x, y));
+        int pointsToAdd = playerDesk.addCard(card, point);
         this.setPoints(pointsToAdd);
-        playerDesk.updateDesk(card, x, y);
+        playerDesk.updateDesk(card, point);
     }
 
     /**

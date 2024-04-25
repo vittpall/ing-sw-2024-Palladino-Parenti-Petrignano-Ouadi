@@ -126,21 +126,21 @@ public class PlayerDesk {
      * adds to totalObjects and totalResources the objects and resources of the new card
      * update the forbiddenPlaces and availablePlaces lists
      *
-     * @param card the card that has been put
-     * @param x    the x-coordinate of the card's position
-     * @param y    the y-coordinate of the card's position
+     * @param card  the card that has been put
+     * @param point the card's position
      */
-    public void updateDesk(GameCard card, int x, int y) {
+
+    public void updateDesk(GameCard card, Point point) {
         Corner[] cardCorners = card.getCorners();
         int addIfFaceDown = card.isPlayedFaceDown() ? 4 : 0;
         for (int i = 0; i < 4; i++) {
             Point pos;
             int cornerToCover;
             pos = switch (i) {
-                case 0 -> new Point(x - 1, y - 1);
-                case 1 -> new Point(x + 1, y - 1);
-                case 2 -> new Point(x + 1, y + 1);
-                default -> new Point(x - 1, y + 1);
+                case 0 -> new Point(point.x - 1, point.y - 1);
+                case 1 -> new Point(point.x + 1, point.y - 1);
+                case 2 -> new Point(point.x + 1, point.y + 1);
+                default -> new Point(point.x - 1, point.y + 1);
             };
             cornerToCover = (i + 2) % 4;
             if (desk.containsKey(pos)) {
