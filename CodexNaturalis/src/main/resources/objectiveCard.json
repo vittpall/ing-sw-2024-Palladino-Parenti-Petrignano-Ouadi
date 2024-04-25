@@ -14,7 +14,7 @@
     "type": "diagonalStrategy",
     "resource": "PLANT_KINGDOM",
     "diagonalOffset": [
-      -1,
+      1,
       -1
     ],
     "points": 2,
@@ -36,8 +36,8 @@
     "type": "diagonalStrategy",
     "resource": "INSECT_KINGDOM",
     "diagonalOffset": [
-      -1,
-      1
+      1,
+      -1
     ],
     "points": 2,
     "frontImagePath": "img_90_fronte.png",
