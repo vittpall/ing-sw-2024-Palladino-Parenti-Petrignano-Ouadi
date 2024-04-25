@@ -71,7 +71,8 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
         if(!deskToUse.containsKey(startingPoint))
             return false;
 
-        while (deskToUse.containsKey(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y + i)) && deskToUse.get(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y - i)).getbackSideResource().equals(primarySource)) {
+        //scan the diagonal until it finds a card that doesn't match the color of the research objective going up and left or right depending on the changeDiagonal
+        while (deskToUse.containsKey(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y + i)) && deskToUse.get(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y + i)).getbackSideResource().equals(primarySource)) {
             i++;
         }
         i--;
