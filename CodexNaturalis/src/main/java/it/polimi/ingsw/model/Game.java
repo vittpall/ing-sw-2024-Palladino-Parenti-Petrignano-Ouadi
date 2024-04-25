@@ -7,6 +7,16 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.util.GameCardLoader;
 import it.polimi.ingsw.util.ObjectiveCardLoader;
+
+/**
+ * this class defines and describes the match
+ * players is a list of all the players of the match
+ * sharedObjectiveCards is an array containing the shared ObjectiveCard that all the player can meet
+ * resourceDeck and GoldDeck represents the decks of that game
+ * isLastRoundStarted is set as true when one player achieves 20 points and indicates that there will be one last complete round
+ * gameStarted is set as true as soon as nPlayer players have joined the game
+ * starterCards and objectiveCards are lists of all the possible starter and objective cards that are not played or drawn yet
+ */
 public class Game {
     private final int gameId;
     private final int nPlayer;
@@ -18,14 +28,13 @@ public class Game {
     private boolean isLastRoundStarted;
     private boolean gameStarted;
     private final ArrayList<StarterCard> starterCards;
-    private ArrayList<ObjectiveCard> objectiveCards;
+    private final ArrayList<ObjectiveCard> objectiveCards;
     /**
      * constructor
-     * creates goldDeck, resourceDeck and sharedObjectiveCards
-     * creates the list players and adds the first player with the username  usernamePlayer to it
-     * sets gameId=id, nPlayer=n, isLastRoundStarted=false, gameStarted=false and currentPlayerIndex=0
-     * @param id
-     * @param n
+     * creates the starterCards, players and objectiveCards lists as empty
+     * sets gameId, nPlayer, isLastRoundStarted, gameStarted and currentPlayerIndex
+     * @param id the gameId
+     * @param n the number of player chosen
      */
     public Game(int id, int n){
         nPlayer=n;
@@ -37,6 +46,13 @@ public class Game {
         players=new ArrayList<>();
         objectiveCards=new ArrayList<>();
     }
+
+    /**
+     * it sets up the game:
+     * creates the goldDeck and resourceDeck
+     * it initializes the sharedObjectiveCards and every player's hand, starterCard and drawnObjectiveCards
+     * it is called when gameStarted is set as true
+     */
     public void setUpGame(){
         this.sharedObjectiveCards=new ObjectiveCard[2];
         double nRandom=Math.random()*objectiveCards.size();
@@ -101,7 +117,6 @@ public class Game {
     public ObjectiveCard[] getSharedObjectiveCards() {
         return Arrays.copyOf(sharedObjectiveCards, sharedObjectiveCards.length);
     }
-    //usare Array.copyOf
     /**
      * @return resourceDeck
      */
@@ -134,30 +149,35 @@ public class Game {
     }
 
     /**
-     * if old(players.size())<nPlayer, creates the players and adds it into players
-     * if old(players.size())+1=nPlayer, starts the game
+     * adds the player playerToAdd to the list of players of the game
+     * it can be called until gameStarted==false
      *
      * @param playerToAdd
      */
     public void addPlayer(Player playerToAdd){
-        //si può chiamare solo se gameStarted==false
         players.add(playerToAdd);
     }
+
+    /**
+     * sets gameStarted as true
+     */
     public void setGameStarted(){
         gameStarted=true;
     }
+
     /**
-     * plays card into the current player's desk
-     * @param card
+     * places the card into the current player's desk at (x,y) position
+     *
+     * @param card card the user wants to play
+     * @param faceDown how the user wants to play it
+     * @param x x-coordinates of desk where the user wants to play the card
+     * @param y y-coordinates of desk where the user wants to play the card
+     * @throws CardNotFoundException when the card sent is not part of the current player's hand
+     * @throws RequirementsNotMetException when the card's requirements are not met into the player's desk
      */
-    public void playCard(GameCard card, boolean faceDown, int x, int y){
-        try{
+    public void playCard(GameCard card, boolean faceDown, int x, int y)
+            throws CardNotFoundException, RequirementsNotMetException{
             players.get(currentPlayerIndex).playCard(card, faceDown, x, y);
-        }catch(CardNotFoundException e){
-            //da fare
-        }catch(RequirementsNotMetException e){
-            //da fare
-        }
     }
     /**
      * draws a card and puts it into the current player's hand
@@ -171,31 +191,31 @@ public class Game {
         getNextPlayer();
         return players.get(currentPlayerIndex).getPoints();
     }
+
     /**
      * draws the card sent as a parameter and puts it into the current player's hand
+     *
      * @param deck
      * @param card
      * @return the current player's points
+     * @throws CardNotFoundException when card is not part of the deck's visible cards list
      */
-    public int drawVisibleCard(Deck deck, GameCard card){
-        try {
+    public int drawVisibleCard(Deck deck, GameCard card) throws CardNotFoundException{
             players.get(currentPlayerIndex).drawVisible(deck, card);
-        }catch(CardNotFoundException e){
-            //da fare
-        }
         if(players.get(currentPlayerIndex).getPoints()>=20)
             isLastRoundStarted=true;
         getNextPlayer();
         return players.get(currentPlayerIndex).getPoints();
     }
+
     /**
-     * change the currentPlayerIndex
+     * change the currentPlayerIndex as the next one
      */
     private void getNextPlayer(){
         currentPlayerIndex=(currentPlayerIndex+1)%nPlayer;
     }
     /**
-     * calculates if the players' objectives are met and adds the points to the players
+     * calculates if the players' objectives are met and adds the points of the met objectives  to the players
      * calculates the winner and ends the game
      * @return the winner of the game
      */
