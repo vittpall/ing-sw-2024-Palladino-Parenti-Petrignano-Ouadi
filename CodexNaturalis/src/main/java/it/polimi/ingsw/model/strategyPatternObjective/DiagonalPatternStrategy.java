@@ -38,10 +38,11 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
     public int isSatisfied(PlayerDesk desk) {
 
         int numberOfTimesVerifiedObjective = 0;
+        HashMap<Point, GameCard> deskToUse = desk.getDesk();
 
         //iterate over desk until I found a position where the card's color is the primarySource
         for (Point point : desk.getDesk().keySet()) {
-            if (CheckDiagonal(desk, point))
+            if (CheckDiagonal(deskToUse, point))
                 numberOfTimesVerifiedObjective++;
         }
         return numberOfTimesVerifiedObjective;
@@ -50,15 +51,15 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
     /**
      * scan the entire board (hashmap) until it founds a matching pattern and then return true if the pattern complete the objective otherwise will return false
      *
-     * @param desk
+     * @param deskToUse
      * @param startingPoint
      * @return
      */
-    private boolean CheckDiagonal(PlayerDesk desk, Point startingPoint) {
+    private boolean CheckDiagonal(HashMap<Point, GameCard> deskToUse, Point startingPoint) {
         int i = 0;
         int changeDiagonal = 1;
         boolean isVerified = false;
-        HashMap<Point, GameCard> deskToUse = desk.getDesk();
+
 
         if(diagonalOffset.equals(new Point(1,1))){
             changeDiagonal = 1;
@@ -67,7 +68,7 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
             changeDiagonal = -1;
         }
 
-        while (desk.getDesk().containsKey(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y + i)) && desk.getDesk().get(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y - i)).getbackSideResource().equals(primarySource)) {
+        while (deskToUse.containsKey(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y + i)) && deskToUse.get(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y - i)).getbackSideResource().equals(primarySource)) {
             i++;
         }
         i--;

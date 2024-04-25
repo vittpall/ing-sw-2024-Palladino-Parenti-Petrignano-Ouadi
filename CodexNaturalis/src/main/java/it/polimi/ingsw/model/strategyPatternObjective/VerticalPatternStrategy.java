@@ -38,11 +38,12 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
      */
     public int isSatisfied(PlayerDesk desk) {
         int numberOfTimesVerifiedObjective = 0;
+        HashMap<Point, GameCard> deskToUse = desk.getDesk();
         //iterate over desk until I found a position where the card's color is the primarySource
-        for (Point point : desk.getDesk().keySet()) {
-            if (desk.getDesk().get(point).getbackSideResource().equals(primarySource)) {
+        for (Point point : deskToUse.keySet()) {
+            if (deskToUse.get(point).getbackSideResource().equals(primarySource)) {
                 //instead of mapping the color to the corner that needs to be checked, it'll use the parameter WhichCorner
-                if (CheckCorner(desk, point))
+                if (CheckCorner(deskToUse, point))
                     numberOfTimesVerifiedObjective++;
             }
         }
@@ -52,16 +53,15 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
     /**
      * Scan the map until it finds at least a card matching the color of the research objective, then it checks if the pattern is verified and will return false otherwise will return false.
      *
-     * @param desk
+     * @param deskToUse
      * @param StartingPoint
      * @return
      */
-    private boolean CheckCorner(PlayerDesk desk, Point StartingPoint) {
+    private boolean CheckCorner(HashMap<Point, GameCard> deskToUse, Point StartingPoint) {
         int i = -2;
-        HashMap<Point, GameCard> deskToUse = desk.getDesk();
         boolean IsVerified = false;
 
-        while (desk.getDesk().containsKey(new Point(StartingPoint.x, StartingPoint.y + i)) && desk.getDesk().get(new Point(StartingPoint.x, StartingPoint.y + i)).getbackSideResource().equals(primarySource))
+        while (deskToUse.containsKey(new Point(StartingPoint.x, StartingPoint.y + i)) && deskToUse.get(new Point(StartingPoint.x, StartingPoint.y + i)).getbackSideResource().equals(primarySource))
             i -= 2;
 
         i += 2;
