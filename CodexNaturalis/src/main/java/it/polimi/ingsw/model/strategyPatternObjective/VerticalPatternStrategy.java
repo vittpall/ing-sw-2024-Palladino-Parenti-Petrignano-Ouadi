@@ -54,21 +54,24 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
      * Scan the map until it finds at least a card matching the color of the research objective, then it checks if the pattern is verified and will return false otherwise will return false.
      *
      * @param deskToUse
-     * @param StartingPoint
+     * @param startingPoint
      * @return
      */
-    private boolean CheckCorner(HashMap<Point, GameCard> deskToUse, Point StartingPoint) {
-        int i = -2;
+    private boolean CheckCorner(HashMap<Point, GameCard> deskToUse, Point startingPoint) {
+        int i = 0;
         boolean IsVerified = false;
 
-        while (deskToUse.containsKey(new Point(StartingPoint.x, StartingPoint.y + i)) && deskToUse.get(new Point(StartingPoint.x, StartingPoint.y + i)).getbackSideResource().equals(primarySource))
+        if(!deskToUse.containsKey(startingPoint))
+            return false;
+
+        while (deskToUse.containsKey(new Point(startingPoint.x, startingPoint.y + i)) && deskToUse.get(new Point(startingPoint.x, startingPoint.y + i)).getbackSideResource().equals(primarySource))
             i -= 2;
 
         i += 2;
 
-        Point LowerCard = new Point(StartingPoint.x, StartingPoint.y + i);
-        Point UpperCard = new Point(StartingPoint.x, StartingPoint.y + i + 2);
-        Point CornerCard = new Point(StartingPoint.x + whichCorner.x, StartingPoint.y + whichCorner.y);
+        Point LowerCard = new Point(startingPoint.x, startingPoint.y + i);
+        Point UpperCard = new Point(startingPoint.x, startingPoint.y + i + 2);
+        Point CornerCard = new Point(startingPoint.x + whichCorner.x, startingPoint.y + whichCorner.y);
 
         if (deskToUse.containsKey(LowerCard) && deskToUse.get(LowerCard).getbackSideResource() == primarySource && deskToUse.containsKey(UpperCard) && deskToUse.get(UpperCard).getbackSideResource() == primarySource) {
             if (deskToUse.containsKey(CornerCard) && deskToUse.get(CornerCard).getbackSideResource() == secondarySource)

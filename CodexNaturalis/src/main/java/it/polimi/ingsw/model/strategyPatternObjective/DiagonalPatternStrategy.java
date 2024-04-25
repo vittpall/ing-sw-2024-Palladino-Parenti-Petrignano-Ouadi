@@ -68,6 +68,9 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
             changeDiagonal = -1;
         }
 
+        if(!deskToUse.containsKey(startingPoint))
+            return false;
+
         while (deskToUse.containsKey(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y + i)) && deskToUse.get(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y - i)).getbackSideResource().equals(primarySource)) {
             i++;
         }
