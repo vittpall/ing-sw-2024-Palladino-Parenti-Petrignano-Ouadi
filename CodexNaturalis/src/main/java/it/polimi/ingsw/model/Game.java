@@ -194,6 +194,7 @@ public class Game {
 
     /**
      * draws a card and puts it into the current player's hand
+     * sets isLastRoundStarted as true if the current player's points are greater or equal to 20
      *
      * @param deck
      * @return the current player's points

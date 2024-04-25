@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
@@ -26,7 +27,7 @@ abstract public class GameCard extends Card {
         super(points, frontImagePath, backImagePath);
         this.frontSideResources = frontSideResources;
         this.backSideResource = backSideResource;
-        this.corners = corners;
+        this.corners = Arrays.copyOf(corners, corners.length);
         this.playedFaceDown = false;
         this.pointType = pointType;
     }
@@ -61,8 +62,6 @@ abstract public class GameCard extends Card {
     }
 
     public Corner[] getCorners() {
-        Corner[] corners;
-        corners = this.corners;
-        return corners;
+        return  Arrays.copyOf(corners, corners.length);
     }
 }

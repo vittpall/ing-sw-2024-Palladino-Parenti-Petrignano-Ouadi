@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * this class defines the player
@@ -75,7 +76,7 @@ public class Player {
      * @param objectiveCards
      */
     public void setDrawnObjectiveCards(ArrayList<ObjectiveCard> objectiveCards) {
-        this.drawnObjectiveCards = objectiveCards;
+        this.drawnObjectiveCards = new ArrayList<>(objectiveCards);
     }
 
     /**
@@ -84,7 +85,7 @@ public class Player {
      * @param chosenObjectiveCard
      */
     public void setObjectiveCard(ObjectiveCard chosenObjectiveCard) {
-        this.objectiveCard = chosenObjectiveCard;
+        this.objectiveCard = new ObjectiveCard(chosenObjectiveCard);
         this.drawnObjectiveCards = null;
         //le carte 2 carte obiettivo da cui sceglierla si gestiscono nel game per ogni player
     }
