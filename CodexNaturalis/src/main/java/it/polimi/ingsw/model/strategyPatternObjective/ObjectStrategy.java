@@ -38,6 +38,8 @@ public class ObjectStrategy implements ObjectiveStrategy {
         for (CornerObject currObj : objectToCheck.keySet()) {
             objectOnDesk = TotalObjects.get(currObj);
             int numToCheck = objectToCheck.get(currObj);
+            if(objectOnDesk == 0)
+                return 0;
             temporaryNumberOfTimes = objectOnDesk / numToCheck;
             if (temporaryNumberOfTimes < numberOfTimesVerifiedObjective || numberOfTimesVerifiedObjective == -1)
                 numberOfTimesVerifiedObjective = temporaryNumberOfTimes;
