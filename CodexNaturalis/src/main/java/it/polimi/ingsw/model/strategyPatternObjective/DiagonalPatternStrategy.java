@@ -71,17 +71,15 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
         if(!deskToUse.containsKey(startingPoint))
             return false;
 
-        //scan the diagonal until it finds a card that doesn't match the color of the research objective going down and left or right depending on the changeDiagonal
-        while (deskToUse.containsKey(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y - i)) && deskToUse.get(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y - i)).getbackSideResource().equals(primarySource)) {
+        //scan the diagonal until it finds a card that doesn't match the color of the research objective going up and left or right depending on the changeDiagonal
+        while (deskToUse.containsKey(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y + i)) && deskToUse.get(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y + i)).getbackSideResource().equals(primarySource)) {
             i++;
         }
         i--;
 
         Point firstPoint = new Point(startingPoint.x + i*changeDiagonal, startingPoint.y + i);
-        Point secondPoint = new Point(firstPoint.x + changeDiagonal , firstPoint.y + 1);
-        Point thirdPoint = new Point(secondPoint.x + changeDiagonal, secondPoint.y + 1);
-
-        //i.g the firstPoint (3,3) the secondPoint (4,4) the thirdPoint (5,5) with changeDiagonal = 1 otherwise the firstPoint (-1,1) the secondPoint (-2,2) the thirdPoint (-3,3) with changeDiagonal = -1
+        Point secondPoint = new Point(firstPoint.x - changeDiagonal, firstPoint.y - 1);
+        Point thirdPoint = new Point(secondPoint.x - changeDiagonal, secondPoint.y -1);
 
         if (deskToUse.containsKey(firstPoint) && deskToUse.get(firstPoint).getbackSideResource() == primarySource && deskToUse.containsKey(secondPoint) && deskToUse.get(secondPoint).getbackSideResource() == primarySource && deskToUse.containsKey(thirdPoint) && deskToUse.get(thirdPoint).getbackSideResource() == primarySource) {
             isVerified = true;
