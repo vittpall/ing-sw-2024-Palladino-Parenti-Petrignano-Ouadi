@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
+import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
@@ -174,7 +175,7 @@ public class Player {
      * @throws RequirementsNotMetException when the player puts a gold card and the requirements are not met
      */
     public void playCard(GameCard card, boolean faceDown, Point point)
-            throws CardNotFoundException, RequirementsNotMetException {
+            throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
         if (card instanceof GoldCard goldCard) {
             playerDesk.checkRequirements(goldCard.getRequirements());
         }
@@ -183,7 +184,6 @@ public class Player {
         card.setPlayedFaceDown(faceDown);
         int pointsToAdd = playerDesk.addCard(card, point);
         this.setPoints(pointsToAdd);
-        playerDesk.updateDesk(card, point);
     }
 
     /**

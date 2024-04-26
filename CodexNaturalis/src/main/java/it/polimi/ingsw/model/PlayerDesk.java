@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.CornerObject;
 import it.polimi.ingsw.model.enumeration.PointType;
@@ -110,12 +111,14 @@ public class PlayerDesk {
      * @param point The point on the desk where the card is to be added.
      * @return the points that the player gains after the move
      */
-    public int addCard(GameCard card, Point point) {
+    public int addCard(GameCard card, Point point) throws PlaceNotAvailableException{
         int pointsToAdd = 0;
         if (availablePlaces.remove(point)) {
-            pointsToAdd = card.isPlayedFaceDown() ? 0 : this.getPointsToAdd(card, point);
             desk.put(point, card);
-        }
+            this.updateDesk(card, point);
+            pointsToAdd = card.isPlayedFaceDown() ? 0 : this.getPointsToAdd(card, point);
+        }else
+            throw new PlaceNotAvailableException("Place"+point+" not available");
         return pointsToAdd;
     }
 
@@ -130,7 +133,7 @@ public class PlayerDesk {
      * @param point the card's position
      */
 
-    public void updateDesk(GameCard card, Point point) {
+    private void updateDesk(GameCard card, Point point) {
         Corner[] cardCorners = card.getCorners();
         int addIfFaceDown = card.isPlayedFaceDown() ? 4 : 0;
         for (int i = 0; i < 4; i++) {
@@ -196,8 +199,9 @@ public class PlayerDesk {
     private int getPointsToAdd(GameCard card, Point p) {
         if (card.getPointType().equals(PointType.GENERAL))
             return card.getPoints();
-        if (card.getPointType().equals(PointType.INKWELL))
+        if (card.getPointType().equals(PointType.INKWELL)){
             return card.getPoints() * totalObjects.get(CornerObject.INKWELL);
+        }
         if (card.getPointType().equals(PointType.MANUSCRIPT))
             return card.getPoints() * totalObjects.get(CornerObject.MANUSCRIPT);
         if (card.getPointType().equals(PointType.QUILL))

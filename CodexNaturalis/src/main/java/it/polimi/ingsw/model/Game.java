@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
+import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.util.GameCardLoader;
@@ -188,7 +189,7 @@ public class Game {
      * @throws RequirementsNotMetException when the card's requirements are not met into the player's desk
      */
     public void playCard(GameCard card, boolean faceDown, Point point)
-            throws CardNotFoundException, RequirementsNotMetException {
+            throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
         players.get(currentPlayerIndex).playCard(card, faceDown, point);
     }
 
