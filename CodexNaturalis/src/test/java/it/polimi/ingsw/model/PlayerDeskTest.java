@@ -136,7 +136,47 @@ class PlayerDeskTest {
         assertEquals(expectedForbiddenPlaces, desk.getForbiddenPlaces());
     }
     @Test
-    void updateDesk_updateTotalResourcesWhenACornerIsCovered() throws PlaceNotAvailableException {
+    void checkRequirements_checkIfItThrowsTheException() throws PlaceNotAvailableException {
+        PlayerDesk desk = new PlayerDesk();
+        Corner[] corners = new Corner[8];
+        for(int i=0;i< corners.length;i++){
+            if(i==1||i==0)
+                corners[i] = new Corner(Resource.FUNGI_KINGDOM);
+            else
+                corners[i] = new Corner(true);
+        }
+        GameCard cardToAdd = new ResourceCard(null, null, null, 0, PointType.GENERAL, null, corners);
+        cardToAdd.setPlayedFaceDown(false);
+        desk.addCard(cardToAdd, new Point(0,0));
+
+        EnumMap<Resource, Integer> requirements=new EnumMap<>(Resource.class);
+        requirements.put(Resource.FUNGI_KINGDOM, 2);
+        requirements.put(Resource.INSECT_KINGDOM, 1);
+        assertThrows(RequirementsNotMetException.class, ()->desk.checkRequirements(requirements));
+    }
+    @Test
+    void checkRequirements_checkIfItDoesNotThrowTheExceptionWhenRequirementsAreMet() throws PlaceNotAvailableException {
+        PlayerDesk desk = new PlayerDesk();
+        Corner[] corners = new Corner[8];
+        for(int i=0;i< corners.length;i++){
+            if(i==1)
+                corners[i] = new Corner(Resource.FUNGI_KINGDOM);
+            else if(i==2)
+                corners[i] = new Corner(Resource.INSECT_KINGDOM);
+            else
+                corners[i] = new Corner(true);
+        }
+        GameCard cardToAdd = new ResourceCard(null, null, null, 0, PointType.GENERAL, null, corners);
+        cardToAdd.setPlayedFaceDown(false);
+        desk.addCard(cardToAdd, new Point(0,0));
+
+        EnumMap<Resource, Integer> requirements=new EnumMap<>(Resource.class);
+        requirements.put(Resource.FUNGI_KINGDOM, 1);
+        requirements.put(Resource.INSECT_KINGDOM, 1);
+        assertDoesNotThrow(()->desk.checkRequirements(requirements));
+    }
+    @Test
+    void addCard_updateTotalResourcesWhenACornerIsCovered() throws PlaceNotAvailableException {
         PlayerDesk desk = new PlayerDesk();
         Corner[] corners = new Corner[8];
         for(int i=0;i< corners.length;i++){
@@ -166,6 +206,7 @@ class PlayerDeskTest {
         }
         cardToAdd = new ResourceCard(null, null, null, 0, PointType.GENERAL, null, corners);
         cardToAdd.setPlayedFaceDown(false);
+        desk.addCard(cardToAdd, new Point(1,1));
         for(Resource res : desk.getTotalResources().keySet()){
             if(res!= Resource.FUNGI_KINGDOM)
                 assertEquals(0, desk.getTotalResources().get(res));
@@ -358,46 +399,6 @@ class PlayerDeskTest {
         expectedForbiddenPlaces.add(new Point(-1,-1));
         expectedForbiddenPlaces.add(new Point(0,2));
         assertEquals(expectedForbiddenPlaces, desk.getForbiddenPlaces());
-    }
-    @Test
-    void checkRequirements_checkIfItThrowsTheException() throws PlaceNotAvailableException {
-        PlayerDesk desk = new PlayerDesk();
-        Corner[] corners = new Corner[8];
-        for(int i=0;i< corners.length;i++){
-            if(i==1||i==0)
-                corners[i] = new Corner(Resource.FUNGI_KINGDOM);
-            else
-                corners[i] = new Corner(true);
-        }
-        GameCard cardToAdd = new ResourceCard(null, null, null, 0, PointType.GENERAL, null, corners);
-        cardToAdd.setPlayedFaceDown(false);
-        desk.addCard(cardToAdd, new Point(0,0));
-
-        EnumMap<Resource, Integer> requirements=new EnumMap<>(Resource.class);
-        requirements.put(Resource.FUNGI_KINGDOM, 2);
-        requirements.put(Resource.INSECT_KINGDOM, 1);
-        assertThrows(RequirementsNotMetException.class, ()->desk.checkRequirements(requirements));
-    }
-    @Test
-    void checkRequirements_checkIfItDoesNotThrowTheExceptionWhenRequirementsAreMet() throws PlaceNotAvailableException {
-        PlayerDesk desk = new PlayerDesk();
-        Corner[] corners = new Corner[8];
-        for(int i=0;i< corners.length;i++){
-            if(i==1)
-                corners[i] = new Corner(Resource.FUNGI_KINGDOM);
-            else if(i==2)
-                corners[i] = new Corner(Resource.INSECT_KINGDOM);
-            else
-                corners[i] = new Corner(true);
-        }
-        GameCard cardToAdd = new ResourceCard(null, null, null, 0, PointType.GENERAL, null, corners);
-        cardToAdd.setPlayedFaceDown(false);
-        desk.addCard(cardToAdd, new Point(0,0));
-
-        EnumMap<Resource, Integer> requirements=new EnumMap<>(Resource.class);
-        requirements.put(Resource.FUNGI_KINGDOM, 1);
-        requirements.put(Resource.INSECT_KINGDOM, 1);
-        assertDoesNotThrow(()->desk.checkRequirements(requirements));
     }
     @Test
     void addCard_checkIfItThrowsTheExceptionIfThePlaceIsNotAvailable(){
