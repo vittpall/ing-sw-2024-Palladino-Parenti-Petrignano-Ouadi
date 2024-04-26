@@ -46,6 +46,16 @@ public class Corner{
     }
 
     /**
+     * constructor to call when we want to create a new corner that is a copy of the parameter
+     * @param cornerToCopy
+     */
+    public Corner(Corner cornerToCopy){
+        this.hidden=cornerToCopy.hidden;
+        this.resource=cornerToCopy.resource;
+        this.object=cornerToCopy.object;
+    }
+
+    /**
      * @return hidden
      */
     public boolean isHidden() {

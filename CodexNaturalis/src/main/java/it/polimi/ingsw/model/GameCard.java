@@ -27,7 +27,10 @@ abstract public class GameCard extends Card {
         super(points, frontImagePath, backImagePath);
         this.frontSideResources = frontSideResources;
         this.backSideResource = backSideResource;
-        this.corners = Arrays.copyOf(corners, corners.length);
+        this.corners=new Corner[8];
+        for(int i=0;i< corners.length;i++){
+            this.corners[i]=new Corner(corners[i]);
+        }
         this.playedFaceDown = false;
         this.pointType = pointType;
     }

@@ -30,7 +30,7 @@ class ResourceStrategyTest {
     }
 
     @Test
-    void isSatisfied_givenDeskWithWrongResources_returnZero()
+    void isSatisfied_givenDeskWithWrongResources_returnZero ()throws PlaceNotAvailableException
     {
         ResourceStrategy resourceStrategy = new ResourceStrategy(Resource.FUNGI_KINGDOM, 3);
         PlayerDesk desk = new PlayerDesk();
@@ -51,12 +51,8 @@ class ResourceStrategyTest {
         ResourceCard card1 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
         ResourceCard card2 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
 
-        try {
-            desk.addCard(card1, new Point(0,0));
-            desk.addCard(card2, new Point(1,1));
-        } catch (PlaceNotAvailableException e) {
-            throw new RuntimeException(e);
-        }
+        desk.addCard(card1, new Point(0,0));
+        desk.addCard(card2, new Point(1,1));
 
         assertEquals(0, resourceStrategy.isSatisfied(desk));
 
