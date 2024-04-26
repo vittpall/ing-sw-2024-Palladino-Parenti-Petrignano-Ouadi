@@ -60,7 +60,7 @@ class ResourceStrategyTest {
     }
 
     @Test
-    void isSatisfied_givenDeskWithCorrectResources_returnOne()
+    void isSatisfied_givenDeskWithCorrectResources_moreThanOne()
     {
         ResourceStrategy resourceStrategy = new ResourceStrategy(Resource.INSECT_KINGDOM, 3);
         PlayerDesk desk = new PlayerDesk();
@@ -91,7 +91,7 @@ class ResourceStrategyTest {
             throw new RuntimeException(e);
         }
 
-        assertEquals(3, resourceStrategy.isSatisfied(desk));
+        assertEquals(4, resourceStrategy.isSatisfied(desk));
 
 
     }
