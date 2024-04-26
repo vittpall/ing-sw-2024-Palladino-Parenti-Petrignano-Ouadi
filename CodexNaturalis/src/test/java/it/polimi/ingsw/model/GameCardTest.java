@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,9 +12,20 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameCardTest {
 
+    private Corner[] corners;
+
+    @BeforeEach
+    void setUp() {
+        corners = new Corner[8];
+        for (int i = 0; i < 8; i++) {
+            corners[i] = new Corner(false);
+        }
+
+    }
+
     @Test
     void flipCard_changesCardOrientation() {
-        GameCard card = new GameCard(null, null, null, 0, null, new ArrayList<>(), null) {
+        GameCard card = new GameCard(null, null, null, 0, null, new ArrayList<>(), corners) {
             // Empty implementation for abstract class
         };
         assertFalse(card.isPlayedFaceDown());
@@ -24,7 +36,7 @@ class GameCardTest {
     @Test
     void getCardResourcesFront_returnsCorrectResources() {
         ArrayList<Resource> resources = new ArrayList<>(Arrays.asList(Resource.ANIMAL_KINGDOM, Resource.FUNGI_KINGDOM));
-        GameCard card = new GameCard(Resource.ANIMAL_KINGDOM, null, null, 0, PointType.CORNER, resources, null) {
+        GameCard card = new GameCard(Resource.ANIMAL_KINGDOM, null, null, 0, PointType.CORNER, resources, corners) {
             // Empty implementation for abstract class
         };
         assertEquals(resources, card.getFrontSideResources());
@@ -33,7 +45,7 @@ class GameCardTest {
     @Test
     void getCardResourceBack_returnsCorrectResource() {
         Resource resource = Resource.INSECT_KINGDOM;
-        GameCard card = new GameCard(resource, null, null, 0, null, new ArrayList<>(), null) {
+        GameCard card = new GameCard(resource, null, null, 0, null, new ArrayList<>(), corners) {
             // Empty implementation for abstract class
         };
         assertEquals(resource, card.getbackSideResource());
@@ -42,7 +54,7 @@ class GameCardTest {
     @Test
     void getPointType_returnsCorrectPointType() {
         PointType pointType = PointType.MANUSCRIPT;
-        GameCard card = new GameCard(null, null, null, 0, pointType, new ArrayList<>(), null) {
+        GameCard card = new GameCard(null, null, null, 0, pointType, new ArrayList<>(), corners) {
             // Empty implementation for abstract class
         };
 
@@ -52,7 +64,7 @@ class GameCardTest {
     @Test
     void getImageFrontPath_returnsCorrectPath() {
         String path = "path/to/front/image";
-        GameCard card = new GameCard(null, path, null, 0, null, new ArrayList<>(), null) {
+        GameCard card = new GameCard(null, path, null, 0, null, new ArrayList<>(), corners) {
             // Empty implementation for abstract class
         };
 
@@ -62,7 +74,7 @@ class GameCardTest {
     @Test
     void getImageBackPath_returnsCorrectPath() {
         String path = "path/to/back/image";
-        GameCard card = new GameCard(null, null, path, 0, null, new ArrayList<>(), null) {
+        GameCard card = new GameCard(null, null, path, 0, null, new ArrayList<>(), corners) {
             // Empty implementation for abstract class
         };
         assertEquals(path, card.getImageBackPath());

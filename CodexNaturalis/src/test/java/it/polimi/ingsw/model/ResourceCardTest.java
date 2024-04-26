@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,6 +11,17 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ResourceCardTest {
+
+    private Corner[] corners;
+
+    @BeforeEach
+    void setUp() {
+        corners = new Corner[8];
+        for (int i = 0; i < 8; i++) {
+            corners[i] = new Corner(false);
+        }
+
+    }
 
     @Test
     void constructor_initializesSuperclassFieldsCorrectly() {
@@ -20,7 +32,7 @@ class ResourceCardTest {
         String imageFrontPath = "path/to/front/image";
         String imageBackPath = "path/to/back/image";
 
-        ResourceCard card = new ResourceCard(resourceBack, imageFrontPath, imageBackPath, points, pointType, resourcesFront, null);
+        ResourceCard card = new ResourceCard(resourceBack, imageFrontPath, imageBackPath, points, pointType, resourcesFront, corners);
 
         assertEquals(resourcesFront, card.getFrontSideResources());
         assertEquals(resourceBack, card.getbackSideResource());

@@ -23,11 +23,9 @@ class CardTest {
 
     @Test
     void getPoints_throwsIllegalArgumentException_whenPointsAreNegative() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Card(-5, "/path/to/front/image", "/path/to/back/image") {
-            };
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> new Card(-5, "/path/to/front/image", "/path/to/back/image") {
         });
-        assertEquals("Points cannot be negative.", exception.getMessage());
+        assertEquals("Points cannot be negative", exception.getMessage());
     }
 
     @Test

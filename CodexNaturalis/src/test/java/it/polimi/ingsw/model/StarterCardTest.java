@@ -19,8 +19,12 @@ public class StarterCardTest {
         int points = 5;
         String imageFrontPath = "path/to/front/image";
         String imageBackPath = "path/to/back/image";
+        Corner[] corners = new Corner[8];
+        for (int i = 0; i < 8; i++) {
+            corners[i] = new Corner(false);
+        }
 
-        StarterCard card = new StarterCard(resourceBack, imageFrontPath, imageBackPath, points, pointType, resourcesFront, null);
+        StarterCard card = new StarterCard(resourceBack, imageFrontPath, imageBackPath, points, pointType, resourcesFront, corners);
 
 
         assertEquals(resourcesFront, card.getFrontSideResources());
