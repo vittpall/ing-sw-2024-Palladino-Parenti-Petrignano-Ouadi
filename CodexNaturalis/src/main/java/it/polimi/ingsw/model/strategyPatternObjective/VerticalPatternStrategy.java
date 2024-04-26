@@ -41,7 +41,7 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
         HashMap<Point, GameCard> deskToUse = desk.getDesk();
         //iterate over desk until I found a position where the card's color is the primarySource
         for (Point point : desk.getDesk().keySet()) {
-            if (deskToUse.get(point).getbackSideResource().equals(primarySource)) {
+            if (desk.getDesk().get(point).getbackSideResource().equals(primarySource)) {
                 //instead of mapping the color to the corner that needs to be checked, it'll use the parameter WhichCorner
                 if (CheckCorner(deskToUse, point))
                     numberOfTimesVerifiedObjective++;
