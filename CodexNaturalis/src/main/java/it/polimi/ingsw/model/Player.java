@@ -84,8 +84,11 @@ public class Player {
      * sets objectiveCard as the parameter and set drawnObjectiveCards as null
      *
      * @param chosenObjectiveCard
+     * @throws CardNotFoundException if the chosenObjectiveCard is not in the drawnObjectiveCards
      */
-    public void setObjectiveCard(ObjectiveCard chosenObjectiveCard) {
+    public void setObjectiveCard(ObjectiveCard chosenObjectiveCard) throws CardNotFoundException{
+        if(!drawnObjectiveCards.contains(chosenObjectiveCard))
+            throw new CardNotFoundException("The ObjectiveCard is not in the drawnObjectiveCards");
         this.objectiveCard = new ObjectiveCard(chosenObjectiveCard);
         this.drawnObjectiveCards = null;
         //le carte 2 carte obiettivo da cui sceglierla si gestiscono nel game per ogni player
@@ -137,7 +140,7 @@ public class Player {
      * @return playerDesk
      */
     public PlayerDesk getPlayerDesk() {
-        return playerDesk;
+        return new PlayerDesk(playerDesk);
     }
 
     /**
@@ -179,8 +182,11 @@ public class Player {
         if (card instanceof GoldCard goldCard) {
             playerDesk.checkRequirements(goldCard.getRequirements());
         }
-        boolean checkRemove = this.playerHand.remove(card);
-        if (!checkRemove) throw new CardNotFoundException("card not found");
+        boolean checkRemove=true;
+        if(!(card instanceof StarterCard)){
+            checkRemove = this.playerHand.remove(card);
+        }
+        if (!checkRemove|| !card.equals(starterCard)) throw new CardNotFoundException("card not found");
         card.setPlayedFaceDown(faceDown);
         int pointsToAdd = playerDesk.addCard(card, point);
         this.setPoints(pointsToAdd);

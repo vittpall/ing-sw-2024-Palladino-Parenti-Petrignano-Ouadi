@@ -48,6 +48,13 @@ public class PlayerDesk {
         }
     }
 
+    public PlayerDesk(PlayerDesk deskToCopy){
+        this.desk = new HashMap<>(deskToCopy.getDesk());
+        this.availablePlaces = new HashSet<>(deskToCopy.getAvailablePlaces());
+        this.forbiddenPlaces = new HashSet<>(deskToCopy.getForbiddenPlaces());
+        this.totalResources = new EnumMap<>(deskToCopy.getTotalResources());
+        this.totalObjects = new EnumMap<>(deskToCopy.getTotalObjects());
+    }
     /**
      * @return totalResources
      */
