@@ -7,4 +7,6 @@ public interface VirtualServer extends Remote {
     void connect(VirtualView client) throws RemoteException;
 
     void reset() throws RemoteException;
+
+    boolean checkUsername(String username) throws RemoteException;
 }

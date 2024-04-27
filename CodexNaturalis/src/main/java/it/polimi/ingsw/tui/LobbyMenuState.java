@@ -12,12 +12,18 @@ public class LobbyMenuState implements ClientState {
     }
 
     @Override
+    public void promptForInput() {
+        System.out.print("Enter your choice (1-3): ");
+    }
+
+    @Override
     public void display() {
-        System.out.print("Lobby Menu");
-        System.out.print("Please select an option:");
-        System.out.print("1. Create a new game");
-        System.out.print("2. Join a game");
-        System.out.print("3. Exit");
+        System.out.println("\n---------- Lobby Menu ----------");
+        System.out.println("Please select an option:");
+        System.out.println("1. Create a new game 🆕");
+        System.out.println("2. Join a game 🚪");
+        System.out.println("3. Exit 🚪");
+        System.out.println("--------------------------------\n");
     }
 
     @Override

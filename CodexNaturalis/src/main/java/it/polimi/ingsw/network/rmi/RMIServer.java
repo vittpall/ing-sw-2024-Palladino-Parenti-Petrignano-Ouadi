@@ -5,10 +5,13 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class RMIServer implements VirtualServer {
     final List<VirtualView> clients = new ArrayList<>();
+    private final Set<String> usernames = new HashSet<>();
 
     public RMIServer() throws RemoteException {
         super();  // Call the constructor of UnicastRemoteObject
@@ -24,6 +27,11 @@ public class RMIServer implements VirtualServer {
     public void reset() throws RemoteException {
         System.err.println("reset request");
 
+    }
+
+    @Override
+    public boolean checkUsername(String username) throws RemoteException {
+        return usernames.add(username);
     }
 
     public static void main(String[] args) throws RemoteException {
