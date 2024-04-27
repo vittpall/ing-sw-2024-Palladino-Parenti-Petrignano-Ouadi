@@ -36,7 +36,7 @@ class VerticalPatternStrategyTest {
     }
 
     @Test
-    void isSatified_givenDeskWithCorrectResources_returnOne() {
+    void isSatified_givenDeskWithCorrectResourcesRightBottom_returnOne() {
         VerticalPatternStrategy verticalPatternStrategy = new VerticalPatternStrategy(Resource.FUNGI_KINGDOM, Resource.PLANT_KINGDOM, new Point(1, -1));
         PlayerDesk desk = new PlayerDesk();
 
@@ -56,6 +56,128 @@ class VerticalPatternStrategyTest {
         }
         assertEquals(1, verticalPatternStrategy.isSatisfied(desk));
     }
+
+    @Test
+    void isSatified_givenDeskWithCorrectResourcesRightUp_returnOne() {
+        VerticalPatternStrategy verticalPatternStrategy = new VerticalPatternStrategy(Resource.FUNGI_KINGDOM, Resource.PLANT_KINGDOM, new Point(1, 3));
+        PlayerDesk desk = new PlayerDesk();
+
+        Corner[] corners;
+
+        corners = new Corner[8];
+        for (int i = 0; i < 8; i++) {
+            corners[i] = new Corner(false);
+        }
+        try {
+            desk.addCard(new ResourceCard(Resource.FUNGI_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(0, 0));
+            desk.addCard(new ResourceCard(Resource.PLANT_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(-1, 1));
+            desk.addCard(new ResourceCard(Resource.FUNGI_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(0, 2));
+            desk.addCard(new ResourceCard(Resource.PLANT_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(1, 3));
+        } catch (PlaceNotAvailableException e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(1, verticalPatternStrategy.isSatisfied(desk));
+    }
+
+    @Test
+    void isSatified_givenDeskWithCorrectResourcesLeftUp_returnOne() {
+        VerticalPatternStrategy verticalPatternStrategy = new VerticalPatternStrategy(Resource.FUNGI_KINGDOM, Resource.PLANT_KINGDOM, new Point(-1, 3));
+        PlayerDesk desk = new PlayerDesk();
+
+        Corner[] corners;
+
+        corners = new Corner[8];
+        for (int i = 0; i < 8; i++) {
+            corners[i] = new Corner(false);
+        }
+        try {
+            desk.addCard(new ResourceCard(Resource.FUNGI_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(0, 0));
+            desk.addCard(new ResourceCard(Resource.PLANT_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(-1, 1));
+            desk.addCard(new ResourceCard(Resource.FUNGI_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(0, 2));
+            desk.addCard(new ResourceCard(Resource.PLANT_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(-1, 3));
+        } catch (PlaceNotAvailableException e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(1, verticalPatternStrategy.isSatisfied(desk));
+    }
+
+    @Test
+    void isSatified_givenDeskWithCorrectResourcesLeftBottom_returnOne() {
+        VerticalPatternStrategy verticalPatternStrategy = new VerticalPatternStrategy(Resource.FUNGI_KINGDOM, Resource.PLANT_KINGDOM, new Point(-1, -1));
+        PlayerDesk desk = new PlayerDesk();
+
+        Corner[] corners;
+
+        corners = new Corner[8];
+        for (int i = 0; i < 8; i++) {
+            corners[i] = new Corner(false);
+        }
+        try {
+            desk.addCard(new ResourceCard(Resource.FUNGI_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(0, 0));
+            desk.addCard(new ResourceCard(Resource.PLANT_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(-1, 1));
+            desk.addCard(new ResourceCard(Resource.FUNGI_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(0, 2));
+            desk.addCard(new ResourceCard(Resource.PLANT_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(-1, -1));
+        } catch (PlaceNotAvailableException e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(1, verticalPatternStrategy.isSatisfied(desk));
+    }
+
+    @Test
+    void isSatified_givenADeterminedStartingPoint_returnOne() {
+        VerticalPatternStrategy verticalPatternStrategy = new VerticalPatternStrategy(Resource.FUNGI_KINGDOM, Resource.PLANT_KINGDOM, new Point(-1, -1));
+        PlayerDesk desk = new PlayerDesk();
+
+        Corner[] corners;
+
+        corners = new Corner[8];
+        for (int i = 0; i < 8; i++) {
+            corners[i] = new Corner(false);
+        }
+        try {
+            desk.addCard(new ResourceCard(Resource.FUNGI_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(0, 0));
+            desk.addCard(new ResourceCard(Resource.PLANT_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(-1, 1));
+            desk.addCard(new ResourceCard(Resource.FUNGI_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(0, 2));
+            desk.addCard(new ResourceCard(Resource.PLANT_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(-1, -1));
+        } catch (PlaceNotAvailableException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        assertTrue(verticalPatternStrategy.CheckCorner(desk.getDesk(), new Point(0, 0)));
+    }
+
+    @Test
+    void isSatified_givenDeskTopLeft_returnMoreThanOne() {
+        VerticalPatternStrategy verticalPatternStrategy = new VerticalPatternStrategy(Resource.FUNGI_KINGDOM, Resource.PLANT_KINGDOM, new Point(1, 3));
+        PlayerDesk desk = new PlayerDesk();
+
+        Corner[] corners;
+
+        corners = new Corner[8];
+        for (int i = 0; i < 8; i++) {
+            corners[i] = new Corner(false);
+        }
+        try {
+            desk.addCard(new ResourceCard(Resource.FUNGI_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(0, 0));
+            desk.addCard(new ResourceCard(Resource.PLANT_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(-1, 1));
+            desk.addCard(new ResourceCard(Resource.FUNGI_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(0, 2));
+            desk.addCard(new ResourceCard(Resource.PLANT_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(1, 3));
+            desk.addCard(new ResourceCard(Resource.PLANT_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(-1, 3));
+            desk.addCard(new ResourceCard(Resource.ANIMAL_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(0, 4));
+            desk.addCard(new ResourceCard(Resource.ANIMAL_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(-1, 5));
+            desk.addCard(new ResourceCard(Resource.FUNGI_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(0, 6));
+            desk.addCard(new ResourceCard(Resource.ANIMAL_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(-1, 7));
+            desk.addCard(new ResourceCard(Resource.FUNGI_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(0, 8));
+            desk.addCard(new ResourceCard(Resource.PLANT_KINGDOM, "path/to/front/image", "path/to/back/image", 0, PointType.CORNER, null, corners), new Point(1, 9));
+        } catch (PlaceNotAvailableException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        assertEquals(2, verticalPatternStrategy.isSatisfied(desk));
+    }
+
 
 
 

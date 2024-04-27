@@ -57,7 +57,7 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
      * @param startingPoint
      * @return
      */
-    private boolean CheckCorner(HashMap<Point, GameCard> deskToUse, Point startingPoint) {
+    boolean CheckCorner(HashMap<Point, GameCard> deskToUse, Point startingPoint) {
         int i = 0;
         boolean IsVerified = false;
 
@@ -72,7 +72,7 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
 
         Point LowerCard = new Point(startingPoint.x, startingPoint.y + i);
         Point UpperCard = new Point(startingPoint.x, startingPoint.y + i + 2);
-        Point CornerCard = new Point(startingPoint.x + whichCorner.x, startingPoint.y + whichCorner.y);
+        Point CornerCard = new Point(LowerCard.x + whichCorner.x, LowerCard.y + whichCorner.y);
 
         if (deskToUse.containsKey(LowerCard) && deskToUse.get(LowerCard).getbackSideResource() == primarySource && deskToUse.containsKey(UpperCard) && deskToUse.get(UpperCard).getbackSideResource() == primarySource) {
             if (deskToUse.containsKey(CornerCard) && deskToUse.get(CornerCard).getbackSideResource() == secondarySource)

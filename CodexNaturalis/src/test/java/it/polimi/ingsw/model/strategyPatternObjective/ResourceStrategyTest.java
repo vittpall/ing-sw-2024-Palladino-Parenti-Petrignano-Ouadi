@@ -99,5 +99,43 @@ class ResourceStrategyTest {
 
 
 
+    @Test
+    void isSatisfied_givenDeskWithCorrectResources_returnOne()
+    {
+        ResourceStrategy resourceStrategy = new ResourceStrategy(Resource.INSECT_KINGDOM, 3);
+        PlayerDesk desk = new PlayerDesk();
+
+        PointType pointType = PointType.CORNER;
+        int points = 5;
+        String imageFrontPath = "path/to/front/image";
+        String imageBackPath = "path/to/back/image";
+
+        Corner[] corners;
+
+        corners = new Corner[8];
+        for (int i = 0; i < 8; i++) {
+            corners[i] = new Corner(Resource.INSECT_KINGDOM);
+        }
+
+        ResourceCard card1 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+        ResourceCard card2 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+        ResourceCard card3 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+        ResourceCard card4 = new ResourceCard(Resource.ANIMAL_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+
+        try {
+            desk.addCard(card1, new Point(0,0));
+            desk.addCard(card2, new Point(1,1));
+            desk.addCard(card3, new Point(2,2));
+            desk.addCard(card4, new Point(3,3));
+        } catch (PlaceNotAvailableException e) {
+            throw new RuntimeException(e);
+        }
+
+        assertEquals(4, resourceStrategy.isSatisfied(desk));
+
+
+    }
+
+
 
 }
