@@ -34,6 +34,6 @@ public class RMIServer implements VirtualServer {
                 (VirtualServer) UnicastRemoteObject.exportObject(engine, 0);
         Registry registry = LocateRegistry.createRegistry(1234);
         registry.rebind(name, stub);
-        System.out.println("Adder bound");
+        System.out.println("Server bound");
     }
 }
