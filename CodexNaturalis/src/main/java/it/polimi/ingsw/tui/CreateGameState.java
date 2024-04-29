@@ -48,7 +48,8 @@ import java.util.Scanner;
             input = scanner.nextLine().trim();
         } while (input.isEmpty());
 
-        nPlayers =Integer.parseInt(input);
+        nPlayers = Integer.parseInt(input);
+        //TODO catch exception if input is not a number
         if(nPlayers < 2 || nPlayers>4){
             System.out.println("Invalid number of players");
             createGame();

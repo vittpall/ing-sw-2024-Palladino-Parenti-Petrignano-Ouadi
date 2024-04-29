@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,7 +21,7 @@ import java.util.Map;
  * totalResources takes account of how many Resources are visible into the player's desk
  * totalObjects takes account of how many CornerObjects are visible into the player's desk
  */
-public class PlayerDesk {
+public class PlayerDesk implements Serializable {
     private final HashMap<Point, GameCard> desk;
     private final HashSet<Point> availablePlaces;
     private final HashSet<Point> forbiddenPlaces;

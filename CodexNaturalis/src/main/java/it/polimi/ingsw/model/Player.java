@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -20,7 +21,7 @@ import java.util.Arrays;
  * starterCard is the StarterCard assigned to the player
  * playerDesk is a reference to the assigned PlayerDesk
  */
-public class Player {
+public class Player implements Serializable {
     private final String username;
     private int points;
     private final ArrayList<GameCard> playerHand;

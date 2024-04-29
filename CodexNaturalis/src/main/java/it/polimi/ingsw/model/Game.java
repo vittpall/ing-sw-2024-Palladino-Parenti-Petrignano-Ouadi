@@ -8,6 +8,7 @@ import it.polimi.ingsw.util.GameCardLoader;
 import it.polimi.ingsw.util.ObjectiveCardLoader;
 
 import java.awt.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -20,7 +21,7 @@ import java.util.Arrays;
  * gameStarted is set as true as soon as nPlayer players have joined the game
  * starterCards and objectiveCards are lists of all the possible starter and objective cards that are not played or drawn yet
  */
-public class Game {
+public class Game implements Serializable{
     private final int gameId;
     private final int nPlayer;
     private final ArrayList<Player> players;
