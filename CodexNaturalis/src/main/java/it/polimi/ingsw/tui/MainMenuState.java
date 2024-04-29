@@ -22,6 +22,19 @@ public class MainMenuState implements ClientState {
 
     @Override
     public void display() {
+        System.out.println(" ██████╗ ██████╗ ██████╗ ███████╗██╗  ██╗                              \n" +
+                "██╔════╝██╔═══██╗██╔══██╗██╔════╝╚██╗██╔╝                              \n" +
+                "██║     ██║   ██║██║  ██║█████╗   ╚███╔╝                               \n" +
+                "██║     ██║   ██║██║  ██║██╔══╝   ██╔██╗                               \n" +
+                "╚██████╗╚██████╔╝██████╔╝███████╗██╔╝ ██╗                              \n" +
+                " ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝                              \n" +
+                "                                                                       \n" +
+                "███╗   ██╗ █████╗ ████████╗██╗   ██╗██████╗  █████╗ ██╗     ██╗███████╗\n" +
+                "████╗  ██║██╔══██╗╚══██╔══╝██║   ██║██╔══██╗██╔══██╗██║     ██║██╔════╝\n" +
+                "██╔██╗ ██║███████║   ██║   ██║   ██║██████╔╝███████║██║     ██║███████╗\n" +
+                "██║╚██╗██║██╔══██║   ██║   ██║   ██║██╔══██╗██╔══██║██║     ██║╚════██║\n" +
+                "██║ ╚████║██║  ██║   ██║   ╚██████╔╝██║  ██║██║  ██║███████╗██║███████║\n" +
+                "╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝");
         System.out.println("\nWelcome to Codex Naturalis!");
         System.out.println("⚔️  _________________________________  ⚔️");
         System.out.println("|                                     |");
@@ -57,7 +70,7 @@ public class MainMenuState implements ClientState {
 
         if (client.server.checkUsername(username)) {
             client.setUsername(username);
-            client.setCurrentState(new LobbyMenuState(client));
+            client.setCurrentState(new LobbyMenuState(client, scanner));
         } else {
             System.out.println("Username already taken");
             requestUsername();

@@ -1,20 +1,22 @@
 package it.polimi.ingsw.network.rmi;
 
+import it.polimi.ingsw.controller.LobbyController;
+import it.polimi.ingsw.model.Game;
+
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class RMIServer implements VirtualServer {
     final List<VirtualView> clients = new ArrayList<>();
-    private final Set<String> usernames = new HashSet<>();
+
+    private LobbyController lobbyController;
 
     public RMIServer() throws RemoteException {
         super();  // Call the constructor of UnicastRemoteObject
+        lobbyController = new LobbyController();
     }
 
     @Override
@@ -31,7 +33,22 @@ public class RMIServer implements VirtualServer {
 
     @Override
     public boolean checkUsername(String username) throws RemoteException {
-        return usernames.add(username);
+        return lobbyController.checkUsername(username);
+    }
+
+    @Override
+    public HashMap<Integer, Game> getNotStartedGames() throws RemoteException {
+        return lobbyController.getVisibleGames();
+    }
+
+    @Override
+    public void joinGame(int id, String username) throws RemoteException {
+        lobbyController.joinGame(id, username);
+    }
+
+    @Override
+    public void createGame(String username, int nPlayers) throws RemoteException {
+        lobbyController.createGame(username, nPlayers);
     }
 
     public static void main(String[] args) throws RemoteException {

@@ -2,13 +2,18 @@ package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.network.rmi.RMIClient;
 
+import java.util.Scanner;
+
 public class LobbyMenuState implements ClientState {
 
 
     RMIClient client;
+    private final Scanner scanner;
 
-    public LobbyMenuState(RMIClient client) {
+    public LobbyMenuState(RMIClient client, Scanner scanner) {
         this.client = client;
+        this.scanner = scanner;
+
     }
 
     @Override
@@ -30,10 +35,10 @@ public class LobbyMenuState implements ClientState {
     public void inputHandler(int input) {
         switch (input) {
             case 1:
-                //  client.setCurrentState(new CreateGameMenuState(client));
+                client.setCurrentState(new CreateGameState(client, scanner));
                 break;
             case 2:
-                // client.setCurrentState(new JoinGameMenuState(client));
+                client.setCurrentState(new JoinGameMenuState(client));
                 break;
             case 3:
                 System.exit(0);

@@ -21,13 +21,14 @@ public class Lobby {
         return games.get(gameId);
     }
 
-    public Map<Integer, Game> listAllGames() {
+    public HashMap<Integer, Game> listAllGames() {
         return new HashMap<>(games);
     }
 
-    public Game createNewGame(int numberOfPlayers) {
+    public Game createNewGame(int numberOfPlayers, Player player) {
         Game newGame = new Game(nextGameId, numberOfPlayers);
         games.put(nextGameId, newGame);
+        joinGame(nextGameId, player);
         nextGameId++;
         return newGame;
     }
