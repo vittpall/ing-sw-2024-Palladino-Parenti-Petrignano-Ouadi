@@ -69,12 +69,5 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             currentState.inputHandler(input);
         }
     }
-/*
-    public static void main(String[] args) throws RemoteException, NotBoundException {
-        Registry registry = LocateRegistry.getRegistry(args[0], 1234);
-        VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
 
-        new RMIClient(server).run();
-    }
-    */
 }

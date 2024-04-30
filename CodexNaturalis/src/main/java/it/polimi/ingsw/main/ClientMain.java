@@ -37,38 +37,19 @@ public class ClientMain {
         {
             System.out.println("Invalid input, please try again");
             serverIP = new Scanner(System.in).nextLine();
-            if(serverIP.equals("defaultIP"))
+            if(serverIP.equals("defaultIP") && checkValidity(serverIP))
             {
-                //user "" to chose default IP
                 defaultIPChosen = true;
                 serverIP = "127.0.0.1";
             }
         }
 
-        /* Does the client need to insert his local IP? Does it only have to know the server one?
-        System.out.println("Please enter your local IP: ");
-        defaultIPChosen = false;
-        input = new Scanner(System.in).nextLine();
-        if(input.equals("defaultIP"))
-        {
-            defaultIPChosen = true;
-        }
-        while(!defaultIPChosen && checkValidity(input))
-        {
-            System.out.println("Invalid input, please try again");
-            input = new Scanner(System.in).nextLine();
-            if(input.equals("defaultIP"))
-            {
-                //user "" to chose default IP
-                defaultIPChosen = true;
-            }
-        }
-*/
         System.out.println("Please choose the connection type: rmi or socket");
         do {
             connectionChoose = new Scanner(System.in).nextLine();
         }while(!connectionChoose.equals("rmi") && !connectionChoose.equals("socket"));
 
+        //rmi
         if(connectionChoose.equals("rmi"))
         {
             try {
@@ -82,10 +63,10 @@ public class ClientMain {
             }
         }
         else
-        {
+        {//socket
             Socket serverSocket = null;
             try {
-                serverSocket = new Socket(serverIP, 1234);
+                serverSocket = new Socket(serverIP, 2345);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

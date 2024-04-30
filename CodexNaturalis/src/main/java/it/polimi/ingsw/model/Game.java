@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.chat.Chat;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.util.GameCardLoader;
 import it.polimi.ingsw.util.ObjectiveCardLoader;
@@ -33,6 +34,7 @@ public class Game implements Serializable{
     private boolean gameStarted;
     private final ArrayList<StarterCard> starterCards;
     private final ArrayList<ObjectiveCard> objectiveCards;
+    private Chat chats;
 
     /**
      * constructor
@@ -51,6 +53,7 @@ public class Game implements Serializable{
         starterCards = new ArrayList<>();
         players = new ArrayList<>();
         objectiveCards = new ArrayList<>();
+        chats = new Chat();
     }
 
     /**

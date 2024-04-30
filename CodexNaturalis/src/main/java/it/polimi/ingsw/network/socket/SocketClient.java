@@ -26,6 +26,7 @@ public class SocketClient {
         runCli();
     }
 
+    //what i send to the server
     private void runCli() throws RemoteException {
         Scanner scan = new Scanner(System.in);
         while (true) {
@@ -35,6 +36,7 @@ public class SocketClient {
         }
     }
 
+    //what i receive from the server
     private void runVirtualServer() throws IOException {
         String line;
         // Read message type

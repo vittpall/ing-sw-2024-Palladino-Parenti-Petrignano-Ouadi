@@ -63,16 +63,5 @@ public class RMIServer implements VirtualServer {
             globalChat.add(toSave);
 
     }
-/*
-    public static void main(String[] args) throws RemoteException {
-        String name = "VirtualServer";
 
-        VirtualServer engine = new RMIServer();
-        VirtualServer stub =
-                (VirtualServer) UnicastRemoteObject.exportObject(engine, 0);
-        Registry registry = LocateRegistry.createRegistry(1234);
-        registry.rebind(name, stub);
-        System.out.println("Server bound");
-    }
-    */
 }
