@@ -8,6 +8,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class RMIClient extends UnicastRemoteObject implements VirtualView {
@@ -40,11 +41,26 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
 
     private void runStateLoop() throws RemoteException {
+        boolean correctInput;
         while (true) {
+            correctInput = false;
             currentState.display();
             currentState.promptForInput();
-            int input = scan.nextInt();
-            scan.nextLine();  // Consume newline left-over
+            int input = 0;
+            while(!correctInput){
+                try {
+                    input = scan.nextInt();
+                    correctInput = true;
+                } catch (InputMismatchException e) {
+                    System.out.println("\nInvalid input: Reinsert the value: ");
+
+
+                }
+                finally {
+                    scan.nextLine();
+                }
+            } 
+
             currentState.inputHandler(input);
         }
     }
