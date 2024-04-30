@@ -12,6 +12,9 @@ import java.util.*;
 public class RMIServer implements VirtualServer {
     final List<VirtualView> clients = new ArrayList<>();
 
+    private ArrayList<String> privateChat = new ArrayList<>();
+    private ArrayList<String> globalChat = new ArrayList<>();
+
     private LobbyController lobbyController;
 
     public RMIServer() throws RemoteException {
@@ -51,6 +54,16 @@ public class RMIServer implements VirtualServer {
         lobbyController.createGame(username, nPlayers);
     }
 
+    @Override
+    public void sendMessage(String sender, String receiver, String message) throws RemoteException {
+        String toSave = sender + ": " + message;
+        if(receiver != null)
+            privateChat.add(toSave);
+        else
+            globalChat.add(toSave);
+
+    }
+/*
     public static void main(String[] args) throws RemoteException {
         String name = "VirtualServer";
 
@@ -61,4 +74,5 @@ public class RMIServer implements VirtualServer {
         registry.rebind(name, stub);
         System.out.println("Server bound");
     }
+    */
 }

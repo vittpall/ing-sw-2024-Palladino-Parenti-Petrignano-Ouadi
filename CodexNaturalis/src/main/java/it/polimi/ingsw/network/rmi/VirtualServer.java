@@ -18,4 +18,6 @@ public interface VirtualServer extends Remote {
     void joinGame(int id, String username) throws RemoteException;
 
     void createGame(String username, int nPlayers) throws RemoteException;
+
+    void sendMessage(String username, String receiver, String message) throws RemoteException;
 }

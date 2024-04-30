@@ -16,8 +16,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     ClientState currentState;
     private String username;
     private final Scanner scan;
+    private int idGame;
 
-    protected RMIClient(VirtualServer server) throws RemoteException {
+    public RMIClient(VirtualServer server) throws RemoteException {
         this.scan = new Scanner(System.in);
         this.server = server;
         currentState = new MainMenuState(this, scan);
@@ -31,9 +32,13 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return username;  // Method to get the username
     }
 
-    private void run() throws RemoteException {
+    public void run() throws RemoteException {
         this.server.connect(this);
         runStateLoop();
+    }
+
+    public void setIdGame(int idGame) {
+        this.idGame = idGame;
     }
 
     public void setCurrentState(ClientState state) {
@@ -64,11 +69,12 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             currentState.inputHandler(input);
         }
     }
-
+/*
     public static void main(String[] args) throws RemoteException, NotBoundException {
         Registry registry = LocateRegistry.getRegistry(args[0], 1234);
         VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
 
         new RMIClient(server).run();
     }
+    */
 }
