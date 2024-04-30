@@ -82,6 +82,7 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
         //remove the card previously checked
         deskToUse.remove(LowerCard);
         deskToUse.remove(UpperCard);
+        deskToUse.remove(CornerCard);
 
         return IsVerified;
     }

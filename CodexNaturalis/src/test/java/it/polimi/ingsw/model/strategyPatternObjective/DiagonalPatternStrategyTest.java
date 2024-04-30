@@ -278,9 +278,50 @@ class DiagonalPatternStrategyTest {
 
     }
 
+    @Test
+    void checkDiagonal_twoOverlappedDiagon_returnMoreThanOne() {
+        PointType pointType = PointType.CORNER;
+        String imageFrontPath = "path/to/front/image";
+        String imageBackPath = "path/to/back/image";
 
+        Corner[] corners;
 
+        corners = new Corner[8];
+        for (int i = 0; i < 8; i++) {
+            corners[i] = new Corner(false);
+        }
 
+        GameCard card1 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+        GameCard card2 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+        GameCard card3 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+        GameCard card4 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+        GameCard card5 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+        GameCard card6 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+        GameCard card7 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+        GameCard card8 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+        GameCard card9 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
 
+        PlayerDesk desk = new PlayerDesk();
+
+        try {
+            desk.addCard(card1, new Point(0, 0));
+            desk.addCard(card2, new Point(-1, 1));
+            desk.addCard(card3, new Point(-2, 2));
+            desk.addCard(card4, new Point(-3, 3));
+            desk.addCard(card5, new Point(0, 2));
+            desk.addCard(card6, new Point(1, 1));
+            desk.addCard(card7, new Point(-1, 3));
+            desk.addCard(card8, new Point(-2, 4));
+            desk.addCard(card9, new Point(-3, 5));
+
+        } catch (PlaceNotAvailableException e) {
+            throw new RuntimeException(e);
+        }
+
+        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.INSECT_KINGDOM, new Point(1, -1));
+
+        assertEquals(2, diagonalPatternStrategy.isSatisfied(desk));
+
+    }
 
 }
