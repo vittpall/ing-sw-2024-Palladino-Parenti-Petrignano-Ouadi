@@ -1,9 +1,9 @@
 package it.polimi.ingsw.main;
 
 import it.polimi.ingsw.controller.LobbyController;
-import it.polimi.ingsw.network.rmi.RMIServer;
-import it.polimi.ingsw.network.rmi.VirtualServer;
-import it.polimi.ingsw.network.socket.SocketServer;
+import it.polimi.ingsw.network.rmi.Server.RMIServer;
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
+import it.polimi.ingsw.network.socket.Server.SocketServer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -11,9 +11,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ServerMain {
     public static void main(String[] args)

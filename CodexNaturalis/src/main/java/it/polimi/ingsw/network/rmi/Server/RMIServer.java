@@ -1,12 +1,11 @@
-package it.polimi.ingsw.network.rmi;
+package it.polimi.ingsw.network.rmi.Server;
 
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
 public class RMIServer implements VirtualServer {

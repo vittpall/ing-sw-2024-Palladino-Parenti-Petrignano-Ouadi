@@ -1,6 +1,6 @@
 package it.polimi.ingsw.tui;
 
-import it.polimi.ingsw.network.rmi.RMIClient;
+import it.polimi.ingsw.network.rmi.Client.RMIClient;
 
 import java.rmi.RemoteException;
 import java.util.Scanner;

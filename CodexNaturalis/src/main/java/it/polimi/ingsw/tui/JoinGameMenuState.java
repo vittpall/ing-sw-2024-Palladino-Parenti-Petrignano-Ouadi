@@ -1,16 +1,17 @@
 package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.network.rmi.RMIClient;
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
+import it.polimi.ingsw.network.rmi.Client.RMIClient;
 import java.util.HashMap;
 import java.rmi.RemoteException;
 
 public class JoinGameMenuState implements ClientState{
-    RMIClient client;
+    VirtualView client;
     //used to show the last option in the bullet list of the menu
     int lastOptionOutput = 1;
 
-    public JoinGameMenuState(RMIClient client) {
+    public JoinGameMenuState(VirtualView client) {
         this.client = client;
     }
     @Override
@@ -25,7 +26,7 @@ public class JoinGameMenuState implements ClientState{
         System.out.println("These are the games to enter option:");
 
         try{
-            HashMap<Integer, Game> games = client.server.getNotStartedGames();
+            HashMap<Integer, Game> games = client.getServer().getNotStartedGames();
             if(games.isEmpty()){
                 System.out.println("No games available.\n 1.Create new game 🆕");
                 lastOptionOutput++;
@@ -49,16 +50,16 @@ public class JoinGameMenuState implements ClientState{
             System.exit(0);
         } else{
             try{
-                if(client.server.getNotStartedGames().isEmpty() && input==1){
+                if(client.getServer().getNotStartedGames().isEmpty() && input==1){
                     //client.setCurrentState(new CreateGameMenuState(client));
                     return;
                 }
-                if(client.server.getNotStartedGames().get(input)==null){
+                if(client.getServer().getNotStartedGames().get(input)==null){
                     System.out.println("Invalid input");
                     return;
                 }
 
-                client.server.joinGame(input, client.getUsername());
+                client.getServer().joinGame(input, client.getUsername());
             }catch(RemoteException ex){
                 System.out.println("Error while joining the game");
             }

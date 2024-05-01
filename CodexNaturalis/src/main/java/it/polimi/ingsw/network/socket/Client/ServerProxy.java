@@ -1,8 +1,8 @@
-package it.polimi.ingsw.network.socket;
+package it.polimi.ingsw.network.socket.Client;
 
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.network.rmi.VirtualServer;
-import it.polimi.ingsw.network.rmi.VirtualView;
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.BufferedWriter;
 import java.io.PrintWriter;

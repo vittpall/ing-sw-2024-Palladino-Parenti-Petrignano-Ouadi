@@ -1,19 +1,23 @@
 package it.polimi.ingsw.tui;
 
-import it.polimi.ingsw.network.rmi.RMIClient;
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
+import it.polimi.ingsw.network.rmi.Client.RMIClient;
+import it.polimi.ingsw.network.socket.Client.SocketClient;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class MainMenuState implements ClientState {
+public class MainMenuState implements ClientState, Remote {
 
-    RMIClient client;
+    VirtualView client;
     private final Scanner scanner;
 
-    public MainMenuState(RMIClient client, Scanner scanner) {
+    public MainMenuState(VirtualView client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
     }
+
 
     @Override
     public void promptForInput() {
@@ -68,7 +72,7 @@ public class MainMenuState implements ClientState {
             username = scanner.nextLine();
         } while (username.isEmpty());
 
-        if (client.server.checkUsername(username)) {
+        if (client.getServer().checkUsername(username)) {
             client.setUsername(username);
             client.setCurrentState(new LobbyMenuState(client, scanner));
         } else {

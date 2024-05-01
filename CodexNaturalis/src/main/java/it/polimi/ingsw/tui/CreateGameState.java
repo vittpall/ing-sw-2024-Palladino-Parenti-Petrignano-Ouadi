@@ -1,16 +1,18 @@
 package it.polimi.ingsw.tui;
 
-import it.polimi.ingsw.network.rmi.RMIClient;
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
+import it.polimi.ingsw.network.rmi.Client.RMIClient;
 
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
  public class CreateGameState implements ClientState{
-    RMIClient client;
-    private final Scanner scanner;
+
+     VirtualView client;
+     private final Scanner scanner;
 
 
-    public CreateGameState(RMIClient client, Scanner scanner) {
+    public CreateGameState(VirtualView client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
     }
@@ -54,7 +56,7 @@ import java.util.Scanner;
             System.out.println("Invalid number of players");
             createGame();
         }else{
-            client.server.createGame(client.getUsername(), nPlayers);
+            client.getServer().createGame(client.getUsername(), nPlayers);
             //client.setCurrentState(new WaitForPlayers(client));
         }
 

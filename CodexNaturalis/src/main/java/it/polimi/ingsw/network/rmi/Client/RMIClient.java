@@ -1,12 +1,11 @@
-package it.polimi.ingsw.network.rmi;
+package it.polimi.ingsw.network.rmi.Client;
 
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
 import it.polimi.ingsw.tui.MainMenuState;
 
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -41,6 +40,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         this.idGame = idGame;
     }
 
+    public VirtualServer getServer()
+    {
+        return this.server;
+    }
+
     public void setCurrentState(ClientState state) {
         this.currentState = state;
     }
@@ -58,8 +62,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                     correctInput = true;
                 } catch (InputMismatchException e) {
                     System.out.println("\nInvalid input: Reinsert the value: ");
-
-
                 }
                 finally {
                     scan.nextLine();

@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model.chat;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Chat {
+public class Chat implements Serializable {
     private ArrayList<Message> globalChat;
     private HashMap<String, ArrayList<Message>> privateChats;
 

@@ -1,11 +1,13 @@
 package it.polimi.ingsw.model.chat;
 
+import java.io.Serializable;
+
 /**
  * This class represents a message that can be sent in the chat.
 
  */
 
-public class Message {
+public class Message implements Serializable {
     private String sender;
     private String receiver;
     private String content;

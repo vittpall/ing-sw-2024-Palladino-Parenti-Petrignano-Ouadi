@@ -1,16 +1,18 @@
 package it.polimi.ingsw.tui;
 
-import it.polimi.ingsw.network.rmi.RMIClient;
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
+import it.polimi.ingsw.network.rmi.Client.RMIClient;
 
+import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public class LobbyMenuState implements ClientState {
 
 
-    RMIClient client;
+    VirtualView client;
     private final Scanner scanner;
 
-    public LobbyMenuState(RMIClient client, Scanner scanner) {
+    public LobbyMenuState(VirtualView client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
 
@@ -35,10 +37,18 @@ public class LobbyMenuState implements ClientState {
     public void inputHandler(int input) {
         switch (input) {
             case 1:
-                client.setCurrentState(new CreateGameState(client, scanner));
+                try {
+                    client.setCurrentState(new CreateGameState(client, scanner));
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case 2:
-                client.setCurrentState(new JoinGameMenuState(client));
+                try {
+                    client.setCurrentState(new JoinGameMenuState(client));
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case 3:
                 System.exit(0);

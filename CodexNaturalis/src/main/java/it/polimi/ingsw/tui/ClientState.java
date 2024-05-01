@@ -1,8 +1,9 @@
 package it.polimi.ingsw.tui;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface ClientState {
+public interface ClientState extends Remote {
 
     void display();
 

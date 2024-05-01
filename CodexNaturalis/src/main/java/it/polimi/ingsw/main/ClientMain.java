@@ -1,8 +1,8 @@
 package it.polimi.ingsw.main;
 
-import it.polimi.ingsw.network.rmi.RMIClient;
-import it.polimi.ingsw.network.rmi.VirtualServer;
-import it.polimi.ingsw.network.socket.SocketClient;
+import it.polimi.ingsw.network.rmi.Client.RMIClient;
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
+import it.polimi.ingsw.network.socket.Client.SocketClient;
 
 import java.io.*;
 import java.net.Socket;
@@ -86,6 +86,7 @@ public class ClientMain {
                 throw new RuntimeException(e);
             }
         }
+
     }
 
     private static boolean checkValidity(String input)

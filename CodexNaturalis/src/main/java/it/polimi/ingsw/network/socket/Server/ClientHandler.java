@@ -1,7 +1,7 @@
-package it.polimi.ingsw.network.socket;
+package it.polimi.ingsw.network.socket.Server;
 
 import it.polimi.ingsw.controller.LobbyController;
-import it.polimi.ingsw.network.rmi.VirtualView;
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,7 +26,9 @@ public class ClientHandler {
         while ((line = input.readLine()) != null) {
             // Read message and perform action
             switch (line) {
-
+                case "checkUsername" -> {
+                    controller.checkUsername(input.readLine());
+                }
                 default -> System.err.println("[INVALID MESSAGE]");
             }
         }
