@@ -29,12 +29,12 @@ public class SocketServer implements VirtualServer, Remote {
         Socket clientSocket = null;
         while ((clientSocket = this.listenSocket.accept()) != null) {
             //this one arrives from the client
-            InputStreamReader socketRx = new InputStreamReader(clientSocket.getInputStream());
+            ObjectInputStream socketRx = new ObjectInputStream(clientSocket.getInputStream());
             //this one contains the data sent to the client
-            OutputStreamWriter socketTx = new OutputStreamWriter(clientSocket.getOutputStream());
+            ObjectOutputStream socketTx = new ObjectOutputStream(clientSocket.getOutputStream());
 
             //this one serves as the remote object for the client
-            ClientHandler handler = new ClientHandler(this, new BufferedReader(socketRx), new BufferedWriter(socketTx), this.lobbyController);
+            ClientHandler handler = new ClientHandler(this, socketRx, socketTx, this.lobbyController);
 
             clients.add(handler);
             //it's the same as the list of virtual client view
@@ -42,6 +42,8 @@ public class SocketServer implements VirtualServer, Remote {
                 try {
                     handler.runVirtualView();
                 } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }).start();

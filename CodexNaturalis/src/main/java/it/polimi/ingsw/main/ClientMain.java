@@ -60,6 +60,10 @@ public class ClientMain {
                 throw new RuntimeException(e);
             } catch (NotBoundException e) {
                 throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
         else
@@ -71,18 +75,22 @@ public class ClientMain {
                 throw new RuntimeException(e);
             }
 
-            InputStreamReader socketRx = null;
-            OutputStreamWriter socketTx = null;
+            ObjectInputStream socketRx = null;
+            ObjectOutputStream socketTx = null;
             try {
-                socketRx = new InputStreamReader(serverSocket.getInputStream());
-                socketTx = new OutputStreamWriter(serverSocket.getOutputStream());
+                socketTx = new ObjectOutputStream(serverSocket.getOutputStream());
+                socketRx = new ObjectInputStream(serverSocket.getInputStream());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
 
             try {
-                new SocketClient(new BufferedReader(socketRx), new BufferedWriter(socketTx)).run();
+                new SocketClient(socketRx, socketTx).run();
             } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }

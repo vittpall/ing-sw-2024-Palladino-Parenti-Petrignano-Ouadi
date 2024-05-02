@@ -4,6 +4,7 @@ import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.rmi.Client.RMIClient;
 import it.polimi.ingsw.network.socket.Client.SocketClient;
 
+import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.Scanner;
@@ -49,7 +50,7 @@ public class MainMenuState implements ClientState, Remote {
     }
 
     @Override
-    public void inputHandler(int input) throws RemoteException {
+    public void inputHandler(int input) throws IOException, ClassNotFoundException {
 
         switch (input) {
             case 1:
@@ -65,14 +66,14 @@ public class MainMenuState implements ClientState, Remote {
     }
 
 
-    private void requestUsername() throws RemoteException {
+    private void requestUsername() throws IOException, ClassNotFoundException {
         String username;
         do {
             System.out.println("Enter your username (cannot be empty):");
             username = scanner.nextLine();
         } while (username.isEmpty());
 
-        if (client.getServer().checkUsername(username)) {
+        if (client.checkUsername(username)) {
             client.setUsername(username);
             client.setCurrentState(new LobbyMenuState(client, scanner));
         } else {

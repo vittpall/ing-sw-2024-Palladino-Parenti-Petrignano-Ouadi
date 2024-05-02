@@ -5,6 +5,7 @@ import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
 import it.polimi.ingsw.tui.MainMenuState;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.InputMismatchException;
@@ -31,7 +32,12 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return username;  // Method to get the username
     }
 
-    public void run() throws RemoteException {
+    @Override
+    public boolean checkUsername(String username) throws IOException, RemoteException, ClassNotFoundException {
+        return server.checkUsername(username);
+    }
+
+    public void run() throws IOException, ClassNotFoundException {
         this.server.connect(this);
         runStateLoop();
     }
@@ -49,7 +55,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         this.currentState = state;
     }
 
-    private void runStateLoop() throws RemoteException {
+    private void runStateLoop() throws IOException, ClassNotFoundException {
         boolean correctInput;
         while (true) {
             correctInput = false;
