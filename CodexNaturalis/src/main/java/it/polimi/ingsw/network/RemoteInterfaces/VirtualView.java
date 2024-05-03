@@ -7,9 +7,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public interface VirtualView extends Remote{
-
-    VirtualServer getServer() throws RemoteException;
+public interface VirtualView extends Remote {
 
     void setUsername(String username) throws RemoteException;
 
@@ -17,8 +15,6 @@ public interface VirtualView extends Remote{
 
     String getUsername() throws RemoteException;
 
-    public boolean checkUsername(String username) throws IOException, RemoteException, ClassNotFoundException;
-
-
+    public boolean checkUsername(String username) throws IOException, RemoteException, ClassNotFoundException, InterruptedException;
 
 }

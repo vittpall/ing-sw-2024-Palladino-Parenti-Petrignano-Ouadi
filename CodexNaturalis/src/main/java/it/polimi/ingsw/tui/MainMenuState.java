@@ -1,8 +1,7 @@
 package it.polimi.ingsw.tui;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
-import it.polimi.ingsw.network.rmi.Client.RMIClient;
-import it.polimi.ingsw.network.socket.Client.SocketClient;
 
 import java.io.IOException;
 import java.rmi.Remote;
@@ -27,19 +26,20 @@ public class MainMenuState implements ClientState, Remote {
 
     @Override
     public void display() {
-        System.out.println(" ██████╗ ██████╗ ██████╗ ███████╗██╗  ██╗                              \n" +
-                "██╔════╝██╔═══██╗██╔══██╗██╔════╝╚██╗██╔╝                              \n" +
-                "██║     ██║   ██║██║  ██║█████╗   ╚███╔╝                               \n" +
-                "██║     ██║   ██║██║  ██║██╔══╝   ██╔██╗                               \n" +
-                "╚██████╗╚██████╔╝██████╔╝███████╗██╔╝ ██╗                              \n" +
-                " ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝                              \n" +
-                "                                                                       \n" +
-                "███╗   ██╗ █████╗ ████████╗██╗   ██╗██████╗  █████╗ ██╗     ██╗███████╗\n" +
-                "████╗  ██║██╔══██╗╚══██╔══╝██║   ██║██╔══██╗██╔══██╗██║     ██║██╔════╝\n" +
-                "██╔██╗ ██║███████║   ██║   ██║   ██║██████╔╝███████║██║     ██║███████╗\n" +
-                "██║╚██╗██║██╔══██║   ██║   ██║   ██║██╔══██╗██╔══██║██║     ██║╚════██║\n" +
-                "██║ ╚████║██║  ██║   ██║   ╚██████╔╝██║  ██║██║  ██║███████╗██║███████║\n" +
-                "╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝");
+        System.out.println("""
+                 ██████╗ ██████╗ ██████╗ ███████╗██╗  ██╗                             \s
+                ██╔════╝██╔═══██╗██╔══██╗██╔════╝╚██╗██╔╝                             \s
+                ██║     ██║   ██║██║  ██║█████╗   ╚███╔╝                              \s
+                ██║     ██║   ██║██║  ██║██╔══╝   ██╔██╗                              \s
+                ╚██████╗╚██████╔╝██████╔╝███████╗██╔╝ ██╗                             \s
+                 ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝                             \s
+                                                                                      \s
+                ███╗   ██╗ █████╗ ████████╗██╗   ██╗██████╗  █████╗ ██╗     ██╗███████╗
+                ████╗  ██║██╔══██╗╚══██╔══╝██║   ██║██╔══██╗██╔══██╗██║     ██║██╔════╝
+                ██╔██╗ ██║███████║   ██║   ██║   ██║██████╔╝███████║██║     ██║███████╗
+                ██║╚██╗██║██╔══██║   ██║   ██║   ██║██╔══██╗██╔══██║██║     ██║╚════██║
+                ██║ ╚████║██║  ██║   ██║   ╚██████╔╝██║  ██║██║  ██║███████╗██║███████║
+                ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝╚══════╝""");
         System.out.println("\nWelcome to Codex Naturalis!");
         System.out.println("⚔️  _________________________________  ⚔️");
         System.out.println("|                                     |");
@@ -50,7 +50,7 @@ public class MainMenuState implements ClientState, Remote {
     }
 
     @Override
-    public void inputHandler(int input) throws IOException, ClassNotFoundException {
+    public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
 
         switch (input) {
             case 1:
@@ -66,7 +66,7 @@ public class MainMenuState implements ClientState, Remote {
     }
 
 
-    private void requestUsername() throws IOException, ClassNotFoundException {
+    private void requestUsername() throws IOException, ClassNotFoundException, InterruptedException {
         String username;
         do {
             System.out.println("Enter your username (cannot be empty):");

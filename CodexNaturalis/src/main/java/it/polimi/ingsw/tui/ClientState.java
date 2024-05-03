@@ -8,7 +8,7 @@ public interface ClientState extends Remote {
 
     void display();
 
-    void inputHandler(int input) throws IOException, ClassNotFoundException;
+    void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException;
 
     void promptForInput();
 }

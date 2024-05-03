@@ -1,28 +1,27 @@
 package it.polimi.ingsw.network.socket.Server;
 
-import it.polimi.ingsw.controller.LobbyController;
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
-import java.io.*;
+import it.polimi.ingsw.Controller.LobbyController;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public class SocketServer implements VirtualServer, Remote {
+public class SocketServer implements Remote {
 
     final ServerSocket listenSocket;
     final LobbyController lobbyController;
     final List<ClientHandler> clients = new ArrayList<>();
 
-    public SocketServer(ServerSocket listenSocket, LobbyController controller) {
-        this.listenSocket = listenSocket;
-        this.lobbyController = controller;
+    public SocketServer(LobbyController lobbyController) throws IOException {
+        this.listenSocket = new ServerSocket(2345);
+        this.lobbyController = lobbyController;
     }
 
     public void runServer() throws IOException {
@@ -46,42 +45,12 @@ public class SocketServer implements VirtualServer, Remote {
                 } catch (ClassNotFoundException e) {
                     throw new RuntimeException(e);
                 }
-            }).start();
+            }, "ClientHandler").start();
         }
     }
 
-    @Override
-    public void connect(VirtualView client) throws RemoteException {
-
-    }
-
-    @Override
-    public void reset() throws RemoteException {
-
-    }
 
     public boolean checkUsername(String username) throws RemoteException {
         return lobbyController.checkUsername(username);
     }
-
-    @Override
-    public HashMap<Integer, Game> getNotStartedGames() throws RemoteException {
-        return null;
-    }
-
-    @Override
-    public void joinGame(int id, String username) throws RemoteException {
-
-    }
-
-    @Override
-    public void createGame(String username, int nPlayers) throws RemoteException {
-
-    }
-
-    @Override
-    public void sendMessage(String username, String receiver, String message) throws RemoteException {
-
-    }
-
 }

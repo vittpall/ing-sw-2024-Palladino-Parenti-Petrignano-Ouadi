@@ -25,19 +25,19 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
 
     public void setUsername(String username) {
-        this.username = username;  // Method to set the username
+        this.username = username;
     }
 
     public String getUsername() {
-        return username;  // Method to get the username
+        return username;
     }
 
     @Override
-    public boolean checkUsername(String username) throws IOException, RemoteException, ClassNotFoundException {
+    public boolean checkUsername(String username) throws IOException {
         return server.checkUsername(username);
     }
 
-    public void run() throws IOException, ClassNotFoundException {
+    public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
         runStateLoop();
     }
@@ -46,33 +46,27 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         this.idGame = idGame;
     }
 
-    public VirtualServer getServer()
-    {
-        return this.server;
-    }
-
     public void setCurrentState(ClientState state) {
         this.currentState = state;
     }
 
-    private void runStateLoop() throws IOException, ClassNotFoundException {
+    private void runStateLoop() throws IOException, ClassNotFoundException, InterruptedException {
         boolean correctInput;
         while (true) {
             correctInput = false;
             currentState.display();
             currentState.promptForInput();
             int input = 0;
-            while(!correctInput){
+            while (!correctInput) {
                 try {
                     input = scan.nextInt();
                     correctInput = true;
                 } catch (InputMismatchException e) {
                     System.out.println("\nInvalid input: Reinsert the value: ");
-                }
-                finally {
+                } finally {
                     scan.nextLine();
                 }
-            } 
+            }
 
             currentState.inputHandler(input);
         }

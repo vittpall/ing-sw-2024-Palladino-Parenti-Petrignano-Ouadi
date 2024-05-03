@@ -1,48 +1,39 @@
 package it.polimi.ingsw.network.socket.Client;
 
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.CheckUsernameMsg;
-import it.polimi.ingsw.network.socket.ClientToServerMsg.ClientToServerMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 import it.polimi.ingsw.tui.ClientState;
 import it.polimi.ingsw.tui.MainMenuState;
 
-import java.io.*;
-import java.rmi.RemoteException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class SocketClient implements VirtualView {
 
-//    private final BufferedReader input;
-  //  private final VirtualServer server;
-    private ObjectOutputStream out;
-    private ObjectInputStream in;
-    private String username;
+    private final ObjectOutputStream out;
+    private final ObjectInputStream in;
     ClientState currentState;
+    private String username;
+    private final ConcurrentMap<Class<? extends ServerToClientMsg>, BlockingQueue<ServerToClientMsg>> responseQueues = new ConcurrentHashMap<>();
+
     private int idGame;
 
-    public SocketClient(ObjectInputStream in, ObjectOutputStream out)
-    {
+    public SocketClient(ObjectInputStream in, ObjectOutputStream out) {
         this.in = in;
         this.out = out;
         currentState = new MainMenuState(this, new Scanner(System.in));
     }
 
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
-
-    public void setIdGame(int idGame)
-    {
+    public void setIdGame(int idGame) {
         this.idGame = idGame;
-    }
-
-    //not used (just in RMI)
-    public VirtualServer getServer() {
-        return null;
     }
 
     public void setCurrentState(ClientState state) {
@@ -54,20 +45,23 @@ public class SocketClient implements VirtualView {
         return this.username;
     }
 
-    public void run() throws IOException, ClassNotFoundException {
-      /*  new Thread(() -> {
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void run() throws IOException, ClassNotFoundException, InterruptedException {
+        new Thread(() -> {
             try {
                 runVirtualServer();
-                System.out.println("ciao");
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        }).start();*/
+        }).start();
         runCli();
     }
 
-    //what I send to the server
-    private void runCli() throws IOException, ClassNotFoundException {
+
+    private void runCli() throws IOException, ClassNotFoundException, InterruptedException {
         boolean correctInput;
         Scanner scan = new Scanner(System.in);
         while (true) {
@@ -75,16 +69,13 @@ public class SocketClient implements VirtualView {
             currentState.display();
             currentState.promptForInput();
             int input = 0;
-            while(!correctInput){
+            while (!correctInput) {
                 try {
                     input = scan.nextInt();
                     correctInput = true;
                 } catch (InputMismatchException e) {
                     System.out.println("\nInvalid input: Reinsert the value: ");
-
-
-                }
-                finally {
+                } finally {
                     scan.nextLine();
                 }
             }
@@ -93,36 +84,33 @@ public class SocketClient implements VirtualView {
 
         }
     }
-/*
+
     //what I receive from the server
-    private void runVirtualServer() throws IOException {
-        String line;
-        // Read message type
-        while ((line = input.readLine()) != null) {
-            // Read message and perform action
-            switch (line) {
-                //to handle the output of the server
-                default -> System.err.println("[INVALID MESSAGE]");
+    private void runVirtualServer() throws IOException, ClassNotFoundException {
+        try {
+            while (true) {
+                ServerToClientMsg msg = (ServerToClientMsg) in.readObject();
+                Class<? extends ServerToClientMsg> responseType = msg.getClass();
+                responseQueues.computeIfAbsent(responseType, k -> new LinkedBlockingQueue<>()).put(msg);
+
             }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
-*/
-    public boolean checkUsername(String username) throws IOException, ClassNotFoundException {
-        out.writeObject(new CheckUsernameMsg(username));
+
+
+
+    public boolean checkUsername(String username) throws IOException, ClassNotFoundException, InterruptedException {
+        CheckUsernameMsg request = new CheckUsernameMsg(username);
+        ServerToClientMsg expectedResponse = request.getTypeofResponse();
+        out.writeObject(request);
         out.flush();
         out.reset();
-        return Boolean.parseBoolean(unPackMsg().getResponse());
-    }
+        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
+        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
 
-    public ServerToClientMsg unPackMsg() throws IOException, ClassNotFoundException {
-
-        ServerToClientMsg response;
-        while ((response = (ServerToClientMsg) in.readObject()) != null) {
-            return response;
-        }
-
-
-        return null;
+        return Boolean.parseBoolean(response.getResponse());
     }
 
 

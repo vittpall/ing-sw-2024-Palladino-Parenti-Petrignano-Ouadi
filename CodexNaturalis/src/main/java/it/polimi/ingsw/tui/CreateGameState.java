@@ -56,8 +56,8 @@ import java.util.Scanner;
             System.out.println("Invalid number of players");
             createGame();
         }else{
-            client.getServer().createGame(client.getUsername(), nPlayers);
-            //client.setCurrentState(new WaitForPlayers(client));
+          //  client.createGame(client.getUsername(), nPlayers);
+        //    client.setCurrentState(new WaitForPlayers(client));
         }
 
     }

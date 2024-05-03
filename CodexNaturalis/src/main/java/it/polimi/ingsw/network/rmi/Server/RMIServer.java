@@ -1,36 +1,29 @@
 package it.polimi.ingsw.network.rmi.Server;
 
-import it.polimi.ingsw.controller.LobbyController;
+import it.polimi.ingsw.Controller.LobbyController;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.rmi.RemoteException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class RMIServer implements VirtualServer {
     final List<VirtualView> clients = new ArrayList<>();
 
-    private ArrayList<String> privateChat = new ArrayList<>();
-    private ArrayList<String> globalChat = new ArrayList<>();
+    private final LobbyController lobbyController;
 
-    private LobbyController lobbyController;
-
-    public RMIServer() throws RemoteException {
+    public RMIServer(LobbyController lobbyController) throws RemoteException {
         super();  // Call the constructor of UnicastRemoteObject
-        lobbyController = new LobbyController();
+        this.lobbyController = lobbyController;
     }
 
     @Override
-    public void connect(VirtualView client) throws RemoteException {
+    public synchronized void connect(VirtualView client) throws RemoteException {
         System.err.println("new client connected");
         this.clients.add(client);
-    }
-
-    @Override
-    public void reset() throws RemoteException {
-        System.err.println("reset request");
-
     }
 
     @Override
@@ -53,14 +46,5 @@ public class RMIServer implements VirtualServer {
         lobbyController.createGame(username, nPlayers);
     }
 
-    @Override
-    public void sendMessage(String sender, String receiver, String message) throws RemoteException {
-        String toSave = sender + ": " + message;
-        if(receiver != null)
-            privateChat.add(toSave);
-        else
-            globalChat.add(toSave);
-
-    }
 
 }

@@ -25,8 +25,8 @@ public class JoinGameMenuState implements ClientState{
         System.out.println("\n---------- Lobby Menu ----------");
         System.out.println("These are the games to enter option:");
 
-        try{
-            HashMap<Integer, Game> games = client.getServer().getNotStartedGames();
+      /*  try{
+            HashMap<Integer, Game> games = client.getNotStartedGames();
             if(games.isEmpty()){
                 System.out.println("No games available.\n 1.Create new game 🆕");
                 lastOptionOutput++;
@@ -41,7 +41,7 @@ public class JoinGameMenuState implements ClientState{
             System.out.println(lastOptionOutput+". Exit 🚪");
         }catch(RemoteException ex){
             System.out.println(ex.getMessage());
-        }
+        }*/
         System.out.println("--------------------------------\n");
     }
     @Override
@@ -49,20 +49,20 @@ public class JoinGameMenuState implements ClientState{
         if(input == lastOptionOutput){
             System.exit(0);
         } else{
-            try{
-                if(client.getServer().getNotStartedGames().isEmpty() && input==1){
+           /* try{
+                if(client.getNotStartedGames().isEmpty() && input==1){
                     //client.setCurrentState(new CreateGameMenuState(client));
                     return;
                 }
-                if(client.getServer().getNotStartedGames().get(input)==null){
+                if(client.getNotStartedGames().get(input)==null){
                     System.out.println("Invalid input");
                     return;
                 }
 
-                client.getServer().joinGame(input, client.getUsername());
+                client.joinGame(input, client.getUsername());
             }catch(RemoteException ex){
                 System.out.println("Error while joining the game");
-            }
+            }*/
             //client.setCurrentState(new aitForPlayers());
         }
     }
