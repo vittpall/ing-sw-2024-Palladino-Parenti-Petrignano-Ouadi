@@ -32,10 +32,9 @@ public class Lobby {
         return nextGameId - 1;
     }
 
-    public boolean joinGame(int gameId, Player player) {
+    public int joinGame(int gameId, Player player) {
         Game game = getGame(gameId);
-        game.addPlayer(player);
-        return true;
+        return game.addPlayer(player);
     }
 
 }

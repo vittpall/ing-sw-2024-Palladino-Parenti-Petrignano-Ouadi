@@ -59,10 +59,11 @@ import java.util.Scanner;
             try{
                 System.out.println("Creating game and waiting for the players...");
                 client.createGame(client.getUsername(), nPlayers);
+                System.out.println("The game "+client.getIdGame()+" has started.\nYou are the player number "+client.getIdClientIntoGame()+"\n");
             }catch(InterruptedException | RemoteException e){
                 System.out.println("Error creating game. Please try again.");
             }
-        //    client.setCurrentState(new WaitForPlayers(client));
+            client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
         }
 
     }

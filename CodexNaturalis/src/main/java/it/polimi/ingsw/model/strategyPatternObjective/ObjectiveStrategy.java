@@ -2,10 +2,12 @@ package it.polimi.ingsw.model.strategyPatternObjective;
 
 import it.polimi.ingsw.model.PlayerDesk;
 
+import java.io.Serializable;
+
 /**
  * interface of the design pattern strategy
  */
-public interface ObjectiveStrategy {
+public interface ObjectiveStrategy extends Serializable {
     /**
      * standard method of the strategy pattern that will be overridden by the concrete strategies
      * @param desk

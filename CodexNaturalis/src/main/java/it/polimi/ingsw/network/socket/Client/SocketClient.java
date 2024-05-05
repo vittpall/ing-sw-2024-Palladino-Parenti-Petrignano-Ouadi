@@ -1,6 +1,8 @@
 package it.polimi.ingsw.network.socket.Client;
 
+import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.CheckUsernameMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -48,6 +51,16 @@ public class SocketClient implements VirtualView {
         return this.username;
     }
 
+    @Override
+    public int getIdGame() {
+        return 0;
+    }
+
+    @Override
+    public int getIdClientIntoGame() {
+        return 0;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -58,6 +71,11 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    public void setObjectiveCard(int idCard) throws RemoteException, CardNotFoundException {
+        //TODO
+    }
+
+    @Override
     public void createGame(String username, int nPlayers) throws RemoteException, InterruptedException {
         //TODO
     }
@@ -65,6 +83,12 @@ public class SocketClient implements VirtualView {
     @Override
     public void joinGame(int input, String username) throws RemoteException, InterruptedException {
         //TODO
+    }
+
+    @Override
+    public ArrayList<ObjectiveCard> getPlayerObjectiveCards() throws RemoteException {
+        //TODO
+        return null;
     }
 
     public void run() throws IOException, ClassNotFoundException, InterruptedException {

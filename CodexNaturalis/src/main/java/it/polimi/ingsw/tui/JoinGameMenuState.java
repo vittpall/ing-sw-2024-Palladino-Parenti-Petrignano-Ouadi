@@ -48,7 +48,7 @@ public class JoinGameMenuState implements ClientState{
         System.out.println("--------------------------------\n");
     }
     @Override
-    public void inputHandler(int input) {
+    public void inputHandler(int input) throws RemoteException {
         if(input == lastOptionOutput){
             System.exit(0);
         } else{
@@ -63,11 +63,12 @@ public class JoinGameMenuState implements ClientState{
                 }
                 System.out.println("Waiting for the game to start...");
                 client.joinGame(input, client.getUsername());
+                System.out.println("The game "+client.getIdGame()+" has started.\nYou are the player number "+client.getIdClientIntoGame()+"\n");
             }catch(RemoteException | InterruptedException ex){
                 System.out.println("Error while joining the game");
             }
-            //client.setCurrentState(new aitForPlayers());
         }
+        client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
     }
 
 

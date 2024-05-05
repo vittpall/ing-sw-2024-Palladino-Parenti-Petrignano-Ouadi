@@ -102,6 +102,7 @@ public class Game implements Serializable{
             playerObjCards.add(objectiveCards.remove((int) nRandom));
             player.setDrawnObjectiveCards(playerObjCards);
         }
+        setGameStarted();
     }
 
     /**
@@ -173,8 +174,9 @@ public class Game implements Serializable{
      *
      * @param playerToAdd
      */
-    public void addPlayer(Player playerToAdd) {
+    public int addPlayer(Player playerToAdd) {
         players.add(playerToAdd);
+        return players.size()-1;
     }
 
     /**

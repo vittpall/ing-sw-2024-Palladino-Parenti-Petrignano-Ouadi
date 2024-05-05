@@ -1,9 +1,11 @@
 package it.polimi.ingsw.Controller;
 
+import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Lobby;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,10 +37,10 @@ public class LobbyController {
         return visibleGames;
     }
 
-    public synchronized void joinGame(int id, String username) throws InterruptedException{
+    public synchronized int joinGame(int id, String username) throws InterruptedException{
         Game game = model.getGame(id);
         ArrayList<TokenColor> usedColors = new ArrayList<>();
-        TokenColor chosenColor = null;
+        TokenColor chosenColor = TokenColor.BLUE;
         for (Player player : game.getPlayers()) {
             usedColors.add(player.getTokenColor());
         }
@@ -49,18 +51,30 @@ public class LobbyController {
             }
         }
         Player player = new Player(chosenColor, username);
-        model.joinGame(id, player);
+        int nPlayer=model.joinGame(id, player);
         if(model.getGame(id).getPlayers().size()<model.getGame(id).getnPlayer()){
             while(model.getGame(id).getPlayers().size()<model.getGame(id).getnPlayer()) wait();
         }else{
             this.notifyAll();
             model.getGame(id).setUpGame();
         }
+        return nPlayer;
     }
 
-    public void createGame(String username, int nPlayers) throws InterruptedException{
-        Player player = new Player(TokenColor.BLUE, username);
+    public int createGame(String username, int nPlayers) throws InterruptedException{
         int newGameId=model.createNewGame(nPlayers);
-        this.joinGame(newGameId, username);
+        int nPlayer= this.joinGame(newGameId, username);
+        if(nPlayer==0){
+            return newGameId;
+        }
+        return -1;
+    }
+
+    public ArrayList<ObjectiveCard> getObjectiveCards(int idGame, int idPlayer) {
+        return model.getGame(idGame).getPlayers().get(idPlayer).getDrawnObjectiveCards();
+    }
+
+    public void setObjectiveCard(int idGame, int idClientIntoGame, ObjectiveCard objCard) throws CardNotFoundException {
+        model.getGame(idGame).getPlayers().get(idClientIntoGame).setObjectiveCard(objCard);
     }
 }
