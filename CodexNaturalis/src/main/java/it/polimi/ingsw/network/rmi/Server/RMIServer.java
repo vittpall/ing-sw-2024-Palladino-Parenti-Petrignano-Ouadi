@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.rmi.Server;
 
-import it.polimi.ingsw.Controller.LobbyController;
+import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;

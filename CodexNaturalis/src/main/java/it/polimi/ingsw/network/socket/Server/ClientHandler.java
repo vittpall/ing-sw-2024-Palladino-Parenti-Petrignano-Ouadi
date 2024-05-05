@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network.socket.Server;
 
-import it.polimi.ingsw.Controller.LobbyController;
+import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.ClientToServerMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;

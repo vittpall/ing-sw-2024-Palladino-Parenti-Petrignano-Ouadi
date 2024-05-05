@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network.socket.Server;
 
 
-import it.polimi.ingsw.Controller.LobbyController;
+import it.polimi.ingsw.controller.LobbyController;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
