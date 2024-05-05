@@ -24,7 +24,7 @@ import java.util.Scanner;
     public void display() {
         System.out.println("\n---------- Create new game ----------");
         System.out.println("|   Please select an option:          |");
-        System.out.println("|   1. Create Game 🎮                        |");
+        System.out.println("|   1. Create Game 🎮                 |");
         System.out.println("|   2. Exit 🚪                        |");
     }
     @Override
@@ -56,7 +56,12 @@ import java.util.Scanner;
             System.out.println("Invalid number of players");
             createGame();
         }else{
-          //  client.createGame(client.getUsername(), nPlayers);
+            try{
+                System.out.println("Creating game and waiting for the players...");
+                client.createGame(client.getUsername(), nPlayers);
+            }catch(InterruptedException | RemoteException e){
+                System.out.println("Error creating game. Please try again.");
+            }
         //    client.setCurrentState(new WaitForPlayers(client));
         }
 

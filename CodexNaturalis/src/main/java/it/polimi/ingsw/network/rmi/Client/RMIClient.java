@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.rmi.Client;
 
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.tui.MainMenuState;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -35,6 +37,18 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     @Override
     public boolean checkUsername(String username) throws IOException {
         return server.checkUsername(username);
+    }
+    @Override
+    public HashMap<Integer, Game> getNotStartedGames() throws RemoteException{
+        return server.getNotStartedGames();
+    }
+    @Override
+    public void joinGame(int input, String username) throws RemoteException, InterruptedException{
+        server.joinGame(input, username);
+    }
+    @Override
+    public void createGame(String username, int nPlayers) throws RemoteException, InterruptedException{
+        server.createGame(username, nPlayers);
     }
 
     public void run() throws IOException, ClassNotFoundException, InterruptedException {

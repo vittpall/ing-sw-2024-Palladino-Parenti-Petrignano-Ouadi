@@ -28,14 +28,14 @@ public class LobbyController {
         HashMap<Integer, Game> allGames = model.listAllGames();
         HashMap<Integer, Game> visibleGames = new HashMap<>();
         for (int id : allGames.keySet()) {
-            if (allGames.get(id).getPlayers().size() <= allGames.get(id).getnPlayer()) {
+            if (allGames.get(id).getPlayers().size() < allGames.get(id).getnPlayer()) {
                 visibleGames.put(id, allGames.get(id));
             }
         }
         return visibleGames;
     }
 
-    public void joinGame(int id, String username) {
+    public synchronized void joinGame(int id, String username) throws InterruptedException{
         Game game = model.getGame(id);
         ArrayList<TokenColor> usedColors = new ArrayList<>();
         TokenColor chosenColor = null;
@@ -50,10 +50,17 @@ public class LobbyController {
         }
         Player player = new Player(chosenColor, username);
         model.joinGame(id, player);
+        if(model.getGame(id).getPlayers().size()<model.getGame(id).getnPlayer()){
+            while(model.getGame(id).getPlayers().size()<model.getGame(id).getnPlayer()) wait();
+        }else{
+            this.notifyAll();
+            model.getGame(id).setUpGame();
+        }
     }
 
-    public void createGame(String username, int nPlayers) {
+    public void createGame(String username, int nPlayers) throws InterruptedException{
         Player player = new Player(TokenColor.BLUE, username);
-        model.createNewGame(nPlayers, player);
+        int newGameId=model.createNewGame(nPlayers);
+        this.joinGame(newGameId, username);
     }
 }

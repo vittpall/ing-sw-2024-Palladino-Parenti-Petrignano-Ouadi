@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.socket.Client;
 
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.CheckUsernameMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
@@ -9,6 +10,8 @@ import it.polimi.ingsw.tui.MainMenuState;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
@@ -47,6 +50,21 @@ public class SocketClient implements VirtualView {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    @Override
+    public HashMap<Integer, Game> getNotStartedGames() throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public void createGame(String username, int nPlayers) throws RemoteException, InterruptedException {
+        //TODO
+    }
+
+    @Override
+    public void joinGame(int input, String username) throws RemoteException, InterruptedException {
+        //TODO
     }
 
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
@@ -112,6 +130,5 @@ public class SocketClient implements VirtualView {
 
         return Boolean.parseBoolean(response.getResponse());
     }
-
 
 }

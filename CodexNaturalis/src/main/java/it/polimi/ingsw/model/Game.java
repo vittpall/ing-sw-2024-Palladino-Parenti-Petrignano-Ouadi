@@ -63,11 +63,6 @@ public class Game implements Serializable{
      * it is called when gameStarted is set as true
      */
     public void setUpGame() {
-        this.sharedObjectiveCards = new ObjectiveCard[2];
-        double nRandom = Math.random() * objectiveCards.size();
-        this.sharedObjectiveCards[0] = objectiveCards.remove((int) nRandom);
-        nRandom = Math.random() * objectiveCards.size();
-        this.sharedObjectiveCards[1] = objectiveCards.remove((int) nRandom);
         //vengono creati i deck
         ArrayList<GameCard> usableGoldCard = new ArrayList<>();
         ArrayList<GameCard> usableResourceCard = new ArrayList<>();
@@ -87,6 +82,12 @@ public class Game implements Serializable{
         //inizializzazione objectiveCard che conterrà tutte le carte obiettivo possibili
         ObjectiveCardLoader objectiveCardLoader = new ObjectiveCardLoader();
         objectiveCards.addAll(objectiveCardLoader.loadObjectiveCards());
+        //inizializzazione delle 2 carte obiettivo condivise
+        this.sharedObjectiveCards = new ObjectiveCard[2];
+        double nRandom = Math.random() * objectiveCards.size();
+        this.sharedObjectiveCards[0] = objectiveCards.remove((int) nRandom);
+        nRandom = Math.random() * objectiveCards.size();
+        this.sharedObjectiveCards[1] = objectiveCards.remove((int) nRandom);
         //viene settata la mano iniziale e la starter card del player
         for (Player player : players) {
             player.setPlayerHand(resourceDeck, goldDeck);

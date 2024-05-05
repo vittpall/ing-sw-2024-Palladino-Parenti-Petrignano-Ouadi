@@ -15,9 +15,9 @@ public interface VirtualServer extends Remote {
     
     HashMap<Integer, Game> getNotStartedGames() throws RemoteException;
 
-    void joinGame(int id, String username) throws RemoteException;
+    void joinGame(int id, String username) throws RemoteException, InterruptedException;
 
-    void createGame(String username, int nPlayers) throws RemoteException;
+    void createGame(String username, int nPlayers) throws RemoteException, InterruptedException;
 
 
 }

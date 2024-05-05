@@ -25,12 +25,11 @@ public class Lobby {
         return new HashMap<>(games);
     }
 
-    public Game createNewGame(int numberOfPlayers, Player player) {
+    public int createNewGame(int numberOfPlayers) {
         Game newGame = new Game(nextGameId, numberOfPlayers);
         games.put(nextGameId, newGame);
-        joinGame(nextGameId, player);
         nextGameId++;
-        return newGame;
+        return nextGameId - 1;
     }
 
     public boolean joinGame(int gameId, Player player) {

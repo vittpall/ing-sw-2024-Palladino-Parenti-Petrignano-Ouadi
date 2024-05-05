@@ -37,12 +37,12 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public void joinGame(int id, String username) throws RemoteException {
+    public void joinGame(int id, String username) throws RemoteException, InterruptedException {
         lobbyController.joinGame(id, username);
     }
 
     @Override
-    public void createGame(String username, int nPlayers) throws RemoteException {
+    public void createGame(String username, int nPlayers) throws RemoteException, InterruptedException{
         lobbyController.createGame(username, nPlayers);
     }
 

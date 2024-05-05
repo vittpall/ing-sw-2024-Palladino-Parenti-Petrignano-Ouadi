@@ -45,7 +45,7 @@ public class LobbyMenuState implements ClientState {
                 break;
             case 2:
                 try {
-                    client.setCurrentState(new JoinGameMenuState(client));
+                    client.setCurrentState(new JoinGameMenuState(client, scanner));
                 } catch (RemoteException e) {
                     throw new RuntimeException(e);
                 }
