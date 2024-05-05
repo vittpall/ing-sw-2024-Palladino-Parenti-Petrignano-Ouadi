@@ -61,7 +61,7 @@ public class CardPrinter {
                 y++;
                 printCenteredLine(lineContent, backgroundColor);
             }
-            while (y < cardHeight) {
+            while (y <= cardHeight) {
                 y++;
                 printCenteredLine("", backgroundColor);
             }
@@ -147,8 +147,9 @@ public class CardPrinter {
         } else if (strategy instanceof ResourceStrategy resourceStrategy) {
             printResourceStrategy(resourceStrategy);
         }
-        // String strategyDetails = strategy.getDetailsForPrinting();
-        //System.out.println(colorBackground + " " + centerString(strategyDetails, cardWidth - 2) + " " + RESET);
+        String pointsDetail = "Pts: " + card.getPoints() + " ";
+        System.out.println(Color.GREY + " " + centerString(pointsDetail, cardWidth - 2) + " " + RESET);
+        System.out.println();
     }
 
     private void printDiagonalPatternStrategy(DiagonalPatternStrategy strategy) {
@@ -167,7 +168,7 @@ public class CardPrinter {
         Point secondOffsetPoint = new Point((centerX / 2) - offset.x, centerY + offset.y);
 
         // Print the card with the diagonal
-        for (int y = 0; y < cardHeight; y++) {
+        for (int y = 0; y < cardHeight - 1; y++) {
             StringBuilder line = new StringBuilder();
             for (int x = 0; x < cardWidth / 2; x++) { // Iterate over half the cardWidth because each square takes 2 character spaces
                 if ((x == centerPoint.x && y == centerPoint.y) ||
@@ -182,7 +183,6 @@ public class CardPrinter {
             line.append(RESET);
             System.out.println(line);
         }
-        System.out.println(); // For spacing between cards
     }
 
     private void printVerticalPatternStrategy(VerticalPatternStrategy strategy) {
@@ -220,31 +220,8 @@ public class CardPrinter {
             line.append(RESET);
             System.out.println(line);
         }
-        System.out.println(); // For spacing between cards
     }
 
-    private void printCenteredResourceList(String resourceNames, Color backgroundColor) {
-        int y = cardHeight / 2; // Center text vertically
-        int start = (cardWidth - resourceNames.length()) / 2; // Calculate starting position to center text horizontally
-
-        StringBuilder line = new StringBuilder();
-        line.append(backgroundColor);
-        for (int x = 0; x < cardWidth; x++) {
-            if (x >= start && x < start + resourceNames.length()) {
-                line.append(resourceNames.charAt(x - start)); // Add the resource name character by character
-            } else {
-                line.append(" "); // Fill the rest of the line with spaces
-            }
-        }
-        line.append(RESET);
-        for (int i = 0; i < cardHeight; i++) {
-            if (i == y) {
-                System.out.println(line); // Print the line with resource names
-            } else {
-                System.out.println(backgroundColor + " ".repeat(cardWidth) + RESET); // Print empty lines with background color
-            }
-        }
-    }
 
     private void printResourceStrategy(ResourceStrategy strategy) {
         Resource resource = strategy.getResourceStrategyToCheck();
@@ -256,7 +233,7 @@ public class CardPrinter {
         int centerTextY = cardHeight / 2;
 
         // Print the card with resource color and centered text
-        for (int y = 0; y < cardHeight; y++) {
+        for (int y = 0; y < cardHeight - 1; y++) {
             StringBuilder line = new StringBuilder();
             for (int x = 0; x < cardWidth; x++) {
                 line.append(resourceColor); // Apply resource color to the entire line
@@ -270,7 +247,6 @@ public class CardPrinter {
             line.append(RESET);
             System.out.println(line);
         }
-        System.out.println(); // For spacing between cards
     }
 
     private void printObjectStrategy(ObjectStrategy strategy) {
@@ -291,7 +267,6 @@ public class CardPrinter {
             y++;
             printCenteredLine("", backgroundColor);
         }
-        System.out.println(); // For spacing between cards
     }
 
     private void printCenteredLine(String content, Color backgroundColor) {
