@@ -1,11 +1,13 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
+
 /**
  * This is an abstract class named Card.
  * It has private integer variables for points and strings for front and back image paths.
  * This class can be extended by other classes to represent different types of cards.
  */
-public abstract class Card {
+public abstract class Card implements Serializable {
     private int points;
     private final String frontImagePath;
     private final String backImagePath;

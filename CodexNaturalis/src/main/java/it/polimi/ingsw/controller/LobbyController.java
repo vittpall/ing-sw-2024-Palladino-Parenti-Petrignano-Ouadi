@@ -37,7 +37,7 @@ public class LobbyController {
         return visibleGames;
     }
 
-    public synchronized int joinGame(int id, String username) throws InterruptedException{
+    public synchronized int joinGame(int id, String username) throws InterruptedException {
         Game game = model.getGame(id);
         ArrayList<TokenColor> usedColors = new ArrayList<>();
         TokenColor chosenColor = TokenColor.BLUE;
@@ -51,20 +51,20 @@ public class LobbyController {
             }
         }
         Player player = new Player(chosenColor, username);
-        int nPlayer=model.joinGame(id, player);
-        if(model.getGame(id).getPlayers().size()<model.getGame(id).getnPlayer()){
-            while(model.getGame(id).getPlayers().size()<model.getGame(id).getnPlayer()) wait();
-        }else{
+        int nPlayer = model.joinGame(id, player);
+        if (model.getGame(id).getPlayers().size() < model.getGame(id).getnPlayer()) {
+            while (model.getGame(id).getPlayers().size() < model.getGame(id).getnPlayer()) wait();
+        } else {
             this.notifyAll();
             model.getGame(id).setUpGame();
         }
         return nPlayer;
     }
 
-    public int createGame(String username, int nPlayers) throws InterruptedException{
-        int newGameId=model.createNewGame(nPlayers);
-        int nPlayer= this.joinGame(newGameId, username);
-        if(nPlayer==0){
+    public int createGame(String username, int nPlayers) throws InterruptedException {
+        int newGameId = model.createNewGame(nPlayers);
+        int nPlayer = this.joinGame(newGameId, username);
+        if (nPlayer == 0) {
             return newGameId;
         }
         return -1;
