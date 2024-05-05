@@ -29,6 +29,19 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
         this.whichCorner = whichCorner;
     }
 
+
+    public Resource getPrimarySource() {
+        return primarySource;
+    }
+
+    public Point getWhichCorner() {
+        return whichCorner;
+    }
+
+    public Resource getSecondarySource() {
+        return secondarySource;
+    }
+
     /**
      * this method will be recognized if the Resource cards
      * on the PlayerDesk meet the requirements of the objective card.

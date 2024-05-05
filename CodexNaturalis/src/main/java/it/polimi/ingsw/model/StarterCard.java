@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * It extends the GameCard class.
  * A StarterCard does not have any additional attributes or methods.
  */
-class StarterCard extends GameCard {
+public class StarterCard extends GameCard {
 
     /**
      * This is the constructor for the StarterCard class.

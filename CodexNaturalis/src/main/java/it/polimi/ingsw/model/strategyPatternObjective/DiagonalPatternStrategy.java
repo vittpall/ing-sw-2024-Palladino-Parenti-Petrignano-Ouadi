@@ -28,6 +28,14 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
     }
 
 
+    public Resource getPrimarySource() {
+        return primarySource;
+    }
+
+    public Point getDiagonalOffset() {
+        return diagonalOffset;
+    }
+
     /**
      * this method will be recognized if the Resource cards
      * on the PlayerDesk meet the requirements of the objective card.
@@ -61,9 +69,6 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
         boolean isVerified = false;
 
 
-        if (diagonalOffset.equals(new Point(1, 1))) {
-            changeDiagonal = 1;
-        }
         if (diagonalOffset.equals(new Point(1, -1))) {
             changeDiagonal = -1;
         }

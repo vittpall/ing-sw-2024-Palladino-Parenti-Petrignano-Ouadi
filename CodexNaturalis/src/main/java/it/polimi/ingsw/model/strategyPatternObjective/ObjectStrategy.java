@@ -20,6 +20,9 @@ public class ObjectStrategy implements ObjectiveStrategy {
     }
 
 
+    public EnumMap<CornerObject, Integer> getObjectToCheck() {
+        return objectToCheck;
+    }
 
     /**
      * this method will be recognized if the Resource cards
