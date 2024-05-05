@@ -28,7 +28,7 @@ public class StarterCardTest {
 
 
         assertEquals(resourcesFront, card.getFrontSideResources());
-        assertEquals(resourceBack, card.getbackSideResource());
+        assertEquals(resourceBack, card.getBackSideResource());
         assertEquals(pointType, card.getPointType());
         assertEquals(points, card.getPoints());
         assertEquals(imageFrontPath, card.getImageFrontPath());

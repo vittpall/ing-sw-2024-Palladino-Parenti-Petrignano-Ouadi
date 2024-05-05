@@ -6,7 +6,6 @@ package it.polimi.ingsw.model;
  * This class can be extended by other classes to represent different types of cards.
  */
 public abstract class Card {
-    // The points associated with the card
     private int points;
     private final String frontImagePath;
     private final String backImagePath;

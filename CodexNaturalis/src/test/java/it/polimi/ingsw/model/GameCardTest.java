@@ -48,7 +48,7 @@ class GameCardTest {
         GameCard card = new GameCard(resource, null, null, 0, null, new ArrayList<>(), corners) {
             // Empty implementation for abstract class
         };
-        assertEquals(resource, card.getbackSideResource());
+        assertEquals(resource, card.getBackSideResource());
     }
 
     @Test

@@ -39,7 +39,7 @@ abstract public class GameCard extends Card {
         this.playedFaceDown = playedFaceDown;
     }
 
-    public Resource getbackSideResource() {
+    public Resource getBackSideResource() {
         return backSideResource;
     }
 

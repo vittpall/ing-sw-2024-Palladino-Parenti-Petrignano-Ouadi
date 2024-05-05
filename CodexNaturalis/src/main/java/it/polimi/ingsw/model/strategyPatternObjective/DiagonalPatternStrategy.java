@@ -22,7 +22,7 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
      * @param primarySource
      * @param diagonalOffset
      */
-    public DiagonalPatternStrategy(Resource primarySource,  Point diagonalOffset) {
+    public DiagonalPatternStrategy(Resource primarySource, Point diagonalOffset) {
         this.primarySource = primarySource;
         this.diagonalOffset = diagonalOffset;
     }
@@ -61,27 +61,27 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
         boolean isVerified = false;
 
 
-        if(diagonalOffset.equals(new Point(1,1))){
+        if (diagonalOffset.equals(new Point(1, 1))) {
             changeDiagonal = 1;
         }
-        if(diagonalOffset.equals(new Point(1,-1))){
+        if (diagonalOffset.equals(new Point(1, -1))) {
             changeDiagonal = -1;
         }
 
-        if(!deskToUse.containsKey(startingPoint))
+        if (!deskToUse.containsKey(startingPoint))
             return false;
 
         //scan the diagonal until it finds a card that doesn't match the color of the research objective going up and left or right depending on the changeDiagonal
-        while (deskToUse.containsKey(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y + i)) && deskToUse.get(new Point(startingPoint.x + i*changeDiagonal, startingPoint.y + i)).getbackSideResource().equals(primarySource)) {
+        while (deskToUse.containsKey(new Point(startingPoint.x + i * changeDiagonal, startingPoint.y + i)) && deskToUse.get(new Point(startingPoint.x + i * changeDiagonal, startingPoint.y + i)).getBackSideResource().equals(primarySource)) {
             i++;
         }
         i--;
 
-        Point firstPoint = new Point(startingPoint.x + i*changeDiagonal, startingPoint.y + i);
+        Point firstPoint = new Point(startingPoint.x + i * changeDiagonal, startingPoint.y + i);
         Point secondPoint = new Point(firstPoint.x - changeDiagonal, firstPoint.y - 1);
-        Point thirdPoint = new Point(secondPoint.x - changeDiagonal, secondPoint.y -1);
+        Point thirdPoint = new Point(secondPoint.x - changeDiagonal, secondPoint.y - 1);
 
-        if (deskToUse.containsKey(firstPoint) && deskToUse.get(firstPoint).getbackSideResource() == primarySource && deskToUse.containsKey(secondPoint) && deskToUse.get(secondPoint).getbackSideResource() == primarySource && deskToUse.containsKey(thirdPoint) && deskToUse.get(thirdPoint).getbackSideResource() == primarySource) {
+        if (deskToUse.containsKey(firstPoint) && deskToUse.get(firstPoint).getBackSideResource() == primarySource && deskToUse.containsKey(secondPoint) && deskToUse.get(secondPoint).getBackSideResource() == primarySource && deskToUse.containsKey(thirdPoint) && deskToUse.get(thirdPoint).getBackSideResource() == primarySource) {
             isVerified = true;
         }
 
