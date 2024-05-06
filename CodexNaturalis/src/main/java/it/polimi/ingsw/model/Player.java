@@ -27,7 +27,7 @@ public class Player implements Serializable {
     private final ArrayList<GameCard> playerHand;
     private ObjectiveCard objectiveCard;
     private ArrayList<ObjectiveCard> drawnObjectiveCards;
-    private final TokenColor color;
+    private TokenColor color;
     private StarterCard starterCard;
     private final PlayerDesk playerDesk;
 
@@ -48,6 +48,9 @@ public class Player implements Serializable {
         this.playerHand = new ArrayList<>();
         this.playerDesk = new PlayerDesk();
         this.drawnObjectiveCards = new ArrayList<>();
+    }
+    public void setTokenColor(TokenColor color) {
+        this.color = color;
     }
 
     /**
@@ -225,4 +228,5 @@ public class Player implements Serializable {
         this.setPoints(pointsToAdd);
         return nObjectiveMet;
     }
+
 }

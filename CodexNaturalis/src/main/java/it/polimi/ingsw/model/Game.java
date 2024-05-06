@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.chat.Chat;
+import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.util.GameCardLoader;
 import it.polimi.ingsw.util.ObjectiveCardLoader;
@@ -104,7 +105,22 @@ public class Game implements Serializable{
         }
         setGameStarted();
     }
-
+    public ArrayList<TokenColor>  getAvailableColors(){
+        ArrayList<TokenColor> usedColors = new ArrayList<>();
+        for (Player player : players) {
+            usedColors.add(player.getTokenColor());
+        }
+        ArrayList<TokenColor> availableColors = new ArrayList<>();
+        for(TokenColor color : TokenColor.values()){
+            if(!usedColors.contains(color)){
+                availableColors.add(color);
+            }
+        }
+        return availableColors;
+    }
+    public void setTokenColor(int idPlayer, TokenColor color){
+        players.get(idPlayer).setTokenColor(color);
+    }
     /**
      * @return gameId
      */

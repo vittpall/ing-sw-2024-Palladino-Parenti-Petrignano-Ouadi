@@ -101,4 +101,10 @@ public class LobbyController {
     public ObjectiveCard[] getSharedObjectiveCards(int idGame) {
         return model.getGame(idGame).getSharedObjectiveCards();
     }
+    public synchronized ArrayList<TokenColor> getAvailableColors(int idGame){
+        return model.getGame(idGame).getAvailableColors();
+    }
+    public synchronized void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor){
+        model.getGame(idGame).setTokenColor(idClientIntoGame, tokenColor);
+    }
 }
