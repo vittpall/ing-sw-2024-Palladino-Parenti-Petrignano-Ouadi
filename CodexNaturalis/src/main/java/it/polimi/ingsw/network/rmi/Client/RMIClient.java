@@ -7,12 +7,19 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.*;
+import it.polimi.ingsw.tui.ClientState;
+import it.polimi.ingsw.tui.GlobalChatState;
+import it.polimi.ingsw.tui.MainMenuState;
+import it.polimi.ingsw.tui.PrivateChatState;
 
 import java.awt.*;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -49,12 +56,33 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
 
     @Override
+    public void receiveMessage(Message msg) throws RemoteException {
+        if(currentState instanceof GlobalChatState || currentState instanceof PrivateChatState){
+            if(msg.getSender().equals(this.username))
+                System.out.println("You: " + msg.getContent());
+            else
+                System.out.println(msg.getSender() + ": " + msg.getContent());
+        }
+        else
+        {
+            if(msg.getReceiver() == null)
+                System.out.println("You have received a message");
+            else
+                System.out.println("You have received a from " + msg.getSender());
+        }
+    }
+
+    @Override
     public boolean checkUsername(String username) throws IOException {
         return server.checkUsername(username);
     }
     @Override
     public HashMap<Integer, Game> getNotStartedGames() throws RemoteException{
         return server.getNotStartedGames();
+    }
+
+    public ArrayList<Player> getAllPlayers(int gameId) throws RemoteException{
+        return server.getAllPlayers(gameId);
     }
     @Override
     public void joinGame(int input, String username) throws RemoteException, InterruptedException{
@@ -117,6 +145,21 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException{
         server.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
     }
+
+    public ArrayList<Message> getMessages(String receiver) throws RemoteException{
+           return server.getMessages(receiver, this.idGame, this.username);
+    }
+
+    public void sendMessage(String receiver, String message) throws RemoteException{
+        Message msg = new Message(this.username, receiver, message, this.idGame);
+        server.sendMessage(msg);
+    }
+
+    @Override
+    public ClientState getCurrentState() throws RemoteException {
+        return currentState;
+    }
+
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
         runStateLoop();
@@ -144,6 +187,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             currentState.display();
             currentState.promptForInput();
             int input = 0;
+            while(currentState instanceof PrivateChatState || currentState instanceof GlobalChatState) {
+            }
             while (!correctInput) {
                 try {
                     input = scan.nextInt();
@@ -154,7 +199,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                     scan.nextLine();
                 }
             }
-
             currentState.inputHandler(input);
         }
     }

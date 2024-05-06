@@ -8,6 +8,8 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
@@ -41,6 +43,39 @@ public class RMIServer implements VirtualServer {
     @Override
     public HashMap<Integer, Game> getNotStartedGames() throws RemoteException {
         return lobbyController.getVisibleGames();
+    }
+
+    @Override
+    public ArrayList<Player> getAllPlayers(int gameId) throws RemoteException {
+        return lobbyController.getAllPlayers(gameId);
+    }
+
+    @Override
+    public ArrayList<Message> getMessages(String receiver, int gameId, String sender) throws RemoteException {
+        return lobbyController.getMessages(receiver, gameId, sender);
+    }
+
+    @Override
+    public void sendMessage(Message msg) throws RemoteException {
+        lobbyController.sendMessage(msg);
+        //TODO alert all the clients that a new message has been sent
+        //TODO implement an observer pattern
+        if(msg.getReceiver() == null)
+        {
+            for (VirtualView client : clients)
+            {
+                if(client.getIdGame() == msg.getGameId())
+                    client.receiveMessage(msg);
+            }
+
+        }
+        else
+        {
+            for (VirtualView client : clients)
+                if(client.getIdGame() == msg.getGameId())
+                    client.receiveMessage(msg);
+        }
+
     }
 
     @Override

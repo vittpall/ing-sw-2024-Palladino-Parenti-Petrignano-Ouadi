@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.chat.Message;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,9 +35,21 @@ public class Lobby {
         return nextGameId - 1;
     }
 
+    public ArrayList<Message> getMessages(String receiver, int gameId, String sender) {
+        if (receiver == null)
+            return games.get(gameId).getChats().getGlobalChat();
+        else
+            return games.get(gameId).getChats().getPrivateChat(receiver, sender);
+    }
+
     public int joinGame(int gameId, Player player) {
         Game game = getGame(gameId);
         return game.addPlayer(player);
     }
 
+    public void sendMessage(Message msg) {
+        Game game = getGame(msg.getGameId());
+        game.getChats().addMessage(msg);
+
+    }
 }

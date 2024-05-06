@@ -7,7 +7,10 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.StarterCard;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.tui.ClientState;
 
 import java.awt.*;
@@ -17,6 +20,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public interface VirtualView extends Remote {
 
@@ -35,6 +39,10 @@ public interface VirtualView extends Remote {
     int getIdGame() throws RemoteException;
 
     int getIdClientIntoGame() throws RemoteException;
+
+    ArrayList<Player> getAllPlayers(int gameId) throws RemoteException;
+
+    void receiveMessage(Message msg) throws RemoteException;
 
     public boolean checkUsername(String username) throws IOException, RemoteException, ClassNotFoundException, InterruptedException;
 
@@ -60,4 +68,11 @@ public interface VirtualView extends Remote {
     void drawCard(int input, int inVisible) throws RemoteException, CardNotFoundException;
 
     void waitForYourTurn() throws RemoteException, InterruptedException;
+
+    ClientState getCurrentState() throws RemoteException;
+
+    ArrayList<Message> getMessages(String receiver) throws RemoteException;
+
+    void sendMessage(String receiver, String input) throws RemoteException;
+
 }

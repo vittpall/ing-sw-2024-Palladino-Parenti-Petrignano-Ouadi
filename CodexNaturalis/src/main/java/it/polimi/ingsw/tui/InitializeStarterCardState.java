@@ -76,6 +76,9 @@ public class InitializeStarterCardState implements ClientState{
             case 3:
                 System.exit(0);
                 break;
+            case 4:
+                client.setCurrentState(new ChatState(client, scanner, this));
+                break;
             default:
                 System.out.print("Invalid input");
                 display();

@@ -11,6 +11,7 @@ public class Message implements Serializable {
     private String sender;
     private String receiver;
     private String content;
+    private int gameId;
 
     /**
      * Default constructor
@@ -18,10 +19,11 @@ public class Message implements Serializable {
      * @param receiver
      * @param content
      */
-    public Message(String sender, String receiver, String content) {
+    public Message(String sender, String receiver, String content, int gameId) {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
+        this.gameId = gameId;
     }
 
     public String getSender() {
@@ -46,5 +48,9 @@ public class Message implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getGameId() {
+        return this.gameId;
     }
 }

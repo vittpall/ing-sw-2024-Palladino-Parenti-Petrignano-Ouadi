@@ -49,6 +49,9 @@ public class PlayCardState implements ClientState{
             case 5:
                 System.exit(0);
                 break;
+            case 6:
+                client.setCurrentState(new ChatState(client, scanner));
+                break;
             default:
                 System.out.println("Invalid input");
                 break;

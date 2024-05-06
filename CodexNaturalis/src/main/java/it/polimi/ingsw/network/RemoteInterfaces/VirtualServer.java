@@ -8,6 +8,8 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.chat.Message;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -22,6 +24,12 @@ public interface VirtualServer extends Remote {
     boolean checkUsername(String username) throws RemoteException;
     
     HashMap<Integer, Game> getNotStartedGames() throws RemoteException;
+
+    ArrayList<Player> getAllPlayers(int gameId) throws RemoteException;
+
+    ArrayList<Message> getMessages(String receiver, int gameId, String sender) throws RemoteException;
+
+    void sendMessage(Message msg) throws RemoteException;
 
     int joinGame(int id, String username) throws RemoteException, InterruptedException;
 

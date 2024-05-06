@@ -179,6 +179,10 @@ public class Game implements Serializable{
         return isLastRoundStarted;
     }
 
+    public Chat getChats() {
+        return chats;
+    }
+
     /**
      * @return gameStarted
      */

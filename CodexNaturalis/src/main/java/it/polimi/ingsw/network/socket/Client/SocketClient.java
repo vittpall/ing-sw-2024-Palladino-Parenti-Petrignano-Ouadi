@@ -4,15 +4,18 @@ import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.CheckUsernameMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 import it.polimi.ingsw.tui.ClientState;
 import it.polimi.ingsw.tui.MainMenuState;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -33,7 +36,6 @@ public class SocketClient implements VirtualView {
     ClientState currentState;
     private String username;
     private final ConcurrentMap<Class<? extends ServerToClientMsg>, BlockingQueue<ServerToClientMsg>> responseQueues = new ConcurrentHashMap<>();
-
     private int idGame;
 
     public SocketClient(ObjectInputStream in, ObjectOutputStream out) {
@@ -63,6 +65,16 @@ public class SocketClient implements VirtualView {
     @Override
     public int getIdClientIntoGame() {
         return 0;
+    }
+
+    @Override
+    public ArrayList<Player> getAllPlayers(int gameId) throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public void receiveMessage(Message msg) throws RemoteException {
+        //TODO
     }
 
     public void setUsername(String username) {
@@ -96,6 +108,21 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    public ClientState getCurrentState() {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Message> getMessages(String receiver) throws RemoteException {
+        return null;
+    }
+
+    @Override
+    public void sendMessage(String receiver, String input) throws RemoteException {
+
+    }
+
+    @Override
     public StarterCard getStarterCard() throws RemoteException {
         //TODO
         return null;
@@ -122,6 +149,26 @@ public class SocketClient implements VirtualView {
     public ObjectiveCard[] getSharedObjectiveCards() throws RemoteException {
         //TODO
         return new ObjectiveCard[0];
+    }
+
+    @Override
+    public String getNextState() throws RemoteException {
+        return "";
+    }
+
+    @Override
+    public void playCard(int chosenCard, boolean faceDown, Point chosenPosition) throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
+
+    }
+
+    @Override
+    public void drawCard(int input, int inVisible) throws RemoteException, CardNotFoundException {
+
+    }
+
+    @Override
+    public void waitForYourTurn() throws RemoteException, InterruptedException {
+
     }
 
     public void run() throws IOException, ClassNotFoundException, InterruptedException {

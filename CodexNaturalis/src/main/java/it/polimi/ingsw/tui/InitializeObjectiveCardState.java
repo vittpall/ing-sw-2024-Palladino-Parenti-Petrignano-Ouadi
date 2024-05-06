@@ -36,6 +36,7 @@ public class InitializeObjectiveCardState implements ClientState {
                 nObjectiveCard++;
             }
             System.out.println("|   3. Exit 🚪                        |");
+            System.out.println("|   4. Chat 💬                        |");
         } catch (RemoteException ex) {
             System.out.println("Error while getting the drawn objective cards");
             System.out.println(ex.getMessage());
@@ -64,6 +65,9 @@ public class InitializeObjectiveCardState implements ClientState {
                 break;
             case 3:
                 System.exit(0);
+                break;
+            case 4:
+                client.setCurrentState(new ChatState(client, scanner, this));
                 break;
             default:
                 System.out.print("Invalid input");

@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.TokenColor;
@@ -36,6 +37,14 @@ public class LobbyController {
             }
         }
         return visibleGames;
+    }
+
+    public ArrayList<Player> getAllPlayers(int gameId){
+        return model.getGame(gameId).getPlayers();
+    }
+
+    public ArrayList<Message> getMessages(String receiver, int gameId, String sender){
+        return model.getMessages(receiver, gameId, sender);
     }
 
     public synchronized int joinGame(int id, String username) throws InterruptedException {
@@ -140,4 +149,9 @@ public class LobbyController {
     public boolean getIsLastRoundStarted(int idGame) {
         return model.getGame(idGame).getIsLastRoundStarted();
     }
+
+    public void sendMessage(Message msg) {
+        model.sendMessage(msg);
+    }
+
 }

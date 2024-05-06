@@ -32,6 +32,9 @@ public class WaitForYourTurnState implements ClientState{
             case 2:
                 System.exit(0);
                 break;
+            case 3:
+                client.setCurrentState(new ChatState(client, scanner, this));
+                break;
             default:
                 System.out.println("Invalid input");
                 break;
@@ -40,6 +43,8 @@ public class WaitForYourTurnState implements ClientState{
 
     @Override
     public void promptForInput() {
-        System.out.println("Press 1 to wait for your turn, 2 to exit");
+        System.out.println("1. Wait for your turn");
+        System.out.println("2. Exit");
+        System.out.println("3. Chat");
     }
 }

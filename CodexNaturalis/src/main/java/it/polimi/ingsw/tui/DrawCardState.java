@@ -44,6 +44,9 @@ public class DrawCardState implements ClientState{
             case 3:
                 System.exit(0);
                 break;
+            case 4:
+                client.setCurrentState(new ChatState(client, scanner, this));
+                break;
             default:
                 System.out.println("Invalid input");
                 break;
@@ -56,6 +59,10 @@ public class DrawCardState implements ClientState{
 
     @Override
     public void promptForInput() {
+        System.out.println("1. Draw resource card");
+        System.out.println("2. Draw gold card");
+        System.out.println("3. Exit");
+        System.out.println("4. Chat");
 
     }
 }

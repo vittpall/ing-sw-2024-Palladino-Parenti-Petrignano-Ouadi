@@ -149,6 +149,13 @@ public class Player implements Serializable {
     }
 
     /**
+     * @return username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
      * draws a card from the chosenDeck and puts it into the playerHand
      *
      * @param chosenDeck
