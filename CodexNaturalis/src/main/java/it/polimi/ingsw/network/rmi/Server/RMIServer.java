@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
+import java.awt.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,5 +82,27 @@ public class RMIServer implements VirtualServer {
     @Override
     public ObjectiveCard[] getSharedObjectiveCards(int idGame) throws RemoteException{
         return lobbyController.getSharedObjectiveCards(idGame);
+    }
+    @Override
+    public int getCurrentPlayer(int idGame) throws RemoteException {
+        return lobbyController.getCurrentPlayer(idGame);
+    }
+    @Override
+    public void playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
+            throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
+        lobbyController.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
+    }
+
+    @Override
+    public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws RemoteException, CardNotFoundException {
+        lobbyController.drawCard(idGame, idClientIntoGame, deckToChoose, inVisible);
+    }
+    @Override
+    public void waitForYourTurn(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException{
+        lobbyController.waitForYourTurn( idGame, idClientIntoGame);
+    }
+    @Override
+    public boolean getIsLastRoundStarted(int idGame) throws RemoteException{
+        return lobbyController.getIsLastRoundStarted(idGame);
     }
 }

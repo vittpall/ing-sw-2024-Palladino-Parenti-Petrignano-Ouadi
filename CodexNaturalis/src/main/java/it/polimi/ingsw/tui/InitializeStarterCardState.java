@@ -79,6 +79,16 @@ public class InitializeStarterCardState implements ClientState{
             default:
                 System.out.print("Invalid input");
                 display();
+
+        }
+        String nextState=client.getNextState();
+        if(nextState.equals("PlayCardState"))
+            client.setCurrentState(new PlayCardState(client, scanner));
+        else if(nextState.equals("WaitForYourTurnState"))
+            client.setCurrentState(new WaitForYourTurnState(client, scanner));
+        else{
+            System.out.println("Error");
+            display();
         }
     }
 }

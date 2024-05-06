@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.tui.ClientState;
 
+import java.awt.*;
 import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -50,4 +51,13 @@ public interface VirtualView extends Remote {
     ArrayList<GameCard> getPlayerHand() throws RemoteException;
 
     ObjectiveCard[] getSharedObjectiveCards() throws RemoteException;
+
+    String getNextState() throws RemoteException;
+
+    void playCard(int chosenCard, boolean faceDown, Point chosenPosition)
+            throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException;
+
+    void drawCard(int input, int inVisible) throws RemoteException, CardNotFoundException;
+
+    void waitForYourTurn() throws RemoteException, InterruptedException;
 }

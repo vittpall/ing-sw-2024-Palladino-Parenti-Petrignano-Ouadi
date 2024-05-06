@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.rmi.Remote;
@@ -41,4 +42,15 @@ public interface VirtualServer extends Remote {
     ArrayList<GameCard> getPlayerHand(int idGame, int idClientIntoGame) throws RemoteException;
 
     ObjectiveCard[] getSharedObjectiveCards(int idGame) throws RemoteException;
+
+    int getCurrentPlayer(int idGame) throws RemoteException;
+
+    void playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
+            throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException;
+
+    void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws RemoteException, CardNotFoundException;
+
+    void waitForYourTurn( int idGame, int idClientIntoGame) throws RemoteException, InterruptedException;
+
+    boolean getIsLastRoundStarted(int idGame) throws RemoteException;
 }

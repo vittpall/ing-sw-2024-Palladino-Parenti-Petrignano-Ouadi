@@ -169,8 +169,8 @@
     "corners": [
       "PLANT_KINGDOM",
       "free",
-      "PLANT_KINGDOM",
-      "hidden"
+      "hidden",
+      "PLANT_KINGDOM"
     ],
     "requirements": {},
     "type": "resource"
@@ -185,8 +185,8 @@
     "corners": [
       "PLANT_KINGDOM",
       "PLANT_KINGDOM",
-      "hidden",
-      "free"
+      "free",
+      "hidden"
     ],
     "requirements": {},
     "type": "resource"
@@ -217,8 +217,8 @@
     "corners": [
       "hidden",
       "PLANT_KINGDOM",
-      "free",
-      "PLANT_KINGDOM"
+      "PLANT_KINGDOM",
+      "free"
     ],
     "requirements": {},
     "type": "resource"
@@ -233,8 +233,8 @@
     "corners": [
       "hidden",
       "INSECT_KINGDOM",
-      "QUILL",
-      "PLANT_KINGDOM"
+      "PLANT_KINGDOM",
+      "QUILL"
     ],
     "requirements": {},
     "type": "resource"
@@ -249,8 +249,8 @@
     "corners": [
       "FUNGI_KINGDOM",
       "PLANT_KINGDOM",
-      "hidden",
-      "INKWELL"
+      "INKWELL",
+      "hidden"
     ],
     "requirements": {},
     "type": "resource"
@@ -265,8 +265,8 @@
     "corners": [
       "MANUSCRIPT",
       "hidden",
-      "PLANT_KINGDOM",
-      "ANIMAL_KINGDOM"
+      "ANIMAL_KINGDOM",
+      "PLANT_KINGDOM"
     ],
     "requirements": {},
     "type": "resource"
@@ -281,8 +281,8 @@
     "corners": [
       "free",
       "free",
-      "PLANT_KINGDOM",
-      "hidden"
+      "hidden",
+      "PLANT_KINGDOM"
     ],
     "requirements": {},
     "type": "resource"
@@ -297,8 +297,8 @@
     "corners": [
       "free",
       "free",
-      "hidden",
-      "PLANT_KINGDOM"
+      "PLANT_KINGDOM",
+      "hidden"
     ],
     "requirements": {},
     "type": "resource"
@@ -329,8 +329,8 @@
     "corners": [
       "ANIMAL_KINGDOM",
       "ANIMAL_KINGDOM",
-      "free",
-      "hidden"
+      "hidden",
+      "free"
     ],
     "requirements": {},
     "type": "resource"
@@ -361,8 +361,8 @@
     "corners": [
       "ANIMAL_KINGDOM",
       "hidden",
-      "ANIMAL_KINGDOM",
-      "free"
+      "free",
+      "ANIMAL_KINGDOM"
     ],
     "requirements": {},
     "type": "resource"
@@ -377,8 +377,8 @@
     "corners": [
       "free",
       "ANIMAL_KINGDOM",
-      "hidden",
-      "ANIMAL_KINGDOM"
+      "ANIMAL_KINGDOM",
+      "hidden"
     ],
     "requirements": {},
     "type": "resource"
@@ -393,8 +393,8 @@
     "corners": [
       "hidden",
       "INSECT_KINGDOM",
-      "INKWELL",
-      "ANIMAL_KINGDOM"
+      "ANIMAL_KINGDOM",
+      "INKWELL"
     ],
     "requirements": {},
     "type": "resource"
@@ -409,8 +409,8 @@
     "corners": [
       "PLANT_KINGDOM",
       "ANIMAL_KINGDOM",
-      "hidden",
-      "MANUSCRIPT"
+      "MANUSCRIPT",
+      "hidden"
     ],
     "requirements": {},
     "type": "resource"
@@ -425,8 +425,8 @@
     "corners": [
       "QUILL",
       "hidden",
-      "ANIMAL_KINGDOM",
-      "FUNGI_KINGDOM"
+      "FUNGI_KINGDOM",
+      "ANIMAL_KINGDOM"
     ],
     "requirements": {},
     "type": "resource"
@@ -441,8 +441,8 @@
     "corners": [
       "hidden",
       "free",
-      "ANIMAL_KINGDOM",
-      "free"
+      "free",
+      "ANIMAL_KINGDOM"
     ],
     "requirements": {},
     "type": "resource"
@@ -457,8 +457,8 @@
     "corners": [
       "free",
       "hidden",
-      "free",
-      "ANIMAL_KINGDOM"
+      "ANIMAL_KINGDOM",
+      "free"
     ],
     "requirements": {},
     "type": "resource"
@@ -473,8 +473,8 @@
     "corners": [
       "free",
       "ANIMAL_KINGDOM",
-      "free",
-      "hidden"
+      "hidden",
+      "free"
     ],
     "requirements": {},
     "type": "resource"
@@ -489,8 +489,8 @@
     "corners": [
       "INSECT_KINGDOM",
       "INSECT_KINGDOM",
-      "free",
-      "hidden"
+      "hidden",
+      "free"
     ],
     "requirements": {},
     "type": "resource"
@@ -521,8 +521,8 @@
     "corners": [
       "INSECT_KINGDOM",
       "hidden",
-      "INSECT_KINGDOM",
-      "free"
+      "free",
+      "INSECT_KINGDOM"
     ],
     "requirements": {},
     "type": "resource"
@@ -537,8 +537,8 @@
     "corners": [
       "free",
       "INSECT_KINGDOM",
-      "hidden",
-      "INSECT_KINGDOM"
+      "INSECT_KINGDOM",
+      "hidden"
     ],
     "requirements": {},
     "type": "resource"
@@ -553,8 +553,8 @@
     "corners": [
       "hidden",
       "QUILL",
-      "ANIMAL_KINGDOM",
-      "INSECT_KINGDOM"
+      "INSECT_KINGDOM",
+      "ANIMAL_KINGDOM"
     ],
     "requirements": {},
     "type": "resource"
@@ -569,8 +569,8 @@
     "corners": [
       "MANUSCRIPT",
       "INSECT_KINGDOM",
-      "hidden",
-      "FUNGI_KINGDOM"
+      "FUNGI_KINGDOM",
+      "hidden"
     ],
     "requirements": {},
     "type": "resource"
@@ -585,8 +585,8 @@
     "corners": [
       "INSECT_KINGDOM",
       "PLANT_KINGDOM",
-      "INKWELL",
-      "hidden"
+      "hidden",
+      "INKWELL"
     ],
     "requirements": {},
     "type": "resource"
@@ -617,8 +617,8 @@
     "corners": [
       "free",
       "free",
-      "hidden",
-      "INSECT_KINGDOM"
+      "INSECT_KINGDOM",
+      "hidden"
     ],
     "requirements": {},
     "type": "resource"
@@ -649,8 +649,8 @@
     "corners": [
       "hidden",
       "free",
-      "free",
-      "QUILL"
+      "QUILL",
+      "free"
     ],
     "requirements": {
       "FUNGI_KINGDOM": 2,
@@ -668,8 +668,8 @@
     "corners": [
       "free",
       "INKWELL",
-      "hidden",
-      "free"
+      "free",
+      "hidden"
     ],
     "requirements": {
       "FUNGI_KINGDOM": 2,
@@ -687,8 +687,8 @@
     "corners": [
       "MANUSCRIPT",
       "free",
-      "free",
-      "hidden"
+      "hidden",
+      "free"
     ],
     "requirements": {
       "FUNGI_KINGDOM": 2,
@@ -706,8 +706,8 @@
     "corners": [
       "free",
       "free",
-      "hidden",
-      "free"
+      "free",
+      "hidden"
     ],
     "requirements": {
       "FUNGI_KINGDOM": 3,
@@ -725,8 +725,8 @@
     "corners": [
       "free",
       "free",
-      "free",
-      "hidden"
+      "hidden",
+      "free"
     ],
     "requirements": {
       "FUNGI_KINGDOM": 3,
@@ -763,8 +763,8 @@
     "corners": [
       "free",
       "hidden",
-      "INKWELL",
-      "hidden"
+      "hidden",
+      "INKWELL"
     ],
     "requirements": {
       "FUNGI_KINGDOM": 3
@@ -799,8 +799,8 @@
     "corners": [
       "hidden",
       "MANUSCRIPT",
-      "hidden",
-      "free"
+      "free",
+      "hidden"
     ],
     "requirements": {
       "FUNGI_KINGDOM": 3
@@ -817,8 +817,8 @@
     "corners": [
       "free",
       "hidden",
-      "free",
-      "hidden"
+      "hidden",
+      "free"
     ],
     "requirements": {
       "FUNGI_KINGDOM": 5
@@ -835,8 +835,8 @@
     "corners": [
       "QUILL",
       "free",
-      "free",
-      "hidden"
+      "hidden",
+      "free"
     ],
     "requirements": {
       "PLANT_KINGDOM": 2,
@@ -854,8 +854,8 @@
     "corners": [
       "free",
       "MANUSCRIPT",
-      "hidden",
-      "free"
+      "free",
+      "hidden"
     ],
     "requirements": {
       "PLANT_KINGDOM": 2,
@@ -873,8 +873,8 @@
     "corners": [
       "free",
       "hidden",
-      "INKWELL",
-      "free"
+      "free",
+      "INKWELL"
     ],
     "requirements": {
       "PLANT_KINGDOM": 2,
@@ -911,8 +911,8 @@
     "corners": [
       "free",
       "free",
-      "free",
-      "hidden"
+      "hidden",
+      "free"
     ],
     "requirements": {
       "PLANT_KINGDOM": 3,
@@ -949,8 +949,8 @@
     "corners": [
       "free",
       "hidden",
-      "QUILL",
-      "hidden"
+      "hidden",
+      "QUILL"
     ],
     "requirements": {
       "PLANT_KINGDOM": 3
@@ -985,8 +985,8 @@
     "corners": [
       "hidden",
       "INKWELL",
-      "hidden",
-      "free"
+      "free",
+      "hidden"
     ],
     "requirements": {
       "PLANT_KINGDOM": 3
@@ -1021,8 +1021,8 @@
     "corners": [
       "INKWELL",
       "free",
-      "free",
-      "hidden"
+      "hidden",
+      "free"
     ],
     "requirements": {
       "ANIMAL_KINGDOM": 2,
@@ -1040,8 +1040,8 @@
     "corners": [
       "hidden",
       "free",
-      "free",
-      "MANUSCRIPT"
+      "MANUSCRIPT",
+      "free"
     ],
     "requirements": {
       "ANIMAL_KINGDOM": 2,
@@ -1059,8 +1059,8 @@
     "corners": [
       "free",
       "hidden",
-      "QUILL",
-      "free"
+      "free",
+      "QUILL"
     ],
     "requirements": {
       "ANIMAL_KINGDOM": 2,
@@ -1078,8 +1078,8 @@
     "corners": [
       "free",
       "free",
-      "hidden",
-      "free"
+      "free",
+      "hidden"
     ],
     "requirements": {
       "ANIMAL_KINGDOM": 3,
@@ -1135,8 +1135,8 @@
     "corners": [
       "free",
       "hidden",
-      "MANUSCRIPT",
-      "hidden"
+      "hidden",
+      "MANUSCRIPT"
     ],
     "requirements": {
       "ANIMAL_KINGDOM": 3
@@ -1171,8 +1171,8 @@
     "corners": [
       "hidden",
       "free",
-      "hidden",
-      "QUILL"
+      "QUILL",
+      "hidden"
     ],
     "requirements": {
       "ANIMAL_KINGDOM": 3
@@ -1189,8 +1189,8 @@
     "corners": [
       "hidden",
       "free",
-      "hidden",
-      "free"
+      "free",
+      "hidden"
     ],
     "requirements": {
       "ANIMAL_KINGDOM": 5
@@ -1207,8 +1207,8 @@
     "corners": [
       "free",
       "QUILL",
-      "hidden",
-      "free"
+      "free",
+      "hidden"
     ],
     "requirements": {
       "INSECT_KINGDOM": 2,
@@ -1226,8 +1226,8 @@
     "corners": [
       "free",
       "hidden",
-      "MANUSCRIPT",
-      "free"
+      "free",
+      "MANUSCRIPT"
     ],
     "requirements": {
       "INSECT_KINGDOM": 2,
@@ -1245,8 +1245,8 @@
     "corners": [
       "hidden",
       "free",
-      "free",
-      "INKWELL"
+      "INKWELL",
+      "free"
     ],
     "requirements": {
       "INSECT_KINGDOM": 2,
@@ -1264,8 +1264,8 @@
     "corners": [
       "free",
       "free",
-      "hidden",
-      "free"
+      "free",
+      "hidden"
     ],
     "requirements": {
       "INSECT_KINGDOM": 3,
@@ -1283,8 +1283,8 @@
     "corners": [
       "free",
       "free",
-      "free",
-      "hidden"
+      "hidden",
+      "free"
     ],
     "requirements": {
       "INSECT_KINGDOM": 3,
@@ -1321,8 +1321,8 @@
     "corners": [
       "INKWELL",
       "hidden",
-      "free",
-      "hidden"
+      "hidden",
+      "free"
     ],
     "requirements": {
       "INSECT_KINGDOM": 3
@@ -1357,8 +1357,8 @@
     "corners": [
       "hidden",
       "hidden",
-      "QUILL",
-      "free"
+      "free",
+      "QUILL"
     ],
     "requirements": {
       "INSECT_KINGDOM": 3
@@ -1389,12 +1389,14 @@
     "backImagePath": "img_81_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": ["INSECT_KINGDOM"],
+    "frontSideResources": [
+      "INSECT_KINGDOM"
+    ],
     "corners": [
       "free",
       "PLANT_KINGDOM",
-      "INSECT_KINGDOM",
-      "free"
+      "free",
+      "INSECT_KINGDOM"
     ],
     "requirements": {},
     "type": "starter"
@@ -1405,12 +1407,14 @@
     "backImagePath": "img_82_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": ["FUNGI_KINGDOM"],
+    "frontSideResources": [
+      "FUNGI_KINGDOM"
+    ],
     "corners": [
       "ANIMAL_KINGDOM",
       "free",
-      "free",
-      "FUNGI_KINGDOM"
+      "FUNGI_KINGDOM",
+      "free"
     ],
     "requirements": {},
     "type": "starter"
@@ -1421,7 +1425,10 @@
     "backImagePath": "img_83_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": ["PLANT_KINGDOM", "FUNGI_KINGDOM"],
+    "frontSideResources": [
+      "PLANT_KINGDOM",
+      "FUNGI_KINGDOM"
+    ],
     "corners": [
       "free",
       "free",
@@ -1437,7 +1444,10 @@
     "backImagePath": "img_84_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": ["ANIMAL_KINGDOM", "INSECT_KINGDOM"],
+    "frontSideResources": [
+      "ANIMAL_KINGDOM",
+      "INSECT_KINGDOM"
+    ],
     "corners": [
       "free",
       "free",
@@ -1453,7 +1463,11 @@
     "backImagePath": "img_85_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": ["ANIMAL_KINGDOM", "INSECT_KINGDOM", "PLANT_KINGDOM"],
+    "frontSideResources": [
+      "ANIMAL_KINGDOM",
+      "INSECT_KINGDOM",
+      "PLANT_KINGDOM"
+    ],
     "corners": [
       "free",
       "free",
@@ -1469,7 +1483,11 @@
     "backImagePath": "img_86_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": ["PLANT_KINGDOM","ANIMAL_KINGDOM", "FUNGI_KINGDOM"],
+    "frontSideResources": [
+      "PLANT_KINGDOM",
+      "ANIMAL_KINGDOM",
+      "FUNGI_KINGDOM"
+    ],
     "corners": [
       "free",
       "free",

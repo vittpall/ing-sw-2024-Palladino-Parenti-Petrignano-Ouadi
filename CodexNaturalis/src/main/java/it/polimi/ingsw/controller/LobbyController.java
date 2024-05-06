@@ -107,4 +107,37 @@ public class LobbyController {
     public synchronized void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor){
         model.getGame(idGame).setTokenColor(idClientIntoGame, tokenColor);
     }
+
+    public int getCurrentPlayer(int idGame) {
+        return model.getGame(idGame).getCurrentPlayerIndex();
+    }
+
+    public void playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
+            throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
+        model.getGame(idGame).playCard(chosenCard, idClientIntoGame, faceDown, chosenPosition);
+    }
+
+    public  void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws CardNotFoundException{
+        //TODO: completare il metodo e vedere come mettere meglio il synchronized
+        synchronized(model.getGame(idGame)){
+            Deck chosenDeck=null;//da decidere
+            GameCard chosenCard=null;
+            int currentPlayerPoints;
+            if(inVisible==3)
+                currentPlayerPoints=model.getGame(idGame).drawCard(chosenDeck);
+            else
+                currentPlayerPoints= model.getGame(idGame).drawVisibleCard(chosenDeck, chosenCard);
+            model.getGame(idGame).notifyAll();
+        }
+    }
+
+    public void waitForYourTurn(int idGame, int idClientIntoGame) throws InterruptedException{
+        synchronized (model.getGame(idGame)) {
+            while (model.getGame(idGame).getCurrentPlayerIndex() != idClientIntoGame) model.getGame(idGame).wait();
+        }
+    }
+
+    public boolean getIsLastRoundStarted(int idGame) {
+        return model.getGame(idGame).getIsLastRoundStarted();
+    }
 }

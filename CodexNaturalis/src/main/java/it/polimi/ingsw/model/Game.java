@@ -207,14 +207,16 @@ public class Game implements Serializable{
     /**
      * places the card into the current player's desk at (x,y) position
      *
-     * @param card     card the user wants to play
+     * @param idCard     card the user wants to play
      * @param faceDown how the user wants to play it
      * @param point    coordinates of desk where the user wants to play the card
      * @throws CardNotFoundException       when the card sent is not part of the current player's hand
      * @throws RequirementsNotMetException when the card's requirements are not met into the player's desk
      */
-    public void playCard(GameCard card, boolean faceDown, Point point)
+    public void playCard(int idCard, int idClient, boolean faceDown, Point point)
             throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
+        if(idClient!=currentPlayerIndex) throw new CardNotFoundException("Not your turn");
+        GameCard card = players.get(currentPlayerIndex).getPlayerHand().get(idCard);
         players.get(currentPlayerIndex).playCard(card, faceDown, point);
     }
 

@@ -9,9 +9,9 @@ import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
-import it.polimi.ingsw.tui.ClientState;
-import it.polimi.ingsw.tui.MainMenuState;
+import it.polimi.ingsw.tui.*;
 
+import java.awt.*;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -97,11 +97,38 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public ObjectiveCard[] getSharedObjectiveCards() throws RemoteException {
         return server.getSharedObjectiveCards(idGame);
     }
+    @Override
+    public String getNextState() throws RemoteException {
+        if(currentState instanceof InitializeStarterCardState){
+            if(server.getCurrentPlayer(idGame)==idClientIntoGame)
+                return "PlayCardState";
+            else
+                return "WaitForYourTurnState";
+        }else if( currentState instanceof DrawCardState){
+            if(server.getIsLastRoundStarted(idGame))
+                return "LastRoundState";
+            else
+                return "WaitForYourTurnState";
+        }
+        return "Error";
+    }
+    @Override
+    public void playCard(int chosenCard, boolean faceDown, Point chosenPosition)
+            throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException{
+        server.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
+    }
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
         runStateLoop();
     }
-
+    @Override
+    public void drawCard(int input, int inVisible) throws RemoteException, CardNotFoundException{
+        server.drawCard(idGame, idClientIntoGame, input, inVisible);
+    }
+    @Override
+    public void waitForYourTurn() throws RemoteException, InterruptedException {
+        server.waitForYourTurn(idGame, idClientIntoGame);
+    }
     public void setIdGame(int idGame) {
         this.idGame = idGame;
     }
