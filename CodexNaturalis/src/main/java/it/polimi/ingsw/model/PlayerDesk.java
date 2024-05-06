@@ -184,7 +184,7 @@ public class PlayerDesk implements Serializable {
                 }
             }
         }
-        if (card.isPlayedFaceDown()) {
+        if (card.isPlayedFaceDown()&& !(card instanceof StarterCard)) {
             int res = totalResources.get(card.getBackSideResource());
             res++;
             totalResources.put(card.getBackSideResource(), res);
