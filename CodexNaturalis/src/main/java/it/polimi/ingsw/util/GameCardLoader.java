@@ -24,7 +24,7 @@ public class GameCardLoader {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        module.addDeserializer(Corner.class, new CornerDeserializer());
+        module.addDeserializer(Corner[].class, new CornerDeserializer());
         mapper.registerModule(module);
         List<GameCard> cards = new ArrayList<>();
         try {
