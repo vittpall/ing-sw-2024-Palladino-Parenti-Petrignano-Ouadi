@@ -1,7 +1,11 @@
 package it.polimi.ingsw.network.rmi.Client;
 
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
+import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
@@ -65,14 +69,34 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
     @Override
     public void setObjectiveCard(int idCard) throws RemoteException, CardNotFoundException {
-        server.setObjectiveCard(idGame, idClientIntoGame, getPlayerObjectiveCards().get(idCard));
+        server.setObjectiveCard(idGame, idClientIntoGame, idCard);
     }
     @Override
     public void createGame(String username, int nPlayers) throws RemoteException, InterruptedException{
         idGame=server.createGame(username, nPlayers);
         idClientIntoGame=0;
     }
-
+    @Override
+    public StarterCard getStarterCard() throws RemoteException{
+        return server.getStarterCard(idGame, idClientIntoGame);
+    }
+    @Override
+    public void playStarterCard(boolean playedFacedDown)
+            throws RemoteException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
+        server.playStarterCard(idGame, idClientIntoGame, playedFacedDown);
+    }
+    @Override
+    public ObjectiveCard getPlayerObjectiveCard() throws RemoteException {
+        return server.getPlayerObjectiveCard(idGame, idClientIntoGame);
+    }
+    @Override
+    public ArrayList<GameCard> getPlayerHand() throws RemoteException {
+        return server.getPlayerHand(idGame, idClientIntoGame);
+    }
+    @Override
+    public ObjectiveCard[] getSharedObjectiveCards() throws RemoteException {
+        return server.getSharedObjectiveCards(idGame);
+    }
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
         runStateLoop();

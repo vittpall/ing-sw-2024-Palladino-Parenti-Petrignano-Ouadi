@@ -15,7 +15,7 @@ public class CardPrinter {
 
     private enum Color {
         GREEN("\u001B[42m"), BLUE("\u001B[44m"), RED("\u001B[41m"),
-        PURPLE("\u001B[45m"), GREY("\u001B[100m");
+        PURPLE("\u001B[45m"), GREY("\u001B[100m"), WHITE("\u001B[47m");
 
         private final String code;
 
@@ -50,6 +50,7 @@ public class CardPrinter {
     private void printGameCard(GameCard card) {
         Corner[] corners = card.getCorners();
         Color colorBackground = chooseColor(card.getBackSideResource());
+        printColorBorder(corners[0], corners[1], colorBackground);
         if (card instanceof StarterCard starterCard) {
             ArrayList<Resource> frontSideResources = starterCard.getFrontSideResources();
             Color backgroundColor = Color.GREY; // Card background color
@@ -66,10 +67,9 @@ public class CardPrinter {
                 printCenteredLine("", backgroundColor);
             }
 
-            System.out.println(); // For spacing between cards
 
         } else {
-            printColorBorder(corners[0], corners[1], colorBackground);
+            //printColorBorder(corners[0], corners[1], colorBackground);
             for (int i = 0; i < cardHeight - 2; i++) {
                 if (i == cardHeight / 2 - 1) {
                     printCardContent(card, colorBackground);
@@ -77,10 +77,12 @@ public class CardPrinter {
                     System.out.println(colorBackground + repeat(cardWidth) + RESET);
                 }
             }
-            printColorBorder(corners[2], corners[3], colorBackground);
+            //printColorBorder(corners[2], corners[3], colorBackground);
 
-            System.out.println();
         }
+        printColorBorder(corners[2], corners[3], colorBackground);
+        System.out.println(); // For spacing between cards
+
     }
 
     private void printColorBorder(Corner cornerLeft, Corner cornerRight, Color color) {
@@ -287,6 +289,7 @@ public class CardPrinter {
     }
 
     private Color chooseColor(Resource backSideResource) {
+        if(backSideResource == null) return Color.WHITE;
         return switch (backSideResource) {
             case PLANT_KINGDOM -> Color.GREEN;
             case ANIMAL_KINGDOM -> Color.BLUE;

@@ -111,7 +111,9 @@ public class Game implements Serializable{
     public int getGameId() {
         return gameId;
     }
-
+    public void setObjectiveCards(int idPlayer, int chosenCard) throws CardNotFoundException{
+        players.get(idPlayer).setObjectiveCard(chosenCard);
+    }
     /**
      * @return nPlayer
      */

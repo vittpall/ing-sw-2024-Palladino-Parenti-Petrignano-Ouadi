@@ -1,7 +1,12 @@
 package it.polimi.ingsw.network.RemoteInterfaces;
 
+import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
+import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.tui.ClientState;
 
@@ -35,4 +40,14 @@ public interface VirtualView extends Remote {
     void joinGame(int input, String username) throws RemoteException, InterruptedException;
 
     ArrayList<ObjectiveCard> getPlayerObjectiveCards() throws RemoteException;
+
+    StarterCard getStarterCard() throws RemoteException;
+
+    void playStarterCard(boolean playedFacedDown)throws RemoteException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException;
+
+    ObjectiveCard getPlayerObjectiveCard() throws RemoteException;
+
+    ArrayList<GameCard> getPlayerHand() throws RemoteException;
+
+    ObjectiveCard[] getSharedObjectiveCards() throws RemoteException;
 }

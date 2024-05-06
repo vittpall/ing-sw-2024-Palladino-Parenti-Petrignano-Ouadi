@@ -19,18 +19,19 @@ public class InitializeObjectiveCardState implements ClientState {
 
     @Override
     public void promptForInput() {
-        System.out.print("Enter your choice (1-2) : ");
+        System.out.print("Enter your choice (1-3) : ");
     }
 
     @Override
     public void display() {
-        int nObjectiveCard = 0;
+        int nObjectiveCard = 1;
         CardPrinter printer = new CardPrinter();
         System.out.println("\n---------- Game Setup ----------");
         try {
             ArrayList<ObjectiveCard> playerObjectiveCards = client.getPlayerObjectiveCards();
             System.out.println("Your objective cards are:");
             for (ObjectiveCard card : playerObjectiveCards) {
+                System.out.println(nObjectiveCard + ".");
                 printer.printCard(card);
                 nObjectiveCard++;
             }
@@ -47,16 +48,16 @@ public class InitializeObjectiveCardState implements ClientState {
         switch (input) {
             case 1:
                 try {
-                    client.setObjectiveCard(1);
-                    // client.setCurrentState(new InitializeStarterCardState(client, scanner));
+                    client.setObjectiveCard(0);
+                    client.setCurrentState(new InitializeStarterCardState(client, scanner));
                 } catch (CardNotFoundException | RemoteException ex) {
                     System.out.println("Card not found. Please try again");
                 }
                 break;
             case 2:
                 try {
-                    client.setObjectiveCard(2);
-                    // client.setCurrentState(new InitializeStarterCardState(client, scanner));
+                    client.setObjectiveCard(1);
+                    client.setCurrentState(new InitializeStarterCardState(client, scanner));
                 } catch (CardNotFoundException | RemoteException ex) {
                     System.out.println("Card not found. Please try again");
                 }

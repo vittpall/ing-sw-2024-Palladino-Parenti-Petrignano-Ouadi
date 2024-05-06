@@ -1,12 +1,13 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.Lobby;
-import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -74,7 +75,30 @@ public class LobbyController {
         return model.getGame(idGame).getPlayers().get(idPlayer).getDrawnObjectiveCards();
     }
 
-    public void setObjectiveCard(int idGame, int idClientIntoGame, ObjectiveCard objCard) throws CardNotFoundException {
-        model.getGame(idGame).getPlayers().get(idClientIntoGame).setObjectiveCard(objCard);
+    public void setObjectiveCard(int idGame, int idClientIntoGame, int idObjCard) throws CardNotFoundException {
+        //model.getGame(idGame).getPlayers().get(idClientIntoGame).setObjectiveCard(objCard);
+        model.getGame(idGame).setObjectiveCards(idClientIntoGame, idObjCard);
+    }
+
+    public StarterCard getStarterCard(int idGame, int idClientIntoGame) {
+        return model.getGame(idGame).getPlayers().get(idClientIntoGame).getStarterCard();
+    }
+
+    public void playStarterCard(int idGame, int idClientIntoGame, boolean playedFacedDown)
+            throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
+        GameCard starterCard = model.getGame(idGame).getPlayers().get(idClientIntoGame).getStarterCard();
+        model.getGame(idGame).getPlayers().get(idClientIntoGame).playCard(starterCard, playedFacedDown, new Point(0,0));
+    }
+
+    public ObjectiveCard getObjectiveCard(int idGame, int idClientIntoGame) {
+        return model.getGame(idGame).getPlayers().get(idClientIntoGame).getObjectiveCard();
+    }
+
+    public ArrayList<GameCard> getPlayerHand(int idGame, int idClientIntoGame) {
+        return model.getGame(idGame).getPlayers().get(idClientIntoGame).getPlayerHand();
+    }
+
+    public ObjectiveCard[] getSharedObjectiveCards(int idGame) {
+        return model.getGame(idGame).getSharedObjectiveCards();
     }
 }

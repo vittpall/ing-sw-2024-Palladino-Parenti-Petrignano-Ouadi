@@ -3,13 +3,15 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.enumeration.CornerObject;
 import it.polimi.ingsw.model.enumeration.Resource;
 
+import java.io.Serializable;
+
 /**
  * this class defines the card's corner
  * hidden is an attribute that is set as true if the corner can not be covered and is set as false otherwise
  * resource is an attribute that represents the corner's resource, if present
  * object is an attribute that represents the corner's object, if present
  */
-public class Corner{
+public class Corner implements Serializable {
 
     private boolean hidden;
     private final Resource resource;

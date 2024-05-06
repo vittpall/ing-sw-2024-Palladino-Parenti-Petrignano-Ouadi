@@ -87,10 +87,11 @@ public class Player implements Serializable {
      * @param chosenObjectiveCard
      * @throws CardNotFoundException if the chosenObjectiveCard is not in the drawnObjectiveCards
      */
-    public void setObjectiveCard(ObjectiveCard chosenObjectiveCard) throws CardNotFoundException{
-        if(!drawnObjectiveCards.contains(chosenObjectiveCard))
+    public void setObjectiveCard(int chosenObjectiveCard) throws CardNotFoundException{
+        ObjectiveCard chosenCard=drawnObjectiveCards.get(chosenObjectiveCard);
+        if(!drawnObjectiveCards.contains(chosenCard))
             throw new CardNotFoundException("The ObjectiveCard is not in the drawnObjectiveCards");
-        this.objectiveCard = new ObjectiveCard(chosenObjectiveCard);
+        this.objectiveCard = new ObjectiveCard(chosenCard);
         this.drawnObjectiveCards = null;
         //le carte 2 carte obiettivo da cui sceglierla si gestiscono nel game per ogni player
     }

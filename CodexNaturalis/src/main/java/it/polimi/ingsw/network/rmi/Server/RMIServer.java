@@ -2,7 +2,11 @@ package it.polimi.ingsw.network.rmi.Server;
 
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
+import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
@@ -54,7 +58,28 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public void setObjectiveCard(int idGame, int idClientIntoGame, ObjectiveCard objCard) throws RemoteException, CardNotFoundException {
-        lobbyController.setObjectiveCard(idGame, idClientIntoGame, objCard);
+    public void setObjectiveCard(int idGame, int idClientIntoGame, int idObjCard) throws RemoteException, CardNotFoundException {
+        lobbyController.setObjectiveCard(idGame, idClientIntoGame, idObjCard);
+    }
+    @Override
+    public StarterCard getStarterCard(int idGame, int idClientIntoGame) throws RemoteException{
+        return lobbyController.getStarterCard(idGame, idClientIntoGame);
+    }
+    @Override
+    public void playStarterCard(int idGame, int idClientIntoGame, boolean playedFacedDown)
+            throws RemoteException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
+        lobbyController.playStarterCard(idGame, idClientIntoGame, playedFacedDown);
+    }
+    @Override
+    public ObjectiveCard getPlayerObjectiveCard(int idGame, int idClientIntoGame) throws RemoteException{
+        return lobbyController.getObjectiveCard(idGame, idClientIntoGame);
+    }
+    @Override
+    public ArrayList<GameCard> getPlayerHand(int idGame, int idClientIntoGame) throws RemoteException{
+        return lobbyController.getPlayerHand(idGame, idClientIntoGame);
+    }
+    @Override
+    public ObjectiveCard[] getSharedObjectiveCards(int idGame) throws RemoteException{
+        return lobbyController.getSharedObjectiveCards(idGame);
     }
 }

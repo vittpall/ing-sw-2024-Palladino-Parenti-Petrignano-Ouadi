@@ -1,7 +1,11 @@
 package it.polimi.ingsw.network.socket.Client;
 
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
+import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.CheckUsernameMsg;
@@ -89,6 +93,35 @@ public class SocketClient implements VirtualView {
     public ArrayList<ObjectiveCard> getPlayerObjectiveCards() throws RemoteException {
         //TODO
         return null;
+    }
+
+    @Override
+    public StarterCard getStarterCard() throws RemoteException {
+        //TODO
+        return null;
+    }
+
+    @Override
+    public void playStarterCard(boolean playedFacedDown) throws RemoteException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
+        //TODO
+    }
+
+    @Override
+    public ObjectiveCard getPlayerObjectiveCard() throws RemoteException {
+        //TODO
+        return null;
+    }
+
+    @Override
+    public ArrayList<GameCard> getPlayerHand() throws RemoteException {
+        //TODO
+        return null;
+    }
+
+    @Override
+    public ObjectiveCard[] getSharedObjectiveCards() throws RemoteException {
+        //TODO
+        return new ObjectiveCard[0];
     }
 
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
