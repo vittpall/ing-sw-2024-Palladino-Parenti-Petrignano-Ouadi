@@ -19,7 +19,7 @@ public class InitializeObjectiveCardState implements ClientState {
 
     @Override
     public void promptForInput() {
-        System.out.print("Enter your choice (1-3) : ");
+        System.out.print("Enter your choice (1-4) : ");
     }
 
     @Override

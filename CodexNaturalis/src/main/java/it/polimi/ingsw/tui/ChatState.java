@@ -41,7 +41,7 @@ public class ChatState implements ClientState {
                 break;
             case 3:
                 //return to the game
-                //client.setCurrentState(returnState);
+                client.setCurrentState(returnState);
                 break;
             default:
                 System.out.print("Invalid input");

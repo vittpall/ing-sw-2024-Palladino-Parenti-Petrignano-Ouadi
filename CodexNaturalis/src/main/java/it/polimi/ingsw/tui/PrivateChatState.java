@@ -39,7 +39,7 @@ public class PrivateChatState implements ClientState{
                 if (message.getSender().equals(client.getUsername()))
                     System.out.println("You: " + message.getContent());
                 else
-                    System.out.println(message.getReceiver() + ": " + message.getContent());
+                    System.out.println(message.getSender() + ": " + message.getContent());
             }
         }
 

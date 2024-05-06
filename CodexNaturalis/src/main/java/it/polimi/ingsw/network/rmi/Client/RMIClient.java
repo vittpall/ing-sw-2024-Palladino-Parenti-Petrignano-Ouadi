@@ -182,13 +182,33 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
     private void runStateLoop() throws IOException, ClassNotFoundException, InterruptedException {
         boolean correctInput;
+        boolean chatState = false;
+        int chatStateContator;
         while (true) {
+            chatStateContator = 0;
             correctInput = false;
+            chatState = false;
             currentState.display();
             currentState.promptForInput();
             int input = 0;
-            while(currentState instanceof PrivateChatState || currentState instanceof GlobalChatState) {
-            }
+            do{
+                if(currentState instanceof PrivateChatState || currentState instanceof GlobalChatState)
+                {
+                    chatState = true;
+                    chatStateContator++;
+                }
+                else
+                {
+//TODO why does it give me error?
+                    if(chatStateContator > 0)
+                    {
+                        chatStateContator = 0;
+                        currentState.display();
+                        currentState.promptForInput();
+                    }
+                    chatState = false;
+                }
+            }while(chatState);
             while (!correctInput) {
                 try {
                     input = scan.nextInt();

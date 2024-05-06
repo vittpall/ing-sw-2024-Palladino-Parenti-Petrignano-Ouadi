@@ -12,11 +12,13 @@ public class PrivateChatSelectingReceiverState implements ClientState {
     private VirtualView client;
     private final Scanner scanner;
     private int finalOption;
+    ArrayList<Player> availablePlayers;
 
     public PrivateChatSelectingReceiverState(VirtualView client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
         this.finalOption = 0;
+        this.availablePlayers = new ArrayList<>();
     }
 
     @Override
@@ -31,12 +33,12 @@ public class PrivateChatSelectingReceiverState implements ClientState {
             else
             {
                 this.finalOption ++;
-                ArrayList<Player> availablePlayers = new ArrayList<>(client.getAllPlayers(client.getIdGame()));
+                availablePlayers = new ArrayList<>(client.getAllPlayers(client.getIdGame()));
                 removePlayerFromList(availablePlayers);
 
                 for(int i = 0; i < availablePlayers.size(); i++){
                     this.finalOption += i;
-                    Player player = client.getAllPlayers(client.getIdGame()).get(i);
+                    Player player = availablePlayers.get(i);
                     System.out.println(this.finalOption + ") " + player.getUsername());
                 }
             }
@@ -59,6 +61,7 @@ public class PrivateChatSelectingReceiverState implements ClientState {
     public void inputHandler(int input) {
 
         try {
+
             if(input == this.finalOption+1){
                 client.setCurrentState(new ChatState(client, scanner));
             }else
@@ -70,8 +73,7 @@ public class PrivateChatSelectingReceiverState implements ClientState {
                     }
                     else
                     {
-                        System.out.println("You are now chatting with " + client.getAllPlayers(client.getIdGame()).get(input-1).getUsername());
-                        client.setCurrentState(new PrivateChatState(client, scanner, client.getAllPlayers(client.getIdGame()).get(input-1).getUsername()));
+                        client.setCurrentState(new PrivateChatState(client, scanner, availablePlayers.get(input-1).getUsername()));
                     }
                 }
                 else
