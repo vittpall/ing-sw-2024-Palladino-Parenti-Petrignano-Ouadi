@@ -199,13 +199,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                 }
                 else
                 {
-//TODO why does it give me error?
-                    if(chatStateContator > 0)
-                    {
-                        chatStateContator = 0;
-                        currentState.display();
-                        currentState.promptForInput();
-                    }
                     chatState = false;
                 }
             }while(chatState);
