@@ -70,18 +70,31 @@ abstract public class GameCard extends Card {
         return Arrays.copyOf(corners, corners.length);
     }
 
+
+
     @Override
-    public void print(PrintContext context) {
+    public void print(PrintContext context, boolean faceDown) {
         Corner[] corners = getCorners();
         CardPrinter.Color colorBackground = context.chooseColor(getBackSideResource());
-        context.printColorBorder(corners[0], corners[1], colorBackground);
+        if (faceDown) {
+            context.printColorBorder(corners[4], corners[5], colorBackground);
+        } else {
+            context.printColorBorder(corners[0], corners[1], colorBackground);
+        }
 
-        printCardDetails(context, colorBackground);
+        printCardDetails(context, colorBackground, faceDown);
 
-        context.printColorBorder(corners[2], corners[3], colorBackground);
+        if (faceDown) {
+            context.printColorBorder(corners[6], corners[7], colorBackground);
+        } else {
+            context.printColorBorder(corners[2], corners[3], colorBackground);
+
+        }
         System.out.println(); // For spacing between cards
+
     }
 
-    protected abstract void printCardDetails(PrintContext context, CardPrinter.Color colorBackground);
+
+    protected abstract void printCardDetails(PrintContext context, CardPrinter.Color colorBackground, boolean faceDown);
 
 }

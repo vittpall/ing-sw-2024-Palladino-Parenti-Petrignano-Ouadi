@@ -12,7 +12,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class InitializeStarterCardState implements ClientState{
+public class InitializeStarterCardState implements ClientState {
     VirtualView client;
     private final Scanner scanner;
 
@@ -20,11 +20,13 @@ public class InitializeStarterCardState implements ClientState{
         this.client = client;
         this.scanner = scanner;
     }
+
     @Override
     public void promptForInput() {
         System.out.print("Enter your choice\n(1- if you want to play it on the front\n" +
                 "2- if you want to play it faced down \n3 to exit) : ");
     }
+
     @Override
     public void display() {
         CardPrinter printer = new CardPrinter();
@@ -33,27 +35,31 @@ public class InitializeStarterCardState implements ClientState{
             System.out.println("The common objective cards are:");
             //stampare le objective card comuni a tutti i giocatori
             ObjectiveCard[] sharedObjectiveCards = client.getSharedObjectiveCards();
-            for(ObjectiveCard card : sharedObjectiveCards){
-                printer.printCard(card);
+            for (ObjectiveCard card : sharedObjectiveCards) {
+                printer.printCard(card, false);
             }
             System.out.println("Your objective card is:");
             //stampare l'objective card richiesta
-            printer.printCard(client.getPlayerObjectiveCard());
+            printer.printCard(client.getPlayerObjectiveCard(), false);
             System.out.println("Your hand is:");
             //stampare la mano del giocatore richiesta
             ArrayList<GameCard> playerHand = client.getPlayerHand();
-            for(GameCard card : playerHand){
-                printer.printCard(card);
+            for (GameCard card : playerHand) {
+                printer.printCard(card, false);
             }
             StarterCard playerStarterCard = client.getStarterCard();
             System.out.println("Your starter card is:");
-            printer.printCard(playerStarterCard);
+            System.out.println("|   1. Play on the front 🎮          |");
+            printer.printCard(playerStarterCard,false);
+            System.out.println("|   2. Play faced down 🎮            |");
+            printer.printCard(playerStarterCard, true);
             System.out.println("|   3. Exit 🚪                        |");
         } catch (RemoteException ex) {
             System.out.println("Error while getting the drawn objective cards");
             System.out.println(ex.getMessage());
         }
     }
+
     @Override
     public void inputHandler(int input) throws RemoteException {
         switch (input) {
@@ -61,7 +67,8 @@ public class InitializeStarterCardState implements ClientState{
                 try {
                     client.playStarterCard(false);
                     // client.setCurrentState(new InitializeStarterCardState(client, scanner));
-                } catch (RemoteException | PlaceNotAvailableException | CardNotFoundException | RequirementsNotMetException ex) {
+                } catch (RemoteException | PlaceNotAvailableException | CardNotFoundException |
+                         RequirementsNotMetException ex) {
                     System.out.println("Card not found. Please try again");
                 }
                 break;
@@ -69,7 +76,8 @@ public class InitializeStarterCardState implements ClientState{
                 try {
                     client.playStarterCard(true);
                     // client.setCurrentState(new InitializeStarterCardState(client, scanner));
-                } catch (RemoteException | PlaceNotAvailableException | CardNotFoundException | RequirementsNotMetException ex) {
+                } catch (RemoteException | PlaceNotAvailableException | CardNotFoundException |
+                         RequirementsNotMetException ex) {
                     System.out.println("Card not found. Please try again");
                 }
                 break;
@@ -84,12 +92,12 @@ public class InitializeStarterCardState implements ClientState{
                 display();
 
         }
-        String nextState=client.getNextState();
-        if(nextState.equals("PlayCardState"))
+        String nextState = client.getNextState();
+        if (nextState.equals("PlayCardState"))
             client.setCurrentState(new PlayCardState(client, scanner));
-        else if(nextState.equals("WaitForYourTurnState"))
+        else if (nextState.equals("WaitForYourTurnState"))
             client.setCurrentState(new WaitForYourTurnState(client, scanner));
-        else{
+        else {
             System.out.println("Error");
             display();
         }

@@ -32,7 +32,7 @@ public class InitializeObjectiveCardState implements ClientState {
             System.out.println("Your objective cards are:");
             for (ObjectiveCard card : playerObjectiveCards) {
                 System.out.println(nObjectiveCard + ".");
-                printer.printCard(card);
+                printer.printCard(card, false);
                 nObjectiveCard++;
             }
             System.out.println("|   3. Exit 🚪                        |");

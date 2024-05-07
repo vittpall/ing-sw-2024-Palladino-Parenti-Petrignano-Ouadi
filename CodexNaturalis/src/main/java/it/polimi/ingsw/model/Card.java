@@ -68,7 +68,8 @@ public abstract class Card implements Serializable {
     }
 
 
-    public abstract void print(PrintContext context);
+
+    public abstract void print(PrintContext context, boolean faceDown);
 
 
 }

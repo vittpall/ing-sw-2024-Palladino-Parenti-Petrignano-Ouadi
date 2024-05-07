@@ -33,11 +33,11 @@ public class PlayCardState implements ClientState {
             //stampare le objective card comuni a tutti i giocatori
             ObjectiveCard[] sharedObjectiveCards = client.getSharedObjectiveCards();
             for (ObjectiveCard card : sharedObjectiveCards) {
-                printer.printCard(card);
+                printer.printCard(card, false);
             }
             System.out.println("Your objective card is:");
             //stampare l'objective card richiesta
-            printer.printCard(client.getPlayerObjectiveCard());
+            printer.printCard(client.getPlayerObjectiveCard(), false);
             System.out.println("Your desk is:\n");
             //stampare il desk del giocatore
             System.out.println("Choose a card to play:");
@@ -46,7 +46,7 @@ public class PlayCardState implements ClientState {
             int i = 1;
             for (GameCard card : playerHand) {
                 System.out.println(i + ".");
-                printer.printCard(card);
+                printer.printCard(card, false);
                 i++;
             }
         } catch (RemoteException ex) {

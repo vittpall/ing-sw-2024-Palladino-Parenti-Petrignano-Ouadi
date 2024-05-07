@@ -47,8 +47,9 @@ public class ObjectiveCard extends Card implements Serializable {
         return strategy;
     }
 
+
     @Override
-    public void print(PrintContext context) {
+    public void print(PrintContext context, boolean faceDown) {
         strategy.print(context);
         String pointsDetail = "Pts: " + getPoints() + " ";
         System.out.println(CardPrinter.Color.GREY + " " + context.centerString(pointsDetail, context.getCardWidth() - 2) + " " + CardPrinter.RESET);

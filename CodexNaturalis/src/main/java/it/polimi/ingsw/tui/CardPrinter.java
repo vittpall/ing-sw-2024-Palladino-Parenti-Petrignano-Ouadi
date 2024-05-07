@@ -45,9 +45,9 @@ public class CardPrinter {
         return cornerSize;
     }
 
-    public void printCard(Card card) {
+    public void printCard(Card card, boolean faceDown) {
         PrintContext context = new PrintContext(this);
-        card.print(context);
+        card.print(context, faceDown);
     }
 
 

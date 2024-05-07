@@ -38,9 +38,13 @@ public class StarterCard extends GameCard {
     }
 
     @Override
-    protected void printCardDetails(PrintContext context, CardPrinter.Color colorBackground) {
+    protected void printCardDetails(PrintContext context, CardPrinter.Color colorBackground, boolean faceDown) {
+        ArrayList<Resource> resources = new ArrayList<>();
+        if (!faceDown) {
+            resources = getFrontSideResources();
+        }
         int y = 1;
-        for (Resource resource : getFrontSideResources()) {
+        for (Resource resource : resources) {
             if (y >= context.getCardHeight()) break; // Prevents writing outside the card bounds
             String lineContent = resource.toString(); // Prepare line content
             y++;
