@@ -42,13 +42,14 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
 
         // Calculate the central x position for the primary squares
         int centerOfCardX = cardWidth / 2;
+        int centerOfCardY = cardHeight / 2;
         int primaryX = centerOfCardX - 2;  // Adjusted to center primary squares a bit left
-        int primaryY1 = whichCorner.y;
-        int primaryY2 = whichCorner.y + 1;
+        int primaryY1 = centerOfCardY + 1;
+        int primaryY2 = primaryY1 - 1;
 
         // Calculate position for the secondary square using the offset
         int secondaryX = primaryX + whichCorner.x * 2;
-        int secondaryY = primaryY2 + whichCorner.y;
+        int secondaryY = primaryY1 - whichCorner.y;
 
         for (int y = 0; y < cardHeight; y++) {
             StringBuilder line = new StringBuilder();
