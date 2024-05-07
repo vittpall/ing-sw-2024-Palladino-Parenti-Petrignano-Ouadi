@@ -15,12 +15,14 @@ public class PrivateChatState implements ClientState{
     private final Scanner scanner;
     private String receiver;
     private int lastMessageReceived;
+    private ClientState returnState;
 
-    public PrivateChatState(VirtualView client, Scanner scanner, String receiver) {
+    public PrivateChatState(VirtualView client, Scanner scanner, String receiver, ChatState returnState) {
         this.client = client;
         this.scanner = scanner;
         this.receiver = receiver;
         this.lastMessageReceived = 0;
+        this.returnState = returnState;
     }
 
     @Override
@@ -58,7 +60,7 @@ public class PrivateChatState implements ClientState{
             client.sendMessage(receiver, input);
             input = scanner.nextLine();
         }
-        client.setCurrentState(new ChatState(client, scanner));
+        client.setCurrentState(this.returnState);
     }
 
     @Override
