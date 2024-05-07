@@ -64,4 +64,6 @@ public interface VirtualServer extends Remote {
     boolean getIsLastRoundStarted(int idGame) throws RemoteException;
 
     HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame)throws RemoteException;
+
+    ArrayList<GameCard> getVisibleCardsDeck(int idGame, int deck) throws RemoteException;
 }

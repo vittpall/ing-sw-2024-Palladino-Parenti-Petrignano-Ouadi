@@ -77,4 +77,6 @@ public interface VirtualView extends Remote {
     void sendMessage(String receiver, String input) throws RemoteException;
 
     HashSet<Point> getAvailablePlaces()throws RemoteException;
+
+    ArrayList<GameCard> getVisibleCardsDeck(int deck) throws RemoteException;
 }

@@ -145,5 +145,10 @@ public class RMIServer implements VirtualServer {
     public HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame)throws RemoteException{
         return lobbyController.getAvailablePlaces(idGame, idClientIntoGame);
     }
+    @Override
+    public ArrayList<GameCard> getVisibleCardsDeck(int idGame,int deck) throws RemoteException{
+        return lobbyController.getVisibleCardsDeck(idGame, deck);
+    }
+
 
 }

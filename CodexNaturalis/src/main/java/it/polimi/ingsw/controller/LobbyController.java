@@ -129,13 +129,24 @@ public class LobbyController {
     public  void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws CardNotFoundException{
         //TODO: completare il metodo e vedere come mettere meglio il synchronized
         synchronized(model.getGame(idGame)){
-            Deck chosenDeck=null;//da decidere
-            GameCard chosenCard=null;
+            Deck chosenDeck;
+            if(deckToChoose==1)
+                chosenDeck=model.getGame(idGame).getResourceDeck();//da decidere
+            else
+                chosenDeck=model.getGame(idGame).getGoldDeck();//da decidere
+
+
             int currentPlayerPoints;
             if(inVisible==3)
                 currentPlayerPoints=model.getGame(idGame).drawCard(chosenDeck);
-            else
+            else{
+                GameCard chosenCard=null;
+                if(inVisible==1)
+                    chosenCard= chosenDeck.getVisibleCards().getFirst();
+                else if(inVisible==2)
+                    chosenCard= chosenDeck.getVisibleCards().get(1);
                 currentPlayerPoints= model.getGame(idGame).drawVisibleCard(chosenDeck, chosenCard);
+            }
             model.getGame(idGame).notifyAll();
         }
     }
@@ -156,5 +167,11 @@ public class LobbyController {
 
     public HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame) {
         return model.getGame(idGame).getPlayers().get(idClientIntoGame).getPlayerDesk().getAvailablePlaces();
+    }
+
+    public ArrayList<GameCard> getVisibleCardsDeck(int idGame, int deck) {
+        if(deck==1)
+            return model.getGame(idGame).getResourceDeck().getVisibleCards();
+        return model.getGame(idGame).getGoldDeck().getVisibleCards();
     }
 }

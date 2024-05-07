@@ -125,6 +125,11 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    public ArrayList<GameCard> getVisibleCardsDeck(int deck) throws RemoteException {
+        return null;
+    }
+
+    @Override
     public StarterCard getStarterCard() throws RemoteException {
         //TODO
         return null;
