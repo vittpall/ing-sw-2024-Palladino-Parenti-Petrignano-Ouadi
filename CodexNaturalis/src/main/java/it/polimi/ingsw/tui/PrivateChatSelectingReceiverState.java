@@ -1,6 +1,7 @@
 package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.chat.Chat;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.rmi.Client.RMIClient;
 
@@ -13,11 +14,13 @@ public class PrivateChatSelectingReceiverState implements ClientState {
     private final Scanner scanner;
     private int finalOption;
     ArrayList<Player> availablePlayers;
+    private ChatState returnState;
 
-    public PrivateChatSelectingReceiverState(VirtualView client, Scanner scanner) {
+    public PrivateChatSelectingReceiverState(VirtualView client, Scanner scanner, ChatState returnState){
         this.client = client;
         this.scanner = scanner;
         this.finalOption = 0;
+        this.returnState = returnState;
         this.availablePlayers = new ArrayList<>();
     }
 
@@ -73,7 +76,7 @@ public class PrivateChatSelectingReceiverState implements ClientState {
                     }
                     else
                     {
-                        client.setCurrentState(new PrivateChatState(client, scanner, availablePlayers.get(input-1).getUsername()));
+                        client.setCurrentState(new PrivateChatState(client, scanner, availablePlayers.get(input-1).getUsername(), this.returnState));
                     }
                 }
                 else
@@ -92,6 +95,5 @@ public class PrivateChatSelectingReceiverState implements ClientState {
     @Override
     public void promptForInput() {
         System.out.println(this.finalOption+1 +".Exit chat");
-        System.out.println();
     }
 }

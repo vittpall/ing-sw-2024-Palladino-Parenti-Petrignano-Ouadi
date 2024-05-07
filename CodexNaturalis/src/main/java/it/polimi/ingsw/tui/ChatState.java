@@ -33,11 +33,11 @@ public class ChatState implements ClientState {
         switch (input) {
             case 1:
                 //send message to a player
-                client.setCurrentState(new PrivateChatSelectingReceiverState(client, scanner));
+                client.setCurrentState(new PrivateChatSelectingReceiverState(client, scanner, this));
                 break;
             case 2:
                 //send message to all players
-                client.setCurrentState(new GlobalChatState(client, scanner));
+                client.setCurrentState(new GlobalChatState(client, scanner, this));
                 break;
             case 3:
                 //return to the game

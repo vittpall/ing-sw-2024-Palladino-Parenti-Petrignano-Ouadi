@@ -12,10 +12,13 @@ public class GlobalChatState implements ClientState{
 
     private final VirtualView client;
     private final Scanner scanner;
+    private ChatState returnState;
 
-    public GlobalChatState(VirtualView client, Scanner scanner) {
+
+    public GlobalChatState(VirtualView client, Scanner scanner, ChatState returnState) {
         this.client = client;
         this.scanner = scanner;
+        this.returnState = returnState;
     }
 
     @Override
@@ -46,7 +49,7 @@ public class GlobalChatState implements ClientState{
             client.sendMessage(null, input);
             input = scanner.nextLine();
         }
-        client.setCurrentState(new ChatState(client, scanner));
+        client.setCurrentState(returnState);
     }
 
     @Override
