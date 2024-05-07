@@ -2,8 +2,11 @@ package it.polimi.ingsw.model.strategyPatternObjective;
 
 import it.polimi.ingsw.model.PlayerDesk;
 import it.polimi.ingsw.model.enumeration.CornerObject;
+import it.polimi.ingsw.tui.CardPrinter;
+import it.polimi.ingsw.tui.PrintContext;
 
 import java.util.EnumMap;
+import java.util.Map;
 
 public class ObjectStrategy implements ObjectiveStrategy {
 
@@ -19,10 +22,6 @@ public class ObjectStrategy implements ObjectiveStrategy {
         this.objectToCheck = objectToCheck;
     }
 
-
-    public EnumMap<CornerObject, Integer> getObjectToCheck() {
-        return objectToCheck;
-    }
 
     /**
      * this method will be recognized if the Resource cards
@@ -41,7 +40,7 @@ public class ObjectStrategy implements ObjectiveStrategy {
         for (CornerObject currObj : objectToCheck.keySet()) {
             objectOnDesk = TotalObjects.get(currObj);
             int numToCheck = objectToCheck.get(currObj);
-            if(objectOnDesk == 0)
+            if (objectOnDesk == 0)
                 return 0;
             temporaryNumberOfTimes = objectOnDesk / numToCheck;
             if (temporaryNumberOfTimes < numberOfTimesVerifiedObjective || numberOfTimesVerifiedObjective == -1)
@@ -49,6 +48,26 @@ public class ObjectStrategy implements ObjectiveStrategy {
         }
 
         return numberOfTimesVerifiedObjective;
+    }
+
+    @Override
+    public void print(PrintContext context) {
+        CardPrinter.Color backgroundColor = CardPrinter.Color.GREY; // Card background color
+
+        // Print the card with a gray background and objects listed with their counts
+        int y = 1; // Start printing from the second line to give a top margin
+        for (Map.Entry<CornerObject, Integer> entry : objectToCheck.entrySet()) {
+            if (y >= context.getCardHeight()) break; // Prevents writing outside the card lbounds
+            String lineContent = entry.getKey().toString() + ": " + entry.getValue(); // Prepare line content
+            y++;
+            context.printCenteredLine(lineContent, backgroundColor);
+        }
+
+        // Fill the rest of the card with blank lines if needed
+        while (y < context.getCardHeight()) {
+            y++;
+            context.printCenteredLine("", backgroundColor);
+        }
     }
 }
 

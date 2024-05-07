@@ -2,6 +2,8 @@ package it.polimi.ingsw.model.strategyPatternObjective;
 
 import it.polimi.ingsw.model.PlayerDesk;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.tui.CardPrinter;
+import it.polimi.ingsw.tui.PrintContext;
 
 import java.util.EnumMap;
 
@@ -28,13 +30,33 @@ public class ResourceStrategy implements ObjectiveStrategy {
 
     }
 
-    public Resource getResourceStrategyToCheck() {
-        return resourceStrategyToCheck;
+
+    @Override
+    public void print(PrintContext context) {
+        int cardWidth = context.getCardWidth();
+        int cardHeight = context.getCardHeight();
+        CardPrinter.Color resourceColor = context.chooseColor(resourceStrategyToCheck);
+
+        // Calculate the center position for the number of resources
+        int centerTextX = (cardWidth - String.valueOf(numOfResourceToCheck).length()) / 2;
+        int centerTextY = cardHeight / 2;
+
+        for (int y = 0; y < cardHeight - 1; y++) {
+            StringBuilder line = new StringBuilder();
+            for (int x = 0; x < cardWidth; x++) {
+                if (y == centerTextY && x >= centerTextX && x < centerTextX + String.valueOf(numOfResourceToCheck).length()) {
+                    line.append(numOfResourceToCheck); // Append the number at the center
+                    x += String.valueOf(numOfResourceToCheck).length() - 1; // Adjust x to account for the length of numResource
+                } else {
+                    line.append(" "); // Fill with space
+                }
+            }
+            line.insert(0, resourceColor); // Apply resource color to the entire line
+            line.append(CardPrinter.RESET);
+            System.out.println(line);
+        }
     }
 
-    public int getNumOfResourceToCheck() {
-        return numOfResourceToCheck;
-    }
 
     /**
      * enum map is a map where thw key is Resource and the integer is the number of times the resource is on the playerDesk.

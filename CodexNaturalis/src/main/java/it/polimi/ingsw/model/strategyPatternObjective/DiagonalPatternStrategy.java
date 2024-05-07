@@ -3,6 +3,8 @@ package it.polimi.ingsw.model.strategyPatternObjective;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.PlayerDesk;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.tui.CardPrinter;
+import it.polimi.ingsw.tui.PrintContext;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -54,6 +56,40 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
                 numberOfTimesVerifiedObjective++;
         }
         return numberOfTimesVerifiedObjective;
+    }
+
+    @Override
+    public void print(PrintContext context) {
+        Point offset = getDiagonalOffset();
+        Resource primarySource = getPrimarySource();
+        CardPrinter.Color resourceColor = context.chooseColor(primarySource);
+        CardPrinter.Color backgroundColor = CardPrinter.Color.GREY; // Default background color for the card
+
+        // Calculate center positions correctly
+        int centerX = (context.getCardWidth() / 2) - 1; // Center square starts at cardWidth/2 - 1
+        int centerY = context.getCardHeight() / 2;
+
+        // Adjust the x positions for the diagonal based on center X and the offset
+        Point centerPoint = new Point(centerX / 2, centerY); // Divide by 2 because each x represents 2 spaces
+        Point firstOffsetPoint = new Point((centerX / 2) + offset.x, centerY - offset.y);
+        Point secondOffsetPoint = new Point((centerX / 2) - offset.x, centerY + offset.y);
+
+        // Print the card with the diagonal
+        for (int y = 0; y < context.getCardHeight() - 1; y++) {
+            StringBuilder line = new StringBuilder();
+            for (int x = 0; x < context.getCardWidth() / 2; x++) { // Iterate over half the cardWidth because each square takes 2 character spaces
+                if ((x == centerPoint.x && y == centerPoint.y) ||
+                        (x == firstOffsetPoint.x && y == firstOffsetPoint.y) ||
+                        (x == secondOffsetPoint.x && y == secondOffsetPoint.y)) {
+                    line.append(resourceColor);  // Apply resource color for diagonal squares
+                } else {
+                    line.append(backgroundColor); // Apply grey color for the rest of the card
+                }
+                line.append("  ");  // Append two spaces for each square
+            }
+            line.append(CardPrinter.RESET);
+            System.out.println(line);
+        }
     }
 
     /**

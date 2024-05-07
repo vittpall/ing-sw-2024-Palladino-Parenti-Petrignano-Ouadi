@@ -2,6 +2,8 @@ package it.polimi.ingsw.model.strategyPatternObjective;
 
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.PlayerDesk;
+import it.polimi.ingsw.tui.CardPrinter;
+import it.polimi.ingsw.tui.PrintContext;
 
 import java.io.Serializable;
 
@@ -44,4 +46,14 @@ public class ObjectiveCard extends Card implements Serializable {
     public ObjectiveStrategy getStrategy() {
         return strategy;
     }
+
+    @Override
+    public void print(PrintContext context) {
+        strategy.print(context);
+        String pointsDetail = "Pts: " + getPoints() + " ";
+        System.out.println(CardPrinter.Color.GREY + " " + context.centerString(pointsDetail, context.getCardWidth() - 2) + " " + CardPrinter.RESET);
+        System.out.println();
+    }
+
+
 }

@@ -3,6 +3,8 @@ package it.polimi.ingsw.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.tui.CardPrinter;
+import it.polimi.ingsw.tui.PrintContext;
 
 import java.util.ArrayList;
 
@@ -34,4 +36,21 @@ public class StarterCard extends GameCard {
             @JsonProperty("corners") Corner[] corners) {
         super(backSideResource, frontImagePath, backImagePath, points, pointType, frontSideResources, corners);
     }
+
+    @Override
+    protected void printCardDetails(PrintContext context, CardPrinter.Color colorBackground) {
+        int y = 1;
+        for (Resource resource : getFrontSideResources()) {
+            if (y >= context.getCardHeight()) break; // Prevents writing outside the card bounds
+            String lineContent = resource.toString(); // Prepare line content
+            y++;
+            context.printCenteredLine(lineContent, colorBackground);
+        }
+        while (y <= context.getCardHeight() - 2) {
+            y++;
+            context.printCenteredLine("", colorBackground);
+        }
+    }
+
+
 }

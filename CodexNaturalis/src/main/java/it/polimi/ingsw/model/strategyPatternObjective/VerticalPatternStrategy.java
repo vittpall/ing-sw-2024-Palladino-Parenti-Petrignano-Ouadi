@@ -3,6 +3,8 @@ package it.polimi.ingsw.model.strategyPatternObjective;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.PlayerDesk;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.tui.CardPrinter;
+import it.polimi.ingsw.tui.PrintContext;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -29,18 +31,41 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
         this.whichCorner = whichCorner;
     }
 
+    @Override
+    public void print(PrintContext context) {
+        int cardWidth = context.getCardWidth();
+        int cardHeight = context.getCardHeight();
+        CardPrinter.Color primaryColor = context.chooseColor(primarySource);
+        CardPrinter.Color secondaryColor = context.chooseColor(secondarySource);
 
-    public Resource getPrimarySource() {
-        return primarySource;
+        CardPrinter.Color backgroundColor = CardPrinter.Color.GREY;
+
+        // Calculate the central x position for the primary squares
+        int centerOfCardX = cardWidth / 2;
+        int primaryX = centerOfCardX - 2;  // Adjusted to center primary squares a bit left
+        int primaryY1 = whichCorner.y;
+        int primaryY2 = whichCorner.y + 1;
+
+        // Calculate position for the secondary square using the offset
+        int secondaryX = primaryX + whichCorner.x * 2;
+        int secondaryY = primaryY2 + whichCorner.y;
+
+        for (int y = 0; y < cardHeight; y++) {
+            StringBuilder line = new StringBuilder();
+            for (int x = 0; x < cardWidth; x += 2) {
+                if ((x == primaryX) && (y == primaryY1 || y == primaryY2)) {
+                    line.append(primaryColor).append("  ");
+                } else if (x == secondaryX && y == secondaryY) {
+                    line.append(secondaryColor).append("  ");
+                } else {
+                    line.append(backgroundColor).append("  ");
+                }
+            }
+            line.append(CardPrinter.RESET);
+            System.out.println(line);
+        }
     }
 
-    public Point getWhichCorner() {
-        return whichCorner;
-    }
-
-    public Resource getSecondarySource() {
-        return secondarySource;
-    }
 
     /**
      * this method will be recognized if the Resource cards
@@ -74,7 +99,7 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
         int i = 0;
         boolean IsVerified = false;
 
-        if(!deskToUse.containsKey(startingPoint))
+        if (!deskToUse.containsKey(startingPoint))
             return false;
 
         //scan the desk until it finds the first card that doesn't match the primarySource going down the desk

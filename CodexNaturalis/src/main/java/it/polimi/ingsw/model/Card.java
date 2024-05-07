@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.tui.PrintContext;
+
 import java.io.Serializable;
 
 /**
@@ -64,6 +66,9 @@ public abstract class Card implements Serializable {
     public String getImageBackPath() {
         return this.backImagePath;
     }
+
+
+    public abstract void print(PrintContext context);
 
 
 }

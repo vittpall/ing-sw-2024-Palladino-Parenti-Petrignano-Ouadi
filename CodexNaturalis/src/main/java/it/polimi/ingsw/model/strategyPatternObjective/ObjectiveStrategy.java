@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.strategyPatternObjective;
 
 import it.polimi.ingsw.model.PlayerDesk;
+import it.polimi.ingsw.tui.PrintContext;
 
 import java.io.Serializable;
 
@@ -14,4 +15,6 @@ public interface ObjectiveStrategy extends Serializable {
      * @return
      */
     int isSatisfied(PlayerDesk desk);
+
+    void print(PrintContext context);
 }
