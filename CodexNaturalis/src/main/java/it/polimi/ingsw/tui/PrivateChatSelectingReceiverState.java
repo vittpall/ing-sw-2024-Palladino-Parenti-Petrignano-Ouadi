@@ -66,7 +66,7 @@ public class PrivateChatSelectingReceiverState implements ClientState {
         try {
 
             if(input == this.finalOption+1){
-                client.setCurrentState(new ChatState(client, scanner));
+                client.setCurrentState(returnState);
             }else
             {
                 if(client.getAllPlayers(client.getIdGame()) != null) {
