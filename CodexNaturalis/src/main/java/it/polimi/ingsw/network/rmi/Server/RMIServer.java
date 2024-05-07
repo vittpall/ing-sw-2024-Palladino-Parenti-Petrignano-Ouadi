@@ -17,6 +17,7 @@ import java.awt.*;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class RMIServer implements VirtualServer {
@@ -140,4 +141,9 @@ public class RMIServer implements VirtualServer {
     public boolean getIsLastRoundStarted(int idGame) throws RemoteException{
         return lobbyController.getIsLastRoundStarted(idGame);
     }
+    @Override
+    public HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame)throws RemoteException{
+        return lobbyController.getAvailablePlaces(idGame, idClientIntoGame);
+    }
+
 }

@@ -49,6 +49,7 @@ public class Player implements Serializable {
         this.playerDesk = new PlayerDesk();
         this.drawnObjectiveCards = new ArrayList<>();
     }
+
     public void setTokenColor(TokenColor color) {
         this.color = color;
     }
@@ -90,9 +91,9 @@ public class Player implements Serializable {
      * @param chosenObjectiveCard
      * @throws CardNotFoundException if the chosenObjectiveCard is not in the drawnObjectiveCards
      */
-    public void setObjectiveCard(int chosenObjectiveCard) throws CardNotFoundException{
-        ObjectiveCard chosenCard=drawnObjectiveCards.get(chosenObjectiveCard);
-        if(!drawnObjectiveCards.contains(chosenCard))
+    public void setObjectiveCard(int chosenObjectiveCard) throws CardNotFoundException {
+        ObjectiveCard chosenCard = drawnObjectiveCards.get(chosenObjectiveCard);
+        if (!drawnObjectiveCards.contains(chosenCard))
             throw new CardNotFoundException("The ObjectiveCard is not in the drawnObjectiveCards");
         this.objectiveCard = new ObjectiveCard(chosenCard);
         this.drawnObjectiveCards = null;
@@ -194,11 +195,11 @@ public class Player implements Serializable {
         if (card instanceof GoldCard goldCard) {
             playerDesk.checkRequirements(goldCard.getRequirements());
         }
-        boolean checkRemove=true;
-        if(!(card instanceof StarterCard)){
+        boolean checkRemove = true;
+        if (!(card instanceof StarterCard)) {
             checkRemove = this.playerHand.remove(card);
         }
-        if (!checkRemove|| !card.equals(starterCard)) throw new CardNotFoundException("card not found");
+        if (!checkRemove) throw new CardNotFoundException("card not found");
         card.setPlayedFaceDown(faceDown);
         int pointsToAdd = playerDesk.addCard(card, point);
         this.setPoints(pointsToAdd);

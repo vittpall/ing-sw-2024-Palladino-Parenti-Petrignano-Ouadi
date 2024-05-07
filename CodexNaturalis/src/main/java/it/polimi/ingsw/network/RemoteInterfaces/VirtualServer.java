@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.HashSet;
 
 public interface VirtualServer extends Remote {
     void connect(VirtualView client) throws RemoteException;
@@ -61,4 +62,6 @@ public interface VirtualServer extends Remote {
     void waitForYourTurn( int idGame, int idClientIntoGame) throws RemoteException, InterruptedException;
 
     boolean getIsLastRoundStarted(int idGame) throws RemoteException;
+
+    HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame)throws RemoteException;
 }

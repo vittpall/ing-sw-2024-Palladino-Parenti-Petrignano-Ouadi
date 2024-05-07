@@ -22,10 +22,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 
 public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public final VirtualServer server;
@@ -159,11 +156,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public ClientState getCurrentState() throws RemoteException {
         return currentState;
     }
-
-    public void run() throws IOException, ClassNotFoundException, InterruptedException {
-        this.server.connect(this);
-        runStateLoop();
-    }
     @Override
     public void drawCard(int input, int inVisible) throws RemoteException, CardNotFoundException{
         server.drawCard(idGame, idClientIntoGame, input, inVisible);
@@ -172,6 +164,16 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public void waitForYourTurn() throws RemoteException, InterruptedException {
         server.waitForYourTurn(idGame, idClientIntoGame);
     }
+    @Override
+    public HashSet<Point> getAvailablePlaces()throws RemoteException{
+        return server.getAvailablePlaces(idGame, idClientIntoGame);
+    }
+
+    public void run() throws IOException, ClassNotFoundException, InterruptedException {
+        this.server.connect(this);
+        runStateLoop();
+    }
+
     public void setIdGame(int idGame) {
         this.idGame = idGame;
     }

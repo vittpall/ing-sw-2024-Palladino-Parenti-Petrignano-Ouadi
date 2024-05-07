@@ -20,6 +20,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public interface VirtualView extends Remote {
@@ -75,4 +76,5 @@ public interface VirtualView extends Remote {
 
     void sendMessage(String receiver, String input) throws RemoteException;
 
+    HashSet<Point> getAvailablePlaces()throws RemoteException;
 }

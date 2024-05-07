@@ -20,10 +20,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -120,6 +117,11 @@ public class SocketClient implements VirtualView {
     @Override
     public void sendMessage(String receiver, String input) throws RemoteException {
 
+    }
+
+    @Override
+    public HashSet<Point> getAvailablePlaces() throws RemoteException {
+        return null;
     }
 
     @Override

@@ -154,4 +154,7 @@ public class LobbyController {
         model.sendMessage(msg);
     }
 
+    public HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame) {
+        return model.getGame(idGame).getPlayers().get(idClientIntoGame).getPlayerDesk().getAvailablePlaces();
+    }
 }
