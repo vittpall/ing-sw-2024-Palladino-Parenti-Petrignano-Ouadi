@@ -57,7 +57,11 @@ public class MainMenuState implements ClientState, Remote {
                 requestUsername();
                 break;
             case 2:
-                System.exit(0);
+                try {
+                    client.close();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
                 break;
             default:
                 System.out.print("Invalid input");

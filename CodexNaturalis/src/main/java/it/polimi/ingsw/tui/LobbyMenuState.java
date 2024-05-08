@@ -51,7 +51,11 @@ public class LobbyMenuState implements ClientState {
                 }
                 break;
             case 3:
-                System.exit(0);
+                try {
+                    client.close();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
                 break;
             default:
                 System.out.print("Invalid input");

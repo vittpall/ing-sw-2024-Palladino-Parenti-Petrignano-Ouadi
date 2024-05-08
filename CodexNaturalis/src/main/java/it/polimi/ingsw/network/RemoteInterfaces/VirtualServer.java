@@ -36,6 +36,7 @@ public interface VirtualServer extends Remote {
 
     int createGame(String username, int nPlayers) throws RemoteException, InterruptedException;
 
+    void removeUsername(String username) throws RemoteException;
 
     ArrayList<ObjectiveCard> getPlayerObjectiveCards(int idGame, int idPlayer) throws RemoteException;
 

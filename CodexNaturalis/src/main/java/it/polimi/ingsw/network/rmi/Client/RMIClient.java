@@ -73,6 +73,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public boolean checkUsername(String username) throws IOException {
         return server.checkUsername(username);
     }
+
     @Override
     public HashMap<Integer, Game> getNotStartedGames() throws RemoteException{
         return server.getNotStartedGames();
@@ -175,6 +176,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
         runStateLoop();
+    }
+
+    public void close() throws RemoteException {
+        server.removeUsername(username);
+        System.exit(0);
     }
 
     public void setIdGame(int idGame) {

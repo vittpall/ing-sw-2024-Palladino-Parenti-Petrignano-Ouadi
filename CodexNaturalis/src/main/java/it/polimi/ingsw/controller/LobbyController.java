@@ -24,8 +24,20 @@ public class LobbyController {
         model = new Lobby();
     }
 
-    public synchronized boolean checkUsername(String username) {
-        return usernames.add(username);
+    public boolean checkUsername(String username) {
+        synchronized (this.usernames)
+        {
+            return usernames.add(username);
+        }
+
+    }
+
+    public synchronized void removeUsername(String username) {
+        synchronized (this.usernames)
+        {
+            usernames.remove(username);
+        }
+
     }
 
     public HashMap<Integer, Game> getVisibleGames() {

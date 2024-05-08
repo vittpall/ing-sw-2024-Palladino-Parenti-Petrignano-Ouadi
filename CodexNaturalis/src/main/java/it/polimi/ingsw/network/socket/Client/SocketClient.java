@@ -130,6 +130,11 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    public void close() throws RemoteException {
+
+    }
+
+    @Override
     public StarterCard getStarterCard() throws RemoteException {
         //TODO
         return null;

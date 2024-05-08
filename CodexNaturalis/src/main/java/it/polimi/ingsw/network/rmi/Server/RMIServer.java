@@ -41,6 +41,10 @@ public class RMIServer implements VirtualServer {
         return lobbyController.checkUsername(username);
     }
 
+    public void removeUsername(String username) {
+        lobbyController.removeUsername(username);
+    }
+
     @Override
     public HashMap<Integer, Game> getNotStartedGames() throws RemoteException {
         return lobbyController.getVisibleGames();

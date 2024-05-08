@@ -50,7 +50,11 @@ public class JoinGameMenuState implements ClientState{
     @Override
     public void inputHandler(int input) throws RemoteException {
         if(input == lastOptionOutput){
-            System.exit(0);
+            try {
+                client.close();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         } else{
             try{
                 if(client.getNotStartedGames().isEmpty() && input==1){

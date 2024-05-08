@@ -79,7 +79,11 @@ public class PlayCardState implements ClientState {
         }
         switch (input) {
             case 4:
-                System.exit(0);
+                try {
+                    client.close();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 5:
                 client.setCurrentState(new ChatState(client, scanner));

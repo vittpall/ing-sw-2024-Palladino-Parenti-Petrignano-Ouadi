@@ -82,7 +82,11 @@ public class InitializeStarterCardState implements ClientState {
                 }
                 break;
             case 3:
-                System.exit(0);
+                try {
+                    client.close();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
                 break;
             case 4:
                 client.setCurrentState(new ChatState(client, scanner, this));
