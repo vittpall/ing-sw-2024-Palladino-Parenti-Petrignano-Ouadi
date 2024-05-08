@@ -28,7 +28,7 @@ class PlayerTest {
     private ArrayList<ObjectiveCard> objCards;
     @BeforeEach
     public void setUpTests() {
-        player = new Player(TokenColor.BLUE, "Test");
+        player = new Player( "Test");
         ArrayList<GameCard> resourceCards = new ArrayList<>();
         Corner[] corners = new Corner[8];
         for(int i = 0; i < 8; i++) {

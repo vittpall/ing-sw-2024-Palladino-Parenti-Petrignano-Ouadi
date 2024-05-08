@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.StarterCard;
+import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.chat.Message;
@@ -155,4 +156,12 @@ public class RMIServer implements VirtualServer {
     }
 
 
+    @Override
+    public ArrayList<TokenColor> getAvailableColors(int idGame) throws RemoteException{
+        return lobbyController.getAvailableColors(idGame);
+    }
+    @Override
+    public void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws RemoteException{
+        lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor);
+    }
 }

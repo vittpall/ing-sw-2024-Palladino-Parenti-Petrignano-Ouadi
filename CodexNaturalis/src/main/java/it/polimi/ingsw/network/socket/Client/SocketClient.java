@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.StarterCard;
+import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
@@ -180,6 +181,18 @@ public class SocketClient implements VirtualView {
 
     @Override
     public void waitForYourTurn() throws RemoteException, InterruptedException {
+
+    }
+
+    @Override
+    public ArrayList<TokenColor> getAvailableColors() throws RemoteException {
+        //TODO
+        return null;
+    }
+
+    @Override
+    public void setTokenColor(TokenColor tokenColor) throws RemoteException {
+        //TODO
 
     }
 

@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.tui.ClientState;
@@ -77,6 +78,10 @@ public interface VirtualView extends Remote {
     void sendMessage(String receiver, String input) throws RemoteException;
 
     HashSet<Point> getAvailablePlaces()throws RemoteException;
+
+    ArrayList<TokenColor> getAvailableColors() throws RemoteException;
+
+    void setTokenColor(TokenColor tokenColor) throws RemoteException;
 
     ArrayList<GameCard> getVisibleCardsDeck(int deck) throws RemoteException;
 

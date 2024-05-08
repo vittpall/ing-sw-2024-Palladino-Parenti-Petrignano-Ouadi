@@ -63,7 +63,8 @@ import java.util.Scanner;
             }catch(InterruptedException | RemoteException e){
                 System.out.println("Error creating game. Please try again.");
             }
-            client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
+          //  client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
+            client.setCurrentState(new ColorSelection(client, scanner));
         }
 
     }

@@ -67,12 +67,14 @@ public class JoinGameMenuState implements ClientState{
                 }
                 System.out.println("Waiting for the game to start...");
                 client.joinGame(input, client.getUsername());
+                client.setCurrentState(new ColorSelection(client, scanner));
                 System.out.println("The game "+client.getIdGame()+" has started.\nYou are the player number "+client.getIdClientIntoGame()+"\n");
             }catch(RemoteException | InterruptedException ex){
                 System.out.println("Error while joining the game");
             }
         }
-        client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
+     //   client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
+
     }
 
 

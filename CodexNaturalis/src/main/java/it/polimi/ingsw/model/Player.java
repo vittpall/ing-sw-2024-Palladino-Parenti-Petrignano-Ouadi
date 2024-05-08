@@ -31,15 +31,15 @@ public class Player implements Serializable {
     private StarterCard starterCard;
     private final PlayerDesk playerDesk;
 
-    /**
+    /*    /**
      * constructor
      * it sets points to 0 and assigned the player's token and username. it creates the objectiveCard, starterCard,
      * playerHand, playerDesk and drawnObjectiveCards and sets them as null
      *
      * @param color
      * @param username
-     */
-    public Player(TokenColor color, String username) {
+
+   public Player(TokenColor color, String username) {
         this.color = color;
         this.username = username;
         this.points = 0;
@@ -48,12 +48,27 @@ public class Player implements Serializable {
         this.playerHand = new ArrayList<>();
         this.playerDesk = new PlayerDesk();
         this.drawnObjectiveCards = new ArrayList<>();
-    }
+    }*/
 
     public void setTokenColor(TokenColor color) {
         this.color = color;
     }
 
+    /**
+     * constructor
+     * it sets points to 0 and assigned the player's token and username. it creates the objectiveCard, starterCard,
+     * playerHand, playerDesk and drawnObjectiveCards and sets them as null
+     * @param username
+     */
+    public Player(String username) {
+        this.username = username;
+        this.points = 0;
+        this.objectiveCard = null;
+        this.starterCard = null;
+        this.playerHand = new ArrayList<>();
+        this.playerDesk = new PlayerDesk();
+        this.drawnObjectiveCards = new ArrayList<>();
+    }
     /**
      * put into the playerHand two resourceCard and one goldCard randomly chosen from the decks
      *

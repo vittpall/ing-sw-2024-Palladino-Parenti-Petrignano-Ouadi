@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.StarterCard;
+import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.chat.Message;
@@ -65,6 +66,10 @@ public interface VirtualServer extends Remote {
     boolean getIsLastRoundStarted(int idGame) throws RemoteException;
 
     HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame)throws RemoteException;
+
+    ArrayList<TokenColor> getAvailableColors(int idGame) throws RemoteException;
+
+    void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws RemoteException;
 
     ArrayList<GameCard> getVisibleCardsDeck(int idGame, int deck) throws RemoteException;
 }

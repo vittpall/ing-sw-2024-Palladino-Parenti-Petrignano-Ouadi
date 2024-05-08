@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.StarterCard;
+import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.chat.Message;
@@ -173,6 +174,17 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return server.getAvailablePlaces(idGame, idClientIntoGame);
     }
 
+
+    @Override
+    public ArrayList<TokenColor> getAvailableColors() throws RemoteException{
+        return server.getAvailableColors(idGame);
+    }
+
+    @Override
+    public void setTokenColor(TokenColor tokenColor) throws RemoteException{
+        server.setTokenColor(idGame, idClientIntoGame, tokenColor);
+    }
+
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
         runStateLoop();
@@ -223,6 +235,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                     scan.nextLine();
                 }
             }
+
             currentState.inputHandler(input);
         }
     }

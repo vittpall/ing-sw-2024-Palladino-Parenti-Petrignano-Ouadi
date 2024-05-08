@@ -61,7 +61,7 @@ public class LobbyController {
 
     public synchronized int joinGame(int id, String username) throws InterruptedException {
         Game game = model.getGame(id);
-        ArrayList<TokenColor> usedColors = new ArrayList<>();
+       /* ArrayList<TokenColor> usedColors = new ArrayList<>();
         TokenColor chosenColor = TokenColor.BLUE;
         for (Player player : game.getPlayers()) {
             usedColors.add(player.getTokenColor());
@@ -71,8 +71,8 @@ public class LobbyController {
                 chosenColor = color;
                 break;
             }
-        }
-        Player player = new Player(chosenColor, username);
+        }*/
+        Player player = new Player(username);
         int nPlayer = model.joinGame(id, player);
         if (model.getGame(id).getPlayers().size() < model.getGame(id).getnPlayer()) {
             while (model.getGame(id).getPlayers().size() < model.getGame(id).getnPlayer()) wait();
