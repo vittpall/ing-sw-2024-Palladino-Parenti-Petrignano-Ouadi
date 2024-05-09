@@ -6,29 +6,33 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class WaitForYourTurnState implements ClientState{
+public class WaitForYourLastTurnState implements ClientState{
     VirtualView client;
     private final Scanner scanner;
 
-    public WaitForYourTurnState(VirtualView client, Scanner scanner) {
+    public WaitForYourLastTurnState(VirtualView client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
     }
 
     @Override
     public void display() {
-        System.out.println("|------Wait for your turn state------|");
-        //mostrare magari il proprio desk e quello degli altri giocatori
+        System.out.println("|------Wait for your turn------|");
+        try{
+            String playerWhoStopped = client.getUsernamePlayerThatStoppedTheGame();
+            System.out.println("The player"+playerWhoStopped+"has reached 20 points!");
+        }catch(RemoteException ex){
+            System.out.println(ex.getMessage());
+        }
+        System.out.println("The next one will be your last turn\n");
     }
 
     @Override
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
-        //il giocatore schiaccia 1 se vuole aspettare il suo turno per poi continuare
-        //schiaccia 2 se vuole abbandonare
-        switch (input){
+        switch(input){
             case 1:
                 client.waitForYourTurn();
-                client.setCurrentState(new PlayCardState(client, scanner));
+                client.setCurrentState(new PlayLastCardState(client, scanner));
                 break;
             case 2:
                 try {
@@ -38,13 +42,14 @@ public class WaitForYourTurnState implements ClientState{
                 }
                 break;
             case 3:
-                client.setCurrentState(new ChatState(client, scanner, this));
+                client.setCurrentState(new ChatState(client, scanner));
                 break;
             default:
                 System.out.println("Invalid input");
                 break;
         }
-    }
+   }
+
 
     @Override
     public void promptForInput() {

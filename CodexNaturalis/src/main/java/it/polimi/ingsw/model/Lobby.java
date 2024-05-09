@@ -52,4 +52,8 @@ public class Lobby {
         game.getChats().addMessage(msg);
 
     }
+
+    public String getUsernamePlayerThatStoppedTheGame(int idGame) {
+        return games.get(idGame).getUsernamePlayerThatStoppedTheGame();
+    }
 }

@@ -76,7 +76,11 @@ public class ColorSelection implements ClientState {
                 break;
 
             case 5:
-                System.exit(0);
+                try {
+                    client.close();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
                 break;
             default:
                 System.out.println("Invalid input");

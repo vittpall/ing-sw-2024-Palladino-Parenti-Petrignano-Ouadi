@@ -186,4 +186,8 @@ public class LobbyController {
             return model.getGame(idGame).getResourceDeck().getVisibleCards();
         return model.getGame(idGame).getGoldDeck().getVisibleCards();
     }
+
+    public String getUsernamePlayerThatStoppedTheGame(int idGame) {
+        return model.getUsernamePlayerThatStoppedTheGame(idGame);
+    }
 }

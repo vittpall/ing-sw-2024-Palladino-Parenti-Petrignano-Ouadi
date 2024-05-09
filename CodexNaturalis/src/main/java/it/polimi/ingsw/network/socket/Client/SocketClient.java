@@ -136,6 +136,11 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    public String getUsernamePlayerThatStoppedTheGame() throws RemoteException {
+        return null;
+    }
+
+    @Override
     public StarterCard getStarterCard() throws RemoteException {
         //TODO
         return null;

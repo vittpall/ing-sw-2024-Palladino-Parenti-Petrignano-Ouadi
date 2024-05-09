@@ -154,6 +154,11 @@ public class RMIServer implements VirtualServer {
     public ArrayList<GameCard> getVisibleCardsDeck(int idGame,int deck) throws RemoteException{
         return lobbyController.getVisibleCardsDeck(idGame, deck);
     }
+    @Override
+    public String getUsernamePlayerThatStoppedTheGame(int idGame) throws RemoteException{
+        return lobbyController.getUsernamePlayerThatStoppedTheGame( idGame);
+    }
+
 
 
     @Override

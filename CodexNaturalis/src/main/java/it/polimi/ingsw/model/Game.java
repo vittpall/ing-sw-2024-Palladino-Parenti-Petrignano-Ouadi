@@ -32,6 +32,7 @@ public class Game implements Serializable{
     private Deck goldDeck;
     private int currentPlayerIndex;
     private boolean isLastRoundStarted;
+    private int playerWhoStoppedTheGame;
     private boolean gameStarted;
     private final ArrayList<StarterCard> starterCards;
     private final ArrayList<ObjectiveCard> objectiveCards;
@@ -51,6 +52,7 @@ public class Game implements Serializable{
         isLastRoundStarted = false;
         gameStarted = false;
         currentPlayerIndex = 0;
+        playerWhoStoppedTheGame=0;
         starterCards = new ArrayList<>();
         players = new ArrayList<>();
         objectiveCards = new ArrayList<>();
@@ -80,6 +82,8 @@ public class Game implements Serializable{
         }
         resourceDeck = new Deck(usableResourceCard);
         goldDeck = new Deck(usableGoldCard);
+        resourceDeck.makeTopCardsVisible();
+        goldDeck.makeTopCardsVisible();
         //inizializzazione objectiveCard che conterrà tutte le carte obiettivo possibili
         ObjectiveCardLoader objectiveCardLoader = new ObjectiveCardLoader();
         objectiveCards.addAll(objectiveCardLoader.loadObjectiveCards());
@@ -233,8 +237,10 @@ public class Game implements Serializable{
      */
     public int drawCard(Deck deck) {
         players.get(currentPlayerIndex).draw(deck);
-        if (players.get(currentPlayerIndex).getPoints() >= 20)
+        if (players.get(currentPlayerIndex).getPoints() >= 20) {
             isLastRoundStarted = true;
+            playerWhoStoppedTheGame=currentPlayerIndex;
+        }
         getNextPlayer();
         return players.get(currentPlayerIndex).getPoints();
     }
@@ -283,5 +289,9 @@ public class Game implements Serializable{
             }
         }
         return winner;
+    }
+
+    public String getUsernamePlayerThatStoppedTheGame() {
+        return players.get(playerWhoStoppedTheGame).getUsername();
     }
 }

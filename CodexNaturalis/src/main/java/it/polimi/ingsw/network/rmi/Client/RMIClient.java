@@ -148,6 +148,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public ArrayList<GameCard> getVisibleCardsDeck(int deck) throws RemoteException{
         return server.getVisibleCardsDeck(idGame, deck);
     }
+    @Override
+    public String getUsernamePlayerThatStoppedTheGame() throws RemoteException{
+        return server.getUsernamePlayerThatStoppedTheGame(idGame);
+    }
+
     public ArrayList<Message> getMessages(String receiver) throws RemoteException{
            return server.getMessages(receiver, this.idGame, this.username);
     }

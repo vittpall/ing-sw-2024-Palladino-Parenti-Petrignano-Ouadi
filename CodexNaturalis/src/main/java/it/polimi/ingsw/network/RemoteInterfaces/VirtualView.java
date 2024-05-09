@@ -85,6 +85,8 @@ public interface VirtualView extends Remote {
 
     ArrayList<GameCard> getVisibleCardsDeck(int deck) throws RemoteException;
 
+    String getUsernamePlayerThatStoppedTheGame() throws RemoteException;
+
     void close() throws RemoteException;
 
 }
