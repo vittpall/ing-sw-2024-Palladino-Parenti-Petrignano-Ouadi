@@ -4,12 +4,12 @@ import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
-import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.CheckUsernameMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
@@ -141,6 +141,11 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    public HashMap<Point, GameCard> getPlayerDesk() throws RemoteException {
+        return null;
+    }
+
+    @Override
     public StarterCard getStarterCard() throws RemoteException {
         //TODO
         return null;
@@ -250,7 +255,6 @@ public class SocketClient implements VirtualView {
             System.out.println("Error: " + e.getMessage());
         }
     }
-
 
 
     public boolean checkUsername(String username) throws IOException, ClassNotFoundException, InterruptedException {

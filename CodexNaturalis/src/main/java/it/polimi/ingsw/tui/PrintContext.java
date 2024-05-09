@@ -1,7 +1,11 @@
 package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.model.Corner;
+import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.enumeration.Resource;
+
+import java.awt.*;
+import java.util.HashMap;
 
 
 public class PrintContext {
@@ -12,6 +16,12 @@ public class PrintContext {
     }
 
 
+    public void printDesk(HashMap<Point, GameCard> desk) {
+       desk.forEach((point, gameCard) -> {
+           System.out.println("Posizione: " + point.toString());
+           printer.printCard(gameCard, gameCard.isPlayedFaceDown());
+       });
+    }
 
     public void printCenteredLine(String content, CardPrinter.Color backgroundColor) {
         int contentLength = content.length();

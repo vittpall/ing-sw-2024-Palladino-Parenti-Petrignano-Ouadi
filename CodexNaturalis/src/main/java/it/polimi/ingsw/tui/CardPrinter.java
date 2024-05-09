@@ -1,7 +1,11 @@
 package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.model.Card;
+import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.enumeration.Resource;
+
+import java.awt.*;
+import java.util.HashMap;
 
 public class CardPrinter {
     public static final String RESET = "\u001B[0m";
@@ -50,6 +54,10 @@ public class CardPrinter {
         card.print(context, faceDown);
     }
 
+    public void printDesk(HashMap<Point, GameCard> desk){
+        PrintContext context = new PrintContext(this);
+        context.printDesk(desk);
+    }
 
     protected Color chooseColor(Resource backSideResource) {
         if (backSideResource == null) return Color.WHITE;

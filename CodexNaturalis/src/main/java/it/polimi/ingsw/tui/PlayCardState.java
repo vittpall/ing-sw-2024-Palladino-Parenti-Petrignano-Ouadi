@@ -39,6 +39,7 @@ public class PlayCardState implements ClientState {
             //stampare l'objective card richiesta
             printer.printCard(client.getPlayerObjectiveCard(), false);
             System.out.println("Your desk is:\n");
+            printer.printDesk(client.getPlayerDesk());
             //stampare il desk del giocatore
             System.out.println("Choose a card to play:");
             //stampare la mano del giocatore richiesta

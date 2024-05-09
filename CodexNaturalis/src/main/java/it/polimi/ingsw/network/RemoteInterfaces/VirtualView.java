@@ -1,28 +1,24 @@
 package it.polimi.ingsw.network.RemoteInterfaces;
 
-import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
-import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
-import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.tui.ClientState;
 
 import java.awt.*;
 import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 public interface VirtualView extends Remote {
 
@@ -46,7 +42,7 @@ public interface VirtualView extends Remote {
 
     void receiveMessage(Message msg) throws RemoteException;
 
-    public boolean checkUsername(String username) throws IOException, RemoteException, ClassNotFoundException, InterruptedException;
+    boolean checkUsername(String username) throws IOException, ClassNotFoundException, InterruptedException;
 
     void joinGame(int input, String username) throws RemoteException, InterruptedException;
 
@@ -54,7 +50,7 @@ public interface VirtualView extends Remote {
 
     StarterCard getStarterCard() throws RemoteException;
 
-    void playStarterCard(boolean playedFacedDown)throws RemoteException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException;
+    void playStarterCard(boolean playedFacedDown) throws RemoteException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException;
 
     ObjectiveCard getPlayerObjectiveCard() throws RemoteException;
 
@@ -77,7 +73,9 @@ public interface VirtualView extends Remote {
 
     void sendMessage(String receiver, String input) throws RemoteException;
 
-    HashSet<Point> getAvailablePlaces()throws RemoteException;
+    HashSet<Point> getAvailablePlaces() throws RemoteException;
+
+    HashMap<Point, GameCard> getPlayerDesk() throws RemoteException;
 
     ArrayList<TokenColor> getAvailableColors() throws RemoteException;
 

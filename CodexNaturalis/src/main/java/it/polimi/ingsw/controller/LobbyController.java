@@ -2,9 +2,9 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
-import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
@@ -25,16 +25,14 @@ public class LobbyController {
     }
 
     public boolean checkUsername(String username) {
-        synchronized (this.usernames)
-        {
+        synchronized (this.usernames) {
             return usernames.add(username);
         }
 
     }
 
     public synchronized void removeUsername(String username) {
-        synchronized (this.usernames)
-        {
+        synchronized (this.usernames) {
             usernames.remove(username);
         }
 
@@ -51,16 +49,15 @@ public class LobbyController {
         return visibleGames;
     }
 
-    public ArrayList<Player> getAllPlayers(int gameId){
+    public ArrayList<Player> getAllPlayers(int gameId) {
         return model.getGame(gameId).getPlayers();
     }
 
-    public ArrayList<Message> getMessages(String receiver, int gameId, String sender){
+    public ArrayList<Message> getMessages(String receiver, int gameId, String sender) {
         return model.getMessages(receiver, gameId, sender);
     }
 
     public synchronized int joinGame(int id, String username) throws InterruptedException {
-        Game game = model.getGame(id);
        /* ArrayList<TokenColor> usedColors = new ArrayList<>();
         TokenColor chosenColor = TokenColor.BLUE;
         for (Player player : game.getPlayers()) {
@@ -108,7 +105,7 @@ public class LobbyController {
     public void playStarterCard(int idGame, int idClientIntoGame, boolean playedFacedDown)
             throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
         GameCard starterCard = model.getGame(idGame).getPlayers().get(idClientIntoGame).getStarterCard();
-        model.getGame(idGame).getPlayers().get(idClientIntoGame).playCard(starterCard, playedFacedDown, new Point(0,0));
+        model.getGame(idGame).getPlayers().get(idClientIntoGame).playCard(starterCard, playedFacedDown, new Point(0, 0));
     }
 
     public ObjectiveCard getObjectiveCard(int idGame, int idClientIntoGame) {
@@ -122,10 +119,12 @@ public class LobbyController {
     public ObjectiveCard[] getSharedObjectiveCards(int idGame) {
         return model.getGame(idGame).getSharedObjectiveCards();
     }
-    public synchronized ArrayList<TokenColor> getAvailableColors(int idGame){
+
+    public synchronized ArrayList<TokenColor> getAvailableColors(int idGame) {
         return model.getGame(idGame).getAvailableColors();
     }
-    public synchronized void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor){
+
+    public synchronized void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) {
         model.getGame(idGame).setTokenColor(idClientIntoGame, tokenColor);
     }
 
@@ -138,32 +137,32 @@ public class LobbyController {
         model.getGame(idGame).playCard(chosenCard, idClientIntoGame, faceDown, chosenPosition);
     }
 
-    public  void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws CardNotFoundException{
+    public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws CardNotFoundException {
         //TODO: completare il metodo e vedere come mettere meglio il synchronized
-        synchronized(model.getGame(idGame)){
+        synchronized (model.getGame(idGame)) {
             Deck chosenDeck;
-            if(deckToChoose==1)
-                chosenDeck=model.getGame(idGame).getResourceDeck();//da decidere
+            if (deckToChoose == 1)
+                chosenDeck = model.getGame(idGame).getResourceDeck();//da decidere
             else
-                chosenDeck=model.getGame(idGame).getGoldDeck();//da decidere
+                chosenDeck = model.getGame(idGame).getGoldDeck();//da decidere
 
 
             int currentPlayerPoints;
-            if(inVisible==3)
-                currentPlayerPoints=model.getGame(idGame).drawCard(chosenDeck);
-            else{
-                GameCard chosenCard=null;
-                if(inVisible==1)
-                    chosenCard= chosenDeck.getVisibleCards().getFirst();
-                else if(inVisible==2)
-                    chosenCard= chosenDeck.getVisibleCards().get(1);
-                currentPlayerPoints= model.getGame(idGame).drawVisibleCard(chosenDeck, chosenCard);
+            if (inVisible == 3)
+                currentPlayerPoints = model.getGame(idGame).drawCard(chosenDeck);
+            else {
+                GameCard chosenCard = null;
+                if (inVisible == 1)
+                    chosenCard = chosenDeck.getVisibleCards().getFirst();
+                else if (inVisible == 2)
+                    chosenCard = chosenDeck.getVisibleCards().get(1);
+                currentPlayerPoints = model.getGame(idGame).drawVisibleCard(chosenDeck, chosenCard);
             }
             model.getGame(idGame).notifyAll();
         }
     }
 
-    public void waitForYourTurn(int idGame, int idClientIntoGame) throws InterruptedException{
+    public void waitForYourTurn(int idGame, int idClientIntoGame) throws InterruptedException {
         synchronized (model.getGame(idGame)) {
             while (model.getGame(idGame).getCurrentPlayerIndex() != idClientIntoGame) model.getGame(idGame).wait();
         }
@@ -182,12 +181,16 @@ public class LobbyController {
     }
 
     public ArrayList<GameCard> getVisibleCardsDeck(int idGame, int deck) {
-        if(deck==1)
+        if (deck == 1)
             return model.getGame(idGame).getResourceDeck().getVisibleCards();
         return model.getGame(idGame).getGoldDeck().getVisibleCards();
     }
 
     public String getUsernamePlayerThatStoppedTheGame(int idGame) {
         return model.getUsernamePlayerThatStoppedTheGame(idGame);
+    }
+
+    public HashMap<Point, GameCard> getPlayerDesk(int idGame, int idClientIntoGame) {
+        return model.getGame(idGame).getPlayers().get(idClientIntoGame).getPlayerDesk().getDesk();
     }
 }

@@ -1,22 +1,21 @@
 package it.polimi.ingsw.network.RemoteInterfaces;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.chat.Message;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public interface VirtualServer extends Remote {
@@ -24,7 +23,7 @@ public interface VirtualServer extends Remote {
 
 
     boolean checkUsername(String username) throws RemoteException;
-    
+
     HashMap<Integer, Game> getNotStartedGames() throws RemoteException;
 
     ArrayList<Player> getAllPlayers(int gameId) throws RemoteException;
@@ -61,11 +60,11 @@ public interface VirtualServer extends Remote {
 
     void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws RemoteException, CardNotFoundException;
 
-    void waitForYourTurn( int idGame, int idClientIntoGame) throws RemoteException, InterruptedException;
+    void waitForYourTurn(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException;
 
     boolean getIsLastRoundStarted(int idGame) throws RemoteException;
 
-    HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame)throws RemoteException;
+    HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame) throws RemoteException;
 
     ArrayList<TokenColor> getAvailableColors(int idGame) throws RemoteException;
 
@@ -74,4 +73,6 @@ public interface VirtualServer extends Remote {
     ArrayList<GameCard> getVisibleCardsDeck(int idGame, int deck) throws RemoteException;
 
     String getUsernamePlayerThatStoppedTheGame(int idGame) throws RemoteException;
+
+    HashMap<Point, GameCard> getPlayerDesk(int idGame, int idClientIntoGame) throws RemoteException;
 }

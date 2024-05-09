@@ -6,11 +6,11 @@ import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
@@ -66,19 +66,15 @@ public class RMIServer implements VirtualServer {
         lobbyController.sendMessage(msg);
         //TODO alert all the clients that a new message has been sent
         //TODO implement an observer pattern
-        if(msg.getReceiver() == null)
-        {
-            for (VirtualView client : clients)
-            {
-                if(client.getIdGame() == msg.getGameId())
+        if (msg.getReceiver() == null) {
+            for (VirtualView client : clients) {
+                if (client.getIdGame() == msg.getGameId())
                     client.receiveMessage(msg);
             }
 
-        }
-        else
-        {
+        } else {
             for (VirtualView client : clients)
-                if(client.getIdGame() == msg.getGameId())
+                if (client.getIdGame() == msg.getGameId())
                     client.receiveMessage(msg);
         }
 
@@ -90,7 +86,7 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public int createGame(String username, int nPlayers) throws RemoteException, InterruptedException{
+    public int createGame(String username, int nPlayers) throws RemoteException, InterruptedException {
         return lobbyController.createGame(username, nPlayers);
     }
 
@@ -103,31 +99,38 @@ public class RMIServer implements VirtualServer {
     public void setObjectiveCard(int idGame, int idClientIntoGame, int idObjCard) throws RemoteException, CardNotFoundException {
         lobbyController.setObjectiveCard(idGame, idClientIntoGame, idObjCard);
     }
+
     @Override
-    public StarterCard getStarterCard(int idGame, int idClientIntoGame) throws RemoteException{
+    public StarterCard getStarterCard(int idGame, int idClientIntoGame) throws RemoteException {
         return lobbyController.getStarterCard(idGame, idClientIntoGame);
     }
+
     @Override
     public void playStarterCard(int idGame, int idClientIntoGame, boolean playedFacedDown)
             throws RemoteException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
         lobbyController.playStarterCard(idGame, idClientIntoGame, playedFacedDown);
     }
+
     @Override
-    public ObjectiveCard getPlayerObjectiveCard(int idGame, int idClientIntoGame) throws RemoteException{
+    public ObjectiveCard getPlayerObjectiveCard(int idGame, int idClientIntoGame) throws RemoteException {
         return lobbyController.getObjectiveCard(idGame, idClientIntoGame);
     }
+
     @Override
-    public ArrayList<GameCard> getPlayerHand(int idGame, int idClientIntoGame) throws RemoteException{
+    public ArrayList<GameCard> getPlayerHand(int idGame, int idClientIntoGame) throws RemoteException {
         return lobbyController.getPlayerHand(idGame, idClientIntoGame);
     }
+
     @Override
-    public ObjectiveCard[] getSharedObjectiveCards(int idGame) throws RemoteException{
+    public ObjectiveCard[] getSharedObjectiveCards(int idGame) throws RemoteException {
         return lobbyController.getSharedObjectiveCards(idGame);
     }
+
     @Override
     public int getCurrentPlayer(int idGame) throws RemoteException {
         return lobbyController.getCurrentPlayer(idGame);
     }
+
     @Override
     public void playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
@@ -138,35 +141,46 @@ public class RMIServer implements VirtualServer {
     public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws RemoteException, CardNotFoundException {
         lobbyController.drawCard(idGame, idClientIntoGame, deckToChoose, inVisible);
     }
+
     @Override
-    public void waitForYourTurn(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException{
-        lobbyController.waitForYourTurn( idGame, idClientIntoGame);
+    public void waitForYourTurn(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException {
+        lobbyController.waitForYourTurn(idGame, idClientIntoGame);
     }
+
     @Override
-    public boolean getIsLastRoundStarted(int idGame) throws RemoteException{
+    public boolean getIsLastRoundStarted(int idGame) throws RemoteException {
         return lobbyController.getIsLastRoundStarted(idGame);
     }
+
     @Override
-    public HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame)throws RemoteException{
+    public HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame) throws RemoteException {
         return lobbyController.getAvailablePlaces(idGame, idClientIntoGame);
     }
+
     @Override
-    public ArrayList<GameCard> getVisibleCardsDeck(int idGame,int deck) throws RemoteException{
+    public ArrayList<GameCard> getVisibleCardsDeck(int idGame, int deck) throws RemoteException {
         return lobbyController.getVisibleCardsDeck(idGame, deck);
     }
+
     @Override
-    public String getUsernamePlayerThatStoppedTheGame(int idGame) throws RemoteException{
-        return lobbyController.getUsernamePlayerThatStoppedTheGame( idGame);
+    public String getUsernamePlayerThatStoppedTheGame(int idGame) throws RemoteException {
+        return lobbyController.getUsernamePlayerThatStoppedTheGame(idGame);
     }
 
 
+    @Override
+    public HashMap<Point, GameCard> getPlayerDesk(int idGame, int idClientIntoGame) throws RemoteException {
+        return lobbyController.getPlayerDesk(idGame, idClientIntoGame);
+    }
+
 
     @Override
-    public ArrayList<TokenColor> getAvailableColors(int idGame) throws RemoteException{
+    public ArrayList<TokenColor> getAvailableColors(int idGame) throws RemoteException {
         return lobbyController.getAvailableColors(idGame);
     }
+
     @Override
-    public void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws RemoteException{
+    public void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws RemoteException {
         lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor);
     }
 }
