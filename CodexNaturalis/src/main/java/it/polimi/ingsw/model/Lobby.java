@@ -41,7 +41,7 @@ public class Lobby {
         }
         Game newGame = new Game(id, numberOfPlayers);
         games.put(id, newGame);
-        return id - 1;
+        return id;
     }
 
     public ArrayList<Message> getMessages(String receiver, int gameId, String sender) {
