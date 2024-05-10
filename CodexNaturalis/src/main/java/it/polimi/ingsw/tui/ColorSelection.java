@@ -29,10 +29,10 @@ public class ColorSelection implements ClientState {
         try {
             ArrayList<TokenColor> ColorList = client.getAvailableColors();
             for (i = 0; i < ColorList.size(); i++) {
-                System.out.println(ColorList.get(i) + "\n");
+                System.out.println((i + 1) + " ." + ColorList.get(i));
             }
         } catch (RemoteException ex) {
-            System.out.println("\nRemote exception\n" + ex.getMessage());
+            System.out.println("Remote exception\n" + ex.getMessage());
         }
         System.out.println("--------------------------------\n");
     }
@@ -71,14 +71,6 @@ public class ColorSelection implements ClientState {
                     client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
                 } else
                     System.out.println("Color not available\n");
-                break;
-
-            case 5:
-                try {
-                    client.close();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
                 break;
             default:
                 System.out.println("Invalid input");
