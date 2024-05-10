@@ -235,7 +235,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
     private void runStateLoop() throws IOException, ClassNotFoundException, InterruptedException {
         boolean correctInput;
-        boolean chatState = false;
+        boolean chatState;
         int chatStateContator;
         while (true) {
             chatStateContator = 0;
@@ -243,7 +243,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             chatState = false;
             currentState.display();
             currentState.promptForInput();
-            int input = 0;
+            String input = "";
             do {
                 if (currentState instanceof PrivateChatState || currentState instanceof GlobalChatState) {
                     chatState = true;
@@ -254,16 +254,33 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             } while (chatState);
             while (!correctInput) {
                 try {
-                    input = scan.nextInt();
+                    System.out.print("Type your command or 'exit' to quit: ");
+                    input = scan.nextLine().trim().toLowerCase();
                     correctInput = true;
                 } catch (InputMismatchException e) {
                     System.out.println("\nInvalid input: Reinsert the value: ");
-                } finally {
-                    scan.nextLine();
                 }
             }
-            currentState.inputHandler(input);
+            if (!handleCommonInput(input))
+                try {
+                    currentState.inputHandler(Integer.parseInt(input));
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input: Please enter a number.");
+                }
         }
+    }
+
+    private boolean handleCommonInput(String input) {
+        if ("exit".equals(input)) {
+            try {
+                System.out.println("Exiting game...");
+                close();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override

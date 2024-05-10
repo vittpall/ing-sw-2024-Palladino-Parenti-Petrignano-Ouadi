@@ -34,13 +34,6 @@ public class WaitForYourLastTurnState implements ClientState{
                 client.waitForYourTurn();
                 client.setCurrentState(new PlayLastCardState(client, scanner));
                 break;
-            case 2:
-                try {
-                    client.close();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                break;
             case 3:
                 client.setCurrentState(new ChatState(client, scanner));
                 break;
@@ -54,7 +47,6 @@ public class WaitForYourLastTurnState implements ClientState{
     @Override
     public void promptForInput() {
         System.out.println("1. Wait for your turn");
-        System.out.println("2. Exit");
-        System.out.println("3. Chat");
+        System.out.println("2. Chat");
     }
 }

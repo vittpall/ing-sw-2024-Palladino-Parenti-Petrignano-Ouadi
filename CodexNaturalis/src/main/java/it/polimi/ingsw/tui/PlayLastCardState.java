@@ -69,7 +69,6 @@ public class PlayLastCardState implements ClientState {
         System.out.println("1. Play card 1");
         System.out.println("2. Play card 2");
         System.out.println("3. Play card 3");
-        System.out.println("4. Exit");
         System.out.println("5. Chat");
     }
 
@@ -95,20 +94,10 @@ public class PlayLastCardState implements ClientState {
             client.setCurrentState(new GetWinnerState(client, scanner));
             return;
         }
-        switch (input) {
-            case 4:
-                try {
-                    client.close();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case 5:
-                client.setCurrentState(new ChatState(client, scanner));
-                break;
-            default:
-                System.out.println("Invalid input");
-                break;
+        if (input == 5) {
+            client.setCurrentState(new ChatState(client, scanner));
+        } else {
+            System.out.println("Invalid input");
         }
     }
 

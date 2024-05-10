@@ -74,13 +74,6 @@ public class DrawCardState implements ClientState {
                 }
                 break;
             case 3:
-                try {
-                    client.close();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case 4:
                 client.setCurrentState(new ChatState(client, scanner, this));
                 break;
             default:
@@ -109,8 +102,7 @@ public class DrawCardState implements ClientState {
     public void promptForInput() {
         System.out.println("1. Draw resource card(visible or hidden)");
         System.out.println("2. Draw gold card(visible or hidden)");
-        System.out.println("3. Exit");
-        System.out.println("4. Chat");
+        System.out.println("3. Chat");
 
     }
 }

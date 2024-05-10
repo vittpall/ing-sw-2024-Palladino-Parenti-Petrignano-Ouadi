@@ -1,11 +1,9 @@
 package it.polimi.ingsw.tui;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.IOException;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public class MainMenuState implements ClientState, Remote {
@@ -21,7 +19,6 @@ public class MainMenuState implements ClientState, Remote {
 
     @Override
     public void promptForInput() {
-        System.out.print("Enter your choice (1 or 2): ");
     }
 
     @Override
@@ -45,23 +42,17 @@ public class MainMenuState implements ClientState, Remote {
         System.out.println("|                                     |");
         System.out.println("|   Please select an option:          |");
         System.out.println("|   1. Play 🎮                        |");
-        System.out.println("|   2. Exit 🚪                        |");
         System.out.println("|_____________________________________|\n");
     }
 
     @Override
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
 
-        switch (input) {
-            case 1:
-                requestUsername();
-                break;
-            case 2:
-                System.exit(0);
-                break;
-            default:
-                System.out.print("Invalid input");
-                display();
+        if (input == 1) {
+            requestUsername();
+        } else {
+            System.out.print("Invalid input");
+            display();
         }
     }
 

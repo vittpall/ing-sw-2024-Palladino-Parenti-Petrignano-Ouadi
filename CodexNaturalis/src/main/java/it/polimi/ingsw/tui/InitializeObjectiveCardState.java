@@ -19,7 +19,7 @@ public class InitializeObjectiveCardState implements ClientState {
 
     @Override
     public void promptForInput() {
-        System.out.print("Enter your choice (1-4) : ");
+
     }
 
     @Override
@@ -35,7 +35,6 @@ public class InitializeObjectiveCardState implements ClientState {
                 printer.printCard(card, false);
                 nObjectiveCard++;
             }
-            System.out.println("|   3. Exit 🚪                        |");
             System.out.println("|   4. Chat 💬                        |");
         } catch (RemoteException ex) {
             System.out.println("Error while getting the drawn objective cards");
@@ -61,13 +60,6 @@ public class InitializeObjectiveCardState implements ClientState {
                     client.setCurrentState(new InitializeStarterCardState(client, scanner));
                 } catch (CardNotFoundException | RemoteException ex) {
                     System.out.println("Card not found. Please try again");
-                }
-                break;
-            case 3:
-                try {
-                    client.close();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
                 }
                 break;
             case 4:

@@ -23,8 +23,6 @@ public class InitializeStarterCardState implements ClientState {
 
     @Override
     public void promptForInput() {
-        System.out.print("Enter your choice\n(1- if you want to play it on the front\n" +
-                "2- if you want to play it faced down \n3 to exit) : ");
     }
 
     @Override
@@ -50,10 +48,9 @@ public class InitializeStarterCardState implements ClientState {
             StarterCard playerStarterCard = client.getStarterCard();
             System.out.println("Your starter card is:");
             System.out.println("|   1. Play on the front 🎮          |");
-            printer.printCard(playerStarterCard,false);
+            printer.printCard(playerStarterCard, false);
             System.out.println("|   2. Play faced down 🎮            |");
             printer.printCard(playerStarterCard, true);
-            System.out.println("|   3. Exit 🚪                        |");
         } catch (RemoteException ex) {
             System.out.println("Error while getting the drawn objective cards");
             System.out.println(ex.getMessage());
@@ -79,13 +76,6 @@ public class InitializeStarterCardState implements ClientState {
                 } catch (RemoteException | PlaceNotAvailableException | CardNotFoundException |
                          RequirementsNotMetException ex) {
                     System.out.println("Card not found. Please try again");
-                }
-                break;
-            case 3:
-                try {
-                    client.close();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
                 }
                 break;
             case 4:
