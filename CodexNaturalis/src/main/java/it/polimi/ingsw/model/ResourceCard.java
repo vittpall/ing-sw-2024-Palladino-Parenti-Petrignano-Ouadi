@@ -43,18 +43,12 @@ public class ResourceCard extends GameCard {
     public void printCardDetails(PrintContext context, CardPrinter.Color colorBackground, boolean faceDown) {
 
         for (int i = 0; i < context.getCardHeight() - 2; i++) {
-            if (!faceDown) {
-                if (i == context.getCardHeight() / 2 - 1) {
-                    if (getPoints() != 0) {
-                        String pointsDetail = "Pts: " + getPoints();
-                        System.out.println(colorBackground + " " + context.centerString(pointsDetail, context.getCardWidth() - 2) + " " + CardPrinter.RESET);
-                    } else {
-                        System.out.println(colorBackground + context.centerString("", context.getCardWidth()) + CardPrinter.RESET);
-                    }
-                }
-            } else {
-                System.out.println(colorBackground + context.repeat(context.getCardWidth()) + CardPrinter.RESET);
+            String printString = colorBackground + context.repeat(context.getCardWidth()) + CardPrinter.RESET;
+            if (!faceDown && i == context.getCardHeight() / 2 - 1 && getPoints() != 0) {
+                String pointsDetail = "Pts: " + getPoints();
+                printString = colorBackground + " " + context.centerString(pointsDetail, context.getCardWidth() - 2) + " " + CardPrinter.RESET;
             }
+            System.out.println(printString);
         }
     }
 
