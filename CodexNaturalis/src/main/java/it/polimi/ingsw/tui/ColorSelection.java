@@ -13,7 +13,6 @@ public class ColorSelection implements ClientState {
 
     @Override
     public void promptForInput() {
-        System.out.print("Enter your choice: Select an available color:\n 1. RED\n 2. BLUE\n 3. YELLOW\n 4. GREEN\n: ");
     }
 
     public ColorSelection(VirtualView client, Scanner scanner) {
@@ -23,56 +22,56 @@ public class ColorSelection implements ClientState {
 
     @Override
     public void display() {
-        int i;
-        System.out.println("\n ----------Choose a color----------");
-        System.out.println("Available colors: \n");
+        System.out.println("\n---------- Choose a color ----------");
+        System.out.println("Available colors:");
         try {
-            ArrayList<TokenColor> ColorList = client.getAvailableColors();
-            for (i = 0; i < ColorList.size(); i++) {
-                System.out.println(ColorList.get(i));
+            ArrayList<TokenColor> colorList = client.getAvailableColors();
+            for (TokenColor tokenColor : colorList) {
+                String colorOutput = formatColorOutput(tokenColor);
+                System.out.println(colorOutput);
             }
         } catch (RemoteException ex) {
-            System.out.println("Remote exception\n" + ex.getMessage());
+            System.out.println("Remote exception: " + ex.getMessage());
         }
-        System.out.println("--------------------------------\n");
+        System.out.println("------------------------------------\n");
     }
 
     @Override
     public void inputHandler(int input) throws RemoteException {
-        ArrayList<TokenColor> ColorList = client.getAvailableColors();
-        switch (input) {
-            case 1:
-                if (ColorList.contains(TokenColor.RED)) {
-                    client.setTokenColor(TokenColor.RED);
-                    client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
-                } else
-                    System.out.println("Color not available\n");
-                break;
-            case 2:
-                if (ColorList.contains(TokenColor.BLUE)) {
-                    client.setTokenColor(TokenColor.BLUE);
-                    client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
-                } else
-                    System.out.println("Color not available\n");
-                break;
-            case 3:
-                if (ColorList.contains(TokenColor.YELLOW)) {
-                    client.setTokenColor(TokenColor.YELLOW);
-                    client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
-                } else
-                    System.out.println("Color not available\n");
-                break;
-            case 4:
-                if (ColorList.contains(TokenColor.GREEN)) {
-                    client.setTokenColor(TokenColor.GREEN);
-                    client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
-                } else
-                    System.out.println("Color not available\n");
-                break;
-           default:
-                System.out.println("Invalid input");
-                display();
-                inputHandler(scanner.nextInt());
+        ArrayList<TokenColor> currentColorList = client.getAvailableColors();
+        TokenColor selectedColor = getColorFromInput(input);
+
+        if (selectedColor != null && currentColorList.contains(selectedColor)) {
+            client.setTokenColor(selectedColor);
+            client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
+        } else if (selectedColor != null) {
+            System.out.println("Color not available, please select another color.");
+            display();
+            promptForInput();
+            inputHandler(scanner.nextInt());
+        } else {
+            System.out.println("Invalid input, please use a valid number (1-4):");
+            promptForInput();
+            inputHandler(scanner.nextInt());
         }
+    }
+
+    private TokenColor getColorFromInput(int input) {
+        return switch (input) {
+            case 1 -> TokenColor.RED;
+            case 2 -> TokenColor.BLUE;
+            case 3 -> TokenColor.YELLOW;
+            case 4 -> TokenColor.GREEN;
+            default -> null; // Return null if input is invalid
+        };
+    }
+
+    private String formatColorOutput(TokenColor color) {
+        return switch (color) {
+            case RED -> "1. RED";
+            case BLUE -> "2. BLUE";
+            case YELLOW -> "3. YELLOW";
+            case GREEN -> "4. GREEN";
+        };
     }
 }
