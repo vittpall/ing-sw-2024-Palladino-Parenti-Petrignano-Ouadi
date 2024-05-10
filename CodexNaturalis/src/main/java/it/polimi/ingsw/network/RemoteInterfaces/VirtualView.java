@@ -63,6 +63,9 @@ public interface VirtualView extends Remote {
     void playCard(int chosenCard, boolean faceDown, Point chosenPosition)
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException;
 
+    void playLastTurn(int chosenCard, boolean faceDown, Point chosenPosition)
+            throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException;
+
     void drawCard(int input, int inVisible) throws RemoteException, CardNotFoundException;
 
     void waitForYourTurn() throws RemoteException, InterruptedException;
@@ -87,4 +90,7 @@ public interface VirtualView extends Remote {
 
     void close() throws RemoteException;
 
+    String getWinner() throws RemoteException, InterruptedException;
+
+    void closeGame() throws RemoteException;
 }

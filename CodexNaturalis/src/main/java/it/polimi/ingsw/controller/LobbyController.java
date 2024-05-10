@@ -137,8 +137,17 @@ public class LobbyController {
         model.getGame(idGame).playCard(chosenCard, idClientIntoGame, faceDown, chosenPosition);
     }
 
+    public void playLastTurn(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
+            throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
+        synchronized (model.getGame(idGame)) {
+            this.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
+            if (model.getGame(idGame).getnPlayer() != idClientIntoGame + 1)
+                model.getGame(idGame).getNextPlayer();
+            model.getGame(idGame).notifyAll();
+        }
+    }
+
     public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws CardNotFoundException {
-        //TODO: completare il metodo e vedere come mettere meglio il synchronized
         synchronized (model.getGame(idGame)) {
             Deck chosenDeck;
             if (deckToChoose == 1)
@@ -192,5 +201,23 @@ public class LobbyController {
 
     public HashMap<Point, GameCard> getPlayerDesk(int idGame, int idClientIntoGame) {
         return model.getGame(idGame).getPlayers().get(idClientIntoGame).getPlayerDesk().getDesk();
+    }
+
+    public String getWinner(int idGame, int idClientIntoGame) throws InterruptedException {
+        String winner = "No winner";
+        synchronized (model.getGame(idGame)) {
+            if (idClientIntoGame + 1 != model.getGame(idGame).getnPlayer())
+                while (model.getGame(idGame).getCurrentPlayerIndex() + 1 != model.getGame(idGame).getnPlayer())
+                    model.getGame(idGame).wait();
+            else {
+                winner = model.getGame(idGame).endGame();
+                model.getGame(idGame).notifyAll();
+            }
+        }
+        return winner;
+    }
+
+    public void closeGame(int idGame) {
+        model.removeGame(idGame);
     }
 }

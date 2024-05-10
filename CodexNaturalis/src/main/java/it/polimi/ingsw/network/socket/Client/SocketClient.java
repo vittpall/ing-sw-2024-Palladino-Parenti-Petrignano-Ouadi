@@ -136,6 +136,16 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    public String getWinner() throws RemoteException, InterruptedException {
+        return null;
+    }
+
+    @Override
+    public void closeGame() throws RemoteException {
+
+    }
+
+    @Override
     public String getUsernamePlayerThatStoppedTheGame() throws RemoteException {
         return null;
     }
@@ -181,6 +191,11 @@ public class SocketClient implements VirtualView {
 
     @Override
     public void playCard(int chosenCard, boolean faceDown, Point chosenPosition) throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
+
+    }
+
+    @Override
+    public void playLastTurn(int chosenCard, boolean faceDown, Point chosenPosition) throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
 
     }
 

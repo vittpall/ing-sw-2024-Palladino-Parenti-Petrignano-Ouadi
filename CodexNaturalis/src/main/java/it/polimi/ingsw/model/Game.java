@@ -23,7 +23,7 @@ import java.util.Arrays;
  * gameStarted is set as true as soon as nPlayer players have joined the game
  * starterCards and objectiveCards are lists of all the possible starter and objective cards that are not played or drawn yet
  */
-public class Game implements Serializable{
+public class Game implements Serializable {
     private final int gameId;
     private final int nPlayer;
     private final ArrayList<Player> players;
@@ -52,7 +52,7 @@ public class Game implements Serializable{
         isLastRoundStarted = false;
         gameStarted = false;
         currentPlayerIndex = 0;
-        playerWhoStoppedTheGame=0;
+        playerWhoStoppedTheGame = 0;
         starterCards = new ArrayList<>();
         players = new ArrayList<>();
         objectiveCards = new ArrayList<>();
@@ -109,31 +109,36 @@ public class Game implements Serializable{
         }
         setGameStarted();
     }
-    public ArrayList<TokenColor>  getAvailableColors(){
+
+    public ArrayList<TokenColor> getAvailableColors() {
         ArrayList<TokenColor> usedColors = new ArrayList<>();
         for (Player player : players) {
             usedColors.add(player.getTokenColor());
         }
         ArrayList<TokenColor> availableColors = new ArrayList<>();
-        for(TokenColor color : TokenColor.values()){
-            if(!usedColors.contains(color)){
+        for (TokenColor color : TokenColor.values()) {
+            if (!usedColors.contains(color)) {
                 availableColors.add(color);
             }
         }
         return availableColors;
     }
-    public void setTokenColor(int idPlayer, TokenColor color){
+
+    public void setTokenColor(int idPlayer, TokenColor color) {
         players.get(idPlayer).setTokenColor(color);
     }
+
     /**
      * @return gameId
      */
     public int getGameId() {
         return gameId;
     }
-    public void setObjectiveCards(int idPlayer, int chosenCard) throws CardNotFoundException{
+
+    public void setObjectiveCards(int idPlayer, int chosenCard) throws CardNotFoundException {
         players.get(idPlayer).setObjectiveCard(chosenCard);
     }
+
     /**
      * @return nPlayer
      */
@@ -202,7 +207,7 @@ public class Game implements Serializable{
      */
     public int addPlayer(Player playerToAdd) {
         players.add(playerToAdd);
-        return players.size()-1;
+        return players.size() - 1;
     }
 
     /**
@@ -215,7 +220,7 @@ public class Game implements Serializable{
     /**
      * places the card into the current player's desk at (x,y) position
      *
-     * @param idCard     card the user wants to play
+     * @param idCard   card the user wants to play
      * @param faceDown how the user wants to play it
      * @param point    coordinates of desk where the user wants to play the card
      * @throws CardNotFoundException       when the card sent is not part of the current player's hand
@@ -223,7 +228,7 @@ public class Game implements Serializable{
      */
     public void playCard(int idCard, int idClient, boolean faceDown, Point point)
             throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
-        if(idClient!=currentPlayerIndex) throw new CardNotFoundException("Not your turn");
+        if (idClient != currentPlayerIndex) throw new CardNotFoundException("Not your turn");
         GameCard card = players.get(currentPlayerIndex).getPlayerHand().get(idCard);
         players.get(currentPlayerIndex).playCard(card, faceDown, point);
     }
@@ -239,7 +244,7 @@ public class Game implements Serializable{
         players.get(currentPlayerIndex).draw(deck);
         if (players.get(currentPlayerIndex).getPoints() >= 20) {
             isLastRoundStarted = true;
-            playerWhoStoppedTheGame=currentPlayerIndex;
+            playerWhoStoppedTheGame = currentPlayerIndex;
         }
         getNextPlayer();
         return players.get(currentPlayerIndex).getPoints();
@@ -264,7 +269,7 @@ public class Game implements Serializable{
     /**
      * change the currentPlayerIndex as the next one
      */
-    private void getNextPlayer() {
+    public void getNextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % nPlayer;
     }
 
@@ -274,10 +279,10 @@ public class Game implements Serializable{
      *
      * @return the winner of the game
      */
-    public Player endGame() {
+    public String endGame() {
         int pointsMax = 0;
         int nObjectiveMetWinner = 0;
-        Player winner = null;
+        String winner = null;
         for (Player currentPlayer : players) {
             int nObjectiveMetPlayer = currentPlayer.checkObjective(sharedObjectiveCards);
             int currentPlayerPoints = currentPlayer.getPoints();
@@ -285,9 +290,12 @@ public class Game implements Serializable{
                     (currentPlayerPoints == pointsMax && nObjectiveMetPlayer > nObjectiveMetWinner)) {
                 pointsMax = currentPlayerPoints;
                 nObjectiveMetWinner = nObjectiveMetPlayer;
-                winner = currentPlayer;
+                winner = currentPlayer.getUsername();
+            } else if (currentPlayerPoints == pointsMax && nObjectiveMetPlayer == nObjectiveMetWinner) {
+                winner = winner + " and " + currentPlayer.getUsername();
             }
         }
+        if (winner == null) return "No winner";
         return winner;
     }
 

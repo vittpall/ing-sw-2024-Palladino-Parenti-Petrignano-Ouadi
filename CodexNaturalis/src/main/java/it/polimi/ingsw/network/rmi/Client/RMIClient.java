@@ -151,6 +151,12 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
 
     @Override
+    public void playLastTurn(int chosenCard, boolean faceDown, Point chosenPosition)
+            throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
+        server.playLastTurn(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
+    }
+
+    @Override
     public ArrayList<GameCard> getVisibleCardsDeck(int deck) throws RemoteException {
         return server.getVisibleCardsDeck(idGame, deck);
     }
@@ -189,6 +195,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return server.getAvailablePlaces(idGame, idClientIntoGame);
     }
 
+    @Override
+    public String getWinner() throws RemoteException, InterruptedException {
+        return server.getWinner(idGame, idClientIntoGame);
+    }
 
     @Override
     public ArrayList<TokenColor> getAvailableColors() throws RemoteException {
@@ -225,7 +235,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
     private void runStateLoop() throws IOException, ClassNotFoundException, InterruptedException {
         boolean correctInput;
-        boolean chatState;
+        boolean chatState = false;
         int chatStateContator;
         while (true) {
             chatStateContator = 0;
@@ -254,6 +264,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             }
             currentState.inputHandler(input);
         }
+    }
+
+    @Override
+    public void closeGame() throws RemoteException {
+        server.closeGame(idGame);
     }
 
 }

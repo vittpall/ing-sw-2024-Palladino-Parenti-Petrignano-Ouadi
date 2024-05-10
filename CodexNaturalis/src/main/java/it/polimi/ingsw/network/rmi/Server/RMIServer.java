@@ -138,6 +138,12 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
+    public void playLastTurn(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
+            throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
+        lobbyController.playLastTurn(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
+    }
+
+    @Override
     public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws RemoteException, CardNotFoundException {
         lobbyController.drawCard(idGame, idClientIntoGame, deckToChoose, inVisible);
     }
@@ -182,5 +188,15 @@ public class RMIServer implements VirtualServer {
     @Override
     public void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws RemoteException {
         lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor);
+    }
+
+    @Override
+    public String getWinner(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException {
+        return lobbyController.getWinner(idGame, idClientIntoGame);
+    }
+
+    @Override
+    public void closeGame(int idGame) throws RemoteException {
+        lobbyController.closeGame(idGame);
     }
 }

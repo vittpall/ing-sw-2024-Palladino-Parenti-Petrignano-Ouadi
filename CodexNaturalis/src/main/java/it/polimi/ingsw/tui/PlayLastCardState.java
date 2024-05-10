@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 
-public class PlayLastCardState implements ClientState{
+public class PlayLastCardState implements ClientState {
     VirtualView client;
     private final Scanner scanner;
 
@@ -26,12 +26,12 @@ public class PlayLastCardState implements ClientState{
     @Override
     public void display() {
         System.out.println("|--------Play your last card state---------|");
-        try{
+        try {
             String playerWhoStopped = client.getUsernamePlayerThatStoppedTheGame();
             System.out.println("This is your last turn!" + playerWhoStopped + "has reached 20 points!");
             System.out.println("The player" + playerWhoStopped + "has reached 20 points!");
 
-        }catch(RemoteException ex){
+        } catch (RemoteException ex) {
             System.out.println(ex.getMessage());
         }
         CardPrinter printer = new CardPrinter();
@@ -62,6 +62,7 @@ public class PlayLastCardState implements ClientState{
             System.out.println(ex.getMessage());
         }
     }
+
     @Override
     public void promptForInput() {
         System.out.println("Choose a card to play:");
@@ -71,6 +72,7 @@ public class PlayLastCardState implements ClientState{
         System.out.println("4. Exit");
         System.out.println("5. Chat");
     }
+
     @Override
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
         if (input > 0 && input < 4) {
@@ -78,7 +80,7 @@ public class PlayLastCardState implements ClientState{
             Point pointChosen = choosePosition();
             boolean faceDown = chooseIfFaceDown();
             try {
-                client.playCard(input - 1, faceDown, pointChosen);
+                client.playLastTurn(input - 1, faceDown, pointChosen);
             } catch (RemoteException ex) {
                 System.out.println(ex.getMessage());
             } catch (PlaceNotAvailableException ex) {
@@ -90,7 +92,7 @@ public class PlayLastCardState implements ClientState{
                 System.out.println("Requirements not met. Please choose another card");
                 //rimandare dopo tutte le eccezioni in questo stato
             }
-            //client.setCurrentState(new WaitForTheWinnerState(client, scanner));
+            client.setCurrentState(new GetWinnerState(client, scanner));
             return;
         }
         switch (input) {
@@ -109,6 +111,7 @@ public class PlayLastCardState implements ClientState{
                 break;
         }
     }
+
     private boolean chooseIfFaceDown() {
         //metodo in cui si chiede al giocatore se vuole giocare la carta coperta o scoperta
         System.out.println("Choose how to play the card(1: faced up - 2:faced down): ");
@@ -125,6 +128,7 @@ public class PlayLastCardState implements ClientState{
         System.out.println("Invalid input");
         return chooseIfFaceDown();
     }
+
     private Point choosePosition() {
         //metodo in cui si chiede al giocatore in che posizione vuole giocare la carta
         //se non è disponibile la posizione si richiede fino a quando non ce n'è una disponibile

@@ -8,16 +8,18 @@ import java.util.Map;
 
 public class Lobby {
     private final Map<Integer, Game> games;
+    private final ArrayList<Integer> unusedIdGame;
     private int nextGameId;
 
     public Lobby() {
         games = new HashMap<>();
+        unusedIdGame = new ArrayList<>();
         nextGameId = 1;
     }
 
 
     public void removeGame(int gameId) {
-        games.remove(gameId);
+        //TODO: rimuovere il gioco quando tutti i giocatori sono usciti. tenere il conto di quanti giocatori sono usciti
     }
 
     public Game getGame(int gameId) {
@@ -29,10 +31,17 @@ public class Lobby {
     }
 
     public int createNewGame(int numberOfPlayers) {
-        Game newGame = new Game(nextGameId, numberOfPlayers);
-        games.put(nextGameId, newGame);
-        nextGameId++;
-        return nextGameId - 1;
+        int id;
+        if (!unusedIdGame.isEmpty()) {
+            id = unusedIdGame.getFirst();
+            unusedIdGame.removeFirst();
+        } else {
+            id = nextGameId;
+            nextGameId++;
+        }
+        Game newGame = new Game(id, numberOfPlayers);
+        games.put(id, newGame);
+        return id - 1;
     }
 
     public ArrayList<Message> getMessages(String receiver, int gameId, String sender) {

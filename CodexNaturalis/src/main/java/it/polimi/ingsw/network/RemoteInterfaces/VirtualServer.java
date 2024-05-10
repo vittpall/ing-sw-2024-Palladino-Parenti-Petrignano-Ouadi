@@ -75,4 +75,11 @@ public interface VirtualServer extends Remote {
     String getUsernamePlayerThatStoppedTheGame(int idGame) throws RemoteException;
 
     HashMap<Point, GameCard> getPlayerDesk(int idGame, int idClientIntoGame) throws RemoteException;
+
+    String getWinner(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException;
+
+    void playLastTurn(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
+            throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException;
+
+    void closeGame(int idGame) throws RemoteException;
 }
