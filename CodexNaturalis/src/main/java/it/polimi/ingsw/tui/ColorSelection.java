@@ -11,9 +11,9 @@ public class ColorSelection implements ClientState {
     VirtualView client;
     private final Scanner scanner;
 
-
     @Override
     public void promptForInput() {
+        System.out.print("Enter your choice: Select an available color:\n 1. RED\n 2. BLUE\n 3. YELLOW\n 4. GREEN\n: ");
     }
 
     public ColorSelection(VirtualView client, Scanner scanner) {
@@ -29,7 +29,7 @@ public class ColorSelection implements ClientState {
         try {
             ArrayList<TokenColor> ColorList = client.getAvailableColors();
             for (i = 0; i < ColorList.size(); i++) {
-                System.out.println((i + 1) + " ." + ColorList.get(i));
+                System.out.println(ColorList.get(i));
             }
         } catch (RemoteException ex) {
             System.out.println("Remote exception\n" + ex.getMessage());
@@ -47,7 +47,6 @@ public class ColorSelection implements ClientState {
                     client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
                 } else
                     System.out.println("Color not available\n");
-
                 break;
             case 2:
                 if (ColorList.contains(TokenColor.BLUE)) {
@@ -56,7 +55,6 @@ public class ColorSelection implements ClientState {
                 } else
                     System.out.println("Color not available\n");
                 break;
-
             case 3:
                 if (ColorList.contains(TokenColor.YELLOW)) {
                     client.setTokenColor(TokenColor.YELLOW);
@@ -64,7 +62,6 @@ public class ColorSelection implements ClientState {
                 } else
                     System.out.println("Color not available\n");
                 break;
-
             case 4:
                 if (ColorList.contains(TokenColor.GREEN)) {
                     client.setTokenColor(TokenColor.GREEN);
@@ -72,13 +69,18 @@ public class ColorSelection implements ClientState {
                 } else
                     System.out.println("Color not available\n");
                 break;
+
+            case 5:
+                try {
+                    client.close();
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                break;
             default:
                 System.out.println("Invalid input");
                 display();
                 inputHandler(scanner.nextInt());
-
         }
     }
-
-
 }
