@@ -210,6 +210,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         server.setTokenColor(idGame, idClientIntoGame, tokenColor);
     }
 
+    public int getPoints() throws RemoteException{
+       return server.getPoints(idGame, idClientIntoGame);
+    }
+
     @Override
     public HashMap<Point, GameCard> getPlayerDesk() throws RemoteException {
         return this.server.getPlayerDesk(idGame, idClientIntoGame);

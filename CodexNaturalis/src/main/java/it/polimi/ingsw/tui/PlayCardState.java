@@ -4,6 +4,8 @@ import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.PlayerDesk;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
@@ -25,10 +27,19 @@ public class PlayCardState implements ClientState {
 
     @Override
     public void display() {
-        System.out.println("|--------Play card state---------|");
-        CardPrinter printer = new CardPrinter();
         //mostrare il proprio desk e mostrare la mano in cui far scegliere quale carta giocare
         try {
+            int playerScore = 0;
+            ArrayList<Player> allPlayers = client.getAllPlayers(client.getIdGame());
+            System.out.println("--------------------------------");
+            System.out.println("The Provisional ranking is: ");
+            for (Player player: allPlayers)
+            {
+                playerScore = client.getPoints();
+                System.out.println("player: " + player.getUsername() + " | Score: "+ playerScore);
+            }
+            System.out.println("|--------Play card state---------|");
+            CardPrinter printer = new CardPrinter();
             System.out.println("The common objective cards are:");
             //stampare le objective card comuni a tutti i giocatori
             ObjectiveCard[] sharedObjectiveCards = client.getSharedObjectiveCards();

@@ -221,6 +221,11 @@ public class SocketClient implements VirtualView {
 
     }
 
+    public int getPoints() throws RemoteException{
+        //TODO
+        return 0;
+    }
+
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         new Thread(() -> {
             try {

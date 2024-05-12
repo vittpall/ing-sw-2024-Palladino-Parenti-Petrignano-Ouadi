@@ -190,6 +190,10 @@ public class RMIServer implements VirtualServer {
         lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor);
     }
 
+    public int getPoints(int idGame, int idClientIntoGame) throws RemoteException{
+        return lobbyController.getPoints(idGame, idClientIntoGame);
+    }
+
     @Override
     public String getWinner(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException {
         return lobbyController.getWinner(idGame, idClientIntoGame);

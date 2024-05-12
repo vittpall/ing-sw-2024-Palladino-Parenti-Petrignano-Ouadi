@@ -70,6 +70,8 @@ public interface VirtualServer extends Remote {
 
     void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws RemoteException;
 
+    int getPoints(int idGame, int idClientIntoGame) throws RemoteException;
+
     ArrayList<GameCard> getVisibleCardsDeck(int idGame, int deck) throws RemoteException;
 
     String getUsernamePlayerThatStoppedTheGame(int idGame) throws RemoteException;

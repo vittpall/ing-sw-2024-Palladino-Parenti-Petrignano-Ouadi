@@ -127,7 +127,9 @@ public class LobbyController {
     public synchronized void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) {
         model.getGame(idGame).setTokenColor(idClientIntoGame, tokenColor);
     }
-
+    public int getPoints(int idGame, int idClientIntoGame){
+        return model.getGame(idGame).getPlayers().get(idClientIntoGame).getPoints();
+    }
     public int getCurrentPlayer(int idGame) {
         return model.getGame(idGame).getCurrentPlayerIndex();
     }

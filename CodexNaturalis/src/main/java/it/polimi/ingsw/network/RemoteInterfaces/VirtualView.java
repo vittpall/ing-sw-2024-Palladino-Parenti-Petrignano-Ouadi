@@ -84,6 +84,8 @@ public interface VirtualView extends Remote {
 
     void setTokenColor(TokenColor tokenColor) throws RemoteException;
 
+    int getPoints() throws RemoteException;
+
     ArrayList<GameCard> getVisibleCardsDeck(int deck) throws RemoteException;
 
     String getUsernamePlayerThatStoppedTheGame() throws RemoteException;
