@@ -64,7 +64,13 @@ public class InitializeStarterCardState implements ClientState {
             case 1:
                 try {
                     client.playStarterCard(false);
-                    // client.setCurrentState(new InitializeStarterCardState(client, scanner));
+                    String nextState = client.getNextState();
+                    if (nextState.equals("PlayCardState")) client.setCurrentState(new PlayCardState(client, scanner));
+                    else if (nextState.equals("WaitForYourTurnState"))
+                        client.setCurrentState(new WaitForYourTurnState(client, scanner));
+                    else {
+                        System.out.println("Error");
+                    }
                 } catch (RemoteException | PlaceNotAvailableException | CardNotFoundException |
                          RequirementsNotMetException ex) {
                     System.out.println("Card not found. Please try again");
@@ -73,7 +79,13 @@ public class InitializeStarterCardState implements ClientState {
             case 2:
                 try {
                     client.playStarterCard(true);
-                    // client.setCurrentState(new InitializeStarterCardState(client, scanner));
+                    String nextState = client.getNextState();
+                    if (nextState.equals("PlayCardState")) client.setCurrentState(new PlayCardState(client, scanner));
+                    else if (nextState.equals("WaitForYourTurnState"))
+                        client.setCurrentState(new WaitForYourTurnState(client, scanner));
+                    else {
+                        System.out.println("Error");
+                    }
                 } catch (RemoteException | PlaceNotAvailableException | CardNotFoundException |
                          RequirementsNotMetException ex) {
                     System.out.println("Card not found. Please try again");
@@ -84,16 +96,7 @@ public class InitializeStarterCardState implements ClientState {
                 break;
             default:
                 System.out.print("Invalid input");
-                display();
         }
-        String nextState = client.getNextState();
-        if (nextState.equals("PlayCardState"))
-            client.setCurrentState(new PlayCardState(client, scanner));
-        else if (nextState.equals("WaitForYourTurnState"))
-            client.setCurrentState(new WaitForYourTurnState(client, scanner));
-        else {
-            System.out.println("Error");
-            display();
-        }
+
     }
 }

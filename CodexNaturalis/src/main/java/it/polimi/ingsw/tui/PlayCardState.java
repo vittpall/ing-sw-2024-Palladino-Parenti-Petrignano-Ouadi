@@ -64,6 +64,7 @@ public class PlayCardState implements ClientState {
                 successfulAction = true;
             } else {
                 System.out.println("Invalid input");
+                successfulAction = true;
             }
         }
     }
@@ -136,7 +137,8 @@ public class PlayCardState implements ClientState {
             System.out.println("Available places:");
             availablePlaces = client.getAvailablePlaces();
             for (Point avPoint : availablePlaces) {
-                System.out.println(avPoint.toString());
+                String formattedCoordinates = String.format("Position: (%d, %d)", avPoint.x, avPoint.y);
+                System.out.println(formattedCoordinates);
             }
         } catch (RemoteException ex) {
             System.out.println("Error fetching available places: " + ex.getMessage());

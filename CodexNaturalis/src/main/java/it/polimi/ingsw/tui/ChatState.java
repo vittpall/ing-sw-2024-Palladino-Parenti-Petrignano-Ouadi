@@ -45,7 +45,6 @@ public class ChatState implements ClientState {
                 break;
             default:
                 System.out.print("Invalid input");
-                display();
         }
     }
 
