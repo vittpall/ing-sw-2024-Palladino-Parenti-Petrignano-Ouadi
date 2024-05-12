@@ -49,7 +49,6 @@ public class LobbyMenuState implements ClientState {
                 break;
             default:
                 System.out.print("Invalid input");
-                display();
         }
     }
 }

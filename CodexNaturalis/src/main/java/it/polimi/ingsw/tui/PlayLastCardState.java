@@ -28,28 +28,23 @@ public class PlayLastCardState implements ClientState {
         System.out.println("|--------Play your last card state---------|");
         try {
             String playerWhoStopped = client.getUsernamePlayerThatStoppedTheGame();
-            System.out.println("This is your last turn!" + playerWhoStopped + "has reached 20 points!");
+            System.out.println("This is your last turn!");
             System.out.println("The player" + playerWhoStopped + "has reached 20 points!");
 
         } catch (RemoteException ex) {
             System.out.println(ex.getMessage());
         }
         CardPrinter printer = new CardPrinter();
-        //mostrare il proprio desk e mostrare la mano da cui far scegliere quale carta giocare
         try {
             System.out.println("The common objective cards are:");
-            //stampare le objective card comuni a tutti i giocatori
             ObjectiveCard[] sharedObjectiveCards = client.getSharedObjectiveCards();
             for (ObjectiveCard card : sharedObjectiveCards) {
                 printer.printCard(card, false);
             }
             System.out.println("Your objective card is:");
-            //stampare l'objective card richiesta
             printer.printCard(client.getPlayerObjectiveCard(), false);
             System.out.println("Your desk is:\n");
-            //stampare il desk del giocatore
             System.out.println("Choose a card to play:");
-            //stampare la mano del giocatore richiesta
             ArrayList<GameCard> playerHand = client.getPlayerHand();
             int i = 1;
             for (GameCard card : playerHand) {
@@ -69,7 +64,7 @@ public class PlayLastCardState implements ClientState {
         System.out.println("1. Play card 1");
         System.out.println("2. Play card 2");
         System.out.println("3. Play card 3");
-        System.out.println("5. Chat");
+        System.out.println("4. Chat");
     }
 
     @Override
@@ -94,7 +89,7 @@ public class PlayLastCardState implements ClientState {
             client.setCurrentState(new GetWinnerState(client, scanner));
             return;
         }
-        if (input == 5) {
+        if (input == 4) {
             client.setCurrentState(new ChatState(client, scanner));
         } else {
             System.out.println("Invalid input");

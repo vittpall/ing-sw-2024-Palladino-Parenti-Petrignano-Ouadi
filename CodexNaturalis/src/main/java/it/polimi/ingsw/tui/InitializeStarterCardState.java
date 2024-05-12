@@ -51,6 +51,7 @@ public class InitializeStarterCardState implements ClientState {
             printer.printCard(playerStarterCard, false);
             System.out.println("|   2. Play faced down 🎮            |");
             printer.printCard(playerStarterCard, true);
+            System.out.println("|   3. Chat 💬                        |");
         } catch (RemoteException ex) {
             System.out.println("Error while getting the drawn objective cards");
             System.out.println(ex.getMessage());
@@ -78,13 +79,12 @@ public class InitializeStarterCardState implements ClientState {
                     System.out.println("Card not found. Please try again");
                 }
                 break;
-            case 4:
+            case 3:
                 client.setCurrentState(new ChatState(client, scanner, this));
                 break;
             default:
                 System.out.print("Invalid input");
                 display();
-
         }
         String nextState = client.getNextState();
         if (nextState.equals("PlayCardState"))
