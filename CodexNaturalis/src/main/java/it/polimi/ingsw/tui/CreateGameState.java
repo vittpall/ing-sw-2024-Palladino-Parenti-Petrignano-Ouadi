@@ -73,6 +73,8 @@ public class CreateGameState implements ClientState {
             client.setCurrentState(new ColorSelection(client, scanner));
         } catch (InterruptedException | RemoteException e) {
             System.out.println("Error creating game. Please try again.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

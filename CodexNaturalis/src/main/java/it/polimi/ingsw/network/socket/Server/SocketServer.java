@@ -43,13 +43,8 @@ public class SocketServer implements Remote {
             new Thread(() -> {
                 try {
                     handler.runVirtualView();
-                } catch (IOException | InterruptedException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                } catch (CardNotFoundException e) {
-                    throw new RuntimeException(e);
-                } catch (PlaceNotAvailableException e) {
-                    throw new RuntimeException(e);
-                } catch (RequirementsNotMetException e) {
+                } catch (IOException | InterruptedException | ClassNotFoundException | RequirementsNotMetException |
+                         PlaceNotAvailableException | CardNotFoundException e) {
                     throw new RuntimeException(e);
                 }
             }, "ClientHandler").start();

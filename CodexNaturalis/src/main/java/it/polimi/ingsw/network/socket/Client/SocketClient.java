@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.socket.Client;
 
-import com.sun.jdi.connect.spi.ClosedConnectionException;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -77,12 +76,7 @@ public class SocketClient implements VirtualView {
     @Override
     public ArrayList<Player> getAllPlayers(int gameId) throws IOException, InterruptedException {
         GetAllPlayersMsg request = new GetAllPlayersMsg(gameId);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         return response.getResponse().getArrayListResponse();
     }
 
@@ -105,15 +99,21 @@ public class SocketClient implements VirtualView {
         this.username = username;
     }
 
-    @Override
-    public HashMap<Integer, Game> getNotStartedGames() throws IOException, InterruptedException {
-        GetNotStartedGamesMsg request = new GetNotStartedGamesMsg();
+
+    private ServerToClientMsg sendRequest(ClientToServerMsg request) throws IOException, InterruptedException {
         ServerToClientMsg expectedResponse = request.getTypeofResponse();
         out.writeObject(request);
         out.flush();
         out.reset();
+        //wait for the response
         BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        return queue.take();  // This will block until the expected type of response is received
+    }
+
+    @Override
+    public HashMap<Integer, Game> getNotStartedGames() throws IOException, InterruptedException {
+        GetNotStartedGamesMsg request = new GetNotStartedGamesMsg();
+        ServerToClientMsg response = sendRequest(request);
 
         return response.getResponse().getGames();
     }
@@ -121,24 +121,13 @@ public class SocketClient implements VirtualView {
     @Override
     public void setObjectiveCard(int idCard) throws IOException, CardNotFoundException, InterruptedException {
         SetObjectiveCardMsg request = new SetObjectiveCardMsg(idGame, idClientIntoGame, idCard);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
     }
 
     @Override
     public void createGame(String username, int nPlayers) throws IOException, InterruptedException {
         CreateGameMsg request = new CreateGameMsg(username, nPlayers);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        //wait for the response
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         idClientIntoGame = 0;
         idGame = response.getResponse().getIntResponse();
     }
@@ -146,13 +135,7 @@ public class SocketClient implements VirtualView {
     @Override
     public void joinGame(int input, String username) throws IOException, InterruptedException {
         JoinGameMsg request = new JoinGameMsg(username, input);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        //wait for the response
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         idGame = input;
         idClientIntoGame = response.getResponse().getIntResponse();
 
@@ -161,13 +144,7 @@ public class SocketClient implements VirtualView {
     @Override
     public ArrayList<ObjectiveCard> getPlayerObjectiveCards() throws IOException, InterruptedException {
         GetPlayerObjectiveCardsMsg request = new GetPlayerObjectiveCardsMsg(idGame, idClientIntoGame);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        //wait for the response
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         return response.getResponse().getArrayListResponse();
     }
 
@@ -179,13 +156,7 @@ public class SocketClient implements VirtualView {
     @Override
     public ArrayList<Message> getMessages(String receiver) throws IOException, InterruptedException {
         GetMessageMsg request = new GetMessageMsg(receiver, this.idGame, this.username);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        //wait for the response
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         return response.getResponse().getArrayListResponse();
     }
 
@@ -193,26 +164,13 @@ public class SocketClient implements VirtualView {
     public void sendMessage(String receiver, String message) throws IOException, InterruptedException {
         Message msg = new Message(this.username, receiver, message, this.idGame);
         SendMessageMsg request = new SendMessageMsg(msg);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        //wait for the response
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
-
+        ServerToClientMsg response = sendRequest(request);
     }
 
     @Override
     public HashSet<Point> getAvailablePlaces() throws IOException, InterruptedException {
         GetAvailablePlacesMsg request = new GetAvailablePlacesMsg(idGame, idClientIntoGame);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        //wait for the response
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         return response.getResponse().getHashSetResponse();
     }
 
@@ -224,12 +182,7 @@ public class SocketClient implements VirtualView {
     @Override
     public void close() throws IOException, InterruptedException {
         ClosedConnectionMsg request = new ClosedConnectionMsg(username);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         response.getResponse();
 
         System.exit(0);
@@ -258,72 +211,41 @@ public class SocketClient implements VirtualView {
     @Override
     public HashMap<Point, GameCard> getPlayerDesk() throws IOException, InterruptedException {
         GetPlayerDesk request = new GetPlayerDesk(idGame, idClientIntoGame);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         return response.getResponse().getGameCardHashMapResponse();
     }
 
     @Override
     public StarterCard getStarterCard() throws IOException, InterruptedException {
         GetStarterCard request = new GetStarterCard(idGame, idClientIntoGame);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         return response.getResponse().getStarterCardResponse();
     }
 
     @Override
     public void playStarterCard(boolean playedFacedDown) throws IOException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException, InterruptedException {
         PlayStarterCard request = new PlayStarterCard(idGame, idClientIntoGame, playedFacedDown);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
-
+        ServerToClientMsg response = sendRequest(request);
     }
 
     @Override
     public ObjectiveCard getPlayerObjectiveCard() throws IOException, InterruptedException {
         GetObjectiveCardMsg request = new GetObjectiveCardMsg(idGame, idClientIntoGame);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         return response.getResponse().getObjectiveCardResponse();
     }
 
     @Override
     public ArrayList<GameCard> getPlayerHand() throws IOException, InterruptedException {
         GetPlayerHandMsg request = new GetPlayerHandMsg(idGame, idClientIntoGame);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         return response.getResponse().getArrayListResponse();
     }
 
     @Override
     public ObjectiveCard[] getSharedObjectiveCards() throws IOException, InterruptedException {
         GetSharedObjectiveCardsMsg request = new GetSharedObjectiveCardsMsg(idGame);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         return response.getResponse().getObjectiveCardsResponse();
     }
 
@@ -345,110 +267,57 @@ public class SocketClient implements VirtualView {
 
     public boolean getIsLastRoundStarted(int idGame) throws IOException, InterruptedException {
         IsLastRoundStartedMsg request = new IsLastRoundStartedMsg(idGame);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         return response.getResponse().getBooleanResponse();
     }
 
     public int getCurrentPlayer(int idGame) throws IOException, InterruptedException {
         GetCurrentPlayerMsg request = new GetCurrentPlayerMsg(idGame);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         return response.getResponse().getIntResponse();
     }
 
     @Override
     public void playCard(int chosenCard, boolean faceDown, Point chosenPosition) throws IOException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException, InterruptedException {
         PlayCardMsg request = new PlayCardMsg(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
-
+        ServerToClientMsg response = sendRequest(request);
     }
 
     @Override
     public void playLastTurn(int chosenCard, boolean faceDown, Point chosenPosition) throws IOException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException, InterruptedException {
         PlayLastTurnMsg request = new PlayLastTurnMsg(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
-
+        ServerToClientMsg response = sendRequest(request);
     }
 
     @Override
     public void drawCard(int input, int inVisible) throws IOException, CardNotFoundException, InterruptedException {
         DrawCardMsg request = new DrawCardMsg(idGame, idClientIntoGame, input, inVisible);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        //wait for the response
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
     }
 
     @Override
     public void waitForYourTurn() throws IOException, InterruptedException {
         WaitForYourTurnMsg request = new WaitForYourTurnMsg(idClientIntoGame, idGame);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        //wait for the response
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
     }
 
     @Override
     public ArrayList<TokenColor> getAvailableColors() throws IOException, InterruptedException {
         AvailableColorMsg request = new AvailableColorMsg(username, idGame);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        //wait for the response
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         return response.getResponse().getArrayListResponse();
     }
 
     @Override
     public void setTokenColor(TokenColor tokenColor) throws IOException, InterruptedException {
         SelectTokenColorMsg request = new SelectTokenColorMsg(idGame, idClientIntoGame, tokenColor);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        //wait for the response
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
-
+        ServerToClientMsg response = sendRequest(request);
 
     }
 
     public int getPoints() throws IOException, InterruptedException {
         GetPoint request = new GetPoint(username, idGame, idClientIntoGame);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        //wait for the response
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
+        ServerToClientMsg response = sendRequest(request);
         return response.getResponse().getIntResponse();
     }
 
@@ -505,13 +374,7 @@ public class SocketClient implements VirtualView {
 
     public boolean checkUsername(String username) throws IOException, ClassNotFoundException, InterruptedException {
         CheckUsernameMsg request = new CheckUsernameMsg(username);
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
-        ServerToClientMsg response = queue.take();  // This will block until the expected type of response is received
-
+        ServerToClientMsg response = sendRequest(request);
         return response.getResponse().getBooleanResponse();
     }
 
