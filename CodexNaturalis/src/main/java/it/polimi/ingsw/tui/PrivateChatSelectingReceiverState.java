@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.chat.Chat;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.rmi.Client.RMIClient;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -48,6 +49,10 @@ public class PrivateChatSelectingReceiverState implements ClientState {
 
         } catch (RemoteException e) {
             throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -88,6 +93,10 @@ public class PrivateChatSelectingReceiverState implements ClientState {
 
 
         } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }

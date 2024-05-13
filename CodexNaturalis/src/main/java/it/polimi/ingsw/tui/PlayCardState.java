@@ -34,6 +34,12 @@ public class PlayCardState implements ClientState {
             showPlayerDesk(printer);
             showPlayerHand(printer);
         } catch (RemoteException ex) {
+            System.out.println("Error while getting the drawn objective cards");
+            System.out.println(ex.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
             System.err.println("Error while retrieving data: " + ex.getMessage());
         }
     }
@@ -141,9 +147,14 @@ public class PlayCardState implements ClientState {
                 System.out.println(formattedCoordinates);
             }
         } catch (RemoteException ex) {
-            System.out.println("Error fetching available places: " + ex.getMessage());
-            return null;
+            System.out.println(ex.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
+        return null;
+    }
 
         int xCoordinate = getValidCoordinate("Choose the x-coordinate: ");
         int yCoordinate = getValidCoordinate("Choose the y-coordinate: ");

@@ -27,6 +27,8 @@ public class GetWinnerState implements ClientState {
             client.getAllPlayers(client.getIdGame()).stream().map(player -> "Player " + player.getUsername() + " has " + player.getPoints() + " points").forEach(System.out::println);
         } catch (RemoteException | InterruptedException e) {
             System.out.println("Error while getting the winner");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

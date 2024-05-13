@@ -1,7 +1,11 @@
 package it.polimi.ingsw.network.socket.Server;
 
 import it.polimi.ingsw.controller.LobbyController;
+import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
+import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
+import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.ClientToServerMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
@@ -20,9 +24,10 @@ public class ClientHandler {
         this.output = output;
     }
 
-    public void runVirtualView() throws IOException, ClassNotFoundException {
+    public void runVirtualView() throws IOException, ClassNotFoundException, InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
         ClientToServerMsg request;
         ServerToClientMsg response;
+        ReturnableObject returnableObject;
         // Read message type
         while ((request = (ClientToServerMsg)input.readObject()) != null) {
             response = request.getTypeofResponse();

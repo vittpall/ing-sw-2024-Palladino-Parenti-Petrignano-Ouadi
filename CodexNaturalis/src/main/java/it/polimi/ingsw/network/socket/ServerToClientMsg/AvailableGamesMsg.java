@@ -2,18 +2,21 @@ package it.polimi.ingsw.network.socket.ServerToClientMsg;
 
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
-public class UserAlreadyTaken extends ServerToClientMsg {
+public class AvailableGamesMsg extends ServerToClientMsg{
 
     private ReturnableObject response;
 
-    public UserAlreadyTaken() {
+    public AvailableGamesMsg() {
+       super();
     }
 
-    public ReturnableObject getResponse() {
-        return this.response;
-    }
-
+    @Override
     public void setResponse(ReturnableObject response) {
         this.response = response;
+    }
+
+    @Override
+    public ReturnableObject getResponse() {
+        return this.response;
     }
 }

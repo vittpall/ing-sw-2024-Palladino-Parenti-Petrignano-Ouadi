@@ -24,11 +24,11 @@ public interface VirtualView extends Remote {
 
     void setUsername(String username) throws RemoteException;
 
-    HashMap<Integer, Game> getNotStartedGames() throws RemoteException;
+    HashMap<Integer, Game> getNotStartedGames() throws IOException, InterruptedException;
 
-    void setObjectiveCard(int idCard) throws RemoteException, CardNotFoundException;
+    void setObjectiveCard(int idCard) throws IOException, CardNotFoundException, InterruptedException;
 
-    void createGame(String username, int nPlayers) throws RemoteException, InterruptedException;
+    void createGame(String username, int nPlayers) throws IOException, InterruptedException;
 
     void setCurrentState(ClientState state) throws RemoteException;
 
@@ -38,59 +38,59 @@ public interface VirtualView extends Remote {
 
     int getIdClientIntoGame() throws RemoteException;
 
-    ArrayList<Player> getAllPlayers(int gameId) throws RemoteException;
+    ArrayList<Player> getAllPlayers(int gameId) throws IOException, InterruptedException;
 
     void receiveMessage(Message msg) throws RemoteException;
 
     boolean checkUsername(String username) throws IOException, ClassNotFoundException, InterruptedException;
 
-    void joinGame(int input, String username) throws RemoteException, InterruptedException;
+    void joinGame(int input, String username) throws IOException, InterruptedException;
 
-    ArrayList<ObjectiveCard> getPlayerObjectiveCards() throws RemoteException;
+    ArrayList<ObjectiveCard> getPlayerObjectiveCards() throws IOException, InterruptedException;
 
-    StarterCard getStarterCard() throws RemoteException;
+    StarterCard getStarterCard() throws IOException, InterruptedException;
 
-    void playStarterCard(boolean playedFacedDown) throws RemoteException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException;
+    void playStarterCard(boolean playedFacedDown) throws IOException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException, InterruptedException;
 
-    ObjectiveCard getPlayerObjectiveCard() throws RemoteException;
+    ObjectiveCard getPlayerObjectiveCard() throws IOException, InterruptedException;
 
-    ArrayList<GameCard> getPlayerHand() throws RemoteException;
+    ArrayList<GameCard> getPlayerHand() throws IOException, InterruptedException;
 
-    ObjectiveCard[] getSharedObjectiveCards() throws RemoteException;
+    ObjectiveCard[] getSharedObjectiveCards() throws IOException, InterruptedException;
 
-    String getNextState() throws RemoteException;
+    String getNextState() throws IOException, InterruptedException;
 
     void playCard(int chosenCard, boolean faceDown, Point chosenPosition)
-            throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException;
+            throws IOException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException, InterruptedException;
 
     void playLastTurn(int chosenCard, boolean faceDown, Point chosenPosition)
-            throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException;
+            throws IOException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException, InterruptedException;
 
-    void drawCard(int input, int inVisible) throws RemoteException, CardNotFoundException;
+    void drawCard(int input, int inVisible) throws IOException, CardNotFoundException, InterruptedException;
 
-    void waitForYourTurn() throws RemoteException, InterruptedException;
+    void waitForYourTurn() throws IOException, InterruptedException;
 
     ClientState getCurrentState() throws RemoteException;
 
-    ArrayList<Message> getMessages(String receiver) throws RemoteException;
+    ArrayList<Message> getMessages(String receiver) throws IOException, InterruptedException;
 
-    void sendMessage(String receiver, String input) throws RemoteException;
+    void sendMessage(String receiver, String input) throws IOException, InterruptedException;
 
-    HashSet<Point> getAvailablePlaces() throws RemoteException;
+    HashSet<Point> getAvailablePlaces() throws IOException, InterruptedException;
 
-    HashMap<Point, GameCard> getPlayerDesk() throws RemoteException;
+    HashMap<Point, GameCard> getPlayerDesk() throws IOException, InterruptedException;
 
-    ArrayList<TokenColor> getAvailableColors() throws RemoteException;
+    ArrayList<TokenColor> getAvailableColors() throws IOException, InterruptedException;
 
-    void setTokenColor(TokenColor tokenColor) throws RemoteException;
+    void setTokenColor(TokenColor tokenColor) throws IOException, InterruptedException;
 
-    int getPoints() throws RemoteException;
+    int getPoints() throws IOException, InterruptedException;
 
     ArrayList<GameCard> getVisibleCardsDeck(int deck) throws RemoteException;
 
     String getUsernamePlayerThatStoppedTheGame() throws RemoteException;
 
-    void close() throws RemoteException;
+    void close() throws IOException, RemoteException, InterruptedException;
 
     String getWinner() throws RemoteException, InterruptedException;
 

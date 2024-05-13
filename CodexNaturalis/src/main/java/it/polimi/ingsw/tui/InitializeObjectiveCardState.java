@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -39,6 +40,10 @@ public class InitializeObjectiveCardState implements ClientState {
         } catch (RemoteException ex) {
             System.out.println("Error while getting the drawn objective cards");
             System.out.println(ex.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -50,7 +55,7 @@ public class InitializeObjectiveCardState implements ClientState {
                 try {
                     client.setObjectiveCard(0);
                     client.setCurrentState(new InitializeStarterCardState(client, scanner));
-                } catch (CardNotFoundException | RemoteException ex) {
+                } catch (CardNotFoundException | IOException | InterruptedException ex) {
                     System.out.println("Card not found. Please try again");
                 }
                 break;
@@ -60,6 +65,10 @@ public class InitializeObjectiveCardState implements ClientState {
                     client.setCurrentState(new InitializeStarterCardState(client, scanner));
                 } catch (CardNotFoundException | RemoteException ex) {
                     System.out.println("Card not found. Please try again");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
                 break;
             case 3:

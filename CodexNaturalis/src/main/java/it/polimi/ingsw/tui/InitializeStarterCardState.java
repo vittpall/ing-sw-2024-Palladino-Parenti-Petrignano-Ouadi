@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -55,11 +56,15 @@ public class InitializeStarterCardState implements ClientState {
         } catch (RemoteException ex) {
             System.out.println("Error while getting the drawn objective cards");
             System.out.println(ex.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public void inputHandler(int input) throws RemoteException {
+    public void inputHandler(int input) throws IOException, InterruptedException {
         switch (input) {
             case 1:
                 try {
@@ -71,9 +76,13 @@ public class InitializeStarterCardState implements ClientState {
                     else {
                         System.out.println("Error");
                     }
-                } catch (RemoteException | PlaceNotAvailableException | CardNotFoundException |
-                         RequirementsNotMetException ex) {
+                } catch (PlaceNotAvailableException | CardNotFoundException | RequirementsNotMetException |
+                         IOException | InterruptedException ex) {
                     System.out.println("Card not found. Please try again");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
                 break;
             case 2:

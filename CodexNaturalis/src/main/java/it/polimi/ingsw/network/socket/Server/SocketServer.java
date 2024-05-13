@@ -2,6 +2,9 @@ package it.polimi.ingsw.network.socket.Server;
 
 
 import it.polimi.ingsw.controller.LobbyController;
+import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
+import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -40,9 +43,13 @@ public class SocketServer implements Remote {
             new Thread(() -> {
                 try {
                     handler.runVirtualView();
-                } catch (IOException e) {
+                } catch (IOException | InterruptedException | ClassNotFoundException e) {
                     throw new RuntimeException(e);
-                } catch (ClassNotFoundException e) {
+                } catch (CardNotFoundException e) {
+                    throw new RuntimeException(e);
+                } catch (PlaceNotAvailableException e) {
+                    throw new RuntimeException(e);
+                } catch (RequirementsNotMetException e) {
                     throw new RuntimeException(e);
                 }
             }, "ClientHandler").start();

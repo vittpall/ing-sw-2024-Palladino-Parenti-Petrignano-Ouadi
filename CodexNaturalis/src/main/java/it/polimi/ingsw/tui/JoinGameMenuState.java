@@ -3,6 +3,10 @@ package it.polimi.ingsw.tui;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
+import it.polimi.ingsw.network.rmi.Client.RMIClient;
+
+import java.io.IOException;
+import java.util.HashMap;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -35,14 +39,17 @@ public class JoinGameMenuState implements ClientState {
                 lastOptionOutput++;
             } else {
                 System.out.println("Choose a game to enter 🚪:");
-                for (int idGame : games.keySet()) {
-                    lastOptionOutput = idGame + 1;
-                    System.out.println(idGame + ". This game has " + games.get(idGame).getnPlayer() + " players and needs " +
-                            (games.get(idGame).getnPlayer() - games.get(idGame).getPlayers().size()) + " players to start");
+                for(int idGame:games.keySet()){
+                    lastOptionOutput= idGame+1;
+                    System.out.println(lastOptionOutput+". This game has "+games.get(idGame).getnPlayer()+ " players and needs "+
+                            (games.get(idGame).getnPlayer()-games.get(idGame).getPlayers().size())+" players to start");
                 }
             }
-        } catch (RemoteException ex) {
+            System.out.println(lastOptionOutput+". Exit 🚪");
+        }catch(RemoteException ex){
             System.out.println(ex.getMessage());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
         System.out.println("--------------------------------\n");
     }
@@ -62,7 +69,7 @@ public class JoinGameMenuState implements ClientState {
             client.joinGame(input, client.getUsername());
             client.setCurrentState(new ColorSelection(client, scanner));
             System.out.println("The game " + client.getIdGame() + " has started.\nYou are the player number " + client.getIdClientIntoGame() + "\n");
-        } catch (RemoteException | InterruptedException ex) {
+        } catch (InterruptedException | IOException ex) {
             System.out.println("Error while joining the game");
         }
     }

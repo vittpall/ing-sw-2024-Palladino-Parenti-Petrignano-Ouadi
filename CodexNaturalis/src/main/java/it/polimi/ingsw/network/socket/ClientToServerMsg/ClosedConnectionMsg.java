@@ -1,29 +1,26 @@
 package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
-
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.UserAlreadyTaken;
 
-public class CheckUsernameMsg extends ClientToServerMsg{
+public class ClosedConnectionMsg extends ClientToServerMsg {
 
-    public CheckUsernameMsg(String username)
-    {
+    private final String username;
+
+    public ClosedConnectionMsg(String username) {
         this.username = username;
     }
 
-    public ReturnableObject functionToCall(LobbyController controller)
-    {
+    @Override
+    public ReturnableObject functionToCall(LobbyController controller) {
         ReturnableObject toReturn = new ReturnableObject();
-        toReturn.setBooleanResponse(controller.checkUsername(username));
-        return toReturn;
+        toReturn.setStringResponse("connection closed");
+        return null;
     }
 
     @Override
     public ServerToClientMsg getTypeofResponse() {
-        return new UserAlreadyTaken();
+        return null;
     }
-
-
 }

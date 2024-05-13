@@ -2,6 +2,7 @@ package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
