@@ -39,10 +39,35 @@ public class PlayLastCardState implements ClientState {
             showObjectiveCards(printer);
             showPlayerDesk(printer);
             showPlayerHand(printer);
-        } catch (RemoteException ex) {
+        } catch (IOException | InterruptedException ex) {
             System.err.println("Error while retrieving data: " + ex.getMessage());
         }
     }
+
+    private void showObjectiveCards(CardPrinter printer) throws IOException, InterruptedException {
+        System.out.println("|-------- Objective Cards --------|");
+        System.out.println("Common objective cards:");
+        for (ObjectiveCard card : client.getSharedObjectiveCards()) {
+            printer.printCard(card, false);
+        }
+        System.out.println("Your objective card:");
+        printer.printCard(client.getPlayerObjectiveCard(), false);
+    }
+
+    private void showPlayerDesk(CardPrinter printer) throws IOException, InterruptedException {
+        System.out.println("Your desk:");
+        printer.printDesk(client.getPlayerDesk());
+    }
+
+    private void showPlayerHand(CardPrinter printer) throws IOException, InterruptedException {
+        System.out.println("Choose a card to play:");
+        ArrayList<GameCard> playerHand = client.getPlayerHand();
+        for (int i = 0; i < playerHand.size(); i++) {
+            System.out.println((i + 1) + ".");
+            printer.printCard(playerHand.get(i), false);
+        }
+    }
+
 
     @Override
     public void promptForInput() {
@@ -55,56 +80,30 @@ public class PlayLastCardState implements ClientState {
 
     @Override
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
-        boolean successfulAction = false;
-        while (!successfulAction) {
-            if (input > 0 && input < 4) {
-                Point pointChosen = choosePosition();
-                boolean faceDown = chooseIfFaceDown();
-                try {
-                    client.playLastTurn(input - 1, faceDown, pointChosen);
-                    successfulAction = true;
-                } catch (RemoteException ex) {
-                    System.out.println(ex.getMessage());
-                } catch (PlaceNotAvailableException ex) {
-                    System.out.println("Place not available");
-                } catch (CardNotFoundException ex) {
-                    System.out.println("Card not found");
-                    System.out.println(ex.getMessage());
-                } catch (RequirementsNotMetException ex) {
-                    System.out.println("Requirements not met. Please choose another card");
-                }
-                client.setCurrentState(new GetWinnerState(client, scanner));
-            } else if (input == 4) {
-                client.setCurrentState(new ChatState(client, scanner));
-                successfulAction = true;
-            } else {
-                System.out.println("Invalid input");
-                successfulAction = true;
+        if (input > 0 && input < 4) {
+            //scelgo se giocare la carta 1,2,3
+            Point pointChosen = choosePosition();
+            boolean faceDown = chooseIfFaceDown();
+            try {
+                client.playLastTurn(input - 1, faceDown, pointChosen);
+            } catch (RemoteException ex) {
+                System.out.println(ex.getMessage());
+            } catch (PlaceNotAvailableException ex) {
+                System.out.println("Place not available");
+            } catch (CardNotFoundException ex) {
+                System.out.println("Card not found");
+                System.out.println(ex.getMessage());
+            } catch (RequirementsNotMetException ex) {
+                System.out.println("Requirements not met. Please choose another card");
+                //rimandare dopo tutte le eccezioni in questo stato
             }
+            client.setCurrentState(new GetWinnerState(client, scanner));
+            return;
         }
-    }
-
-    private void showObjectiveCards(CardPrinter printer) throws RemoteException {
-        System.out.println("|-------- Objective Cards --------|");
-        System.out.println("Common objective cards:");
-        for (ObjectiveCard card : client.getSharedObjectiveCards()) {
-            printer.printCard(card, false);
-        }
-        System.out.println("Your objective card:");
-        printer.printCard(client.getPlayerObjectiveCard(), false);
-    }
-
-    private void showPlayerDesk(CardPrinter printer) throws RemoteException {
-        System.out.println("Your desk:");
-        printer.printDesk(client.getPlayerDesk());
-    }
-
-    private void showPlayerHand(CardPrinter printer) throws RemoteException {
-        System.out.println("Choose a card to play:");
-        ArrayList<GameCard> playerHand = client.getPlayerHand();
-        for (int i = 0; i < playerHand.size(); i++) {
-            System.out.println((i + 1) + ".");
-            printer.printCard(playerHand.get(i), false);
+        if (input == 4) {
+            client.setCurrentState(new ChatState(client, scanner));
+        } else {
+            System.out.println("Invalid input");
         }
     }
 
@@ -135,7 +134,7 @@ public class PlayLastCardState implements ClientState {
                 String formattedCoordinates = String.format("Position: (%d, %d)", avPoint.x, avPoint.y);
                 System.out.println(formattedCoordinates);
             }
-        } catch (RemoteException ex) {
+        } catch (IOException | InterruptedException ex) {
             System.out.println("Error fetching available places: " + ex.getMessage());
             return null;
         }
