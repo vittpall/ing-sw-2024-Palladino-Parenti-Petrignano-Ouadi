@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.rmi.Client;
 
+import it.polimi.ingsw.gui.MainMenuStateGUI;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -14,6 +15,7 @@ import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.rmi.RemoteException;
