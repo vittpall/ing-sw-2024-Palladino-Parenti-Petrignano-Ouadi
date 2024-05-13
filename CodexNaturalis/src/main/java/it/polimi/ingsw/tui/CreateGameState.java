@@ -40,29 +40,39 @@ public class CreateGameState implements ClientState {
     }
 
     private void createGame() throws RemoteException {
-        System.out.println("Enter the number of players (cannot be empty):");
-        int nPlayers;
-        String input;
-        do {
-            input = scanner.nextLine().trim();
-        } while (input.isEmpty());
+        System.out.println("Enter the number of players (2-4):");
 
-        nPlayers = Integer.parseInt(input);
-        //TODO catch exception if input is not a number
-        if (nPlayers < 2 || nPlayers > 4) {
-            System.out.println("Invalid number of players");
-            createGame();
-        } else {
-            try {
-                System.out.println("Creating game and waiting for the players...");
-                client.createGame(client.getUsername(), nPlayers);
-                System.out.println("The game " + client.getIdGame() + " has started.\nYou are the player number " + client.getIdClientIntoGame() + "\n");
-            } catch (InterruptedException | RemoteException e) {
-                System.out.println("Error creating game. Please try again.");
+        int nPlayers = 0;
+        boolean validInput = false;
+
+        while (!validInput) {
+            String input = scanner.nextLine().trim();
+
+            if (input.isEmpty()) {
+                System.out.println("Input cannot be empty. Please enter a number between 2 and 4:");
+                continue;
             }
-            //  client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
-            client.setCurrentState(new ColorSelection(client, scanner));
+
+            try {
+                nPlayers = Integer.parseInt(input);
+                if (nPlayers < 2 || nPlayers > 4) {
+                    System.out.println("Invalid number of players. Please enter a number between 2 and 4:");
+                } else {
+                    validInput = true;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number between 2 and 4:");
+            }
         }
 
+        try {
+            System.out.println("Creating game and waiting for the players...");
+            client.createGame(client.getUsername(), nPlayers);
+            System.out.println("The game " + client.getIdGame() + " has started.\nYou are the player number " + client.getIdClientIntoGame() + "\n");
+            client.setCurrentState(new ColorSelection(client, scanner));
+        } catch (InterruptedException | RemoteException e) {
+            System.out.println("Error creating game. Please try again.");
+        }
     }
+
 }

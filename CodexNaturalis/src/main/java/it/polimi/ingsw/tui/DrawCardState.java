@@ -32,7 +32,7 @@ public class DrawCardState implements ClientState {
                 printer.printCard(card, false);
             }
         } catch (RemoteException ex) {
-            //TODO
+            System.out.println("Error while getting cards");
         }
 
     }
@@ -42,7 +42,7 @@ public class DrawCardState implements ClientState {
         //l'input mi darà 1 se è resource e 2 se è gold per esempio
         switch (input) {
             case 1:
-                //scelgo tra le carte visibili o meno. magari 1 è la prima visible, 2 la seconda e 3 draw a caso
+            case 2:
                 int inVisible = chooseWhichCardToDraw();
                 try {
                     client.drawCard(1, inVisible);
@@ -51,26 +51,10 @@ public class DrawCardState implements ClientState {
                         client.setCurrentState(new WaitForYourTurnState(client, scanner));
                     } else if (nextState.equals("LastRoundState")) {
                         client.setCurrentState(new WaitForYourLastTurnState(client, scanner));
-                        //creare gli stati per l'ultimo round e poi lo stato per la vincita del giocatore
                     }
 
-                } catch (RemoteException | CardNotFoundException ex) {
-                    //TODO
-                }
-                break;
-            case 2:
-                inVisible = chooseWhichCardToDraw();
-                try {
-                    client.drawCard(1, inVisible);
-                    String nextState = client.getNextState();
-                    if (nextState.equals("WaitForYourTurnState")) {
-                        client.setCurrentState(new WaitForYourTurnState(client, scanner));
-                    } else if (nextState.equals("LastRoundState")) {
-                        //creare gli stati per l'ultimo round e poi lo stato per la vincita del giocatore
-                    }
-
-                } catch (RemoteException | CardNotFoundException ex) {
-                    //TODO
+                } catch (CardNotFoundException ex) {
+                    System.out.println(ex.getMessage());
                 }
                 break;
             case 3:

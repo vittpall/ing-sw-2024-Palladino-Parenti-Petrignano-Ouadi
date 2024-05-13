@@ -20,7 +20,7 @@ public class WaitForYourLastTurnState implements ClientState{
         System.out.println("|------Wait for your turn------|");
         try{
             String playerWhoStopped = client.getUsernamePlayerThatStoppedTheGame();
-            System.out.println("The player"+playerWhoStopped+"has reached 20 points!");
+            System.out.println("The player "+playerWhoStopped+" has reached 20 points!");
         }catch(RemoteException ex){
             System.out.println(ex.getMessage());
         }
@@ -34,7 +34,7 @@ public class WaitForYourLastTurnState implements ClientState{
                 client.waitForYourTurn();
                 client.setCurrentState(new PlayLastCardState(client, scanner));
                 break;
-            case 3:
+            case 2:
                 client.setCurrentState(new ChatState(client, scanner));
                 break;
             default:

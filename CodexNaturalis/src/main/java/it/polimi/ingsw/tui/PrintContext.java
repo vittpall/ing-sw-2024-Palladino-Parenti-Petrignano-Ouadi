@@ -17,10 +17,11 @@ public class PrintContext {
 
 
     public void printDesk(HashMap<Point, GameCard> desk) {
-       desk.forEach((point, gameCard) -> {
-           System.out.println("Posizione: " + point.toString());
-           printer.printCard(gameCard, gameCard.isPlayedFaceDown());
-       });
+        desk.forEach((point, gameCard) -> {
+            String formattedCoordinates = String.format("Position: (%d, %d)", point.x, point.y);
+            System.out.println(formattedCoordinates);
+            printer.printCard(gameCard, gameCard.isPlayedFaceDown());
+        });
     }
 
     public void printCenteredLine(String content, CardPrinter.Color backgroundColor) {

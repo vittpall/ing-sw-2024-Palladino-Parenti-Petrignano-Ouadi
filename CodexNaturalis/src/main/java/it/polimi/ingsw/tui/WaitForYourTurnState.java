@@ -3,10 +3,9 @@ package it.polimi.ingsw.tui;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class WaitForYourTurnState implements ClientState{
+public class WaitForYourTurnState implements ClientState {
     VirtualView client;
     private final Scanner scanner;
 
@@ -18,14 +17,11 @@ public class WaitForYourTurnState implements ClientState{
     @Override
     public void display() {
         System.out.println("|------Wait for your turn state------|");
-        //mostrare magari il proprio desk e quello degli altri giocatori
     }
 
     @Override
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
-        //il giocatore schiaccia 1 se vuole aspettare il suo turno per poi continuare
-        //schiaccia 2 se vuole abbandonare
-        switch (input){
+        switch (input) {
             case 1:
                 client.waitForYourTurn();
                 client.setCurrentState(new PlayCardState(client, scanner));

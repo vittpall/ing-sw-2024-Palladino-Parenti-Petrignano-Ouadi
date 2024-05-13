@@ -48,12 +48,10 @@ public class MainMenuState implements ClientState, Remote {
     @Override
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
 
-        if (input == 1) {
+        if (input == 1)
             requestUsername();
-        } else {
+        else
             System.out.print("Invalid input");
-            display();
-        }
     }
 
 
