@@ -56,9 +56,7 @@ public class InitializeStarterCardState implements ClientState {
         } catch (RemoteException ex) {
             System.out.println("Error while getting the drawn objective cards");
             System.out.println(ex.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
@@ -79,10 +77,6 @@ public class InitializeStarterCardState implements ClientState {
                 } catch (PlaceNotAvailableException | CardNotFoundException | RequirementsNotMetException |
                          IOException | InterruptedException ex) {
                     System.out.println("Card not found. Please try again");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
                 }
                 break;
             case 2:
