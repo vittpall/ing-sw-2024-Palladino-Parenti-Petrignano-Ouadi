@@ -36,10 +36,18 @@ public class SocketClient implements VirtualView {
     private final ConcurrentMap<Class<? extends ServerToClientMsg>, BlockingQueue<ServerToClientMsg>> responseQueues = new ConcurrentHashMap<>();
     private int idGame;
 
-    public SocketClient(ObjectInputStream in, ObjectOutputStream out) {
+    public SocketClient(ObjectInputStream in, ObjectOutputStream out, String mode) {
         this.in = in;
         this.out = out;
-        currentState = new MainMenuState(this, new Scanner(System.in));
+        switch (mode) {
+            case "GUI":
+                break;
+            case "TUI":
+                currentState = new MainMenuState(this, new Scanner(System.in));
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported mode");
+        }
     }
 
     public void setIdGame(int idGame) {
@@ -146,6 +154,11 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    public void setPointsDebug() {
+
+    }
+
+    @Override
     public String getUsernamePlayerThatStoppedTheGame() throws RemoteException {
         return null;
     }
@@ -221,7 +234,7 @@ public class SocketClient implements VirtualView {
 
     }
 
-    public int getPoints() throws RemoteException{
+    public int getPoints() throws RemoteException {
         //TODO
         return 0;
     }

@@ -24,14 +24,34 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public final VirtualServer server;
     ClientState currentState;
     private String username;
-    private final Scanner scan;
+    private Scanner scan;
     private int idGame;
     private int idClientIntoGame;
+    private JFrame mainFrame;
 
-    public RMIClient(VirtualServer server) throws RemoteException {
-        this.scan = new Scanner(System.in);
+    public RMIClient(VirtualServer server, String mode) throws RemoteException {
+
         this.server = server;
-        currentState = new MainMenuState(this, scan);
+        switch (mode) {
+            case "GUI":
+                initializeGUI();
+                setCurrentState(new MainMenuStateGUI(this)); // Assuming MainMenuStateGUI implements ClientState
+                break;
+            case "TUI":
+                this.scan = new Scanner(System.in);
+                setCurrentState(new MainMenuState(this, scan)); // Original TUI state
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported mode");
+        }
+    }
+
+    private void initializeGUI() {
+        mainFrame = new JFrame("Game Client");
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setSize(800, 600);
+        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setVisible(true);
     }
 
     public void setUsername(String username) {
@@ -221,7 +241,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
-        runStateLoop();
+        if (currentState instanceof MainMenuStateGUI)
+            runStateLoopGUI();
+        else
+            runStateLoopTUI();
     }
 
     public void close() throws RemoteException {
@@ -235,11 +258,21 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
     public void setCurrentState(ClientState state) {
         this.currentState = state;
+        if (currentState instanceof JPanel) {
+            mainFrame.setContentPane((JPanel) currentState);
+            mainFrame.revalidate();
+            mainFrame.repaint();
+        }
     }
 
-    private void runStateLoop() throws IOException, ClassNotFoundException, InterruptedException {
+    private void runStateLoopGUI() {
+
+    }
+
+    private void runStateLoopTUI() throws IOException, ClassNotFoundException, InterruptedException {
         boolean correctInput;
         boolean chatState;
+
         int chatStateContator;
         while (true) {
             chatStateContator = 0;
