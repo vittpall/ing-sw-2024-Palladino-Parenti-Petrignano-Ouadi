@@ -184,6 +184,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
 
     @Override
+    public void setPointsDebug() {
+
+    }
+
+    @Override
     public String getUsernamePlayerThatStoppedTheGame() throws RemoteException {
         return server.getUsernamePlayerThatStoppedTheGame(idGame);
     }

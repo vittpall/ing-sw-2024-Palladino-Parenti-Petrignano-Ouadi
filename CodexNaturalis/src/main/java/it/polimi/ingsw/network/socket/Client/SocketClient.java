@@ -26,6 +26,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * This class represents the client side of a socket connection.
+ * It implements the VirtualView interface, which provides methods for interacting with the game model.
+ */
 public class SocketClient implements VirtualView {
 
     private final ObjectOutputStream out;
@@ -36,6 +40,12 @@ public class SocketClient implements VirtualView {
     private int idGame;
     private int idClientIntoGame;
 
+    /**
+     * Constructor for the SocketClient class.
+     * @param in ObjectInputStream for receiving data from the server.
+     * @param out ObjectOutputStream for sending data to the server.
+     * @param mode The mode of the client, either "GUI" or "TUI".
+     */
     public SocketClient(ObjectInputStream in, ObjectOutputStream out, String mode) {
         this.in = in;
         this.out = out;
@@ -175,8 +185,10 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
-    public ArrayList<GameCard> getVisibleCardsDeck(int deck) throws RemoteException {
-        return null;
+    public ArrayList<GameCard> getVisibleCardsDeck(int deck) throws IOException, InterruptedException {
+        GetVisibleCardsDeckMsg request = new GetVisibleCardsDeckMsg(idGame, deck);
+        ServerToClientMsg response = sendRequest(request);
+        return response.getResponse().getArrayListResponse();
     }
 
     @Override
@@ -189,13 +201,16 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
-    public String getWinner() throws RemoteException, InterruptedException {
-        return null;
+    public String getWinner() throws IOException, InterruptedException {
+        GetWinnerMsg request = new GetWinnerMsg(idGame, idClientIntoGame);
+        ServerToClientMsg response = sendRequest(request);
+        return response.getResponse().getStringResponse();
     }
 
     @Override
-    public void closeGame() throws RemoteException {
-
+    public void closeGame() throws IOException, InterruptedException {
+        CloseGameMsg request = new CloseGameMsg(idGame);
+        ServerToClientMsg response = sendRequest(request);
     }
 
     @Override
@@ -204,8 +219,10 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
-    public String getUsernamePlayerThatStoppedTheGame() throws RemoteException {
-        return null;
+    public String getUsernamePlayerThatStoppedTheGame() throws IOException, InterruptedException {
+        GetUsernamePlayerThatStoppedTheGameMsg request = new GetUsernamePlayerThatStoppedTheGameMsg(idGame);
+        ServerToClientMsg response = sendRequest(request);
+        return response.getResponse().getStringResponse();
     }
 
     @Override
