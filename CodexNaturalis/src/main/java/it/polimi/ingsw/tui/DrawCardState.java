@@ -34,10 +34,6 @@ public class DrawCardState implements ClientState {
             }
         } catch ( IOException | InterruptedException ex) {
             System.out.println("Error while getting cards");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
 
     }

@@ -35,10 +35,6 @@ public class PlayLastCardState implements ClientState {
 
         } catch ( IOException| InterruptedException ex) {
             System.out.println(ex.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
         CardPrinter printer = new CardPrinter();
         try {
