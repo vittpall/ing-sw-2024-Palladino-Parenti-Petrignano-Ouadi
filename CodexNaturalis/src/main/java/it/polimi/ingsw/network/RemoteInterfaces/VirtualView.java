@@ -86,13 +86,15 @@ public interface VirtualView extends Remote {
 
     int getPoints() throws IOException, InterruptedException;
 
-    ArrayList<GameCard> getVisibleCardsDeck(int deck) throws RemoteException;
+    ArrayList<GameCard> getVisibleCardsDeck(int deck) throws IOException, InterruptedException;
 
-    String getUsernamePlayerThatStoppedTheGame() throws RemoteException;
+    void setPointsDebug();
+
+    String getUsernamePlayerThatStoppedTheGame() throws IOException, InterruptedException;
 
     void close() throws IOException, RemoteException, InterruptedException;
 
-    String getWinner() throws RemoteException, InterruptedException;
+    String getWinner() throws IOException, InterruptedException;
 
-    void closeGame() throws RemoteException;
+    void closeGame() throws IOException, InterruptedException;
 }
