@@ -21,7 +21,7 @@ public class WaitForYourLastTurnState implements ClientState{
         try{
             String playerWhoStopped = client.getUsernamePlayerThatStoppedTheGame();
             System.out.println("The player "+playerWhoStopped+" has reached 20 points!");
-        }catch(RemoteException ex){
+        }catch(IOException| InterruptedException ex){
             System.out.println(ex.getMessage());
         }
         System.out.println("The next one will be your last turn\n");

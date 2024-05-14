@@ -6,6 +6,7 @@ import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.rmi.UnexpectedException;
 import java.util.Scanner;
 
 public class DrawCardState implements ClientState {
@@ -31,7 +32,7 @@ public class DrawCardState implements ClientState {
             for (GameCard card : client.getVisibleCardsDeck(2)) {
                 printer.printCard(card, false);
             }
-        } catch (RemoteException ex) {
+        } catch ( IOException | InterruptedException ex) {
             System.out.println("Error while getting cards");
         }
 

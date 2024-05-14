@@ -213,11 +213,6 @@ public class SocketClient implements VirtualView {
         ServerToClientMsg response = sendRequest(request);
     }
 
-    //@Override
-    public void setPointsDebug() {
-
-    }
-
     @Override
     public String getUsernamePlayerThatStoppedTheGame() throws IOException, InterruptedException {
         GetUsernamePlayerThatStoppedTheGameMsg request = new GetUsernamePlayerThatStoppedTheGameMsg(idGame);

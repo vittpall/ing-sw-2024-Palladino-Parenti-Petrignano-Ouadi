@@ -33,7 +33,7 @@ public class PlayLastCardState implements ClientState {
             System.out.println("This is your last turn!");
             System.out.println("The player " + playerWhoStopped + " has reached 20 points!");
 
-        } catch (RemoteException ex) {
+        } catch ( IOException| InterruptedException ex) {
             System.out.println(ex.getMessage());
         }
         CardPrinter printer = new CardPrinter();
@@ -66,6 +66,7 @@ public class PlayLastCardState implements ClientState {
         System.out.println("Your objective card:");
         printer.printCard(client.getPlayerObjectiveCard(), false);
     }
+
 
     private void showPlayerDesk(CardPrinter printer) throws IOException, InterruptedException {
         System.out.println("Your desk:");

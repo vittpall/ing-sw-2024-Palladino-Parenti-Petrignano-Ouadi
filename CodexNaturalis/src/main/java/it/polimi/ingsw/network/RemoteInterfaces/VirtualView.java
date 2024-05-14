@@ -88,8 +88,6 @@ public interface VirtualView extends Remote {
 
     ArrayList<GameCard> getVisibleCardsDeck(int deck) throws IOException, InterruptedException;
 
-    void setPointsDebug();
-
     String getUsernamePlayerThatStoppedTheGame() throws IOException, InterruptedException;
 
     void close() throws IOException, RemoteException, InterruptedException;

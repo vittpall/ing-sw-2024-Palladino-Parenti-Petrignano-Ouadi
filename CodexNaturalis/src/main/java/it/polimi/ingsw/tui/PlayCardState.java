@@ -79,6 +79,7 @@ public class PlayCardState implements ClientState {
         System.out.println("4. Chat");
     }
 
+
     private void showProvisionalRanking() throws IOException, InterruptedException {
         ArrayList<Player> allPlayers = client.getAllPlayers(client.getIdGame());
         System.out.println("--------------------------------");

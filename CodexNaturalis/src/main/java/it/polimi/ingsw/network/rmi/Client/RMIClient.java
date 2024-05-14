@@ -183,10 +183,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return server.getVisibleCardsDeck(idGame, deck);
     }
 
-    @Override
-    public void setPointsDebug() {
-
-    }
 
     @Override
     public String getUsernamePlayerThatStoppedTheGame() throws RemoteException {
