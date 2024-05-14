@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.socket.Client;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.StarterCard;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
@@ -23,7 +24,25 @@ public class ReturnableObject<T> implements Serializable {
     private ObjectiveCard[] objectiveCardsResponse;
     private StarterCard starterCardResponse;
     private HashMap<Point, GameCard> gameCardHashMapResponse;
+    private Message msg;
+    private ArrayList<Message> messagesResponse;
+
+    public ArrayList<Message> getMessagesResponse() {
+        return messagesResponse;
+    }
+
+    public void setMessagesResponse(ArrayList<Message> messagesResponse) {
+        this.messagesResponse = messagesResponse;
+    }
     //set -1 for the void response
+
+    public Message getMessageResponse() {
+        return msg;
+    }
+
+    public void setMessageResponse(Message msg) {
+        this.msg = msg;
+    }
 
     public HashMap<Point, GameCard> getGameCardHashMapResponse() {
         return gameCardHashMapResponse;

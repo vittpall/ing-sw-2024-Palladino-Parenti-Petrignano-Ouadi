@@ -30,7 +30,7 @@ public class PrivateChatState implements ClientState{
         try {
         System.out.println("Private chat with " + receiver);
         ArrayList<Message> chat = client.getMessages(receiver);
-        if(chat == null){
+        if(chat == null || chat.isEmpty()){
             System.out.println("No messages available");
         }
         else
@@ -47,6 +47,7 @@ public class PrivateChatState implements ClientState{
 
         inputHandler(scanner.nextLine());
         } catch (IOException | InterruptedException | ClassNotFoundException e) {
+            System.err.println("An error occurred: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }

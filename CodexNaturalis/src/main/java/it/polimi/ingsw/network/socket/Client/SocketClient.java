@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.*;
+import it.polimi.ingsw.network.socket.ServerToClientMsg.ReceivedMessage;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 import it.polimi.ingsw.tui.*;
 
@@ -167,7 +168,7 @@ public class SocketClient implements VirtualView {
     public ArrayList<Message> getMessages(String receiver) throws IOException, InterruptedException {
         GetMessageMsg request = new GetMessageMsg(receiver, this.idGame, this.username);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getArrayListResponse();
+        return response.getResponse().getMessagesResponse();
     }
 
     @Override
@@ -376,7 +377,11 @@ public class SocketClient implements VirtualView {
                 ServerToClientMsg msg = (ServerToClientMsg) in.readObject();
                 Class<? extends ServerToClientMsg> responseType = msg.getClass();
                 responseQueues.computeIfAbsent(responseType, k -> new LinkedBlockingQueue<>()).put(msg);
-
+                if(msg instanceof ReceivedMessage)
+                {
+                  //  System.out.println(msg.getResponse().getMessageResponse().getContent());
+                    this.receiveMessage(msg.getResponse().getMessageResponse());
+                }
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

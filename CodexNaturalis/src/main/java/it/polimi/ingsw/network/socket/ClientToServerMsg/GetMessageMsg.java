@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ReceivedMessage;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
@@ -17,14 +18,18 @@ public class GetMessageMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException {
-        ReturnableObject response = new ReturnableObject();
-        response.setArrayListResponse(controller.getMessages(receiver, gameId, sender));
+    public ReturnableObject<Message> functionToCall(LobbyController controller) throws InterruptedException {
+        ReturnableObject<Message> response = new ReturnableObject<>();
+        response.setMessagesResponse((controller.getMessages(receiver, gameId, sender)));
+        for(Message message : controller.getMessages(receiver, gameId, sender)){
+            System.out.println(message.getSender() + ": " + message.getContent());
+        }
+        System.out.println("Messages received: " + response.getMessagesResponse());
         return response;
     }
 
     @Override
     public ServerToClientMsg getTypeofResponse() {
-        return new ReceivedMessage();
+        return new ServerToClientMsg();
     }
 }

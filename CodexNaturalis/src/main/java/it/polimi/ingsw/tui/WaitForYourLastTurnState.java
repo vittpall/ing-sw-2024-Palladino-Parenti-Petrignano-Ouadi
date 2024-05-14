@@ -23,6 +23,10 @@ public class WaitForYourLastTurnState implements ClientState{
             System.out.println("The player "+playerWhoStopped+" has reached 20 points!");
         }catch(IOException| InterruptedException ex){
             System.out.println(ex.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
         System.out.println("The next one will be your last turn\n");
     }

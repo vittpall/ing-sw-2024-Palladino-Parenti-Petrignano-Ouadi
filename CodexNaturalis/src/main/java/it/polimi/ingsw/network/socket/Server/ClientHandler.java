@@ -6,7 +6,9 @@ import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
+import it.polimi.ingsw.network.socket.Client.SocketClient;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.ClientToServerMsg;
+import it.polimi.ingsw.network.socket.ClientToServerMsg.SendMessageMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 import java.io.*;
@@ -30,12 +32,27 @@ public class ClientHandler {
         ReturnableObject returnableObject;
         // Read message type
         while ((request = (ClientToServerMsg)input.readObject()) != null) {
-            response = request.getTypeofResponse();
-            response.setResponse(request.functionToCall(controller));
-            output.writeObject(response);
-            output.flush();
-            output.reset();
+            if(request instanceof SendMessageMsg){
+                request.functionToCall(controller);
+                SocketServer.broadCastMsg(request);
+            }
+            else
+            {
+                response = request.getTypeofResponse();
+                response.setResponse(request.functionToCall(controller));
+                output.writeObject(response);
+                output.flush();
+                output.reset();
+            }
+
 
         }
+    }
+
+    public void sendMessage(ServerToClientMsg msgToBroadCast) throws IOException {
+        System.out.println("message"+ msgToBroadCast.getResponse().getMessageResponse().getContent());
+        output.writeObject(msgToBroadCast);
+        output.flush();
+        output.reset();
     }
 }

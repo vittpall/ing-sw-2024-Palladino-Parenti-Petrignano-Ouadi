@@ -24,7 +24,12 @@ public class SendMessageMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ServerToClientMsg getTypeofResponse() {
-        return new ReceivedMessage();
+    public ServerToClientMsg getTypeofResponse(){
+        ReturnableObject returnableObject = new ReturnableObject();
+        returnableObject.setMessageResponse(msg);
+        ReceivedMessage msgToReturn = new ReceivedMessage();
+        msgToReturn.setResponse(returnableObject);
+        return msgToReturn;
     }
+
 }

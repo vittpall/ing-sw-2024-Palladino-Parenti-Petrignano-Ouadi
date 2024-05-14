@@ -27,12 +27,19 @@ public class GlobalChatState implements ClientState{
         try {
             //if the receiver is null it will return the null value
             ArrayList<Message> globalChat = client.getMessages(null);
-            for(int i = 0; globalChat != null && i < globalChat.size(); i++){
-                if(globalChat.get(i).getSender().equals(client.getUsername()))
-                    System.out.println("You: " + globalChat.get(i).getContent());
-                else
-                    System.out.println(globalChat.get(i).getSender() + ": " + globalChat.get(i).getContent());
+            if(globalChat == null || globalChat.isEmpty()){
+                System.out.println("No messages available");
             }
+            else
+            {
+                for(int i = 0;i < globalChat.size(); i++){
+                    if(globalChat.get(i).getSender().equals(client.getUsername()))
+                        System.out.println("You: " + globalChat.get(i).getContent());
+                    else
+                        System.out.println(globalChat.get(i).getSender() + ": " + globalChat.get(i).getContent());
+                }
+            }
+
             inputHandler(scanner.nextLine());
         } catch (IOException | ClassNotFoundException | InterruptedException e) {
             e.printStackTrace();
