@@ -14,8 +14,8 @@ import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.*;
+import javafx.stage.Stage;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -29,32 +29,25 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     private Scanner scan;
     private int idGame;
     private int idClientIntoGame;
-    private JFrame mainFrame;
+    private boolean isGUIMode = true;
 
-    public RMIClient(VirtualServer server, String mode) throws RemoteException {
+    public RMIClient(VirtualServer server, String mode, Stage stage) throws RemoteException {
 
         this.server = server;
         switch (mode) {
             case "GUI":
-                initializeGUI();
-                setCurrentState(new MainMenuStateGUI(this)); // Assuming MainMenuStateGUI implements ClientState
+                isGUIMode = true;
+                setCurrentState(new MainMenuStateGUI(stage));
                 break;
             case "TUI":
                 this.scan = new Scanner(System.in);
-                setCurrentState(new MainMenuState(this, scan)); // Original TUI state
+                setCurrentState(new MainMenuState(this, scan));
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported mode");
         }
     }
 
-    private void initializeGUI() {
-        mainFrame = new JFrame("Game Client");
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        mainFrame.setSize(800, 600);
-        mainFrame.setLocationRelativeTo(null);
-        mainFrame.setVisible(true);
-    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -233,8 +226,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         server.setTokenColor(idGame, idClientIntoGame, tokenColor);
     }
 
-    public int getPoints() throws RemoteException{
-       return server.getPoints(idGame, idClientIntoGame);
+    public int getPoints() throws RemoteException {
+        return server.getPoints(idGame, idClientIntoGame);
     }
 
     @Override
@@ -244,9 +237,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
-        if (currentState instanceof MainMenuStateGUI)
-            runStateLoopGUI();
-        else
+        if (!isGUIMode)
             runStateLoopTUI();
     }
 
@@ -261,15 +252,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
     public void setCurrentState(ClientState state) {
         this.currentState = state;
-        if (currentState instanceof JPanel) {
-            mainFrame.setContentPane((JPanel) currentState);
-            mainFrame.revalidate();
-            mainFrame.repaint();
-        }
-    }
-
-    private void runStateLoopGUI() {
-
+        if (isGUIMode)
+            state.display();
     }
 
     private void runStateLoopTUI() throws IOException, ClassNotFoundException, InterruptedException {

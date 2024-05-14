@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.socket.Client;
 
+import it.polimi.ingsw.gui.MainMenuStateGUI;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -15,6 +16,7 @@ import it.polimi.ingsw.network.socket.ClientToServerMsg.*;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ReceivedMessage;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 import it.polimi.ingsw.tui.*;
+import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
@@ -43,15 +45,17 @@ public class SocketClient implements VirtualView {
 
     /**
      * Constructor for the SocketClient class.
-     * @param in ObjectInputStream for receiving data from the server.
-     * @param out ObjectOutputStream for sending data to the server.
+     *
+     * @param in   ObjectInputStream for receiving data from the server.
+     * @param out  ObjectOutputStream for sending data to the server.
      * @param mode The mode of the client, either "GUI" or "TUI".
      */
-    public SocketClient(ObjectInputStream in, ObjectOutputStream out, String mode) {
+    public SocketClient(ObjectInputStream in, ObjectOutputStream out, String mode, Stage stage) {
         this.in = in;
         this.out = out;
         switch (mode) {
             case "GUI":
+                currentState = new MainMenuStateGUI(stage);
                 break;
             case "TUI":
                 currentState = new MainMenuState(this, new Scanner(System.in));
@@ -94,15 +98,11 @@ public class SocketClient implements VirtualView {
     @Override
     public void receiveMessage(Message msg) throws RemoteException {
         if (currentState instanceof GlobalChatState || currentState instanceof PrivateChatState) {
-            if (msg.getSender().equals(this.username))
-                System.out.println("You: " + msg.getContent());
-            else
-                System.out.println(msg.getSender() + ": " + msg.getContent());
+            if (msg.getSender().equals(this.username)) System.out.println("You: " + msg.getContent());
+            else System.out.println(msg.getSender() + ": " + msg.getContent());
         } else {
-            if (msg.getReceiver() == null)
-                System.out.println("You have received a message");
-            else
-                System.out.println("You have received a from " + msg.getSender());
+            if (msg.getReceiver() == null) System.out.println("You have received a message");
+            else System.out.println("You have received a from " + msg.getSender());
         }
     }
 
@@ -265,15 +265,11 @@ public class SocketClient implements VirtualView {
     @Override
     public String getNextState() throws IOException, InterruptedException {
         if (currentState instanceof InitializeStarterCardState) {
-            if (this.getCurrentPlayer(idGame) == idClientIntoGame)
-                return "PlayCardState";
-            else
-                return "WaitForYourTurnState";
+            if (this.getCurrentPlayer(idGame) == idClientIntoGame) return "PlayCardState";
+            else return "WaitForYourTurnState";
         } else if (currentState instanceof DrawCardState) {
-            if (this.getIsLastRoundStarted(idGame))
-                return "LastRoundState";
-            else
-                return "WaitForYourTurnState";
+            if (this.getIsLastRoundStarted(idGame)) return "LastRoundState";
+            else return "WaitForYourTurnState";
         }
         return "Error";
     }
@@ -377,9 +373,8 @@ public class SocketClient implements VirtualView {
                 ServerToClientMsg msg = (ServerToClientMsg) in.readObject();
                 Class<? extends ServerToClientMsg> responseType = msg.getClass();
                 responseQueues.computeIfAbsent(responseType, k -> new LinkedBlockingQueue<>()).put(msg);
-                if(msg instanceof ReceivedMessage)
-                {
-                  //  System.out.println(msg.getResponse().getMessageResponse().getContent());
+                if (msg instanceof ReceivedMessage) {
+                    //  System.out.println(msg.getResponse().getMessageResponse().getContent());
                     this.receiveMessage((Message) msg.getResponse().getResponseReturnable());
                 }
             }

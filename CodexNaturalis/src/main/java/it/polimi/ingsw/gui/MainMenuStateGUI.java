@@ -1,42 +1,34 @@
 package it.polimi.ingsw.gui;
 
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 
-public class MainMenuStateGUI extends JPanel  implements ClientState {
-    private final VirtualView client;
+public class MainMenuStateGUI implements ClientState {
+    private final Stage stage;
 
-    public MainMenuStateGUI(VirtualView client) {
-        this.client = client;
-        initializeUI();
-    }
-
-    private void initializeUI() {
-        setLayout(new BorderLayout());
-        JLabel welcomeLabel = new JLabel("Welcome to Codex Naturalis!", SwingConstants.CENTER);
-        add(welcomeLabel, BorderLayout.NORTH);
-
-        JButton playButton = new JButton("Play 🎮");
-        playButton.addActionListener(e -> handlePlayButton());
-
-        add(playButton, BorderLayout.CENTER);
-    }
-
-    private void handlePlayButton() {
-        try {
-            client.setCurrentState(new LobbyMenuStateGUI(client));
-        } catch (IOException ex) {
-            ex.printStackTrace();  // Handle exceptions properly
-        }
+    public MainMenuStateGUI(Stage stage) {
+        this.stage = stage;
     }
 
     @Override
     public void display() {
-        this.setVisible(true);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainMenuState.fxml"));
+            Parent root = loader.load();
+            loader.setController(this);
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Main Menu");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -13,7 +13,8 @@ module PSP44 {
     requires java.desktop;
     requires java.logging;
 
-
+    exports it.polimi.ingsw.controller;
+    exports it.polimi.ingsw.main;
     exports it.polimi.ingsw.model;
     exports it.polimi.ingsw.model.enumeration;
     exports it.polimi.ingsw.network.RemoteInterfaces;
@@ -29,6 +30,7 @@ module PSP44 {
     exports it.polimi.ingsw.gui;
     exports it.polimi.ingsw.tui;
     exports it.polimi.ingsw.util;
+
     opens it.polimi.ingsw.gui to javafx.fxml;
     opens it.polimi.ingsw.model to com.fasterxml.jackson.databind;
 

@@ -5,11 +5,7 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.chat.Message;
-import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.ClientToServerMsg;
-import it.polimi.ingsw.network.socket.ClientToServerMsg.SendMessageMsg;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ReceivedMessage;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 import java.io.IOException;
@@ -18,7 +14,6 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +29,7 @@ public class SocketServer<T> implements Remote {
     }
 
     public void runServer() throws IOException {
-        Socket clientSocket = null;
+        Socket clientSocket;
         while ((clientSocket = this.listenSocket.accept()) != null) {
             //this one arrives from the client
             ObjectInputStream socketRx = new ObjectInputStream(clientSocket.getInputStream());
@@ -57,9 +52,8 @@ public class SocketServer<T> implements Remote {
         }
     }
 
-    public  static void broadCastMsg(ClientToServerMsg message) throws IOException {
-        for(ClientHandler client : clients)
-        {
+    public static void broadCastMsg(ClientToServerMsg message) throws IOException {
+        for (ClientHandler client : clients) {
             ServerToClientMsg receivedMessage = message.getTypeofResponse();
             client.sendMessage(receivedMessage);
         }
