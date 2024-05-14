@@ -4,8 +4,11 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
+
+import java.util.ArrayList;
 
 public class GetVisibleCardsDeckMsg extends ClientToServerMsg{
 
@@ -26,9 +29,9 @@ public class GetVisibleCardsDeckMsg extends ClientToServerMsg{
      * @throws RequirementsNotMetException
      */
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
-        ReturnableObject response = new ReturnableObject();
-        response.setArrayListResponse(controller.getVisibleCardsDeck(idGame, deck));
+    public ReturnableObject<ArrayList<GameCard>> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
+        ReturnableObject<ArrayList<GameCard>> response = new ReturnableObject<>();
+        response.setResponseReturnable(controller.getVisibleCardsDeck(idGame, deck));
         return response;
     }
 

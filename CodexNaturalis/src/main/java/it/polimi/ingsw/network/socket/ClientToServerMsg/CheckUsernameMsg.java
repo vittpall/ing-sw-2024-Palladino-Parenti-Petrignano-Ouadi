@@ -13,10 +13,10 @@ public class CheckUsernameMsg extends ClientToServerMsg{
         this.username = username;
     }
 
-    public ReturnableObject functionToCall(LobbyController controller)
+    public ReturnableObject<Boolean> functionToCall(LobbyController controller)
     {
-        ReturnableObject toReturn = new ReturnableObject();
-        toReturn.setBooleanResponse(controller.checkUsername(username));
+        ReturnableObject<Boolean> toReturn = new ReturnableObject<>();
+        toReturn.setResponseReturnable(controller.checkUsername(username));
         return toReturn;
     }
 

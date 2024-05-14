@@ -1,9 +1,12 @@
 package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.AvailableGamesMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
+
+import java.util.HashMap;
 
 public class GetNotStartedGamesMsg extends ClientToServerMsg{
 
@@ -12,9 +15,10 @@ public class GetNotStartedGamesMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) {
-        this.response.setGames(controller.getVisibleGames());
-        return this.response;
+    public ReturnableObject<HashMap<Integer, Game>> functionToCall(LobbyController controller) {
+        ReturnableObject<HashMap<Integer, Game>> response = new ReturnableObject<>();
+        response.setResponseReturnable(controller.getVisibleGames());
+        return response;
     }
 
     @Override

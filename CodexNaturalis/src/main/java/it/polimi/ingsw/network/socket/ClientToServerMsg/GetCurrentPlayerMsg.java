@@ -13,9 +13,9 @@ public class GetCurrentPlayerMsg extends ClientToServerMsg{
         }
 
         @Override
-        public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException {
-            ReturnableObject response = new ReturnableObject();
-            response.setIntResponse(controller.getCurrentPlayer(idGame));
+        public ReturnableObject<Integer> functionToCall(LobbyController controller) throws InterruptedException {
+            ReturnableObject<Integer> response = new ReturnableObject<>();
+            response.setResponseReturnable(controller.getCurrentPlayer(idGame));
             return response;
         }
 

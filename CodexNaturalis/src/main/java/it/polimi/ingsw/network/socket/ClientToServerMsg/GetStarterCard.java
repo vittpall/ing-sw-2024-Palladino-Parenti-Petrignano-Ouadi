@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
@@ -18,9 +19,9 @@ public class GetStarterCard extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
-       ReturnableObject response = new ReturnableObject();
-         response.setStarterCardResponse(controller.getStarterCard(idGame, idClientIntoGame));
+    public ReturnableObject<StarterCard> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
+       ReturnableObject<StarterCard> response = new ReturnableObject<>();
+         response.setResponseReturnable(controller.getStarterCard(idGame, idClientIntoGame));
          return response;
 
     }

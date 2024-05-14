@@ -13,10 +13,10 @@ public class ClosedConnectionMsg extends ClientToServerMsg {
     }
 
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) {
-        ReturnableObject toReturn = new ReturnableObject();
-        toReturn.setStringResponse("connection closed");
-        return null;
+    public ReturnableObject<String> functionToCall(LobbyController controller) {
+        ReturnableObject<String> response = new ReturnableObject<>();
+        response.setResponseReturnable("connection closed");
+        return response;
     }
 
     @Override

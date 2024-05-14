@@ -50,7 +50,6 @@ public class ClientHandler {
     }
 
     public void sendMessage(ServerToClientMsg msgToBroadCast) throws IOException {
-        System.out.println("message"+ msgToBroadCast.getResponse().getMessageResponse().getContent());
         output.writeObject(msgToBroadCast);
         output.flush();
         output.reset();

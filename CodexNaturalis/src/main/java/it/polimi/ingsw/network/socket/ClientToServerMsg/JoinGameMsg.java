@@ -16,9 +16,9 @@ public class JoinGameMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException {
-        ReturnableObject response = new ReturnableObject();
-        response.setIntResponse(controller.joinGame(this.id, this.username));
+    public ReturnableObject<Integer> functionToCall(LobbyController controller) throws InterruptedException {
+        ReturnableObject<Integer> response = new ReturnableObject<>();
+        response.setResponseReturnable(controller.joinGame(this.id, this.username));
         return response;
     }
 

@@ -29,7 +29,7 @@ public class JoinGameMenuState implements ClientState {
 
         try {
             HashMap<Integer, Game> games = client.getNotStartedGames();
-            if (games.isEmpty()) {
+            if (games == null || games.isEmpty()) {
                 System.out.println("No games available.\n1.Create new game 🆕");
             } else {
                 System.out.println("Choose a game to enter 🚪:");

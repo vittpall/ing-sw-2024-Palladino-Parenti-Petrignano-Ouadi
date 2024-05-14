@@ -19,10 +19,10 @@ public class DrawCardMsg extends ClientToServerMsg{
         this.inVisible = inVisible;
     }
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException {
-        ReturnableObject response = new ReturnableObject();
+    public ReturnableObject<Integer> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException {
+        ReturnableObject<Integer> response = new ReturnableObject<>();
         controller.drawCard(idGame, idClientIntoGame, input, inVisible);
-        response.setIntResponse(-1);
+        response.setResponseReturnable(-1);
         return response;
     }
 

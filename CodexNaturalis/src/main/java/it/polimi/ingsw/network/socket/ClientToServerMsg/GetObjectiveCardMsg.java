@@ -4,13 +4,14 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 public class GetObjectiveCardMsg extends ClientToServerMsg{
 
-    private int idGame;
-    private int idClientIntoGame;
+    private final int idGame;
+    private final int idClientIntoGame;
 
     public GetObjectiveCardMsg(int idGame, int idClientIntoGame){
         this.idGame = idGame;
@@ -18,9 +19,9 @@ public class GetObjectiveCardMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
-        ReturnableObject response = new ReturnableObject();
-        response.setObjectiveCardResponse(controller.getObjectiveCard(idGame, idClientIntoGame));
+    public ReturnableObject<ObjectiveCard> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
+        ReturnableObject<ObjectiveCard> response = new ReturnableObject<>();
+        response.setResponseReturnable(controller.getObjectiveCard(idGame, idClientIntoGame));
         return response;
     }
 

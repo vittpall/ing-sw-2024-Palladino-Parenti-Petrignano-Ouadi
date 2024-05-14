@@ -26,10 +26,10 @@ public class PlayLastTurnMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
-        ReturnableObject response = new ReturnableObject();
+    public ReturnableObject<Integer> functionToCall(LobbyController controller) throws InterruptedException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
+        ReturnableObject<Integer> response = new ReturnableObject<>();
         controller.playLastTurn(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
-        response.setIntResponse(-1);
+        response.setResponseReturnable(-1);
         return response;
     }
 

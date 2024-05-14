@@ -17,9 +17,9 @@ public class GetPoint extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException {
-        ReturnableObject response = new ReturnableObject();
-        response.setIntResponse(controller.getPoints(idGame, idClientIntoGame));
+    public ReturnableObject<Integer> functionToCall(LobbyController controller) throws InterruptedException {
+        ReturnableObject<Integer> response = new ReturnableObject<>();
+        response.setResponseReturnable(controller.getPoints(idGame, idClientIntoGame));
         return response;
     }
 

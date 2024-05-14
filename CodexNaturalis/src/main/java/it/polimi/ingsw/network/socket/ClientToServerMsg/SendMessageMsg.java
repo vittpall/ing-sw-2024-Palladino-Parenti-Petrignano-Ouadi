@@ -16,17 +16,17 @@ public class SendMessageMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException {
-       ReturnableObject response = new ReturnableObject();
+    public ReturnableObject<Integer> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException {
+       ReturnableObject<Integer> response = new ReturnableObject<>();
        controller.sendMessage(msg);
-       response.setIntResponse(-1);
+       response.setResponseReturnable(-1);
        return response;
     }
 
     @Override
     public ServerToClientMsg getTypeofResponse(){
-        ReturnableObject returnableObject = new ReturnableObject();
-        returnableObject.setMessageResponse(msg);
+        ReturnableObject<Message> returnableObject = new ReturnableObject<>();
+        returnableObject.setResponseReturnable(msg);
         ReceivedMessage msgToReturn = new ReceivedMessage();
         msgToReturn.setResponse(returnableObject);
         return msgToReturn;

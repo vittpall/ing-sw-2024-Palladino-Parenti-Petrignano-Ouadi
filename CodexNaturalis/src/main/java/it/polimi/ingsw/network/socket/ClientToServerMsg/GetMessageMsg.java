@@ -6,10 +6,12 @@ import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ReceivedMessage;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
+import java.util.ArrayList;
+
 public class GetMessageMsg extends ClientToServerMsg{
-    private String receiver;
-    private int gameId;
-    private String sender;
+    private final String receiver;
+    private final int gameId;
+    private final String sender;
 
     public GetMessageMsg(String receiver, int gameId, String sender) {
         this.receiver = receiver;
@@ -18,13 +20,13 @@ public class GetMessageMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject<Message> functionToCall(LobbyController controller) throws InterruptedException {
-        ReturnableObject<Message> response = new ReturnableObject<>();
-        response.setMessagesResponse((controller.getMessages(receiver, gameId, sender)));
+    public ReturnableObject<ArrayList<Message>> functionToCall(LobbyController controller) throws InterruptedException {
+        ReturnableObject<ArrayList<Message>> response = new ReturnableObject<>();
+        response.setResponseReturnable((controller.getMessages(receiver, gameId, sender)));
         for(Message message : controller.getMessages(receiver, gameId, sender)){
             System.out.println(message.getSender() + ": " + message.getContent());
         }
-        System.out.println("Messages received: " + response.getMessagesResponse());
+        System.out.println("Messages received: " + response.getResponseReturnable());
         return response;
     }
 

@@ -23,9 +23,9 @@ public class GetUsernamePlayerThatStoppedTheGameMsg extends ClientToServerMsg{
      * @throws RequirementsNotMetException
      */
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
-        ReturnableObject response = new ReturnableObject();
-        response.setStringResponse(controller.getUsernamePlayerThatStoppedTheGame(idGame));
+    public ReturnableObject<String> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
+        ReturnableObject<String> response = new ReturnableObject<>();
+        response.setResponseReturnable(controller.getUsernamePlayerThatStoppedTheGame(idGame));
         return response;
     }
 

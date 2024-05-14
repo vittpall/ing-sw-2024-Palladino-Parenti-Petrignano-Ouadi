@@ -9,8 +9,8 @@ import it.polimi.ingsw.network.socket.ServerToClientMsg.TokenColorMsg;
 
 public class SelectTokenColorMsg extends ClientToServerMsg{
 
-    private int idGame;
-    private int idClientIntoGame;
+    private final int idGame;
+    private final int idClientIntoGame;
     public TokenColor tokenColor;
 
     public SelectTokenColorMsg(int idGame, int idClientIntoGame, TokenColor tokenColor) {
@@ -20,10 +20,10 @@ public class SelectTokenColorMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException {
-        ReturnableObject response = new ReturnableObject();
+    public ReturnableObject<Integer> functionToCall(LobbyController controller) throws InterruptedException {
+        ReturnableObject<Integer> response = new ReturnableObject<>();
         controller.setTokenColor(idGame, idClientIntoGame, tokenColor);
-        response.setIntResponse(-1);
+        response.setResponseReturnable(-1);
         return response;
     }
 

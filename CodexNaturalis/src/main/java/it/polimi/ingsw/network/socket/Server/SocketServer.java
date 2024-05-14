@@ -22,7 +22,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SocketServer implements Remote {
+public class SocketServer<T> implements Remote {
 
     final ServerSocket listenSocket;
     final LobbyController lobbyController;
@@ -57,7 +57,7 @@ public class SocketServer implements Remote {
         }
     }
 
-    public static void broadCastMsg(ClientToServerMsg message) throws IOException {
+    public  static void broadCastMsg(ClientToServerMsg message) throws IOException {
         for(ClientHandler client : clients)
         {
             ServerToClientMsg receivedMessage = message.getTypeofResponse();

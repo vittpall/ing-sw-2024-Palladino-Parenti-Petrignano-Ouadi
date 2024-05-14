@@ -88,7 +88,7 @@ public class SocketClient implements VirtualView {
     public ArrayList<Player> getAllPlayers(int gameId) throws IOException, InterruptedException {
         GetAllPlayersMsg request = new GetAllPlayersMsg(gameId);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getArrayListResponse();
+        return (ArrayList<Player>) response.getResponse().getResponseReturnable();
     }
 
     @Override
@@ -126,7 +126,7 @@ public class SocketClient implements VirtualView {
         GetNotStartedGamesMsg request = new GetNotStartedGamesMsg();
         ServerToClientMsg response = sendRequest(request);
 
-        return response.getResponse().getGames();
+        return (HashMap<Integer, Game>) response.getResponse().getResponseReturnable();
     }
 
     @Override
@@ -140,7 +140,7 @@ public class SocketClient implements VirtualView {
         CreateGameMsg request = new CreateGameMsg(username, nPlayers);
         ServerToClientMsg response = sendRequest(request);
         idClientIntoGame = 0;
-        idGame = response.getResponse().getIntResponse();
+        idGame = (int) response.getResponse().getResponseReturnable();
     }
 
     @Override
@@ -148,7 +148,7 @@ public class SocketClient implements VirtualView {
         JoinGameMsg request = new JoinGameMsg(username, input);
         ServerToClientMsg response = sendRequest(request);
         idGame = input;
-        idClientIntoGame = response.getResponse().getIntResponse();
+        idClientIntoGame = (int) response.getResponse().getResponseReturnable();
 
     }
 
@@ -156,7 +156,7 @@ public class SocketClient implements VirtualView {
     public ArrayList<ObjectiveCard> getPlayerObjectiveCards() throws IOException, InterruptedException {
         GetPlayerObjectiveCardsMsg request = new GetPlayerObjectiveCardsMsg(idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getArrayListResponse();
+        return (ArrayList<ObjectiveCard>) response.getResponse().getResponseReturnable();
     }
 
     @Override
@@ -168,7 +168,7 @@ public class SocketClient implements VirtualView {
     public ArrayList<Message> getMessages(String receiver) throws IOException, InterruptedException {
         GetMessageMsg request = new GetMessageMsg(receiver, this.idGame, this.username);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getMessagesResponse();
+        return (ArrayList<Message>) response.getResponse().getResponseReturnable();
     }
 
     @Override
@@ -182,14 +182,14 @@ public class SocketClient implements VirtualView {
     public HashSet<Point> getAvailablePlaces() throws IOException, InterruptedException {
         GetAvailablePlacesMsg request = new GetAvailablePlacesMsg(idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getHashSetResponse();
+        return (HashSet<Point>) response.getResponse().getResponseReturnable();
     }
 
     @Override
     public ArrayList<GameCard> getVisibleCardsDeck(int deck) throws IOException, InterruptedException {
         GetVisibleCardsDeckMsg request = new GetVisibleCardsDeckMsg(idGame, deck);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getArrayListResponse();
+        return (ArrayList<GameCard>) response.getResponse().getResponseReturnable();
     }
 
     @Override
@@ -205,7 +205,7 @@ public class SocketClient implements VirtualView {
     public String getWinner() throws IOException, InterruptedException {
         GetWinnerMsg request = new GetWinnerMsg(idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getStringResponse();
+        return (String) response.getResponse().getResponseReturnable();
     }
 
     @Override
@@ -218,21 +218,21 @@ public class SocketClient implements VirtualView {
     public String getUsernamePlayerThatStoppedTheGame() throws IOException, InterruptedException {
         GetUsernamePlayerThatStoppedTheGameMsg request = new GetUsernamePlayerThatStoppedTheGameMsg(idGame);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getStringResponse();
+        return (String) response.getResponse().getResponseReturnable();
     }
 
     @Override
     public HashMap<Point, GameCard> getPlayerDesk() throws IOException, InterruptedException {
         GetPlayerDesk request = new GetPlayerDesk(idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getGameCardHashMapResponse();
+        return (HashMap<Point, GameCard>) response.getResponse().getResponseReturnable();
     }
 
     @Override
     public StarterCard getStarterCard() throws IOException, InterruptedException {
         GetStarterCard request = new GetStarterCard(idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getStarterCardResponse();
+        return (StarterCard) response.getResponse().getResponseReturnable();
     }
 
     @Override
@@ -245,21 +245,21 @@ public class SocketClient implements VirtualView {
     public ObjectiveCard getPlayerObjectiveCard() throws IOException, InterruptedException {
         GetObjectiveCardMsg request = new GetObjectiveCardMsg(idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getObjectiveCardResponse();
+        return (ObjectiveCard) response.getResponse().getResponseReturnable();
     }
 
     @Override
     public ArrayList<GameCard> getPlayerHand() throws IOException, InterruptedException {
         GetPlayerHandMsg request = new GetPlayerHandMsg(idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getArrayListResponse();
+        return (ArrayList<GameCard>) response.getResponse().getResponseReturnable();
     }
 
     @Override
     public ObjectiveCard[] getSharedObjectiveCards() throws IOException, InterruptedException {
         GetSharedObjectiveCardsMsg request = new GetSharedObjectiveCardsMsg(idGame);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getObjectiveCardsResponse();
+        return (ObjectiveCard[]) response.getResponse().getResponseReturnable();
     }
 
     @Override
@@ -281,13 +281,13 @@ public class SocketClient implements VirtualView {
     public boolean getIsLastRoundStarted(int idGame) throws IOException, InterruptedException {
         IsLastRoundStartedMsg request = new IsLastRoundStartedMsg(idGame);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getBooleanResponse();
+        return (boolean) response.getResponse().getResponseReturnable();
     }
 
     public int getCurrentPlayer(int idGame) throws IOException, InterruptedException {
         GetCurrentPlayerMsg request = new GetCurrentPlayerMsg(idGame);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getIntResponse();
+        return (int) response.getResponse().getResponseReturnable();
     }
 
     @Override
@@ -318,7 +318,7 @@ public class SocketClient implements VirtualView {
     public ArrayList<TokenColor> getAvailableColors() throws IOException, InterruptedException {
         AvailableColorMsg request = new AvailableColorMsg(username, idGame);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getArrayListResponse();
+        return (ArrayList<TokenColor>) response.getResponse().getResponseReturnable();
     }
 
     @Override
@@ -331,7 +331,7 @@ public class SocketClient implements VirtualView {
     public int getPoints() throws IOException, InterruptedException {
         GetPoint request = new GetPoint(username, idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getIntResponse();
+        return (int) response.getResponse().getResponseReturnable();
     }
 
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
@@ -380,7 +380,7 @@ public class SocketClient implements VirtualView {
                 if(msg instanceof ReceivedMessage)
                 {
                   //  System.out.println(msg.getResponse().getMessageResponse().getContent());
-                    this.receiveMessage(msg.getResponse().getMessageResponse());
+                    this.receiveMessage((Message) msg.getResponse().getResponseReturnable());
                 }
             }
         } catch (Exception e) {
@@ -392,7 +392,7 @@ public class SocketClient implements VirtualView {
     public boolean checkUsername(String username) throws IOException, ClassNotFoundException, InterruptedException {
         CheckUsernameMsg request = new CheckUsernameMsg(username);
         ServerToClientMsg response = sendRequest(request);
-        return response.getResponse().getBooleanResponse();
+        return (boolean) response.getResponse().getResponseReturnable();
     }
 
 }

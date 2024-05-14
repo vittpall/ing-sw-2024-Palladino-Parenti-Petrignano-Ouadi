@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
+import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
@@ -12,9 +13,9 @@ public class GetSharedObjectiveCardsMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException {
-        ReturnableObject response = new ReturnableObject();
-        response.setObjectiveCardsResponse(controller.getSharedObjectiveCards(idGame));
+    public ReturnableObject<ObjectiveCard[]> functionToCall(LobbyController controller) throws InterruptedException {
+        ReturnableObject<ObjectiveCard[]> response = new ReturnableObject<>();
+        response.setResponseReturnable(controller.getSharedObjectiveCards(idGame));
         return response;
     }
 

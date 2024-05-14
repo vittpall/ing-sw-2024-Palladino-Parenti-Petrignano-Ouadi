@@ -11,13 +11,8 @@ import java.io.Serializable;
 
 public abstract class ClientToServerMsg implements Serializable {
 
-    protected ReturnableObject response;
     protected String username;
     protected ServerToClientMsg typeofResponse;
-
-    public ClientToServerMsg() {
-        this.response = new ReturnableObject();
-    }
 
     public abstract ReturnableObject functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException;
     public abstract ServerToClientMsg getTypeofResponse();

@@ -9,7 +9,7 @@ public class ServerToClientMsg implements Serializable {
     protected ReturnableObject response;
 
     public ServerToClientMsg() {
-        this.response = new ReturnableObject();
+        this.response = new ReturnableObject<>();
     }
     public void setResponse(ReturnableObject response)
     {

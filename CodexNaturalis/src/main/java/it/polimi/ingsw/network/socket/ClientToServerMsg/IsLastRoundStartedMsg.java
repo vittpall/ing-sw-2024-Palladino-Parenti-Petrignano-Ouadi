@@ -12,9 +12,9 @@ public class IsLastRoundStartedMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException {
-        ReturnableObject response = new ReturnableObject();
-        response.setBooleanResponse(controller.getIsLastRoundStarted(idGame));
+    public ReturnableObject<Boolean> functionToCall(LobbyController controller) throws InterruptedException {
+        ReturnableObject<Boolean> response = new ReturnableObject<>();
+        response.setResponseReturnable(controller.getIsLastRoundStarted(idGame));
         return response;
     }
 

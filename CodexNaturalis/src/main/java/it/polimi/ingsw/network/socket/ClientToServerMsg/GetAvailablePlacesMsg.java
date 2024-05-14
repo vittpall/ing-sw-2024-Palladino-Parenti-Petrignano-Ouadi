@@ -6,6 +6,9 @@ import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.AvailablePlacesMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
+import java.awt.*;
+import java.util.HashSet;
+
 public class GetAvailablePlacesMsg extends ClientToServerMsg{
 
     private int idGame;
@@ -17,9 +20,9 @@ public class GetAvailablePlacesMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException {
-        ReturnableObject response = new ReturnableObject();
-        response.setHashSetResponse(controller.getAvailablePlaces(idGame, idClientIntoGame));
+    public ReturnableObject<HashSet<Point>> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException {
+        ReturnableObject<HashSet<Point>> response = new ReturnableObject<>();
+        response.setResponseReturnable(controller.getAvailablePlaces(idGame, idClientIntoGame));
         return response;
     }
 

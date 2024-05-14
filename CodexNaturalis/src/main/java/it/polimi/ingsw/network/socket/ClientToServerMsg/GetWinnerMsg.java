@@ -9,17 +9,17 @@ import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 public class GetWinnerMsg extends ClientToServerMsg{
 
-    private int idGame;
-    private int idClientIntoGame;
+    private final int idGame;
+    private final int idClientIntoGame;
 
     public GetWinnerMsg(int idGame, int idClientIntoGame) {
         this.idGame = idGame;
         this.idClientIntoGame = idClientIntoGame;
     }
     @Override
-    public ReturnableObject functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
-        ReturnableObject response = new ReturnableObject();
-        response.setStringResponse(controller.getWinner(idGame, idClientIntoGame));
+    public ReturnableObject<String> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
+        ReturnableObject<String> response = new ReturnableObject<>();
+        response.setResponseReturnable(controller.getWinner(idGame, idClientIntoGame));
         return response;
     }
 
