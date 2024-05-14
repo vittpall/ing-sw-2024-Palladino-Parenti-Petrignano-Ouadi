@@ -198,7 +198,7 @@ public class SocketClient implements VirtualView {
 
     }
 
-    @Override
+    //@Override
     public void setPointsDebug() {
 
     }

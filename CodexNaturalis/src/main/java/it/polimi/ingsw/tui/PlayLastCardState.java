@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
@@ -27,6 +28,7 @@ public class PlayLastCardState implements ClientState {
     public void display() {
         System.out.println("|--------Play your last card state---------|");
         try {
+
             String playerWhoStopped = client.getUsernamePlayerThatStoppedTheGame();
             System.out.println("This is your last turn!");
             System.out.println("The player " + playerWhoStopped + " has reached 20 points!");
@@ -36,12 +38,23 @@ public class PlayLastCardState implements ClientState {
         }
         CardPrinter printer = new CardPrinter();
         try {
+            showProvisionalRanking();
             showObjectiveCards(printer);
             showPlayerDesk(printer);
             showPlayerHand(printer);
         } catch (IOException | InterruptedException ex) {
             System.err.println("Error while retrieving data: " + ex.getMessage());
         }
+    }
+    private void showProvisionalRanking() throws IOException, InterruptedException {
+        ArrayList<Player> allPlayers = client.getAllPlayers(client.getIdGame());
+        System.out.println("--------------------------------");
+        System.out.println("Provisional Ranking:");
+        for (Player player : allPlayers) {
+            int playerScore = client.getPoints();
+            System.out.println("Player: " + player.getUsername() + " | Score: " + playerScore);
+        }
+        System.out.println("--------------------------------");
     }
 
     private void showObjectiveCards(CardPrinter printer) throws IOException, InterruptedException {

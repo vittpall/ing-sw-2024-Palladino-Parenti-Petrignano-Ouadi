@@ -87,6 +87,7 @@ public class PlayCardState implements ClientState {
             int playerScore = client.getPoints();
             System.out.println("Player: " + player.getUsername() + " | Score: " + playerScore);
         }
+        System.out.println("--------------------------------");
     }
 
     private void showObjectiveCards(CardPrinter printer) throws IOException, InterruptedException {
