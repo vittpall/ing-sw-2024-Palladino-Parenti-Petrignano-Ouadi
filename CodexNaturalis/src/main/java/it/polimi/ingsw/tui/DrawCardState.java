@@ -46,7 +46,7 @@ public class DrawCardState implements ClientState {
             case 2:
                 int inVisible = chooseWhichCardToDraw();
                 try {
-                    client.drawCard(1, inVisible);
+                    client.drawCard(input, inVisible);
                     String nextState = client.getNextState();
                     if (nextState.equals("WaitForYourTurnState")) {
                         client.setCurrentState(new WaitForYourTurnState(client, scanner));
