@@ -20,7 +20,7 @@ import java.rmi.Remote;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SocketServer<T> implements Remote {
+public class SocketServer implements Remote {
 
     final ServerSocket listenSocket;
     final LobbyController lobbyController;

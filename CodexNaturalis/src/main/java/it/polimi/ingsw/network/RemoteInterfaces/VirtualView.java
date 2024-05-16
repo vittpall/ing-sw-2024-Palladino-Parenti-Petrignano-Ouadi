@@ -95,4 +95,6 @@ public interface VirtualView extends Remote {
     String getWinner() throws IOException, InterruptedException;
 
     void closeGame() throws IOException, InterruptedException;
+
+    void notifyYourTurn() throws IOException, InterruptedException;
 }

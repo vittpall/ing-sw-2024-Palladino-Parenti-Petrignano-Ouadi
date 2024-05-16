@@ -24,7 +24,7 @@ public class WaitForYourTurnState implements ClientState {
     @Override
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
         if (input == 1) {
-            client.setCurrentState(new ChatState(client, this));
+            client.setCurrentState(new ChatState(client, scanner));
         } else {
             System.out.println("Invalid input");
         }

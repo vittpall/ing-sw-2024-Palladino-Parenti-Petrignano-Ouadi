@@ -197,7 +197,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
 
     @Override
-    public void drawCard(int input, int inVisible) throws RemoteException, CardNotFoundException {
+    public void drawCard(int input, int inVisible) throws IOException, CardNotFoundException, InterruptedException {
         server.drawCard(idGame, idClientIntoGame, input, inVisible);
     }
 
@@ -314,7 +314,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
     @Override
     public void notifyYourTurn() throws RemoteException {
-        setCurrentState(new PlayCardState(this));
+        setCurrentState(new PlayCardState(this, scan));
     }
 
 }

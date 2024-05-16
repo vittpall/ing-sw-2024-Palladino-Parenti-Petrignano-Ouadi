@@ -15,6 +15,7 @@ import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.awt.*;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -144,20 +145,27 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws RemoteException, CardNotFoundException {
+    public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws IOException, CardNotFoundException, InterruptedException {
         lobbyController.drawCard(idGame, idClientIntoGame, deckToChoose, inVisible);
         switchTurns(idGame);
     }
 
-    private void switchTurns(int idGame) throws RemoteException {
+    /**
+     * @param idGame
+     * @param idClientIntoGame
+     * @throws RemoteException
+     * @throws InterruptedException
+     */
+    @Override
+    public void waitForYourTurn(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException {
+
+    }
+
+    private void switchTurns(int idGame) throws IOException, InterruptedException {
         Player nextPlayer = lobbyController.getNextPlayer(idGame);
         for (VirtualView client : clients) {
             if (client.getIdGame() == idGame && (client.getUsername()).equals(nextPlayer.getUsername())) {
-                try {
-                    client.notifyYourTurn();
-                } catch (RemoteException e) {
-                    System.out.println("Failed to notify client: " + e.getMessage());
-                }
+                client.notifyYourTurn();
             }
         }
     }

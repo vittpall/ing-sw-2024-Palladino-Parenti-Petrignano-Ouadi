@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;
+import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public interface VirtualServer extends Remote {
     void playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException;
 
-    void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws RemoteException, CardNotFoundException;
+    void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws IOException, CardNotFoundException, InterruptedException;
 
     void waitForYourTurn(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException;
 

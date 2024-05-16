@@ -220,6 +220,15 @@ public class SocketClient implements VirtualView {
         ServerToClientMsg response = sendRequest(request);
     }
 
+    /**
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Override
+    public void notifyYourTurn() throws IOException, InterruptedException {
+
+    }
+
     @Override
     public String getUsernamePlayerThatStoppedTheGame() throws IOException, InterruptedException {
         GetUsernamePlayerThatStoppedTheGameMsg request = new GetUsernamePlayerThatStoppedTheGameMsg(idGame);
