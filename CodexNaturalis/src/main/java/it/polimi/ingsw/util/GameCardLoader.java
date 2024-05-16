@@ -29,7 +29,7 @@ public class GameCardLoader {
         List<GameCard> cards = new ArrayList<>();
         try {
             //load the game data
-            cards = mapper.readValue(new File("src/main/resources/gameCard.json"), new TypeReference<>() {
+            cards = mapper.readValue(new File("src/main/resources/Json/gameCard.json"), new TypeReference<>() {
             });
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error loading game cards", e);

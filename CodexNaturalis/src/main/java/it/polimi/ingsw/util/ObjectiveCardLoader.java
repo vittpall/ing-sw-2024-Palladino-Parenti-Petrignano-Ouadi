@@ -25,7 +25,7 @@ public class ObjectiveCardLoader {
         mapper.registerModule(module);
         List<ObjectiveCard> cards = new ArrayList<>();
         try {
-            cards = mapper.readValue(new File("src/main/resources/objectiveCard.json"), new TypeReference<>() {
+            cards = mapper.readValue(new File("src/main/resources/Json/objectiveCard.json"), new TypeReference<>() {
             });
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error loading objective cards", e);
