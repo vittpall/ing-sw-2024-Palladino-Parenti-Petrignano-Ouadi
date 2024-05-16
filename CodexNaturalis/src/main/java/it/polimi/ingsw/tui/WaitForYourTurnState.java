@@ -16,28 +16,21 @@ public class WaitForYourTurnState implements ClientState {
 
     @Override
     public void display() {
-        System.out.println("|------Wait for your turn state------|");
+        System.out.println("You are currently waiting for your turn. Please wait for the other players to finish their turn.");
+        System.out.println("You can chat with the other players while you wait.");
+        System.out.println("1. Chat");
     }
 
     @Override
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
-        switch (input) {
-            case 1:
-                client.waitForYourTurn();
-                client.setCurrentState(new PlayCardState(client, scanner));
-                break;
-            case 2:
-                client.setCurrentState(new ChatState(client, scanner, this));
-                break;
-            default:
-                System.out.println("Invalid input");
-                break;
+        if (input == 1) {
+            client.setCurrentState(new ChatState(client, this));
+        } else {
+            System.out.println("Invalid input");
         }
     }
 
     @Override
     public void promptForInput() {
-        System.out.println("1. Wait for your turn");
-        System.out.println("2. Chat");
     }
 }

@@ -146,12 +146,23 @@ public class RMIServer implements VirtualServer {
     @Override
     public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws RemoteException, CardNotFoundException {
         lobbyController.drawCard(idGame, idClientIntoGame, deckToChoose, inVisible);
+        switchTurns(idGame);
     }
 
-    @Override
-    public void waitForYourTurn(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException {
-        lobbyController.waitForYourTurn(idGame, idClientIntoGame);
+    private void switchTurns(int idGame) throws RemoteException {
+        Player nextPlayer = lobbyController.getNextPlayer(idGame);
+        for (VirtualView client : clients) {
+            if (client.getIdGame() == idGame && (client.getUsername()).equals(nextPlayer.getUsername())) {
+                try {
+                    client.notifyYourTurn();
+                } catch (RemoteException e) {
+                    System.out.println("Failed to notify client: " + e.getMessage());
+                }
+            }
+        }
     }
+
+
 
     @Override
     public boolean getIsLastRoundStarted(int idGame) throws RemoteException {

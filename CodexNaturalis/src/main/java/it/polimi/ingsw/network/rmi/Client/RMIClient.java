@@ -29,7 +29,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     private Scanner scan;
     private int idGame;
     private int idClientIntoGame;
-    private boolean isGUIMode = true;
+    private boolean isGUIMode = false;
 
     public RMIClient(VirtualServer server, String mode, Stage stage) throws RemoteException {
 
@@ -41,7 +41,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                 break;
             case "TUI":
                 this.scan = new Scanner(System.in);
-                setCurrentState(new MainMenuState(this, scan));
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported mode");
@@ -60,6 +59,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public int getIdGame() {
         return idGame;
     }
+
 
     public int getIdClientIntoGame() {
         return idClientIntoGame;
@@ -238,44 +238,28 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
         if (!isGUIMode)
-            runStateLoopTUI();
+            setCurrentState(new MainMenuState(this,scan));
+
+        new Thread(() -> {
+            try {
+                inputHandler();
+            } catch (IOException | ClassNotFoundException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
     }
 
-    public void close() throws RemoteException {
-        server.removeUsername(username);
-        System.exit(0);
+    void showState() {
+        currentState.display();
+        currentState.promptForInput();
     }
 
-    public void setIdGame(int idGame) {
-        this.idGame = idGame;
-    }
-
-    public void setCurrentState(ClientState state) {
-        this.currentState = state;
-        if (isGUIMode)
-            state.display();
-    }
-
-    private void runStateLoopTUI() throws IOException, ClassNotFoundException, InterruptedException {
-        boolean correctInput;
-        boolean chatState;
-
-        int chatStateContator;
+    void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
+        boolean correctInput = false;
+        String input = "";
         while (true) {
-            chatStateContator = 0;
             correctInput = false;
-            chatState = false;
-            currentState.display();
-            currentState.promptForInput();
-            String input = "";
-            do {
-                if (currentState instanceof PrivateChatState || currentState instanceof GlobalChatState) {
-                    chatState = true;
-                    chatStateContator++;
-                } else {
-                    chatState = false;
-                }
-            } while (chatState);
             while (!correctInput) {
                 try {
                     System.out.print("Type your command or 'exit' to quit: ");
@@ -294,6 +278,21 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         }
     }
 
+    public void close() throws RemoteException {
+        server.removeUsername(username);
+        System.exit(0);
+    }
+
+    public void setIdGame(int idGame) {
+        this.idGame = idGame;
+    }
+
+    public void setCurrentState(ClientState state) {
+        this.currentState = state;
+        showState();
+    }
+
+
     private boolean handleCommonInput(String input) {
         if ("exit".equals(input)) {
             try {
@@ -307,9 +306,15 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return false;
     }
 
+
     @Override
     public void closeGame() throws RemoteException {
         server.closeGame(idGame);
+    }
+
+    @Override
+    public void notifyYourTurn() throws RemoteException {
+        setCurrentState(new PlayCardState(this));
     }
 
 }

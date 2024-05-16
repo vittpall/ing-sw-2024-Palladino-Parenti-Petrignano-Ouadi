@@ -116,9 +116,11 @@ public class LobbyController {
     public synchronized void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) {
         model.getGame(idGame).setTokenColor(idClientIntoGame, tokenColor);
     }
-    public int getPoints(int idGame, int idClientIntoGame){
+
+    public int getPoints(int idGame, int idClientIntoGame) {
         return model.getGame(idGame).getPlayers().get(idClientIntoGame).getPoints();
     }
+
     public int getCurrentPlayer(int idGame) {
         return model.getGame(idGame).getCurrentPlayerIndex();
     }
@@ -133,7 +135,7 @@ public class LobbyController {
         synchronized (model.getGame(idGame)) {
             this.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
             if (model.getGame(idGame).getnPlayer() != idClientIntoGame + 1)
-                model.getGame(idGame).getNextPlayer();
+                model.getGame(idGame).advanceToNextPlayer();
             model.getGame(idGame).notifyAll();
         }
     }
@@ -146,19 +148,16 @@ public class LobbyController {
             else
                 chosenDeck = model.getGame(idGame).getGoldDeck();//da decidere
 
-
-            int currentPlayerPoints;
             if (inVisible == 3)
-                currentPlayerPoints = model.getGame(idGame).drawCard(chosenDeck);
+                model.getGame(idGame).drawCard(chosenDeck);
             else {
                 GameCard chosenCard = null;
                 if (inVisible == 1)
                     chosenCard = chosenDeck.getVisibleCards().getFirst();
                 else if (inVisible == 2)
                     chosenCard = chosenDeck.getVisibleCards().get(1);
-                currentPlayerPoints = model.getGame(idGame).drawVisibleCard(chosenDeck, chosenCard);
+                model.getGame(idGame).drawVisibleCard(chosenDeck, chosenCard);
             }
-            model.getGame(idGame).notifyAll();
         }
     }
 
@@ -206,6 +205,11 @@ public class LobbyController {
             }
         }
         return winner;
+    }
+
+    public Player getNextPlayer(int idGame) {
+        model.getGame(idGame).advanceToNextPlayer();
+        return model.getGame(idGame).getCurrentPlayer();
     }
 
     public void closeGame(int idGame) {

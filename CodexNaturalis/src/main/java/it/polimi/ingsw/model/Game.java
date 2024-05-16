@@ -238,16 +238,13 @@ public class Game implements Serializable {
      * sets isLastRoundStarted as true if the current player's points are greater or equal to 20
      *
      * @param deck
-     * @return the current player's points
      */
-    public int drawCard(Deck deck) {
+    public void drawCard(Deck deck) {
         players.get(currentPlayerIndex).draw(deck);
         if (players.get(currentPlayerIndex).getPoints() >= 20) {
             isLastRoundStarted = true;
             playerWhoStoppedTheGame = currentPlayerIndex;
         }
-        getNextPlayer();
-        return players.get(currentPlayerIndex).getPoints();
     }
 
     /**
@@ -255,23 +252,26 @@ public class Game implements Serializable {
      *
      * @param deck
      * @param card
-     * @return the current player's points
      * @throws CardNotFoundException when card is not part of the deck's visible cards list
      */
-    public int drawVisibleCard(Deck deck, GameCard card) throws CardNotFoundException {
+    public void drawVisibleCard(Deck deck, GameCard card) throws CardNotFoundException {
         players.get(currentPlayerIndex).drawVisible(deck, card);
         if (players.get(currentPlayerIndex).getPoints() >= 20)
             isLastRoundStarted = true;
-        getNextPlayer();
-        return players.get(currentPlayerIndex).getPoints();
     }
 
     /**
      * change the currentPlayerIndex as the next one
      */
-    public void getNextPlayer() {
+    public void advanceToNextPlayer() {
         currentPlayerIndex = (currentPlayerIndex + 1) % nPlayer;
     }
+
+
+    public Player getCurrentPlayer() {
+        return players.get(currentPlayerIndex);
+    }
+
 
     /**
      * calculates if the players' objectives are met and adds the points of the met objectives  to the players
