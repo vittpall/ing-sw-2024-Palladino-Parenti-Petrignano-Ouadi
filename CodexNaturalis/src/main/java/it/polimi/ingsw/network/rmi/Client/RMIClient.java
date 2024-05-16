@@ -37,7 +37,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         switch (mode) {
             case "GUI":
                 isGUIMode = true;
-                setCurrentState(new MainMenuStateGUI(stage));
+                setCurrentState(new MainMenuStateGUI(stage, this));
                 break;
             case "TUI":
                 this.scan = new Scanner(System.in);
@@ -238,7 +238,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
         if (!isGUIMode)
-            setCurrentState(new MainMenuState(this,scan));
+            setCurrentState(new MainMenuState(this, scan));
 
         new Thread(() -> {
             try {

@@ -55,7 +55,7 @@ public class SocketClient implements VirtualView {
         this.out = out;
         switch (mode) {
             case "GUI":
-                currentState = new MainMenuStateGUI(stage);
+                currentState = new MainMenuStateGUI(stage, this);
                 break;
             case "TUI":
                 currentState = new MainMenuState(this, new Scanner(System.in));
@@ -392,7 +392,7 @@ public class SocketClient implements VirtualView {
                 ServerToClientMsg msg = (ServerToClientMsg) in.readObject();
                 TypeServerToClientMsg responseType = msg.getType();
                 responseQueues.computeIfAbsent(responseType, k -> new LinkedBlockingQueue<>()).put(msg);
-                if (responseType == TypeServerToClientMsg.RECEIVED_MESSAGE){
+                if (responseType == TypeServerToClientMsg.RECEIVED_MESSAGE) {
                     //  System.out.println(msg.getResponse().getMessageResponse().getContent());
                     this.receiveMessage((Message) msg.getResponse().getResponseReturnable());
                 }

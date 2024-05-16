@@ -1,26 +1,52 @@
 package it.polimi.ingsw.gui;
 
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class MainMenuStateGUI implements ClientState {
     private final Stage stage;
+    public Label welcomeLabel;
+    public Button playButton;
+    private final VirtualView client;
 
-    public MainMenuStateGUI(Stage stage) {
+    @FXML
+    private TextField usernameField;
+
+    @FXML
+    private Label errorLabel;
+
+    public MainMenuStateGUI(Stage stage, VirtualView client) {
         this.stage = stage;
+        this.client = client;
+    }
+
+    @FXML
+    private void handlePlayButton() throws IOException, ClassNotFoundException, InterruptedException {
+        String username = usernameField.getText();
+        if (client != null && client.checkUsername(username)) {
+            client.setUsername(username);
+            client.setCurrentState(new LobbyMenuStateGUI(stage, client));
+            errorLabel.setText("");
+        } else {
+            errorLabel.setText("Invalid username, please try again.");
+            usernameField.setText("");
+        }
     }
 
     @Override
     public void display() {
         try {
-
-            //to initialize all the pages of the GUI. We could create an array of pages (which are an enum with all pages and associated to each of them their respetively FXML file) and then initialize them all in a loop
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainMenuState.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it.polimi.ingsw.gui/MainMenuState.fxml"));
             Parent root = loader.load();
             loader.setController(this);
 
