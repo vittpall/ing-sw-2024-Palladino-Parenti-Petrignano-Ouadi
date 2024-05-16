@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
@@ -20,7 +21,7 @@ public class GetSharedObjectiveCardsMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ServerToClientMsg getTypeofResponse() {
-        return new ServerToClientMsg();
+    public TypeServerToClientMsg getType() {
+        return TypeServerToClientMsg.GET_SHARED_OBJECTIVE_CARDS;
     }
 }

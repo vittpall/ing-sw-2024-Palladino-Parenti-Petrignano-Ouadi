@@ -2,9 +2,8 @@ package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ReceivedMessage;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 import java.util.ArrayList;
 
@@ -31,7 +30,7 @@ public class GetMessageMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ServerToClientMsg getTypeofResponse() {
-        return new ServerToClientMsg();
+    public TypeServerToClientMsg getType() {
+        return TypeServerToClientMsg.GET_MESSAGE;
     }
 }

@@ -10,10 +10,10 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.*;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ReceivedMessage;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 import it.polimi.ingsw.tui.*;
 import javafx.stage.Stage;
@@ -39,7 +39,7 @@ public class SocketClient implements VirtualView {
     private final ObjectInputStream in;
     ClientState currentState;
     private String username;
-    private final ConcurrentMap<Class<? extends ServerToClientMsg>, BlockingQueue<ServerToClientMsg>> responseQueues = new ConcurrentHashMap<>();
+    private final ConcurrentMap<TypeServerToClientMsg, BlockingQueue<ServerToClientMsg>> responseQueues = new ConcurrentHashMap<>();
     private int idGame;
     private int idClientIntoGame;
 
@@ -89,6 +89,7 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public ArrayList<Player> getAllPlayers(int gameId) throws IOException, InterruptedException {
         GetAllPlayersMsg request = new GetAllPlayersMsg(gameId);
         ServerToClientMsg response = sendRequest(request);
@@ -112,16 +113,17 @@ public class SocketClient implements VirtualView {
 
 
     private ServerToClientMsg sendRequest(ClientToServerMsg request) throws IOException, InterruptedException {
-        ServerToClientMsg expectedResponse = request.getTypeofResponse();
+        TypeServerToClientMsg expectedResponse = request.getType();
         out.writeObject(request);
         out.flush();
         out.reset();
         //wait for the response
-        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse.getClass(), k -> new LinkedBlockingQueue<>());
+        BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse, k -> new LinkedBlockingQueue<>());
         return queue.take();  // This will block until the expected type of response is received
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public HashMap<Integer, Game> getNotStartedGames() throws IOException, InterruptedException {
         GetNotStartedGamesMsg request = new GetNotStartedGamesMsg();
         ServerToClientMsg response = sendRequest(request);
@@ -153,6 +155,7 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public ArrayList<ObjectiveCard> getPlayerObjectiveCards() throws IOException, InterruptedException {
         GetPlayerObjectiveCardsMsg request = new GetPlayerObjectiveCardsMsg(idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
@@ -165,6 +168,7 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public ArrayList<Message> getMessages(String receiver) throws IOException, InterruptedException {
         GetMessageMsg request = new GetMessageMsg(receiver, this.idGame, this.username);
         ServerToClientMsg response = sendRequest(request);
@@ -179,6 +183,7 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public HashSet<Point> getAvailablePlaces() throws IOException, InterruptedException {
         GetAvailablePlacesMsg request = new GetAvailablePlacesMsg(idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
@@ -186,6 +191,7 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public ArrayList<GameCard> getVisibleCardsDeck(int deck) throws IOException, InterruptedException {
         GetVisibleCardsDeckMsg request = new GetVisibleCardsDeckMsg(idGame, deck);
         ServerToClientMsg response = sendRequest(request);
@@ -222,6 +228,7 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public HashMap<Point, GameCard> getPlayerDesk() throws IOException, InterruptedException {
         GetPlayerDesk request = new GetPlayerDesk(idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
@@ -249,6 +256,7 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public ArrayList<GameCard> getPlayerHand() throws IOException, InterruptedException {
         GetPlayerHandMsg request = new GetPlayerHandMsg(idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
@@ -311,6 +319,7 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public ArrayList<TokenColor> getAvailableColors() throws IOException, InterruptedException {
         AvailableColorMsg request = new AvailableColorMsg(username, idGame);
         ServerToClientMsg response = sendRequest(request);
@@ -325,7 +334,7 @@ public class SocketClient implements VirtualView {
     }
 
     public int getPoints() throws IOException, InterruptedException {
-        GetPoint request = new GetPoint(username, idGame, idClientIntoGame);
+        GetPoints request = new GetPoints(username, idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
         return (int) response.getResponse().getResponseReturnable();
     }
@@ -341,7 +350,7 @@ public class SocketClient implements VirtualView {
         runCli();
     }
 
-
+    @SuppressWarnings("InfiniteLoopStatement")
     private void runCli() throws IOException, ClassNotFoundException, InterruptedException {
         boolean correctInput;
         Scanner scan = new Scanner(System.in);
@@ -367,13 +376,14 @@ public class SocketClient implements VirtualView {
     }
 
     //what I receive from the server
+    @SuppressWarnings("InfiniteLoopStatement")
     private void runVirtualServer() throws IOException, ClassNotFoundException {
         try {
             while (true) {
                 ServerToClientMsg msg = (ServerToClientMsg) in.readObject();
-                Class<? extends ServerToClientMsg> responseType = msg.getClass();
+                TypeServerToClientMsg responseType = msg.getType();
                 responseQueues.computeIfAbsent(responseType, k -> new LinkedBlockingQueue<>()).put(msg);
-                if (msg instanceof ReceivedMessage) {
+                if (responseType == TypeServerToClientMsg.RECEIVED_MESSAGE){
                     //  System.out.println(msg.getResponse().getMessageResponse().getContent());
                     this.receiveMessage((Message) msg.getResponse().getResponseReturnable());
                 }

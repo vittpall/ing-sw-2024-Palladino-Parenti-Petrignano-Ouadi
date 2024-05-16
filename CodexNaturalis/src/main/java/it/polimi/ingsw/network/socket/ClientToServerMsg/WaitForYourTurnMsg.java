@@ -1,10 +1,8 @@
 package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
-import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.GameIdMsg;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 public class WaitForYourTurnMsg extends ClientToServerMsg{
 
@@ -24,8 +22,9 @@ public class WaitForYourTurnMsg extends ClientToServerMsg{
         return response;
     }
 
+
     @Override
-    public ServerToClientMsg getTypeofResponse() {
-        return new GameIdMsg();
+    public TypeServerToClientMsg getType() {
+        return TypeServerToClientMsg.WAIT_FOR_YOUR_TURN;
     }
 }

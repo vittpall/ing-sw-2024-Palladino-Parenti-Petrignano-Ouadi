@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
@@ -20,7 +21,7 @@ public class ClosedConnectionMsg extends ClientToServerMsg {
     }
 
     @Override
-    public ServerToClientMsg getTypeofResponse() {
-        return null;
+    public TypeServerToClientMsg getType() {
+        return TypeServerToClientMsg.CONNECTION_CLOSED;
     }
 }

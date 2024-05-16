@@ -1,16 +1,15 @@
 package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.GameIdMsg;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
-public class GetPoint extends ClientToServerMsg{
+public class GetPoints extends ClientToServerMsg{
 
     private int idGame;
     private int idClientIntoGame;
 
-    public GetPoint(String username, int idGame, int idClientIntoGame) {
+    public GetPoints(String username, int idGame, int idClientIntoGame) {
         this.username = username;
         this.idGame = idGame;
         this.idClientIntoGame = idClientIntoGame;
@@ -24,7 +23,7 @@ public class GetPoint extends ClientToServerMsg{
     }
 
     @Override
-    public ServerToClientMsg getTypeofResponse() {
-        return new GameIdMsg();
+    public TypeServerToClientMsg getType() {
+        return TypeServerToClientMsg.GET_POINTS;
     }
 }

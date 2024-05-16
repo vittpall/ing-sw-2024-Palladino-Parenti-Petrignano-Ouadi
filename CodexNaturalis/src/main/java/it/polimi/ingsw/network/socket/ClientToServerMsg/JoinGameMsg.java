@@ -1,14 +1,12 @@
 package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
-import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.GameIdMsg;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 public class JoinGameMsg extends ClientToServerMsg{
 
-    private int id;
+    private final int id;
 
     public JoinGameMsg (String username, int id) {
         this.username = username;
@@ -22,8 +20,9 @@ public class JoinGameMsg extends ClientToServerMsg{
         return response;
     }
 
+
     @Override
-    public ServerToClientMsg getTypeofResponse() {
-        return new GameIdMsg();
+    public TypeServerToClientMsg getType() {
+        return TypeServerToClientMsg.JOIN_GAME;
     }
 }

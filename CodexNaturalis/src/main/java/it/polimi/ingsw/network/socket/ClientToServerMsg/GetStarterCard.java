@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.StarterCard;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
@@ -27,7 +28,7 @@ public class GetStarterCard extends ClientToServerMsg{
     }
 
     @Override
-    public ServerToClientMsg getTypeofResponse() {
-        return new ServerToClientMsg();
+    public TypeServerToClientMsg getType() {
+        return TypeServerToClientMsg.GET_STARTED_CARD;
     }
 }

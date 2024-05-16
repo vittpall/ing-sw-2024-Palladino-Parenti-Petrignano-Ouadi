@@ -5,6 +5,9 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.ClientToServerMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
@@ -52,9 +55,13 @@ public class SocketServer<T> implements Remote {
         }
     }
 
-    public static void broadCastMsg(ClientToServerMsg message) throws IOException {
+    public static void broadCastMsg(ReturnableObject message, TypeServerToClientMsg type) throws IOException {
+        ServerToClientMsg receivedMessage = new ServerToClientMsg(type);
+        //System.out.println((message.getResponseReturnable()));
+        Message message1 = (Message) message.getResponseReturnable();
+        System.out.println("Message received: " + message1.getContent() + " from " + message1.getSender() + " to " + message1.getReceiver());
+        receivedMessage.setResponse(message);
         for (ClientHandler client : clients) {
-            ServerToClientMsg receivedMessage = message.getTypeofResponse();
             client.sendMessage(receivedMessage);
         }
     }

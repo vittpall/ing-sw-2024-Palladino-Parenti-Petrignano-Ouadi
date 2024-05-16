@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.Client.SocketClient;
@@ -29,16 +30,15 @@ public class ClientHandler {
     public void runVirtualView() throws IOException, ClassNotFoundException, InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
         ClientToServerMsg request;
         ServerToClientMsg response;
-        ReturnableObject returnableObject;
         // Read message type
         while ((request = (ClientToServerMsg)input.readObject()) != null) {
             if(request instanceof SendMessageMsg){
-                request.functionToCall(controller);
-                SocketServer.broadCastMsg(request);
+               ReturnableObject message = request.functionToCall(controller);
+               SocketServer.broadCastMsg(message, request.getType());
             }
             else
             {
-                response = request.getTypeofResponse();
+                response = new ServerToClientMsg(request.getType());
                 response.setResponse(request.functionToCall(controller));
                 output.writeObject(response);
                 output.flush();

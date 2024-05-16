@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
@@ -29,7 +30,7 @@ public class GetPlayerHandMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ServerToClientMsg getTypeofResponse() {
-        return new ServerToClientMsg();
+    public TypeServerToClientMsg getType() {
+        return TypeServerToClientMsg.GET_PLAYER_HAND;
     }
 }

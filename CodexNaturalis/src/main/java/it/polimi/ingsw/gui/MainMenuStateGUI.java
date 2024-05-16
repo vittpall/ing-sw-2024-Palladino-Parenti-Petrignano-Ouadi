@@ -18,6 +18,8 @@ public class MainMenuStateGUI implements ClientState {
     @Override
     public void display() {
         try {
+
+            //to initialize all the pages of the GUI. We could create an array of pages (which are an enum with all pages and associated to each of them their respetively FXML file) and then initialize them all in a loop
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainMenuState.fxml"));
             Parent root = loader.load();
             loader.setController(this);

@@ -2,9 +2,8 @@ package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.TokenColorMsg;
 
 import java.util.ArrayList;
 
@@ -24,7 +23,7 @@ public class AvailableColorMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ServerToClientMsg getTypeofResponse() {
-        return new TokenColorMsg();
+    public TypeServerToClientMsg getType() {
+        return TypeServerToClientMsg.AVAILABLE_COLORS;
     }
 }

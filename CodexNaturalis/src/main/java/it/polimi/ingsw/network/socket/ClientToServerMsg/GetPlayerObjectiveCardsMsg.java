@@ -2,10 +2,9 @@ package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.PlayerObjectiveCardsMsg;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 import java.util.ArrayList;
 
@@ -27,7 +26,7 @@ public class GetPlayerObjectiveCardsMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ServerToClientMsg getTypeofResponse() {
-        return new PlayerObjectiveCardsMsg();
+    public TypeServerToClientMsg getType() {
+        return TypeServerToClientMsg.GET_PLAYER_OBJECTIVE_CARDS;
     }
 }
