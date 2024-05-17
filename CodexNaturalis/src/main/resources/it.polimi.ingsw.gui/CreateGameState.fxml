@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.Integer?>
+<AnchorPane prefHeight="300.0" prefWidth="400.0" styleClass="background" stylesheets="@../styles.css"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.gui.CreateGameStateGUI">
+
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20"/>
+    </padding>
+
+    <Label alignment="CENTER" styleClass="title-label" text="Create New Game 🎮" AnchorPane.leftAnchor="20.0"
+           AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0"/>
+    <Label styleClass="normal-label" text="Select number of players (2-4):" AnchorPane.leftAnchor="20"
+           AnchorPane.rightAnchor="20" AnchorPane.topAnchor="60"/>
+    <ChoiceBox fx:id="playerChoiceBox" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20"
+               AnchorPane.topAnchor="100">
+        <tooltip>
+            <Tooltip text="Choose how many players will be in the game"/>
+        </tooltip>
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <Integer fx:value="2"/>
+                <Integer fx:value="3"/>
+                <Integer fx:value="4"/>
+            </FXCollections>
+        </items>
+    </ChoiceBox>
+    <Button onAction="#handleCreateGame" styleClass="primary-button" text="Create Game" AnchorPane.leftAnchor="20"
+            AnchorPane.rightAnchor="20" AnchorPane.topAnchor="140">
+    </Button>
+</AnchorPane>

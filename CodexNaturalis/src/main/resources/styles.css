@@ -1,0 +1,25 @@
+.background {
+    -fx-background-color: #f4f4f4;
+}
+
+.title-label {
+    -fx-font-size: 20px;
+    -fx-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.normal-label {
+    -fx-font-size: 14px;
+    -fx-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.primary-button {
+    -fx-background-color: #0077cc;
+    -fx-text-fill: white;
+    -fx-font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
+}
+
+.primary-button:hover {
+    -fx-background-color: #005fa3;
+}
