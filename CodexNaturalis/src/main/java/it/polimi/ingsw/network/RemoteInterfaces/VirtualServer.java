@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.RemoteInterfaces;
 
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -8,6 +9,7 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
@@ -25,7 +27,7 @@ public interface VirtualServer extends Remote {
 
     boolean checkUsername(String username) throws RemoteException;
 
-    HashMap<Integer, Game> getNotStartedGames() throws RemoteException;
+    ArrayList<Integer> getNotStartedGames() throws RemoteException;
 
     ArrayList<Player> getAllPlayers(int gameId) throws RemoteException;
 
@@ -85,4 +87,12 @@ public interface VirtualServer extends Remote {
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException;
 
     void closeGame(int idGame) throws RemoteException;
+
+    int getnPlayer(int idGame) throws RemoteException;
+
+    ArrayList<Player> getPlayers(int idGame) throws RemoteException;
+
+    String getCurrentState(int idGame, int idClientIntoGame) throws RemoteException;
+
+    boolean checkState(int idGame, int idClientIntoGame, RequestedActions requestedActions) throws RemoteException;
 }

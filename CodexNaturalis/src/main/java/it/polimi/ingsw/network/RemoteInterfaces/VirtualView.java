@@ -19,12 +19,13 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 public interface VirtualView extends Remote {
 
     void setUsername(String username) throws RemoteException;
 
-    HashMap<Integer, Game> getNotStartedGames() throws IOException, InterruptedException;
+    ArrayList<Integer> getNotStartedGames() throws IOException, InterruptedException;
 
     void setObjectiveCard(int idCard) throws IOException, CardNotFoundException, InterruptedException;
 
@@ -97,4 +98,8 @@ public interface VirtualView extends Remote {
     void closeGame() throws IOException, InterruptedException;
 
     void notifyYourTurn() throws IOException, InterruptedException;
+
+    int getnPlayer(int idGame) throws IOException, InterruptedException;
+
+    ArrayList<Player> getPlayers(int idGame) throws IOException, InterruptedException;
 }

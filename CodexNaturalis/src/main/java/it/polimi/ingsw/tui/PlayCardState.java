@@ -62,6 +62,7 @@ public class PlayCardState implements ClientState {
                 System.out.println("Requirements not met. Please choose another card");
             }
             client.setCurrentState(new DrawCardState(client, scanner));
+            return;
         }
         if (input == 4) {
             client.setCurrentState(new ChatState(client, scanner));
@@ -130,7 +131,6 @@ public class PlayCardState implements ClientState {
         if (input.equals("2"))
             return true;
 
-        System.out.println("Invalid input");
         return chooseIfFaceDown();
     }
 

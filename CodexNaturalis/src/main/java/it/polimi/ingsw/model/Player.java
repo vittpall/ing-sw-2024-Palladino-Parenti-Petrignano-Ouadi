@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
@@ -30,6 +31,15 @@ public class Player implements Serializable {
     private TokenColor color;
     private StarterCard starterCard;
     private final PlayerDesk playerDesk;
+    private PlayerState playerState;;
+
+    public void setPlayerState(PlayerState playerState) {
+        this.playerState = playerState;
+    }
+
+    public PlayerState getPlayerState() {
+        return playerState;
+    }
 
     /*    /**
      * constructor

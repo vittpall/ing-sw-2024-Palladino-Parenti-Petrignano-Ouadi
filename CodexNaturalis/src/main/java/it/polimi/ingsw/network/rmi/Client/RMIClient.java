@@ -9,6 +9,9 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.GameState;
+import it.polimi.ingsw.model.enumeration.PlayerState;
+import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
@@ -86,7 +89,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
 
     @Override
-    public HashMap<Integer, Game> getNotStartedGames() throws RemoteException {
+    public ArrayList<Integer> getNotStartedGames() throws RemoteException {
         return server.getNotStartedGames();
     }
 
@@ -258,7 +261,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
         boolean correctInput = false;
         String input = "";
-        while (true) {
+        do{
+            showState();
             correctInput = false;
             while (!correctInput) {
                 try {
@@ -269,15 +273,105 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                     System.out.println("\nInvalid input: Reinsert the value: ");
                 }
             }
-            if (!handleCommonInput(input))
+
+            if (!handleCommonInput(input)) {
                 try {
                     currentState.inputHandler(Integer.parseInt(input));
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid input: Please enter a number.");
                 }
+            }
+        }while(currentState instanceof ColorSelection);
+        while(true){
+            display();
+            correctInput = false;
+            while (!correctInput) {
+                try {
+                    System.out.print("Type your command or 'exit' to quit: ");
+                    input = scan.nextLine().trim().toLowerCase();
+                    correctInput = true;
+                } catch (InputMismatchException e) {
+                    System.out.println("\nInvalid input: Reinsert the value: ");
+                }
+            }
+
+            if (!handleCommonInput(input)) {
+                try {
+                    boolean checkState=gameLogicInputHandler(Integer.parseInt(input));
+                    if(checkState){
+                        showState();
+                        boolean correctInput2 = false;
+                        while (!correctInput2) {
+                            try {
+                                System.out.print("Type your command or 'exit' to quit: ");
+                                input = scan.nextLine().trim().toLowerCase();
+                                correctInput2 = true;
+                            } catch (InputMismatchException e) {
+                                System.out.println("\nInvalid input: Reinsert the value: ");
+                            }
+                        }
+                        if (!handleCommonInput(input)) {
+                            try {
+                                //TODO: vedere se cambiare qui il current state oppure nel gameLogicInputHandler
+                                currentState.inputHandler(Integer.parseInt(input));
+                            } catch (NumberFormatException e) {
+                                System.out.println("Invalid input: Please enter a number.");
+                            }
+                        }
+                    }else{
+                        System.out.println("The input was not valid. You can "+ server.getCurrentState(idGame, idClientIntoGame));
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input: Please enter a number.");
+                }
+            }
         }
     }
 
+    private boolean gameLogicInputHandler(int i) {
+        try{
+            boolean checkState = false;
+            switch (i) {
+                //probabilmente è meglio mandare l'input al server e poi è il GameController che gestisce lo stato di richiesta
+                //per questo ho commentato la chiamata al metodo checkState
+                case 1:
+                    checkState = server.checkState(idGame, idClientIntoGame, RequestedActions.DRAW);
+                    if (checkState) currentState = new DrawCardState(this, scan);
+                    return checkState;
+                case 2:
+                    checkState = server.checkState(idGame, idClientIntoGame, RequestedActions.PLAY_CARD);
+                    if (checkState) currentState = new PlayCardState(this, scan);
+                    return checkState;
+                case 3:
+                    //TODO: da fare simile
+                case 4:
+                    //TODO: da fare simile
+                case 5:
+                    //TODO: da fare simile
+                case 6:
+                    //TODO: da fare simile
+                case 7:
+                    //TODO: da fare simile
+                default:
+                    return false;
+            }
+        }catch(RemoteException e){
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
+
+    private void display(){
+        System.out.println("1- Draw a card");
+        System.out.println("2- Play a card");
+        System.out.println("3- Show your desk and others' desks");
+        System.out.println("4- Show the shared objective cards and your objective card");
+        System.out.println("5- Show players' points");
+        System.out.println("6- Chat");
+        System.out.println("8- Set your token color");
+        System.out.println("9- Set your objective card");
+        System.out.println("10- Set your starter card");
+    }
     public void close() throws RemoteException {
         server.removeUsername(username);
         System.exit(0);
@@ -289,7 +383,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
     public void setCurrentState(ClientState state) {
         this.currentState = state;
-        showState();
     }
 
 
@@ -315,6 +408,16 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     @Override
     public void notifyYourTurn() throws RemoteException {
         setCurrentState(new PlayCardState(this, scan));
+    }
+
+    @Override
+    public int getnPlayer(int idGame) throws IOException, InterruptedException {
+        return server.getnPlayer(idGame);
+    }
+
+    @Override
+    public ArrayList<Player> getPlayers(int idGame) throws IOException, InterruptedException {
+        return server.getPlayers(idGame);
     }
 
 }

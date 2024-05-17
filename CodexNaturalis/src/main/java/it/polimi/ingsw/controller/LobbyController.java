@@ -5,23 +5,27 @@ import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.GameState;
+import it.polimi.ingsw.model.enumeration.PlayerState;
+import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class LobbyController {
 
-    private final Lobby model;
     private final Set<String> usernames = new HashSet<>();
+    private final Map<Integer, GameController> gameControllers;
+    private final ArrayList<Integer> unusedIdGame;
+    private int nextGameId;
 
 
     public LobbyController() {
-        model = new Lobby();
+        gameControllers = new HashMap<>();
+        unusedIdGame = new ArrayList<>();
+        nextGameId = 1;
     }
 
     public boolean checkUsername(String username) {
@@ -38,181 +42,179 @@ public class LobbyController {
 
     }
 
-    public HashMap<Integer, Game> getVisibleGames() {
-        HashMap<Integer, Game> allGames = model.listAllGames();
-        HashMap<Integer, Game> visibleGames = new HashMap<>();
-        for (int id : allGames.keySet()) {
-            if (allGames.get(id).getPlayers().size() < allGames.get(id).getnPlayer()) {
-                visibleGames.put(id, allGames.get(id));
+    public ArrayList<Integer> getVisibleGames() {
+        ArrayList<Integer> visibleGameControllers = new ArrayList<>();
+        for (int id : gameControllers.keySet()) {
+            if (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer()) {
+                visibleGameControllers.add(id);
             }
         }
-        return visibleGames;
+        return visibleGameControllers;
     }
 
     public ArrayList<Player> getAllPlayers(int gameId) {
-        return model.getGame(gameId).getPlayers();
+        return gameControllers.get(gameId).getPlayers();
     }
 
     public ArrayList<Message> getMessages(String receiver, int gameId, String sender) {
-        return model.getMessages(receiver, gameId, sender);
+        //    return model.getMessages(receiver, gameId, sender);
+        return null;
     }
 
     public synchronized int joinGame(int id, String username) throws InterruptedException {
         Player player = new Player(username);
-        int nPlayer = model.joinGame(id, player);
-        if (model.getGame(id).getPlayers().size() < model.getGame(id).getnPlayer()) {
-            while (model.getGame(id).getPlayers().size() < model.getGame(id).getnPlayer()) wait();
+        int nPlayer = gameControllers.get(id).joinGame(username);
+        //int nPlayer = model.joinGame(id, player);
+        //TODO: sistemare sto if sotto
+        if (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer()) {
+            while (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer()) wait();
         } else {
             this.notifyAll();
-            model.getGame(id).setUpGame();
         }
         return nPlayer;
     }
 
     public int createGame(String username, int nPlayers) throws InterruptedException {
-        int newGameId = model.createNewGame(nPlayers);
-        int nPlayer = this.joinGame(newGameId, username);
+        int id;
+        if (!unusedIdGame.isEmpty()) {
+            id = unusedIdGame.getFirst();
+            unusedIdGame.removeFirst();
+        } else {
+            id = nextGameId;
+            nextGameId++;
+        }
+        GameController gameController = new GameController(id, nPlayers);
+        gameControllers.put(id, gameController);
+
+        //int newGameId = model.createNewGame(nPlayers);
+
+        int nPlayer = this.joinGame(id, username);
         if (nPlayer == 0) {
-            return newGameId;
+            return id;
         }
         return -1;
     }
 
     public ArrayList<ObjectiveCard> getObjectiveCards(int idGame, int idPlayer) {
-        return model.getGame(idGame).getPlayers().get(idPlayer).getDrawnObjectiveCards();
+        return gameControllers.get(idGame).getPlayers().get(idPlayer).getDrawnObjectiveCards();
     }
 
     public void setObjectiveCard(int idGame, int idClientIntoGame, int idObjCard) throws CardNotFoundException {
         //model.getGame(idGame).getPlayers().get(idClientIntoGame).setObjectiveCard(objCard);
-        model.getGame(idGame).setObjectiveCards(idClientIntoGame, idObjCard);
+        gameControllers.get(idGame).setObjectiveCard(idClientIntoGame, idObjCard);
     }
 
     public StarterCard getStarterCard(int idGame, int idClientIntoGame) {
-        return model.getGame(idGame).getPlayers().get(idClientIntoGame).getStarterCard();
+        return gameControllers.get(idGame).getPlayers().get(idClientIntoGame).getStarterCard();
     }
 
     public void playStarterCard(int idGame, int idClientIntoGame, boolean playedFacedDown)
             throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
-        GameCard starterCard = model.getGame(idGame).getPlayers().get(idClientIntoGame).getStarterCard();
-        model.getGame(idGame).getPlayers().get(idClientIntoGame).playCard(starterCard, playedFacedDown, new Point(0, 0));
+        GameCard starterCard = gameControllers.get(idGame).getPlayers().get(idClientIntoGame).getStarterCard();
+        gameControllers.get(idGame).getPlayers().get(idClientIntoGame).playCard(starterCard, playedFacedDown, new Point(0, 0));
     }
 
     public ObjectiveCard getObjectiveCard(int idGame, int idClientIntoGame) {
-        return model.getGame(idGame).getPlayers().get(idClientIntoGame).getObjectiveCard();
+        return gameControllers.get(idGame).getPlayers().get(idClientIntoGame).getObjectiveCard();
     }
 
     public ArrayList<GameCard> getPlayerHand(int idGame, int idClientIntoGame) {
-        return model.getGame(idGame).getPlayers().get(idClientIntoGame).getPlayerHand();
+        return gameControllers.get(idGame).getPlayers().get(idClientIntoGame).getPlayerHand();
     }
 
     public ObjectiveCard[] getSharedObjectiveCards(int idGame) {
-        return model.getGame(idGame).getSharedObjectiveCards();
+        return gameControllers.get(idGame).getSharedObjectiveCards();
     }
 
     public synchronized ArrayList<TokenColor> getAvailableColors(int idGame) {
-        return model.getGame(idGame).getAvailableColors();
+        return gameControllers.get(idGame).getAvailableColors();
     }
 
     public synchronized void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) {
-        model.getGame(idGame).setTokenColor(idClientIntoGame, tokenColor);
+        gameControllers.get(idGame).setTokenColor(idClientIntoGame, tokenColor);
     }
 
     public int getPoints(int idGame, int idClientIntoGame) {
-        return model.getGame(idGame).getPlayers().get(idClientIntoGame).getPoints();
+        return gameControllers.get(idGame).getPlayers().get(idClientIntoGame).getPoints();
     }
 
     public int getCurrentPlayer(int idGame) {
-        return model.getGame(idGame).getCurrentPlayerIndex();
+        return gameControllers.get(idGame).getCurrentPlayer();
     }
 
     public void playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
-        model.getGame(idGame).playCard(chosenCard, idClientIntoGame, faceDown, chosenPosition);
+        gameControllers.get(idGame).playCard(chosenCard, idClientIntoGame, faceDown, chosenPosition);
     }
 
     public void playLastTurn(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
-        synchronized (model.getGame(idGame)) {
-            this.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
-            if (model.getGame(idGame).getnPlayer() != idClientIntoGame + 1)
-                model.getGame(idGame).advanceToNextPlayer();
-            model.getGame(idGame).notifyAll();
-        }
+        gameControllers.get(idGame).playLastTurn(chosenCard, idClientIntoGame, faceDown, chosenPosition);
     }
 
     public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws CardNotFoundException {
-        synchronized (model.getGame(idGame)) {
-            Deck chosenDeck;
-            if (deckToChoose == 1)
-                chosenDeck = model.getGame(idGame).getResourceDeck();//da decidere
-            else
-                chosenDeck = model.getGame(idGame).getGoldDeck();//da decidere
-
-            if (inVisible == 3)
-                model.getGame(idGame).drawCard(chosenDeck);
-            else {
-                GameCard chosenCard = null;
-                if (inVisible == 1)
-                    chosenCard = chosenDeck.getVisibleCards().getFirst();
-                else if (inVisible == 2)
-                    chosenCard = chosenDeck.getVisibleCards().get(1);
-                model.getGame(idGame).drawVisibleCard(chosenDeck, chosenCard);
-            }
-        }
+        gameControllers.get(idGame).drawCard(idClientIntoGame, deckToChoose, inVisible);
     }
 
-    public void waitForYourTurn(int idGame, int idClientIntoGame) throws InterruptedException {
+    /*public void waitForYourTurn(int idGame, int idClientIntoGame) throws InterruptedException {
         synchronized (model.getGame(idGame)) {
             while (model.getGame(idGame).getCurrentPlayerIndex() != idClientIntoGame) model.getGame(idGame).wait();
         }
-    }
+    }*/
 
     public boolean getIsLastRoundStarted(int idGame) {
-        return model.getGame(idGame).getIsLastRoundStarted();
+        return gameControllers.get(idGame).getIsLastRoundStarted();
     }
 
     public void sendMessage(Message msg) {
-        model.sendMessage(msg);
+        // model.sendMessage(msg);
     }
 
     public HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame) {
-        return model.getGame(idGame).getPlayers().get(idClientIntoGame).getPlayerDesk().getAvailablePlaces();
+        return gameControllers.get(idGame).getPlayers().get(idClientIntoGame).getPlayerDesk().getAvailablePlaces();
     }
 
     public ArrayList<GameCard> getVisibleCardsDeck(int idGame, int deck) {
         if (deck == 1)
-            return model.getGame(idGame).getResourceDeck().getVisibleCards();
-        return model.getGame(idGame).getGoldDeck().getVisibleCards();
+            return gameControllers.get(idGame).getResourceDeck().getVisibleCards();
+        return gameControllers.get(idGame).getGoldDeck().getVisibleCards();
     }
 
     public String getUsernamePlayerThatStoppedTheGame(int idGame) {
-        return model.getUsernamePlayerThatStoppedTheGame(idGame);
+        return gameControllers.get(idGame).getUsernamePlayerThatStoppedTheGame();
     }
 
     public HashMap<Point, GameCard> getPlayerDesk(int idGame, int idClientIntoGame) {
-        return model.getGame(idGame).getPlayers().get(idClientIntoGame).getPlayerDesk().getDesk();
+        return gameControllers.get(idGame).getPlayers().get(idClientIntoGame).getPlayerDesk().getDesk();
     }
 
     public String getWinner(int idGame, int idClientIntoGame) throws InterruptedException {
-        String winner = "No winner";
-        synchronized (model.getGame(idGame)) {
-            if (idClientIntoGame + 1 != model.getGame(idGame).getnPlayer())
-                while (model.getGame(idGame).getCurrentPlayerIndex() + 1 != model.getGame(idGame).getnPlayer())
-                    model.getGame(idGame).wait();
-            else {
-                winner = model.getGame(idGame).endGame();
-                model.getGame(idGame).notifyAll();
-            }
-        }
-        return winner;
+        return gameControllers.get(idGame).getWinner(idClientIntoGame);
     }
 
-    public Player getNextPlayer(int idGame) {
+    /*public Player getNextPlayer(int idGame) {
         model.getGame(idGame).advanceToNextPlayer();
         return model.getGame(idGame).getCurrentPlayer();
-    }
+    }*/
 
     public void closeGame(int idGame) {
-        model.removeGame(idGame);
+        //TODO:notificare i giocatori del gioco specifico che il gioco viene chiuso dato che un giocatore l'ha fatto
+        gameControllers.remove(idGame);
+    }
+
+    public int getnPlayer(int idGame) {
+        return gameControllers.get(idGame).getnPlayer();
+    }
+
+    public ArrayList<Player> getPlayers(int idGame) {
+        return gameControllers.get(idGame).getPlayers();
+    }
+
+    public boolean checkState(int idGame, int idPlayerIntoGame, RequestedActions requestedActions) {
+        return gameControllers.get(idGame).checkState(idPlayerIntoGame, requestedActions);
+    }
+
+    public String getCurrentState(int idGame, int idClientIntoGame) {
+        return gameControllers.get(idGame).getCurrentState(idClientIntoGame);
     }
 }

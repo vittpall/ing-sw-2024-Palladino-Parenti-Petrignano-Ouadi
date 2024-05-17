@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.rmi.Server;
 
+import it.polimi.ingsw.controller.GameController;
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
@@ -9,6 +10,7 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
@@ -48,7 +50,7 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public HashMap<Integer, Game> getNotStartedGames() throws RemoteException {
+    public ArrayList<Integer> getNotStartedGames() throws RemoteException {
         return lobbyController.getVisibleGames();
     }
 
@@ -162,9 +164,10 @@ public class RMIServer implements VirtualServer {
     }
 
     private void switchTurns(int idGame) throws IOException, InterruptedException {
-        Player nextPlayer = lobbyController.getNextPlayer(idGame);
+       // Player nextPlayer = lobbyController.getNextPlayer(idGame);
         for (VirtualView client : clients) {
-            if (client.getIdGame() == idGame && (client.getUsername()).equals(nextPlayer.getUsername())) {
+           // if (client.getIdGame() == idGame && (client.getUsername()).equals(nextPlayer.getUsername()))
+            {
                 client.notifyYourTurn();
             }
         }
@@ -222,4 +225,24 @@ public class RMIServer implements VirtualServer {
     public void closeGame(int idGame) throws RemoteException {
         lobbyController.closeGame(idGame);
     }
+
+    @Override
+    public int getnPlayer(int idGame) throws RemoteException {
+        return lobbyController.getnPlayer(idGame);
+    }
+
+    @Override
+    public ArrayList<Player> getPlayers(int idGame) throws RemoteException {
+        return lobbyController.getPlayers(idGame);
+    }
+
+    @Override
+    public String getCurrentState(int idGame, int idClientIntoGame) throws RemoteException {
+        return lobbyController.getCurrentState(idGame, idClientIntoGame);
+    }
+    @Override
+    public boolean checkState(int idGame, int idClientIntoGame, RequestedActions requestedActions) throws RemoteException{
+        return lobbyController.checkState(idGame, idClientIntoGame, requestedActions);
+    }
+
 }

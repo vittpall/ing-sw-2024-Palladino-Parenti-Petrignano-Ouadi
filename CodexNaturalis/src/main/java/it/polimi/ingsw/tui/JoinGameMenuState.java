@@ -5,7 +5,9 @@ import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class JoinGameMenuState implements ClientState {
@@ -28,14 +30,14 @@ public class JoinGameMenuState implements ClientState {
         System.out.println("These are the games to enter option:");
 
         try {
-            HashMap<Integer, Game> games = client.getNotStartedGames();
-            if (games == null || games.isEmpty()) {
+            ArrayList<Integer> gameIds = client.getNotStartedGames();
+            if (gameIds == null || gameIds.isEmpty()) {
                 System.out.println("No games available.\n1.Create new game 🆕");
             } else {
                 System.out.println("Choose a game to enter 🚪:");
-                for (int idGame : games.keySet()) {
-                    System.out.println(idGame + ". This game has " + games.get(idGame).getnPlayer() + " players and needs " +
-                            (games.get(idGame).getnPlayer() - games.get(idGame).getPlayers().size()) + " players to start");
+                for (int idGame : gameIds) {
+                    System.out.println(idGame + ". This game has " + client.getnPlayer(idGame) + " players and needs " +
+                            (client.getnPlayer(idGame) - client.getPlayers(idGame).size()) + " players to start");
                 }
             }
         } catch (RemoteException ex) {
