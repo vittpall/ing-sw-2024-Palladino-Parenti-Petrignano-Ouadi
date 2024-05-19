@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GetNotStartedGamesMsg extends ClientToServerMsg{
@@ -14,8 +15,8 @@ public class GetNotStartedGamesMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject<HashMap<Integer, Game>> functionToCall(LobbyController controller) {
-        ReturnableObject<HashMap<Integer, Game>> response = new ReturnableObject<>();
+    public ReturnableObject<ArrayList<Integer>> functionToCall(LobbyController controller) {
+        ReturnableObject<ArrayList<Integer>> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.getVisibleGames());
         return response;
     }
@@ -23,5 +24,29 @@ public class GetNotStartedGamesMsg extends ClientToServerMsg{
     @Override
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.NOT_STARTED_GAMES;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean getDoItNeedToBeBroadcasted() {
+        return false;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBroadCastMessage() {
+        return "";
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getIdGame() {
+        return -1;
     }
 }

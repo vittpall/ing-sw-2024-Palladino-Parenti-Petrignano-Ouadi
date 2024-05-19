@@ -14,7 +14,12 @@ public abstract class ClientToServerMsg implements Serializable {
 
     protected String username;
     protected ServerToClientMsg typeofResponse;
+    protected boolean doItNeedToBeBroadcasted;
+    protected String broadCastMessage;
 
     public abstract ReturnableObject functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException;
     public abstract TypeServerToClientMsg getType();
+    public abstract boolean getDoItNeedToBeBroadcasted();
+    public abstract String getBroadCastMessage();
+    public abstract int getIdGame();
 }

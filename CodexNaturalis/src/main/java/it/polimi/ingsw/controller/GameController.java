@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.GameState;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
@@ -112,12 +113,16 @@ public class GameController {
         return model.getPlayers();
     }
 
-    /*public ArrayList<Message> getMessages(String receiver, int gameId, String sender) {
-        return model.getMessages(receiver, gameId, sender);
-    }*/
-    //public void sendMessage(Message msg) {
-       // model.sendMessage(msg);
-   // }
+    public ArrayList<Message> getMessages(String receiver, int gameId, String sender) {
+        if(receiver == null)
+            return model.getChats().getGlobalChat();
+        else
+            return model.getChats().getPrivateChat(receiver, sender);
+    }
+
+    public void sendMessage(Message msg) {
+        model.getChats().addMessage(msg);
+    }
 
     public int getCurrentPlayer() {
         return model.getCurrentPlayerIndex();

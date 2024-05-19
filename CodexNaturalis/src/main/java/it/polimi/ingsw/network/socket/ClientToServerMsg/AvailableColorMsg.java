@@ -26,4 +26,28 @@ public class AvailableColorMsg extends ClientToServerMsg{
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.AVAILABLE_COLORS;
     }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean getDoItNeedToBeBroadcasted() {
+        return false;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBroadCastMessage() {
+        return "";
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getIdGame() {
+        return this.idGame;
+    }
 }

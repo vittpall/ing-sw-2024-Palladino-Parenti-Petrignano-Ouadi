@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ClientToServerMsg.ClientToServerMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 import java.io.IOException;
@@ -55,12 +54,19 @@ public class SocketServer implements Remote {
         }
     }
 
-    public static void broadCastMsg(ReturnableObject message, TypeServerToClientMsg type) throws IOException {
-        ServerToClientMsg receivedMessage = new ServerToClientMsg(type);
-        //System.out.println((message.getResponseReturnable()));
-        Message message1 = (Message) message.getResponseReturnable();
-        System.out.println("Message received: " + message1.getContent() + " from " + message1.getSender() + " to " + message1.getReceiver());
+    /*
+    public static void broadCastMsg(ReturnableObject message, TypeServerToClientMsg type, int idGame) throws IOException {
+        ServerToClientMsg receivedMessage = new ServerToClientMsg(type, false, idGame);
         receivedMessage.setResponse(message);
+        for (ClientHandler client : clients) {
+            client.sendMessage(receivedMessage);
+        }
+    }
+    */
+
+    public static void broadCastWhatHappened(ReturnableObject messageToBroadCast, TypeServerToClientMsg type, int idGame) throws IOException {
+        ServerToClientMsg receivedMessage = new ServerToClientMsg(type, true, idGame);
+        receivedMessage.setResponse(messageToBroadCast);
         for (ClientHandler client : clients) {
             client.sendMessage(receivedMessage);
         }

@@ -4,18 +4,22 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
-public class CloseGameMsg extends ClientToServerMsg{
-    int idGame;
+public class CheckStateMsg extends ClientToServerMsg{
 
-    public CloseGameMsg(int idGame) {
+
+    private final int idGame;
+    private final int idClientIntoGame;
+    private final RequestedActions requestedActions;
+
+    public CheckStateMsg(int idGame, int idClientIntoGame, RequestedActions requestedActions) {
         this.idGame = idGame;
-        broadCastMessage = "Game " + idGame + " has been closed";
+        this.idClientIntoGame = idClientIntoGame;
+        this.requestedActions = requestedActions;
     }
-
     /**
      * @param controller
      * @return
@@ -25,16 +29,18 @@ public class CloseGameMsg extends ClientToServerMsg{
      * @throws RequirementsNotMetException
      */
     @Override
-    public ReturnableObject<Integer> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
-        ReturnableObject<Integer> response = new ReturnableObject<>();
-        response.setResponseReturnable(-1);
-        controller.closeGame(idGame);
+    public ReturnableObject<Boolean> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
+        ReturnableObject<Boolean> response = new ReturnableObject<>();
+        response.setResponseReturnable(controller.checkState(idGame, idClientIntoGame, requestedActions));
         return response;
     }
 
+    /**
+     * @return
+     */
     @Override
     public TypeServerToClientMsg getType() {
-        return TypeServerToClientMsg.CLOSED_GAME;
+        return TypeServerToClientMsg.CHECK_STATE;
     }
 
     /**
@@ -42,7 +48,7 @@ public class CloseGameMsg extends ClientToServerMsg{
      */
     @Override
     public boolean getDoItNeedToBeBroadcasted() {
-        return true;
+        return false;
     }
 
     /**
@@ -50,7 +56,7 @@ public class CloseGameMsg extends ClientToServerMsg{
      */
     @Override
     public String getBroadCastMessage() {
-        return this.broadCastMessage;
+        return "";
     }
 
     /**
@@ -60,6 +66,4 @@ public class CloseGameMsg extends ClientToServerMsg{
     public int getIdGame() {
         return this.idGame;
     }
-
-
 }

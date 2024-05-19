@@ -10,6 +10,7 @@ public class IsLastRoundStartedMsg extends ClientToServerMsg{
 
     public IsLastRoundStartedMsg(int idGame) {
         this.idGame = idGame;
+        this.broadCastMessage = "Last round started";
     }
 
     @Override
@@ -22,5 +23,29 @@ public class IsLastRoundStartedMsg extends ClientToServerMsg{
     @Override
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.IS_LAST_ROUND_STARTED;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean getDoItNeedToBeBroadcasted() {
+        return true;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBroadCastMessage() {
+        return this.broadCastMessage;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getIdGame() {
+        return idGame;
     }
 }

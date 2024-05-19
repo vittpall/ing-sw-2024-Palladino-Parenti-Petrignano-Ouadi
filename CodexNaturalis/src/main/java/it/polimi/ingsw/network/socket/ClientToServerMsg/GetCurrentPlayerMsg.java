@@ -24,4 +24,28 @@ public class GetCurrentPlayerMsg extends ClientToServerMsg{
         public TypeServerToClientMsg getType() {
             return TypeServerToClientMsg.CURRENT_PLAYER;
         }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean getDoItNeedToBeBroadcasted() {
+        return false;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBroadCastMessage() {
+        return "";
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getIdGame() {
+        return idGame;
+    }
 }

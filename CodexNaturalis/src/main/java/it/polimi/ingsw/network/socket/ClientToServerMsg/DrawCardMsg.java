@@ -4,7 +4,6 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 public class DrawCardMsg extends ClientToServerMsg{
 
@@ -13,11 +12,12 @@ public class DrawCardMsg extends ClientToServerMsg{
     private int input;
     private int inVisible;
 
-    public DrawCardMsg(int idGame, int idClientIntoGame, int input, int inVisible) {
+    public DrawCardMsg(int idGame, int idClientIntoGame, int input, int inVisible, String broadCastMessage){
         this.idGame = idGame;
         this.idClientIntoGame = idClientIntoGame;
         this.input = input;
         this.inVisible = inVisible;
+        this.broadCastMessage = broadCastMessage;
     }
     @Override
     public ReturnableObject<Integer> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException {
@@ -30,6 +30,30 @@ public class DrawCardMsg extends ClientToServerMsg{
     @Override
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.DRAWN_CARD;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean getDoItNeedToBeBroadcasted() {
+        return true;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBroadCastMessage() {
+        return this.broadCastMessage;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getIdGame() {
+        return this.idGame;
     }
 
 }

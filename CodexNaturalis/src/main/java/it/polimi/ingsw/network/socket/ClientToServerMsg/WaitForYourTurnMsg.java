@@ -17,7 +17,7 @@ public class WaitForYourTurnMsg extends ClientToServerMsg{
     @Override
     public ReturnableObject<Integer> functionToCall(LobbyController controller) throws InterruptedException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
-        controller.waitForYourTurn(idGame, idClientIntoGame);
+    //    controller.waitForYourTurn(idGame, idClientIntoGame);
         response.setResponseReturnable(-1);
         return response;
     }
@@ -26,5 +26,29 @@ public class WaitForYourTurnMsg extends ClientToServerMsg{
     @Override
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.WAIT_FOR_YOUR_TURN;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean getDoItNeedToBeBroadcasted() {
+        return false;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBroadCastMessage() {
+        return "";
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getIdGame() {
+        return 0;
     }
 }

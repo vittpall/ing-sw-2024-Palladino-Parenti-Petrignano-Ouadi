@@ -166,8 +166,8 @@ public class LobbyController {
         return gameControllers.get(idGame).getIsLastRoundStarted();
     }
 
-    public void sendMessage(Message msg) {
-        // model.sendMessage(msg);
+    public void sendMessage(int idGame, Message msg) {
+        gameControllers.get(idGame).sendMessage(msg);
     }
 
     public HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame) {

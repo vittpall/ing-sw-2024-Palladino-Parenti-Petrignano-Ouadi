@@ -76,7 +76,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             else
                 System.out.println(msg.getSender() + ": " + msg.getContent());
         } else {
-            if (msg.getReceiver() == null)
+                if (msg.getReceiver() == null)
                 System.out.println("You have received a message");
             else
                 System.out.println("You have received a from " + msg.getSender());

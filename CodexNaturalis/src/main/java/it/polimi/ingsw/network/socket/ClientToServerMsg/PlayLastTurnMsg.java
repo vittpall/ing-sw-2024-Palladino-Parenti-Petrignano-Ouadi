@@ -36,4 +36,28 @@ public class PlayLastTurnMsg extends ClientToServerMsg{
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.PLAY_LAST_TURN;
     }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean getDoItNeedToBeBroadcasted() {
+        return true;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBroadCastMessage() {
+        return this.broadCastMessage;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getIdGame() {
+        return idGame;
+    }
 }

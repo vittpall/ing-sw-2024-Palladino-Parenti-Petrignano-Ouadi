@@ -22,6 +22,7 @@ public class PlayCardMsg extends ClientToServerMsg{
         this.chosenCard = chosenCard;
         this.faceDown = faceDown;
         this.chosenPosition = chosenPosition;
+        this.broadCastMessage = "Player " + idClientIntoGame + " played a card";
     }
 
     @Override
@@ -35,5 +36,29 @@ public class PlayCardMsg extends ClientToServerMsg{
     @Override
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.PLAY_CARD;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean getDoItNeedToBeBroadcasted() {
+        return true;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBroadCastMessage() {
+        return this.broadCastMessage;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getIdGame() {
+        return idGame;
     }
 }

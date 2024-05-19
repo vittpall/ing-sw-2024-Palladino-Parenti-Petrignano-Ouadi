@@ -41,4 +41,28 @@ public class GetVisibleCardsDeckMsg extends ClientToServerMsg{
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.GET_VISIBLE_CARDS_DECK;
     }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean getDoItNeedToBeBroadcasted() {
+        return false;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBroadCastMessage() {
+        return "";
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getIdGame() {
+        return idGame;
+    }
 }

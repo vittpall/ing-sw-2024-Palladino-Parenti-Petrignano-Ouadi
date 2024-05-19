@@ -10,6 +10,7 @@ public class CreateGameMsg extends ClientToServerMsg{
     public CreateGameMsg(String username, int numberOfPlayers) {
         this.username = username;
         this.numberOfPlayers = numberOfPlayers;
+        this.broadCastMessage = "User " + username + " has created a game with " + numberOfPlayers + " players";
     }
 
     @Override
@@ -22,5 +23,29 @@ public class CreateGameMsg extends ClientToServerMsg{
     @Override
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.CREATED_GAME;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean getDoItNeedToBeBroadcasted() {
+        return true;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBroadCastMessage() {
+        return this.broadCastMessage;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getIdGame() {
+        return -1;
     }
 }

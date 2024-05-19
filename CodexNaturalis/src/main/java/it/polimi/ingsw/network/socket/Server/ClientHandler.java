@@ -27,6 +27,7 @@ public class ClientHandler {
         this.output = output;
     }
 
+
     public void runVirtualView() throws IOException, ClassNotFoundException, InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
         ClientToServerMsg request;
         ServerToClientMsg response;
@@ -34,11 +35,17 @@ public class ClientHandler {
         while ((request = (ClientToServerMsg)input.readObject()) != null) {
             if(request instanceof SendMessageMsg){
                ReturnableObject message = request.functionToCall(controller);
-               SocketServer.broadCastMsg(message, request.getType());
+               SocketServer.broadCastWhatHappened(message, request.getType(), request.getIdGame());
+            }
+            if(request.getDoItNeedToBeBroadcasted()){
+                ReturnableObject responseReturnable = request.functionToCall(controller);
+                ReturnableObject messageToBroadCast = new ReturnableObject<>();
+                messageToBroadCast.setResponseReturnable(request.getBroadCastMessage());
+                SocketServer.broadCastWhatHappened(messageToBroadCast, request.getType(), request.getIdGame());
             }
             else
             {
-                response = new ServerToClientMsg(request.getType());
+                response = new ServerToClientMsg(request.getType(), false);
                 response.setResponse(request.functionToCall(controller));
                 output.writeObject(response);
                 output.flush();

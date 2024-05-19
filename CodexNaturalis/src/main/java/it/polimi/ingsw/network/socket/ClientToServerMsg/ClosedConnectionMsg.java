@@ -8,9 +8,12 @@ import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 public class ClosedConnectionMsg extends ClientToServerMsg {
 
     private final String username;
+    private final int idGame;
 
-    public ClosedConnectionMsg(String username) {
+    public ClosedConnectionMsg(String username, int idGame) {
         this.username = username;
+        this.broadCastMessage = "User " + username + " has left the game";
+        this.idGame = idGame;
     }
 
     @Override
@@ -23,5 +26,29 @@ public class ClosedConnectionMsg extends ClientToServerMsg {
     @Override
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.CONNECTION_CLOSED;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean getDoItNeedToBeBroadcasted() {
+        return true;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBroadCastMessage() {
+        return this.broadCastMessage;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getIdGame() {
+        return this.idGame;
     }
 }

@@ -16,11 +16,13 @@ public class GetWinnerMsg extends ClientToServerMsg{
     public GetWinnerMsg(int idGame, int idClientIntoGame) {
         this.idGame = idGame;
         this.idClientIntoGame = idClientIntoGame;
+
     }
     @Override
     public ReturnableObject<String> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
         ReturnableObject<String> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.getWinner(idGame, idClientIntoGame));
+        this.broadCastMessage = "The game is over!!!" + "The winner is:" + response.getResponseReturnable();
         return response;
     }
 
@@ -28,5 +30,29 @@ public class GetWinnerMsg extends ClientToServerMsg{
     @Override
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.GET_WINNER;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean getDoItNeedToBeBroadcasted() {
+        return true;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBroadCastMessage() {
+        return this.broadCastMessage;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getIdGame() {
+        return idGame;
     }
 }

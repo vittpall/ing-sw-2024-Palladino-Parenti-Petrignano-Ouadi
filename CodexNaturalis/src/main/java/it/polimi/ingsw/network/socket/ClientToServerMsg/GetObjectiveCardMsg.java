@@ -31,4 +31,28 @@ public class GetObjectiveCardMsg extends ClientToServerMsg{
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.GET_OBJECTIVE_CARD;
     }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean getDoItNeedToBeBroadcasted() {
+        return false;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBroadCastMessage() {
+        return "";
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getIdGame() {
+        return idGame;
+    }
 }

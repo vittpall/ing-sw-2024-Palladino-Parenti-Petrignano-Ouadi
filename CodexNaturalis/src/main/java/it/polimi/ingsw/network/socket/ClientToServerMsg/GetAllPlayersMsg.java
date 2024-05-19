@@ -27,4 +27,28 @@ public class GetAllPlayersMsg extends ClientToServerMsg{
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.ALL_PLAYERS;
     }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean getDoItNeedToBeBroadcasted() {
+        return false;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public String getBroadCastMessage() {
+        return "";
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int getIdGame() {
+        return gameId;
+    }
 }
