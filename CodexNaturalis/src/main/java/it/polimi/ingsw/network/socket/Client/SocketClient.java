@@ -4,7 +4,6 @@ import it.polimi.ingsw.gui.MainMenuStateGUI;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
@@ -44,6 +43,7 @@ public class SocketClient implements VirtualView {
     private int idGame;
     private int idClientIntoGame;
     private Scanner scan;
+    private final boolean isGUIMode;
 
     /**
      * Constructor for the SocketClient class.
@@ -57,9 +57,11 @@ public class SocketClient implements VirtualView {
         this.out = out;
         switch (mode) {
             case "GUI":
+                isGUIMode = true;
                 currentState = new MainMenuStateGUI(stage, this);
                 break;
             case "TUI":
+                isGUIMode = false;
                 this.scan = new Scanner(System.in);
                 currentState = new MainMenuState(this, new Scanner(System.in));
                 break;
@@ -374,14 +376,19 @@ public class SocketClient implements VirtualView {
     }
 
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
-        new Thread(() -> {
-            try {
-                runVirtualServer();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
-        inputHandler();
+
+        if (isGUIMode) {
+            showState();
+        } else {
+            new Thread(() -> {
+                try {
+                    runVirtualServer();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+            inputHandler();
+        }
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
@@ -409,7 +416,7 @@ public class SocketClient implements VirtualView {
         Scanner scan = new Scanner(System.in);
         boolean correctInput = false;
         String input = "";
-        do{
+        do {
             showState();
             correctInput = false;
             while (!correctInput) {
@@ -429,8 +436,8 @@ public class SocketClient implements VirtualView {
                     System.out.println("Invalid input: Please enter a number.");
                 }
             }
-        }while(currentState instanceof ColorSelection);
-        while(true){
+        } while (currentState instanceof ColorSelection);
+        while (true) {
             display();
             correctInput = false;
             while (!correctInput) {
@@ -445,8 +452,8 @@ public class SocketClient implements VirtualView {
 
             if (!handleCommonInput(input)) {
                 try {
-                    boolean checkState=gameLogicInputHandler(Integer.parseInt(input));
-                    if(checkState){
+                    boolean checkState = gameLogicInputHandler(Integer.parseInt(input));
+                    if (checkState) {
                         showState();
                         boolean correctInput2 = false;
                         while (!correctInput2) {
@@ -466,8 +473,8 @@ public class SocketClient implements VirtualView {
                                 System.out.println("Invalid input: Please enter a number.");
                             }
                         }
-                    }else{
-                        System.out.println("The input was not valid. You can "+ getCurrentState(idGame, idClientIntoGame));
+                    } else {
+                        System.out.println("The input was not valid. You can " + getCurrentState(idGame, idClientIntoGame));
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid input: Please enter a number.");
@@ -476,7 +483,6 @@ public class SocketClient implements VirtualView {
         }
 
     }
-
 
 
     private boolean handleCommonInput(String input) {
@@ -495,7 +501,7 @@ public class SocketClient implements VirtualView {
     }
 
     private boolean gameLogicInputHandler(int i) {
-        try{
+        try {
             boolean checkState = false;
             switch (i) {
                 //probabilmente è meglio mandare l'input al server e poi è il GameController che gestisce lo stato di richiesta
@@ -521,7 +527,7 @@ public class SocketClient implements VirtualView {
                 default:
                     return false;
             }
-        }catch(RemoteException e){
+        } catch (RemoteException e) {
             System.out.println(e.getMessage());
         } catch (IOException | ClassNotFoundException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -530,7 +536,7 @@ public class SocketClient implements VirtualView {
     }
 
 
-    private void display(){
+    private void display() {
         System.out.println("1- Draw a card");
         System.out.println("2- Play a card");
         System.out.println("3- Show your desk and others' desks");
@@ -559,8 +565,7 @@ public class SocketClient implements VirtualView {
                     //  System.out.println(msg.getResponse().getMessageResponse().getContent());
                     this.receiveMessage((Message) msg.getResponse().getResponseReturnable());
                 }
-                if(msg.doItNeedToBeBroadCasted() && (msg.getIdGame() == idGame || msg.getIdGame() == -1))
-                {
+                if (msg.doItNeedToBeBroadCasted() && (msg.getIdGame() == idGame || msg.getIdGame() == -1)) {
                     this.broadCastToClient(msg.getResponse());
                 }
             }

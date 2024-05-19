@@ -14,10 +14,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainMenuStateGUI implements ClientState {
-    private final Stage stage;
+    private Stage stage;
     public Label welcomeLabel;
     public Button playButton;
-    private final VirtualView client;
+    private VirtualView client;
 
     @FXML
     private TextField usernameField;
@@ -28,6 +28,10 @@ public class MainMenuStateGUI implements ClientState {
     public MainMenuStateGUI(Stage stage, VirtualView client) {
         this.stage = stage;
         this.client = client;
+    }
+
+    public MainMenuStateGUI() {
+        // Initialize with default or null values if necessary
     }
 
     @FXML

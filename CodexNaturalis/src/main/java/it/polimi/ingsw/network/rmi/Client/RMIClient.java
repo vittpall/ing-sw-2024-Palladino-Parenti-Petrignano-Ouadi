@@ -4,13 +4,10 @@ import it.polimi.ingsw.gui.MainMenuStateGUI;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
-import it.polimi.ingsw.model.enumeration.GameState;
-import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
@@ -32,7 +29,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     private Scanner scan;
     private int idGame;
     private int idClientIntoGame;
-    private boolean isGUIMode = false;
+    private final boolean isGUIMode;
 
     public RMIClient(VirtualServer server, String mode, Stage stage) throws RemoteException {
 
@@ -43,7 +40,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                 setCurrentState(new MainMenuStateGUI(stage, this));
                 break;
             case "TUI":
+                isGUIMode = false;
                 this.scan = new Scanner(System.in);
+                setCurrentState(new MainMenuState(this, scan));
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported mode");
@@ -76,7 +75,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             else
                 System.out.println(msg.getSender() + ": " + msg.getContent());
         } else {
-                if (msg.getReceiver() == null)
+            if (msg.getReceiver() == null)
                 System.out.println("You have received a message");
             else
                 System.out.println("You have received a from " + msg.getSender());
@@ -241,16 +240,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
         if (!isGUIMode)
-            setCurrentState(new MainMenuState(this, scan));
-
-        new Thread(() -> {
-            try {
-                inputHandler();
-            } catch (IOException | ClassNotFoundException | InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
-
+            inputHandler();
+        else
+            showState();
     }
 
     void showState() {
@@ -261,7 +253,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
         boolean correctInput = false;
         String input = "";
-        do{
+        do {
             showState();
             correctInput = false;
             while (!correctInput) {
@@ -281,8 +273,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                     System.out.println("Invalid input: Please enter a number.");
                 }
             }
-        }while(currentState instanceof ColorSelection);
-        while(true){
+        } while (currentState instanceof ColorSelection);
+        while (true) {
             display();
             correctInput = false;
             while (!correctInput) {
@@ -297,8 +289,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
             if (!handleCommonInput(input)) {
                 try {
-                    boolean checkState=gameLogicInputHandler(Integer.parseInt(input));
-                    if(checkState){
+                    boolean checkState = gameLogicInputHandler(Integer.parseInt(input));
+                    if (checkState) {
                         showState();
                         boolean correctInput2 = false;
                         while (!correctInput2) {
@@ -318,8 +310,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                                 System.out.println("Invalid input: Please enter a number.");
                             }
                         }
-                    }else{
-                        System.out.println("The input was not valid. You can "+ server.getCurrentState(idGame, idClientIntoGame));
+                    } else {
+                        System.out.println("The input was not valid. You can " + server.getCurrentState(idGame, idClientIntoGame));
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid input: Please enter a number.");
@@ -329,7 +321,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
 
     private boolean gameLogicInputHandler(int i) {
-        try{
+        try {
             boolean checkState = false;
             switch (i) {
                 //probabilmente è meglio mandare l'input al server e poi è il GameController che gestisce lo stato di richiesta
@@ -355,13 +347,13 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                 default:
                     return false;
             }
-        }catch(RemoteException e){
+        } catch (RemoteException e) {
             System.out.println(e.getMessage());
         }
         return false;
     }
 
-    private void display(){
+    private void display() {
         System.out.println("1- Draw a card");
         System.out.println("2- Play a card");
         System.out.println("3- Show your desk and others' desks");
@@ -372,6 +364,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         System.out.println("9- Set your objective card");
         System.out.println("10- Set your starter card");
     }
+
     public void close() throws RemoteException {
         server.removeUsername(username);
         System.exit(0);
