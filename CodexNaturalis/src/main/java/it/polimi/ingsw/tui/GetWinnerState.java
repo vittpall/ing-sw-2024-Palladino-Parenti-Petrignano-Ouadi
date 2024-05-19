@@ -37,7 +37,6 @@ public class GetWinnerState implements ClientState {
         switch (input) {
             case 1:
                 client.closeGame();
-                client.setCurrentState(new LobbyMenuState(client, scanner));
                 break;
             case 2:
                 try {
@@ -45,9 +44,6 @@ public class GetWinnerState implements ClientState {
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-            case 3:
-                client.setCurrentState(new ChatState(client, scanner));
-                break;
             default:
                 System.out.println("Invalid input");
                 break;

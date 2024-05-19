@@ -61,12 +61,9 @@ public class PlayCardState implements ClientState {
             } catch (RequirementsNotMetException ex) {
                 System.out.println("Requirements not met. Please choose another card");
             }
-            client.setCurrentState(new DrawCardState(client, scanner));
             return;
         }
-        if (input == 4) {
-            client.setCurrentState(new ChatState(client, scanner));
-        } else {
+        else {
             System.out.println("Invalid input");
         }
     }

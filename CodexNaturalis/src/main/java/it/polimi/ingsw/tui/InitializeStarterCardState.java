@@ -69,8 +69,8 @@ public class InitializeStarterCardState implements ClientState {
                     client.playStarterCard(false);
                     String nextState = client.getNextState();
                     if (nextState.equals("PlayCardState")) client.setCurrentState(new PlayCardState(client, scanner));
-                    else if (nextState.equals("WaitForYourTurnState"))
-                        client.setCurrentState(new WaitForYourTurnState(client, scanner));
+                 /*   else if (nextState.equals("WaitForYourTurnState"))
+                        client.setCurrentState(new WaitForYourTurnState(client, scanner));*/
                     else {
                         System.out.println("Error");
                     }
@@ -94,9 +94,7 @@ public class InitializeStarterCardState implements ClientState {
                     System.out.println("Card not found. Please try again");
                 }
                 break;
-            case 3:
-                client.setCurrentState(new ChatState(client, scanner, this));
-                break;
+
             default:
                 System.out.print("Invalid input");
         }

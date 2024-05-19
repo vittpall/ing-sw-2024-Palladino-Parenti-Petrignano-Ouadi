@@ -71,9 +71,6 @@ public class InitializeObjectiveCardState implements ClientState {
                     throw new RuntimeException(e);
                 }
                 break;
-            case 3:
-                client.setCurrentState(new ChatState(client, scanner, this));
-                break;
             default:
                 System.out.print("Invalid input");
         }

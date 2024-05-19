@@ -111,12 +111,9 @@ public class PlayLastCardState implements ClientState {
                 System.out.println("Requirements not met. Please choose another card");
                 //rimandare dopo tutte le eccezioni in questo stato
             }
-            client.setCurrentState(new GetWinnerState(client, scanner));
             return;
         }
-        if (input == 4) {
-            client.setCurrentState(new ChatState(client, scanner));
-        } else {
+    else {
             System.out.println("Invalid input");
         }
     }
