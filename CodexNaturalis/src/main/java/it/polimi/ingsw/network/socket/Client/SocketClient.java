@@ -112,6 +112,7 @@ public class SocketClient implements VirtualView {
         }
     }
 
+    @Override
     public void setUsername(String username) {
         this.username = username;
     }
@@ -231,7 +232,7 @@ public class SocketClient implements VirtualView {
      */
     @Override
     public void notifyYourTurn() throws IOException, InterruptedException {
-
+        //TODO
     }
 
     /**
@@ -258,7 +259,8 @@ public class SocketClient implements VirtualView {
 
     @Override
     public void receiveNotification(Message msg) throws IOException, InterruptedException {
-
+        String message = msg.getContent();
+        System.out.println(message);
     }
 
     @Override
@@ -572,17 +574,12 @@ public class SocketClient implements VirtualView {
                     this.receiveMessage((Message) msg.getResponse().getResponseReturnable());
                 }
                 if (msg.doItNeedToBeBroadCasted() && (msg.getIdGame() == idGame || msg.getIdGame() == -1)) {
-                    this.broadCastToClient(msg.getResponse());
+                    this.receiveNotification((Message) msg.getResponse().getResponseReturnable());
                 }
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-    }
-
-    private void broadCastToClient(ReturnableObject<String> msg) throws IOException {
-        String message = msg.getResponseReturnable();
-        System.out.println(message);
     }
 
     public String getCurrentState(int idGame, int idClientIntoGame) throws IOException, InterruptedException {

@@ -40,7 +40,9 @@ public class ClientHandler {
             if(request.getDoItNeedToBeBroadcasted()){
                 ReturnableObject responseReturnable = request.functionToCall(controller);
                 ReturnableObject messageToBroadCast = new ReturnableObject<>();
-                messageToBroadCast.setResponseReturnable(request.getBroadCastMessage());
+                //to align with what happen in the rmi server, i pass a message instead of just a string
+                Message message = new Message(null, null, request.getBroadCastMessage(), request.getIdGame());
+                messageToBroadCast.setResponseReturnable(message);
                 SocketServer.broadCastWhatHappened(messageToBroadCast, request.getType(), request.getIdGame());
             }
             else
