@@ -57,21 +57,20 @@ public class LobbyController {
     }
 
     public ArrayList<Message> getMessages(String receiver, int gameId, String sender) {
-        //    return model.getMessages(receiver, gameId, sender);
-        return null;
+        return gameControllers.get(gameId).getMessages(receiver, sender);
     }
 
-    public synchronized int joinGame(int id, String username) throws InterruptedException {
-        Player player = new Player(username);
-        int nPlayer = gameControllers.get(id).joinGame(username);
-        //int nPlayer = model.joinGame(id, player);
-        //TODO: sistemare sto if sotto
-        if (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer()) {
-            while (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer()) wait();
-        } else {
-            this.notifyAll();
+    public int joinGame(int id, String username) throws InterruptedException {
+        synchronized (gameControllers.get(id)){
+            int nPlayer = gameControllers.get(id).joinGame(username);
+            //int nPlayer = model.joinGame(id, player);
+            if (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer()) {
+                while (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer()) gameControllers.get(id).wait();
+            } else {
+                gameControllers.get(id).notifyAll();
+            }
+            return nPlayer;
         }
-        return nPlayer;
     }
 
     public int createGame(String username, int nPlayers) throws InterruptedException {
@@ -96,7 +95,7 @@ public class LobbyController {
     }
 
     public ArrayList<ObjectiveCard> getObjectiveCards(int idGame, int idPlayer) {
-        return gameControllers.get(idGame).getPlayers().get(idPlayer).getDrawnObjectiveCards();
+        return gameControllers.get(idGame).getObjectiveCards(idPlayer);
     }
 
     public void setObjectiveCard(int idGame, int idClientIntoGame, int idObjCard) throws CardNotFoundException {
@@ -110,12 +109,11 @@ public class LobbyController {
 
     public void playStarterCard(int idGame, int idClientIntoGame, boolean playedFacedDown)
             throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
-        GameCard starterCard = gameControllers.get(idGame).getPlayers().get(idClientIntoGame).getStarterCard();
-        gameControllers.get(idGame).getPlayers().get(idClientIntoGame).playCard(starterCard, playedFacedDown, new Point(0, 0));
+        gameControllers.get(idGame).playStarterCard(idClientIntoGame, playedFacedDown);
     }
 
     public ObjectiveCard getObjectiveCard(int idGame, int idClientIntoGame) {
-        return gameControllers.get(idGame).getPlayers().get(idClientIntoGame).getObjectiveCard();
+        return gameControllers.get(idGame).getObjectiveCard(idClientIntoGame);
     }
 
     public ArrayList<GameCard> getPlayerHand(int idGame, int idClientIntoGame) {
@@ -144,7 +142,7 @@ public class LobbyController {
 
     public void playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
-        gameControllers.get(idGame).playCard(chosenCard, idClientIntoGame, faceDown, chosenPosition);
+        gameControllers.get(idGame).playCard(idClientIntoGame, chosenCard, faceDown, chosenPosition);
     }
 
     public void playLastTurn(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
@@ -175,9 +173,7 @@ public class LobbyController {
     }
 
     public ArrayList<GameCard> getVisibleCardsDeck(int idGame, int deck) {
-        if (deck == 1)
-            return gameControllers.get(idGame).getResourceDeck().getVisibleCards();
-        return gameControllers.get(idGame).getGoldDeck().getVisibleCards();
+        return gameControllers.get(idGame).getVisibleCardsDeck(deck);
     }
 
     public String getUsernamePlayerThatStoppedTheGame(int idGame) {
@@ -216,5 +212,8 @@ public class LobbyController {
 
     public String getCurrentState(int idGame, int idClientIntoGame) {
         return gameControllers.get(idGame).getCurrentState(idClientIntoGame);
+    }
+    public String getCurrentGameState(int idGame) {
+        return gameControllers.get(idGame).getCurrentState();
     }
 }

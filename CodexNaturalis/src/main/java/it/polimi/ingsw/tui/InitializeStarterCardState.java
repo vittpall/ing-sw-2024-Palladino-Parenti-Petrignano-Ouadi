@@ -68,12 +68,7 @@ public class InitializeStarterCardState implements ClientState {
                 try {
                     client.playStarterCard(false);
                     String nextState = client.getNextState();
-                    if (nextState.equals("PlayCardState")) client.setCurrentState(new PlayCardState(client, scanner));
-                 /*   else if (nextState.equals("WaitForYourTurnState"))
-                        client.setCurrentState(new WaitForYourTurnState(client, scanner));*/
-                    else {
-                        System.out.println("Error");
-                    }
+                    client.setCurrentState(new PlayCardState(client, scanner));
                 } catch (PlaceNotAvailableException | CardNotFoundException | RequirementsNotMetException |
                          IOException | InterruptedException ex) {
                     System.out.println("Card not found. Please try again");
@@ -82,13 +77,7 @@ public class InitializeStarterCardState implements ClientState {
             case 2:
                 try {
                     client.playStarterCard(true);
-                    String nextState = client.getNextState();
-                    if (nextState.equals("PlayCardState")) client.setCurrentState(new PlayCardState(client, scanner));
-                    else if (nextState.equals("WaitForYourTurnState"))
-                        client.setCurrentState(new WaitForYourTurnState(client, scanner));
-                    else {
-                        System.out.println("Error");
-                    }
+                    client.setCurrentState(new PlayCardState(client, scanner));
                 } catch (RemoteException | PlaceNotAvailableException | CardNotFoundException |
                          RequirementsNotMetException ex) {
                     System.out.println("Card not found. Please try again");

@@ -81,7 +81,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                 System.out.println("You have received a from " + msg.getSender());
         }
     }
-
+    @Override
+    public void receiveNotification(Message msg) throws IOException, InterruptedException{
+        System.out.println(msg.getContent());
+    }
     @Override
     public boolean checkUsername(String username) throws IOException {
         return server.checkUsername(username);
@@ -91,9 +94,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public ArrayList<Integer> getNotStartedGames() throws RemoteException {
         return server.getNotStartedGames();
     }
-
-    public ArrayList<Player> getAllPlayers(int gameId) throws RemoteException {
-        return server.getAllPlayers(gameId);
+    @Override
+    public ArrayList<Player> getAllPlayers() throws RemoteException {
+        return server.getAllPlayers(idGame);
     }
 
     @Override
@@ -147,12 +150,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
     @Override
     public String getNextState() throws RemoteException {
-        if (currentState instanceof InitializeStarterCardState) {
-            if (server.getCurrentPlayer(idGame) == idClientIntoGame)
-                return "PlayCardState";
-            else
-                return "WaitForYourTurnState";
-        } else if (currentState instanceof DrawCardState) {
+         if (currentState instanceof DrawCardState) {
             if (server.getIsLastRoundStarted(idGame))
                 return "LastRoundState";
             else
@@ -190,7 +188,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
     public void sendMessage(String receiver, String message) throws RemoteException {
         Message msg = new Message(this.username, receiver, message, this.idGame);
-        server.sendMessage(msg);
+        server.sendMessage(idGame, msg);
     }
 
     @Override
@@ -237,7 +235,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return this.server.getPlayerDesk(idGame, idClientIntoGame);
     }
 
-    @Override
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
         if (!isGUIMode)
@@ -252,7 +249,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
 
     void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
-        boolean correctInput = false;
+        boolean correctInput;
         String input = "";
         do {
             showState();
@@ -274,8 +271,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                     System.out.println("Invalid input: Please enter a number.");
                 }
             }
-        } while (currentState instanceof ColorSelection);
-        while (true) {
+        }while(!(currentState instanceof PlayCardState));
+        while(true){
             display();
             correctInput = false;
             while (!correctInput) {
@@ -305,7 +302,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                         }
                         if (!handleCommonInput(input)) {
                             try {
-                                //TODO: vedere se cambiare qui il current state oppure nel gameLogicInputHandler
                                 currentState.inputHandler(Integer.parseInt(input));
                             } catch (NumberFormatException e) {
                                 System.out.println("Invalid input: Please enter a number.");
@@ -322,29 +318,38 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
 
     private boolean gameLogicInputHandler(int i) {
-        try {
-            boolean checkState = false;
+        try{
+            boolean checkState;
             switch (i) {
-                //probabilmente è meglio mandare l'input al server e poi è il GameController che gestisce lo stato di richiesta
-                //per questo ho commentato la chiamata al metodo checkState
                 case 1:
-                    checkState = server.checkState(idGame, idClientIntoGame, RequestedActions.DRAW);
-                    if (checkState) currentState = new DrawCardState(this, scan);
-                    return checkState;
-                case 2:
                     checkState = server.checkState(idGame, idClientIntoGame, RequestedActions.PLAY_CARD);
                     if (checkState) currentState = new PlayCardState(this, scan);
                     return checkState;
+
+                case 2:
+                    checkState = server.checkState(idGame, idClientIntoGame, RequestedActions.DRAW);
+                    if (checkState) currentState = new DrawCardState(this, scan);
+                    return checkState;
                 case 3:
-                    //TODO: da fare simile
+                    checkState = server.checkState(idGame, idClientIntoGame, RequestedActions.SHOW_DESKS);
+                  //  if (checkState) currentState = new ShowDeskState(this, scan);
+                    return checkState;
                 case 4:
-                    //TODO: da fare simile
+                    checkState = server.checkState(idGame, idClientIntoGame, RequestedActions.SHOW_OBJ_CARDS);
+                    if (checkState) currentState = new ShowObjectiveCardsState(this, scan);
+                    return checkState;
                 case 5:
-                    //TODO: da fare simile
+                    checkState = server.checkState(idGame, idClientIntoGame, RequestedActions.SHOW_POINTS);
+                    if (checkState) currentState = new ShowPointsState(this, scan);
+                    return checkState;
                 case 6:
-                    //TODO: da fare simile
+                    checkState = server.checkState(idGame, idClientIntoGame, RequestedActions.CHAT);
+                    if (checkState) currentState = new ChatState(this, scan);
+                    return checkState;
                 case 7:
-                    //TODO: da fare simile
+                    checkState = server.checkState(idGame, idClientIntoGame, RequestedActions.SHOW_WINNER);
+                    if (checkState) currentState = new GetWinnerState(this, scan);
+                    return checkState;
                 default:
                     return false;
             }
@@ -354,16 +359,16 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return false;
     }
 
-    private void display() {
-        System.out.println("1- Draw a card");
-        System.out.println("2- Play a card");
+    private void display(){
+        System.out.println("\n--------------------------------");
+        System.out.println("Choose an action:");
+        System.out.println("1- Play a card");
+        System.out.println("2- Draw a card");
         System.out.println("3- Show your desk and others' desks");
         System.out.println("4- Show the shared objective cards and your objective card");
         System.out.println("5- Show players' points");
         System.out.println("6- Chat");
-        System.out.println("8- Set your token color");
-        System.out.println("9- Set your objective card");
-        System.out.println("10- Set your starter card");
+        System.out.println("7- Show winner\n");
     }
 
     public void close() throws RemoteException {
@@ -405,12 +410,12 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
 
     @Override
-    public int getnPlayer(int idGame) throws IOException, InterruptedException {
+    public int getnPlayer(int idGame) throws IOException {
         return server.getnPlayer(idGame);
     }
 
     @Override
-    public ArrayList<Player> getPlayers(int idGame) throws IOException, InterruptedException {
+    public ArrayList<Player> getPlayers(int idGame) throws IOException{
         return server.getPlayers(idGame);
     }
 

@@ -95,8 +95,8 @@ public class SocketClient implements VirtualView {
 
     @Override
     @SuppressWarnings("unchecked")
-    public ArrayList<Player> getAllPlayers(int gameId) throws IOException, InterruptedException {
-        GetAllPlayersMsg request = new GetAllPlayersMsg(gameId);
+    public ArrayList<Player> getAllPlayers() throws IOException, InterruptedException {
+        GetAllPlayersMsg request = new GetAllPlayersMsg(idGame);
         ServerToClientMsg response = sendRequest(request);
         return (ArrayList<Player>) response.getResponse().getResponseReturnable();
     }
@@ -254,6 +254,11 @@ public class SocketClient implements VirtualView {
     @Override
     public ArrayList<Player> getPlayers(int idGame) throws IOException, InterruptedException {
         return null;
+    }
+
+    @Override
+    public void receiveNotification(Message msg) throws IOException, InterruptedException {
+
     }
 
     @Override

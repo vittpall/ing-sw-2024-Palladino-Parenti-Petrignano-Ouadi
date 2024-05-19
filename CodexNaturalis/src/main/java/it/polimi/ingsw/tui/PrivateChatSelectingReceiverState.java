@@ -31,13 +31,13 @@ public class PrivateChatSelectingReceiverState implements ClientState {
             System.out.println("Private chat-------------------");
             System.out.println("Players to chat with: ---------");
 
-            if(client.getAllPlayers(client.getIdGame()) == null){
+            if(client.getAllPlayers() == null){
                 System.out.println("No players available");
             }
             else
             {
                 this.finalOption ++;
-                availablePlayers = new ArrayList<>(client.getAllPlayers(client.getIdGame()));
+                availablePlayers = new ArrayList<>(client.getAllPlayers());
                 removePlayerFromList(availablePlayers);
 
                 for(int i = 0; i < availablePlayers.size(); i++){
@@ -74,8 +74,8 @@ public class PrivateChatSelectingReceiverState implements ClientState {
                 client.setCurrentState(returnState);
             }else
             {
-                if(client.getAllPlayers(client.getIdGame()) != null) {
-                    if (input > client.getAllPlayers(client.getIdGame()).size()) {
+                if(client.getAllPlayers() != null) {
+                    if (input > client.getAllPlayers().size()) {
                         System.out.println("Invalid input");
                         inputHandler(scanner.nextInt());
                     }

@@ -14,13 +14,13 @@ import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Map;
 
 public class GameController {
     Game model;
     int nPlayers;
     int nPlayersPlaying;
     GameState gameState;
+    String winner;
 
     //come creare il gioco e la classe
     public GameController(int idGame, int nPlayers) {
@@ -28,28 +28,26 @@ public class GameController {
         model = new Game(idGame, nPlayers);
         nPlayersPlaying=0;
         gameState = GameState.WAITING_FOR_PLAYERS;
+        winner="No winner";
     }
 
     public boolean checkState(int idPlayerIntoGame, RequestedActions requestedActions){
-        switch(requestedActions){
-            case RequestedActions.DRAW:
-                if(gameState==GameState.ROUNDS&& model.getPlayers().get(idPlayerIntoGame).getPlayerState()==PlayerState.DRAW)
-                    return true;
-                return false;
-            case RequestedActions.PLAY_CARD:
-                if((gameState==GameState.ROUNDS || gameState==GameState.LASTROUND)
-                        && model.getPlayers().get(idPlayerIntoGame).getPlayerState()==PlayerState.PLAY_CARD)
-                    return true;
-                return false;
-            case RequestedActions.CHAT:
-                return true;
-            default:
-                return false;
-            //TODO : da finire con tutte le opzioni
-        }
+        return switch (requestedActions) {
+            case RequestedActions.DRAW -> (gameState == GameState.ROUNDS || gameState == GameState.FINISHING_ROUND_BEFORE_LAST)
+                            && model.getPlayers().get(idPlayerIntoGame).getPlayerState() == PlayerState.DRAW;
+            case RequestedActions.PLAY_CARD -> (gameState == GameState.ROUNDS || gameState == GameState.LAST_ROUND|| gameState == GameState.FINISHING_ROUND_BEFORE_LAST)
+                    && model.getPlayers().get(idPlayerIntoGame).getPlayerState() == PlayerState.PLAY_CARD;
+            case RequestedActions.SHOW_WINNER -> gameState == GameState.ENDGAME;
+            case RequestedActions.SHOW_DESKS, RequestedActions.SHOW_OBJ_CARDS,
+                 RequestedActions.SHOW_POINTS, RequestedActions.CHAT ->
+                    true;
+        };
     }
     public String getCurrentState(int idClientIntoGame){
         return gameState.toString() + " " + model.getPlayers().get(idClientIntoGame).getPlayerState().toString();
+    }
+    public String getCurrentState(){
+        return gameState.toString();
     }
     public synchronized int joinGame(String username) throws InterruptedException {
         Player player = new Player(username);
@@ -113,7 +111,7 @@ public class GameController {
         return model.getPlayers();
     }
 
-    public ArrayList<Message> getMessages(String receiver, int gameId, String sender) {
+    public ArrayList<Message> getMessages(String receiver, String sender) {
         if(receiver == null)
             return model.getChats().getGlobalChat();
         else
@@ -133,6 +131,15 @@ public class GameController {
             throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
         model.playCard(chosenCard, idClientIntoGame, faceDown, chosenPosition);
         model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.DRAW);
+        if(gameState==GameState.LAST_ROUND){
+            model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.ENDGAME);
+            if (model.getnPlayer() != idClientIntoGame + 1)
+                model.advanceToNextPlayer();
+            else {
+                gameState = GameState.ENDGAME;
+                winner = model.endGame();
+            }
+        }
     }
 
     public synchronized void playLastTurn(int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
@@ -142,12 +149,16 @@ public class GameController {
         model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.ENDGAME);
         if (model.getnPlayer() != idClientIntoGame + 1)
            model.advanceToNextPlayer();
+        else {
+            gameState = GameState.ENDGAME;
+            winner = model.endGame();
+        }
         // TODO: cambiare stato game
         //TODO: mandare messaggino ai client notificando che è cambiato il turno (vedi notifiche chat)
     }
 
     public synchronized void drawCard(int idClientIntoGame, int deckToChoose, int inVisible) throws CardNotFoundException {
-        //fare il check che sia il suo turno
+        //TODO: fare il check che sia il suo turno
         Deck chosenDeck;
         if (deckToChoose == 1)
             chosenDeck = model.getResourceDeck();
@@ -162,6 +173,15 @@ public class GameController {
             else if (inVisible == 2)
                 chosenCard = chosenDeck.getVisibleCards().get(1);
             model.drawVisibleCard(chosenDeck, chosenCard);
+        }
+        if(gameState != GameState.LAST_ROUND && model.getPlayers().get(model.getCurrentPlayerIndex()).getPoints()>=20) {
+            if(model.getCurrentPlayerIndex()==model.getnPlayer()-1)
+                gameState=GameState.LAST_ROUND;
+            else
+                gameState=GameState.FINISHING_ROUND_BEFORE_LAST;
+        }
+        if(gameState==GameState.FINISHING_ROUND_BEFORE_LAST && model.getCurrentPlayerIndex()==model.getnPlayer()-1){
+            gameState=GameState.LAST_ROUND;
         }
         model.getCurrentPlayer().setPlayerState(PlayerState.WAITING);
         model.advanceToNextPlayer();
@@ -189,15 +209,6 @@ public class GameController {
     }
 
     public synchronized String getWinner(int idClientIntoGame) throws InterruptedException {
-        String winner = "No winner";
-
-        if (idClientIntoGame + 1 != model.getnPlayer())
-            while (model.getCurrentPlayerIndex() + 1 != model.getnPlayer())
-                wait();
-        else {
-            winner = model.endGame();
-            notifyAll();
-        }
         return winner;
     }
 

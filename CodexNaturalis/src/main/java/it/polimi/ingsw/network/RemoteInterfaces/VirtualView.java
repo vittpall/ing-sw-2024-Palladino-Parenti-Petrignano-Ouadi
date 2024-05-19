@@ -3,7 +3,6 @@ package it.polimi.ingsw.network.RemoteInterfaces;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
@@ -19,7 +18,6 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 public interface VirtualView extends Remote {
 
@@ -39,7 +37,7 @@ public interface VirtualView extends Remote {
 
     int getIdClientIntoGame() throws RemoteException;
 
-    ArrayList<Player> getAllPlayers(int gameId) throws IOException, InterruptedException;
+    ArrayList<Player> getAllPlayers() throws IOException, InterruptedException;
 
     void receiveMessage(Message msg) throws RemoteException;
 
@@ -102,6 +100,8 @@ public interface VirtualView extends Remote {
     int getnPlayer(int idGame) throws IOException, InterruptedException;
 
     ArrayList<Player> getPlayers(int idGame) throws IOException, InterruptedException;
+
+    void receiveNotification(Message msg) throws IOException, InterruptedException;
 
     void run() throws IOException, InterruptedException,ClassNotFoundException;
 }

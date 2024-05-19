@@ -19,12 +19,11 @@ public class GetWinnerState implements ClientState {
     @Override
     public void display() {
         System.out.println("\n---------- Game ended----------");
-        System.out.println("Wait for everyone to finish their turn. The winner will be displayed soon");
         try {
             String winnerUsername = client.getWinner();
             System.out.println("The winner is: " + winnerUsername);
             System.out.println("These are the points of every player :");
-            client.getAllPlayers(client.getIdGame()).stream().map(player -> "Player " + player.getUsername() + " has " + player.getPoints() + " points").forEach(System.out::println);
+            client.getAllPlayers().stream().map(player -> "Player " + player.getUsername() + " has " + player.getPoints() + " points").forEach(System.out::println);
         } catch (RemoteException | InterruptedException e) {
             System.out.println("Error while getting the winner");
         } catch (IOException e) {

@@ -47,7 +47,7 @@ public class PlayLastCardState implements ClientState {
         }
     }
     private void showProvisionalRanking() throws IOException, InterruptedException {
-        ArrayList<Player> allPlayers = client.getAllPlayers(client.getIdGame());
+        ArrayList<Player> allPlayers = client.getAllPlayers();
         System.out.println("--------------------------------");
         System.out.println("Provisional Ranking:");
         for (Player player : allPlayers) {

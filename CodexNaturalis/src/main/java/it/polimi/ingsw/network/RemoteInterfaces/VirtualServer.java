@@ -33,7 +33,7 @@ public interface VirtualServer extends Remote {
 
     ArrayList<Message> getMessages(String receiver, int gameId, String sender) throws RemoteException;
 
-    void sendMessage(Message msg) throws RemoteException;
+    void sendMessage(int idGame, Message msg) throws RemoteException;
 
     int joinGame(int id, String username) throws RemoteException, InterruptedException;
 

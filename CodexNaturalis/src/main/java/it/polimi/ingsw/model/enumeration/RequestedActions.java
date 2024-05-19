@@ -1,10 +1,8 @@
 package it.polimi.ingsw.model.enumeration;
 
 public enum RequestedActions {
-    DRAW("Draw"), SET_OBJ_CARD ("Setup game"),
-    PLAY_CARD("Game rounds"), SHOW_DESKS("Last round"), SHOW_OBJ_CARDS("End game"),
-    SHOW_POINTS("Show points"), SET_TOKEN_COLOR("Set token color"),
-    SET_STARTER_CARD("Set starter card"), CHAT("Chat");
+    DRAW("Draw"), PLAY_CARD("Game rounds"), SHOW_DESKS("Last round"),
+    SHOW_OBJ_CARDS("End game"), SHOW_POINTS("Show points"), CHAT("Chat"), SHOW_WINNER("Show winner");
 
     private final String text;
 

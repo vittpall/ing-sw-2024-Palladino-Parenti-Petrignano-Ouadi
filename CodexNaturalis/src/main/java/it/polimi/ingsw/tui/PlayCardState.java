@@ -51,6 +51,8 @@ public class PlayCardState implements ClientState {
             boolean faceDown = chooseIfFaceDown();
             try {
                 client.playCard(input - 1, faceDown, pointChosen);
+                System.out.println("Card played successfully");
+                System.out.println("You should now draw a card");
             } catch (RemoteException ex) {
                 System.out.println(ex.getMessage());
             } catch (PlaceNotAvailableException ex) {
@@ -61,7 +63,6 @@ public class PlayCardState implements ClientState {
             } catch (RequirementsNotMetException ex) {
                 System.out.println("Requirements not met. Please choose another card");
             }
-            return;
         }
         else {
             System.out.println("Invalid input");
@@ -79,7 +80,7 @@ public class PlayCardState implements ClientState {
 
 
     private void showProvisionalRanking() throws IOException, InterruptedException {
-        ArrayList<Player> allPlayers = client.getAllPlayers(client.getIdGame());
+        ArrayList<Player> allPlayers = client.getAllPlayers();
         System.out.println("--------------------------------");
         System.out.println("Provisional Ranking:");
         for (Player player : allPlayers) {

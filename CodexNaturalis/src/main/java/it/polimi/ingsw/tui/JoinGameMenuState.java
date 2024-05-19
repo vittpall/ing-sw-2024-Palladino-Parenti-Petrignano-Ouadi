@@ -55,7 +55,7 @@ public class JoinGameMenuState implements ClientState {
                 client.setCurrentState(new CreateGameState(client, scanner));
                 return;
             }
-            if (client.getNotStartedGames().get(input) == null) {
+            if (!(client.getNotStartedGames().contains(input))) {
                 System.out.println("Invalid input");
                 return;
             }

@@ -47,19 +47,10 @@ public class DrawCardState implements ClientState {
                 int inVisible = chooseWhichCardToDraw();
                 try {
                     client.drawCard(input, inVisible);
-                    String nextState = client.getNextState();
-                    if (nextState.equals("WaitForYourTurnState")) {
-                        client.setCurrentState(new WaitForYourTurnState(client, scanner));
-                    } else if (nextState.equals("LastRoundState")) {
-                        client.setCurrentState(new WaitForYourLastTurnState(client, scanner));
-                    }
 
                 } catch (CardNotFoundException ex) {
                     System.out.println(ex.getMessage());
                 }
-                break;
-            case 3:
-                client.setCurrentState(new ChatState(client, scanner, this));
                 break;
             default:
                 System.out.println("Invalid input");

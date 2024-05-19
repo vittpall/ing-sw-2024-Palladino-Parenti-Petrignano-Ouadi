@@ -2,7 +2,8 @@ package it.polimi.ingsw.model.enumeration;
 
 public enum GameState {
     WAITING_FOR_PLAYERS("Waiting for players"), SETUP_GAME ("Setup game"),
-    ROUNDS("Game rounds"), LASTROUND("Last round"), ENDGAME("End game");
+    ROUNDS("Game rounds"), FINISHING_ROUND_BEFORE_LAST("Finishing round before last"),
+    LAST_ROUND("Last round"), ENDGAME("End game");
 
     private final String text;
 
