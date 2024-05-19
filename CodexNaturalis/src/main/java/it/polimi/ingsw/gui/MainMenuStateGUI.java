@@ -28,10 +28,10 @@ public class MainMenuStateGUI implements ClientState {
     public MainMenuStateGUI(Stage stage, VirtualView client) {
         this.stage = stage;
         this.client = client;
+        WindowCloseHandler.setUpCloseRequestHandling(stage);
     }
 
     public MainMenuStateGUI() {
-        // Initialize with default or null values if necessary
     }
 
     @FXML
@@ -62,6 +62,8 @@ public class MainMenuStateGUI implements ClientState {
             e.printStackTrace();
         }
     }
+
+
 
     @Override
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {

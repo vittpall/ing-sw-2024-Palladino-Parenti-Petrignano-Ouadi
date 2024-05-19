@@ -375,6 +375,7 @@ public class SocketClient implements VirtualView {
         return (int) response.getResponse().getResponseReturnable();
     }
 
+    @Override
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
 
         if (isGUIMode) {

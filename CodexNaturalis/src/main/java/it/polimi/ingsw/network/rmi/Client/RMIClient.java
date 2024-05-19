@@ -237,6 +237,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return this.server.getPlayerDesk(idGame, idClientIntoGame);
     }
 
+    @Override
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
         if (!isGUIMode)
