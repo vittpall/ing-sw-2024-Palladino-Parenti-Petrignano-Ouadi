@@ -1,13 +1,10 @@
 package it.polimi.ingsw.network.RemoteInterfaces;
 
 import it.polimi.ingsw.controller.GameController;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.GameCard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
@@ -76,6 +73,8 @@ public interface VirtualServer extends Remote {
     int getPoints(int idGame, int idClientIntoGame) throws RemoteException;
 
     ArrayList<GameCard> getVisibleCardsDeck(int idGame, int deck) throws RemoteException;
+
+    Card getLastCardOfUsableCards(int idGame, int deck) throws RemoteException;
 
     String getUsernamePlayerThatStoppedTheGame(int idGame) throws RemoteException;
 

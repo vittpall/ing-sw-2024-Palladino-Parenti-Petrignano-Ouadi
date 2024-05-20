@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1">
+    <ImageView fx:id="boardImage" fitHeight="453.0" fitWidth="257.0" layoutX="7.0" layoutY="8.0">
+        <Image url="@../Images/Board.jpg"/>
+    </ImageView>
+    <GridPane fx:id="playerDesk" layoutX="125.0" layoutY="468.0" prefHeight="326.0" prefWidth="602.0">
+        <!-- Cards will be added dynamically here -->
+    </GridPane>
+    <StackPane fx:id="objectiveCard1" layoutX="340.0" layoutY="38.0" prefWidth="100" prefHeight="150"/>
+    <StackPane fx:id="objectiveCard2" layoutX="513.0" layoutY="38.0" prefWidth="100" prefHeight="150"/>
+    <StackPane fx:id="visibleCardDeck1Card1" layoutX="433.0" layoutY="152.0"/>
+    <StackPane fx:id="visibleCardDeck1Card2" layoutX="593.0" layoutY="152.0"/>
+    <StackPane fx:id="visibleCardDeck2Card1" layoutX="433.0" layoutY="260.0"/>
+    <StackPane fx:id="visibleCardDeck2Card2" layoutX="593.0" layoutY="260.0"/>
+    <StackPane fx:id="usableCardDeck1Back" layoutX="273.0" layoutY="152.0"/>
+    <StackPane fx:id="usableCardDeck2Back" layoutX="273.0" layoutY="260.0"/>
+</AnchorPane>

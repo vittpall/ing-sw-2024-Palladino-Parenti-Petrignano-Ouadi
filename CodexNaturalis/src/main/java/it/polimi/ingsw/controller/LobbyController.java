@@ -1,12 +1,13 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
-import it.polimi.ingsw.model.enumeration.GameState;
-import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
@@ -61,11 +62,12 @@ public class LobbyController {
     }
 
     public int joinGame(int id, String username) throws InterruptedException {
-        synchronized (gameControllers.get(id)){
+        synchronized (gameControllers.get(id)) {
             int nPlayer = gameControllers.get(id).joinGame(username);
             //int nPlayer = model.joinGame(id, player);
             if (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer()) {
-                while (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer()) gameControllers.get(id).wait();
+                while (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer())
+                    gameControllers.get(id).wait();
             } else {
                 gameControllers.get(id).notifyAll();
             }
@@ -176,6 +178,10 @@ public class LobbyController {
         return gameControllers.get(idGame).getVisibleCardsDeck(deck);
     }
 
+    public Card getLastCardOfUsableCards(int idGame, int deck) {
+        return gameControllers.get(idGame).getLastCardOfUsableCards(deck);
+    }
+
     public String getUsernamePlayerThatStoppedTheGame(int idGame) {
         return gameControllers.get(idGame).getUsernamePlayerThatStoppedTheGame();
     }
@@ -213,6 +219,7 @@ public class LobbyController {
     public String getCurrentState(int idGame, int idClientIntoGame) {
         return gameControllers.get(idGame).getCurrentState(idClientIntoGame);
     }
+
     public String getCurrentGameState(int idGame) {
         return gameControllers.get(idGame).getCurrentState();
     }

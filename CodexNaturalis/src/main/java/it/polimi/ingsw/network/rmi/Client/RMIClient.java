@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.rmi.Client;
 
 import it.polimi.ingsw.gui.MainMenuStateGUI;
+import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -179,6 +180,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return server.getVisibleCardsDeck(idGame, deck);
     }
 
+    @Override
+    public Card getLastFromUsableCards(int deck) throws RemoteException {
+        return server.getLastCardOfUsableCards(idGame, deck);
+    }
 
     @Override
     public String getUsernamePlayerThatStoppedTheGame() throws RemoteException {

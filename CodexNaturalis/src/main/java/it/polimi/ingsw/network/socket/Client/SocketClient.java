@@ -205,6 +205,11 @@ public class SocketClient implements VirtualView {
     }
 
     @Override
+    public GameCard getLastFromUsableCards(int deck) throws RemoteException {
+        return null;
+    }
+
+    @Override
     public void close() throws IOException, InterruptedException {
         ClosedConnectionMsg request = new ClosedConnectionMsg(username, idGame);
         ServerToClientMsg response = sendRequest(request);

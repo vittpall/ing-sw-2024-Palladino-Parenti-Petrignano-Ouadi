@@ -26,42 +26,47 @@ public class GameController {
     public GameController(int idGame, int nPlayers) {
         this.nPlayers = nPlayers;
         model = new Game(idGame, nPlayers);
-        nPlayersPlaying=0;
+        nPlayersPlaying = 0;
         gameState = GameState.WAITING_FOR_PLAYERS;
-        winner="No winner";
+        winner = "No winner";
     }
 
-    public boolean checkState(int idPlayerIntoGame, RequestedActions requestedActions){
+    public boolean checkState(int idPlayerIntoGame, RequestedActions requestedActions) {
         return switch (requestedActions) {
-            case RequestedActions.DRAW -> (gameState == GameState.ROUNDS || gameState == GameState.FINISHING_ROUND_BEFORE_LAST)
+            case RequestedActions.DRAW ->
+                    (gameState == GameState.ROUNDS || gameState == GameState.FINISHING_ROUND_BEFORE_LAST)
                             && model.getPlayers().get(idPlayerIntoGame).getPlayerState() == PlayerState.DRAW;
-            case RequestedActions.PLAY_CARD -> (gameState == GameState.ROUNDS || gameState == GameState.LAST_ROUND|| gameState == GameState.FINISHING_ROUND_BEFORE_LAST)
-                    && model.getPlayers().get(idPlayerIntoGame).getPlayerState() == PlayerState.PLAY_CARD;
+            case RequestedActions.PLAY_CARD ->
+                    (gameState == GameState.ROUNDS || gameState == GameState.LAST_ROUND || gameState == GameState.FINISHING_ROUND_BEFORE_LAST)
+                            && model.getPlayers().get(idPlayerIntoGame).getPlayerState() == PlayerState.PLAY_CARD;
             case RequestedActions.SHOW_WINNER -> gameState == GameState.ENDGAME;
             case RequestedActions.SHOW_DESKS, RequestedActions.SHOW_OBJ_CARDS,
-                 RequestedActions.SHOW_POINTS, RequestedActions.CHAT ->
-                    true;
+                 RequestedActions.SHOW_POINTS, RequestedActions.CHAT -> true;
         };
     }
-    public String getCurrentState(int idClientIntoGame){
+
+    public String getCurrentState(int idClientIntoGame) {
         return gameState.toString() + " " + model.getPlayers().get(idClientIntoGame).getPlayerState().toString();
     }
-    public String getCurrentState(){
+
+    public String getCurrentState() {
         return gameState.toString();
     }
+
     public synchronized int joinGame(String username) throws InterruptedException {
         Player player = new Player(username);
         int idPlayer = model.addPlayer(player);
         nPlayersPlaying++;
         if (model.getPlayers().size() == model.getnPlayer()) {
             model.setUpGame();
-            gameState= GameState.SETUP_GAME;
-            for(int i=0; i<model.getnPlayer(); i++){
+            gameState = GameState.SETUP_GAME;
+            for (int i = 0; i < model.getnPlayer(); i++) {
                 model.getPlayers().get(i).setPlayerState(PlayerState.SETUP_GAME);
             }
         }
         return idPlayer;
     }
+
     public ArrayList<ObjectiveCard> getObjectiveCards(int idPlayer) {
         return model.getPlayers().get(idPlayer).getDrawnObjectiveCards();
     }
@@ -80,12 +85,12 @@ public class GameController {
             throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
         GameCard starterCard = model.getPlayers().get(idClientIntoGame).getStarterCard();
         model.getPlayers().get(idClientIntoGame).playCard(starterCard, playedFacedDown, new Point(0, 0));
-        if(model.getCurrentPlayerIndex() == idClientIntoGame)
+        if (model.getCurrentPlayerIndex() == idClientIntoGame)
             model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.PLAY_CARD);
         else
             model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.WAITING);
-        if(model.getPlayers().stream().allMatch(player->(!player.getPlayerState().equals(PlayerState.SETUP_GAME))))
-            gameState= GameState.ROUNDS;
+        if (model.getPlayers().stream().allMatch(player -> (!player.getPlayerState().equals(PlayerState.SETUP_GAME))))
+            gameState = GameState.ROUNDS;
     }
 
     public ObjectiveCard getObjectiveCard(int idClientIntoGame) {
@@ -107,12 +112,13 @@ public class GameController {
     public synchronized void setTokenColor(int idClientIntoGame, TokenColor tokenColor) {
         model.setTokenColor(idClientIntoGame, tokenColor);
     }
+
     public ArrayList<Player> getAllPlayers() {
         return model.getPlayers();
     }
 
     public ArrayList<Message> getMessages(String receiver, String sender) {
-        if(receiver == null)
+        if (receiver == null)
             return model.getChats().getGlobalChat();
         else
             return model.getChats().getPrivateChat(receiver, sender);
@@ -131,7 +137,7 @@ public class GameController {
             throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
         model.playCard(chosenCard, idClientIntoGame, faceDown, chosenPosition);
         model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.DRAW);
-        if(gameState==GameState.LAST_ROUND){
+        if (gameState == GameState.LAST_ROUND) {
             model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.ENDGAME);
             if (model.getnPlayer() != idClientIntoGame + 1)
                 model.advanceToNextPlayer();
@@ -148,7 +154,7 @@ public class GameController {
         this.playCard(idClientIntoGame, chosenCard, faceDown, chosenPosition);
         model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.ENDGAME);
         if (model.getnPlayer() != idClientIntoGame + 1)
-           model.advanceToNextPlayer();
+            model.advanceToNextPlayer();
         else {
             gameState = GameState.ENDGAME;
             winner = model.endGame();
@@ -174,14 +180,14 @@ public class GameController {
                 chosenCard = chosenDeck.getVisibleCards().get(1);
             model.drawVisibleCard(chosenDeck, chosenCard);
         }
-        if(gameState != GameState.LAST_ROUND && model.getPlayers().get(model.getCurrentPlayerIndex()).getPoints()>=20) {
-            if(model.getCurrentPlayerIndex()==model.getnPlayer()-1)
-                gameState=GameState.LAST_ROUND;
+        if (gameState != GameState.LAST_ROUND && model.getPlayers().get(model.getCurrentPlayerIndex()).getPoints() >= 20) {
+            if (model.getCurrentPlayerIndex() == model.getnPlayer() - 1)
+                gameState = GameState.LAST_ROUND;
             else
-                gameState=GameState.FINISHING_ROUND_BEFORE_LAST;
+                gameState = GameState.FINISHING_ROUND_BEFORE_LAST;
         }
-        if(gameState==GameState.FINISHING_ROUND_BEFORE_LAST && model.getCurrentPlayerIndex()==model.getnPlayer()-1){
-            gameState=GameState.LAST_ROUND;
+        if (gameState == GameState.FINISHING_ROUND_BEFORE_LAST && model.getCurrentPlayerIndex() == model.getnPlayer() - 1) {
+            gameState = GameState.LAST_ROUND;
         }
         model.getCurrentPlayer().setPlayerState(PlayerState.WAITING);
         model.advanceToNextPlayer();
@@ -202,6 +208,12 @@ public class GameController {
         if (deck == 1)
             return model.getResourceDeck().getVisibleCards();
         return model.getGoldDeck().getVisibleCards();
+    }
+
+    public Card getLastCardOfUsableCards(int deck) {
+        if (deck == 1)
+            return model.getResourceDeck().getUsableCards().getLast();
+        return model.getGoldDeck().getUsableCards().getLast();
     }
 
     public String getUsernamePlayerThatStoppedTheGame() {

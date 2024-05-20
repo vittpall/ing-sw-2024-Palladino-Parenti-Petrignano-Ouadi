@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.RemoteInterfaces;
 
+import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -86,6 +87,8 @@ public interface VirtualView extends Remote {
     int getPoints() throws IOException, InterruptedException;
 
     ArrayList<GameCard> getVisibleCardsDeck(int deck) throws IOException, InterruptedException;
+
+    Card getLastFromUsableCards(int deck) throws RemoteException;
 
     String getUsernamePlayerThatStoppedTheGame() throws IOException, InterruptedException;
 

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.gui;
 
-import it.polimi.ingsw.gui.Controller.InitializeStarterCardController;
+import it.polimi.ingsw.gui.Controller.GameController;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
 import javafx.fxml.FXMLLoader;
@@ -9,34 +9,34 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
-public class InizializeStarterCardStateGUI implements ClientState {
-
+public class GameState implements ClientState {
 
     private final VirtualView client;
     private final Stage stage;
 
-    public InizializeStarterCardStateGUI(Stage stage, VirtualView client) {
+    public GameState(Stage stage, VirtualView client) {
         this.client = client;
         this.stage = stage;
     }
 
+
     @Override
     public void display() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InitializeStarterCard.fxml"));
-            loader.setController(new InitializeStarterCardController(stage, client));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GameState.fxml"));
+            loader.setController(new GameController(stage, client));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styles.css")).toExternalForm());
             stage.setScene(scene);
-            stage.setTitle("Main Menu");
             stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load FXML", e);
         }
     }
-
 
     @Override
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {

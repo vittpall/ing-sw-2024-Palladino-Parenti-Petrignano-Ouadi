@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.rmi.Server;
 
 import it.polimi.ingsw.controller.LobbyController;
+import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -81,13 +82,14 @@ public class RMIServer implements VirtualServer {
         }
 
     }
+
     public void broadcastWhatHappened(int idGame, Message msg) throws RemoteException {
-        try{
+        try {
             for (VirtualView client : clients) {
                 if (client.getIdGame() == idGame)
                     client.receiveNotification(msg);
             }
-        }catch(IOException | InterruptedException e){
+        } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -148,16 +150,16 @@ public class RMIServer implements VirtualServer {
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
         lobbyController.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
 
-        if(lobbyController.getCurrentGameState(idGame).equals(GameState.LAST_ROUND.toString())){
+        if (lobbyController.getCurrentGameState(idGame).equals(GameState.LAST_ROUND.toString())) {
             Message msg;
             String content;
-            if(idClientIntoGame!=lobbyController.getnPlayer(idGame)-1) {
-                content ="----------------------------------" +
+            if (idClientIntoGame != lobbyController.getnPlayer(idGame) - 1) {
+                content = "----------------------------------" +
                         "Player " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getUsername() + " played his last card\n" +
                         "Now is " + lobbyController.getPlayers(idGame).get(lobbyController.getCurrentPlayer(idGame)).getUsername() + " turn.";
-            }else
+            } else
                 content = "----------------------------------" +
-                        "Every player finished his last turn\n"+
+                        "Every player finished his last turn\n" +
                         "Now you can see the winner of the game";
             msg = new Message(null, null, content, idGame);
             this.broadcastWhatHappened(idGame, msg);
@@ -175,13 +177,13 @@ public class RMIServer implements VirtualServer {
         lobbyController.drawCard(idGame, idClientIntoGame, deckToChoose, inVisible);
         Message msg;
         String content;
-        content ="----------------------------------" +
+        content = "----------------------------------" +
                 "Player " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getUsername() + " drew a card\n" +
                 "Now is " + lobbyController.getPlayers(idGame).get(lobbyController.getCurrentPlayer(idGame)).getUsername() + " turn.";
-         if(lobbyController.getCurrentGameState(idGame).equals(GameState.FINISHING_ROUND_BEFORE_LAST.toString())||
-                lobbyController.getCurrentGameState(idGame).equals(GameState.LAST_ROUND.toString())){
-             content = "The game is ending. Player "+ lobbyController.getUsernamePlayerThatStoppedTheGame(idGame)+
-                    "has reached 20 points or more\n "+ content;
+        if (lobbyController.getCurrentGameState(idGame).equals(GameState.FINISHING_ROUND_BEFORE_LAST.toString()) ||
+                lobbyController.getCurrentGameState(idGame).equals(GameState.LAST_ROUND.toString())) {
+            content = "The game is ending. Player " + lobbyController.getUsernamePlayerThatStoppedTheGame(idGame) +
+                    "has reached 20 points or more\n " + content;
         }
         msg = new Message(null, null, content, idGame);
         this.broadcastWhatHappened(idGame, msg);
@@ -209,7 +211,6 @@ public class RMIServer implements VirtualServer {
     }*/
 
 
-
     @Override
     public boolean getIsLastRoundStarted(int idGame) throws RemoteException {
         return lobbyController.getIsLastRoundStarted(idGame);
@@ -223,6 +224,11 @@ public class RMIServer implements VirtualServer {
     @Override
     public ArrayList<GameCard> getVisibleCardsDeck(int idGame, int deck) throws RemoteException {
         return lobbyController.getVisibleCardsDeck(idGame, deck);
+    }
+
+    @Override
+    public Card getLastCardOfUsableCards(int idGame, int deck) throws RemoteException {
+        return lobbyController.getLastCardOfUsableCards(idGame, deck);
     }
 
     @Override
@@ -247,7 +253,7 @@ public class RMIServer implements VirtualServer {
         lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor);
     }
 
-    public int getPoints(int idGame, int idClientIntoGame) throws RemoteException{
+    public int getPoints(int idGame, int idClientIntoGame) throws RemoteException {
         return lobbyController.getPoints(idGame, idClientIntoGame);
     }
 
@@ -275,8 +281,9 @@ public class RMIServer implements VirtualServer {
     public String getCurrentState(int idGame, int idClientIntoGame) throws RemoteException {
         return lobbyController.getCurrentState(idGame, idClientIntoGame);
     }
+
     @Override
-    public boolean checkState(int idGame, int idClientIntoGame, RequestedActions requestedActions) throws RemoteException{
+    public boolean checkState(int idGame, int idClientIntoGame, RequestedActions requestedActions) throws RemoteException {
         return lobbyController.checkState(idGame, idClientIntoGame, requestedActions);
     }
 

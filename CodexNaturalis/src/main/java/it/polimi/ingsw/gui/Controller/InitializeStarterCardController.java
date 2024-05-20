@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gui.Controller;
 
+import it.polimi.ingsw.gui.GameState;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -14,7 +15,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Objects;
 
-public class InizializeStarterCardController {
+public class InitializeStarterCardController {
     @FXML
     private ImageView frontImageView;
     @FXML
@@ -23,7 +24,7 @@ public class InizializeStarterCardController {
     private final VirtualView client;
     private final Stage stage;
 
-    public InizializeStarterCardController(Stage stage, VirtualView client) {
+    public InitializeStarterCardController(Stage stage, VirtualView client) {
         this.client = client;
         this.stage = stage;
     }
@@ -57,19 +58,11 @@ public class InizializeStarterCardController {
     private void playStarterCard(boolean faceDown) {
         try {
             client.playStarterCard(faceDown);
-            String nextState = client.getNextState();
-            // Transition to the next state based on the returned state from the client
-            if (nextState.equals("PlayCardState")) {
-                //  client.setCurrentState(new PlayCardStateGUI(client));
-            } else if (nextState.equals("WaitForYourTurnState")) {
-                //  client.setCurrentState(new WaitForYourTurnStateGUI(client));
-            } else {
-                System.out.println("Error transitioning to the next state");
-            }
+            client.setCurrentState(new GameState(stage, client));
+            client.showState();
         } catch (PlaceNotAvailableException | CardNotFoundException | RequirementsNotMetException | IOException |
                  InterruptedException ex) {
             System.out.println("Error playing the card: " + ex.getMessage());
-            // Optionally update a status label with this message if you have one in your FXML
         }
     }
 }
