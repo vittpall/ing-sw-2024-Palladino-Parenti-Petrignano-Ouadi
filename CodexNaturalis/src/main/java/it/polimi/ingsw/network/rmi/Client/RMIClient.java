@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.observer.Observer;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
@@ -23,7 +24,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
-public class RMIClient extends UnicastRemoteObject implements VirtualView {
+public class RMIClient extends UnicastRemoteObject implements VirtualView, Observer {
     public final VirtualServer server;
     ClientState currentState;
     private String username;
@@ -386,6 +387,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         System.exit(0);
     }
 
+    public void removeUsername() throws RemoteException {
+        server.removeUsername(username);
+    }
+
     public void setIdGame(int idGame) {
         this.idGame = idGame;
     }
@@ -429,4 +434,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return server.getPlayers(idGame);
     }
 
+    /**
+     *
+     */
+    @Override
+    public void update() {
+
+    }
 }

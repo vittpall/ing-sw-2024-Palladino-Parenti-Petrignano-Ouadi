@@ -5,6 +5,8 @@ import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.observer.Observer;
+import it.polimi.ingsw.model.observer.Subject;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.Client.SocketClient;
@@ -14,7 +16,7 @@ import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 import java.io.*;
 
-public class ClientHandler {
+public class ClientHandler implements Subject {
     final SocketServer server;
     final ObjectInputStream input;
     final LobbyController controller;
@@ -32,29 +34,34 @@ public class ClientHandler {
         ClientToServerMsg request;
         ServerToClientMsg response;
         // Read message type
-        while ((request = (ClientToServerMsg)input.readObject()) != null) {
-            if(request instanceof SendMessageMsg){
-               ReturnableObject message = request.functionToCall(controller);
-               SocketServer.broadCastWhatHappened(message, request.getType(), request.getIdGame());
-            }
-            if(request.getDoItNeedToBeBroadcasted()){
-                ReturnableObject responseReturnable = request.functionToCall(controller);
-                ReturnableObject messageToBroadCast = new ReturnableObject<>();
-                //to align with what happen in the rmi server, i pass a message instead of just a string
-                Message message = new Message(null, null, request.getBroadCastMessage(), request.getIdGame());
-                messageToBroadCast.setResponseReturnable(message);
-                SocketServer.broadCastWhatHappened(messageToBroadCast, request.getType(), request.getIdGame());
-            }
-            else
-            {
-                response = new ServerToClientMsg(request.getType(), false);
-                response.setResponse(request.functionToCall(controller));
-                output.writeObject(response);
-                output.flush();
-                output.reset();
-            }
+        try {
+            while ((request = (ClientToServerMsg)input.readObject()) != null) {
+                if(request instanceof SendMessageMsg){
+                   ReturnableObject message = request.functionToCall(controller);
+                   SocketServer.broadCastWhatHappened(message, request.getType(), request.getIdGame());
+                }
+                if(request.getDoItNeedToBeBroadcasted()){
+                    ReturnableObject responseReturnable = request.functionToCall(controller);
+                    ReturnableObject messageToBroadCast = new ReturnableObject<>();
+                    //to align with what happen in the rmi server, i pass a message instead of just a string
+                    Message message = new Message(null, null, request.getBroadCastMessage(), request.getIdGame());
+                    messageToBroadCast.setResponseReturnable(message);
+                    SocketServer.broadCastWhatHappened(messageToBroadCast, request.getType(), request.getIdGame());
+                }
+                else
+                {
+                    response = new ServerToClientMsg(request.getType(), false);
+                    response.setResponse(request.functionToCall(controller));
+                    output.writeObject(response);
+                    output.flush();
+                    output.reset();
+                }
 
 
+            }
+        } catch (IOException | ClassNotFoundException | InterruptedException | CardNotFoundException |
+                 PlaceNotAvailableException | RequirementsNotMetException e) {
+            e.printStackTrace();
         }
     }
 
@@ -62,5 +69,29 @@ public class ClientHandler {
         output.writeObject(msgToBroadCast);
         output.flush();
         output.reset();
+    }
+
+    /**
+     * @param o
+     */
+    @Override
+    public void register(Observer o) {
+
+    }
+
+    /**
+     * @param o
+     */
+    @Override
+    public void unregister(Observer o) {
+
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void notifyObserver() {
+
     }
 }

@@ -13,6 +13,7 @@
         <Button fx:id="joinGameButton" text="Join Selected Game" onAction="#handleJoinGame" disable="true"/>
         <Button fx:id="createGameButton" text="Create New Game" onAction="#handleCreateGame"/>
         <Label fx:id="messageLabel" style="-fx-text-fill: red;"/>
+        <Button alignment="TOP_CENTER" layoutX="40.0" layoutY="325.0" onAction="#handleBack" styleClass="primary-button" text="Back" textFill="WHITE" />
     </VBox>
 
 </AnchorPane>

@@ -1,7 +1,11 @@
 package it.polimi.ingsw.gui.Controller;
 
 import it.polimi.ingsw.gui.ColorSelectionGUI;
+import it.polimi.ingsw.gui.CreateGameStateGUI;
+import it.polimi.ingsw.gui.LobbyMenuStateGUI;
+import it.polimi.ingsw.gui.MainMenuStateGUI;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
+import it.polimi.ingsw.tui.MainMenuState;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,6 +14,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class JoinGameMenuController {
@@ -85,6 +91,22 @@ public class JoinGameMenuController {
     }
 
     public void handleCreateGame(ActionEvent actionEvent) {
-        // Handle game creation logic
+        try {
+            client.setCurrentState(new CreateGameStateGUI(stage, client));
+            client.showState();
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+    public void handleBack(ActionEvent actionEvent) {
+        try {
+            client.setCurrentState(new LobbyMenuStateGUI(stage, client));
+            client.showState();
+            //TODO to remove the username from the game
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

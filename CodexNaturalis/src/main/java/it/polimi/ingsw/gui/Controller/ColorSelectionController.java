@@ -71,10 +71,10 @@ public class ColorSelectionController {
             });
         }
     }
-
-    public void handleSelectColor() {
+//TODO here the listener will recall the method display to refresh the list of colors.
+    public void handleSelectColor() throws IOException, InterruptedException {
         TokenColor selectedColor = colorListView.getSelectionModel().getSelectedItem();
-        if (selectedColor != null) {
+        if (selectedColor != null && client.getAvailableColors().contains(selectedColor)) {
             try {
                 client.setTokenColor(selectedColor);
                 client.setCurrentState(new ObjectiveCardSelectionStateGUI(stage, client));
@@ -84,6 +84,9 @@ public class ColorSelectionController {
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
+        }
+        else {
+            messageLabel.setText("Color not available, please select another color.");
         }
     }
 

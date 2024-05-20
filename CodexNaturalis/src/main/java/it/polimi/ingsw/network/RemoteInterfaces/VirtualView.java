@@ -94,6 +94,8 @@ public interface VirtualView extends Remote {
 
     void close() throws IOException, RemoteException, InterruptedException;
 
+    void removeUsername() throws IOException, InterruptedException;
+
     String getWinner() throws IOException, InterruptedException;
 
     void closeGame() throws IOException, InterruptedException;

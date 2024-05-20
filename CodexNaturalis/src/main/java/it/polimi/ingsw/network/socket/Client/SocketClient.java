@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.model.observer.Observer;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.*;
@@ -33,7 +34,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * This class represents the client side of a socket connection.
  * It implements the VirtualView interface, which provides methods for interacting with the game model.
  */
-public class SocketClient implements VirtualView {
+public class SocketClient implements VirtualView, Observer {
 
     private final ObjectOutputStream out;
     private final ObjectInputStream in;
@@ -120,6 +121,7 @@ public class SocketClient implements VirtualView {
 
     private ServerToClientMsg sendRequest(ClientToServerMsg request) throws IOException, InterruptedException {
         TypeServerToClientMsg expectedResponse = request.getType();
+        System.out.println("Sending request: " + request.getType() + " to the server");
         out.writeObject(request);
         out.flush();
         out.reset();
@@ -133,7 +135,7 @@ public class SocketClient implements VirtualView {
     public ArrayList<Integer> getNotStartedGames() throws IOException, InterruptedException {
         GetNotStartedGamesMsg request = new GetNotStartedGamesMsg();
         ServerToClientMsg response = sendRequest(request);
-
+        System.out.println("Received response: " + response.getResponse().getResponseReturnable());
         return (ArrayList<Integer>) response.getResponse().getResponseReturnable();
     }
 
@@ -212,10 +214,20 @@ public class SocketClient implements VirtualView {
     @Override
     public void close() throws IOException, InterruptedException {
         ClosedConnectionMsg request = new ClosedConnectionMsg(username, idGame);
+        System.out.println("Closing connection!!!");
         ServerToClientMsg response = sendRequest(request);
         response.getResponse();
 
         System.exit(0);
+    }
+
+    /**
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    @Override
+    public void removeUsername() throws IOException, InterruptedException {
+
     }
 
     @Override
@@ -248,7 +260,9 @@ public class SocketClient implements VirtualView {
      */
     @Override
     public int getnPlayer(int idGame) throws IOException, InterruptedException {
-        return 0;
+        GetNPlayer request = new GetNPlayer(idGame);
+        ServerToClientMsg response = sendRequest(request);
+        return (int) response.getResponse().getResponseReturnable();
     }
 
     /**
@@ -258,8 +272,11 @@ public class SocketClient implements VirtualView {
      * @throws InterruptedException
      */
     @Override
+    @SuppressWarnings("unchecked")
     public ArrayList<Player> getPlayers(int idGame) throws IOException, InterruptedException {
-        return null;
+        GetAllPlayersMsg request = new GetAllPlayersMsg(idGame);
+        ServerToClientMsg response = sendRequest(request);
+        return (ArrayList<Player>) response.getResponse().getResponseReturnable();
     }
 
     @Override
@@ -449,8 +466,9 @@ public class SocketClient implements VirtualView {
                     System.out.println("Invalid input: Please enter a number.");
                 }
             }
-        } while (currentState instanceof ColorSelection);
+        } while (!(currentState instanceof PlayCardState));
         while (true) {
+            System.out.println("You are in the game: " + idGame + " as player: " + idClientIntoGame);
             display();
             correctInput = false;
             while (!correctInput) {
@@ -528,15 +546,25 @@ public class SocketClient implements VirtualView {
                     if (checkState) currentState = new PlayCardState(this, scan);
                     return checkState;
                 case 3:
-                    //TODO: da fare simile
+                    checkState = checkState(idGame, idClientIntoGame, RequestedActions.SHOW_DESKS);
+                    //  if (checkState) currentState = new ShowDeskState(this, scan);
+                    return checkState;
                 case 4:
-                    //TODO: da fare simile
+                    checkState = checkState(idGame, idClientIntoGame, RequestedActions.SHOW_OBJ_CARDS);
+                    if (checkState) currentState = new ShowObjectiveCardsState(this, scan);
+                    return checkState;
                 case 5:
-                    //TODO: da fare simile
+                    checkState = checkState(idGame, idClientIntoGame, RequestedActions.SHOW_POINTS);
+                    if (checkState) currentState = new ShowPointsState(this, scan);
+                    return checkState;
                 case 6:
-                    //TODO: da fare simile
+                    checkState = checkState(idGame, idClientIntoGame, RequestedActions.CHAT);
+                    if (checkState) currentState = new ChatState(this, scan);
+                    return checkState;
                 case 7:
-                    //TODO: da fare simile
+                    checkState = checkState(idGame, idClientIntoGame, RequestedActions.SHOW_WINNER);
+                    if (checkState) currentState = new GetWinnerState(this, scan);
+                    return checkState;
                 default:
                     return false;
             }
@@ -607,4 +635,11 @@ public class SocketClient implements VirtualView {
         return (boolean) response.getResponse().getResponseReturnable();
     }
 
+    /**
+     *
+     */
+    @Override
+    public void update() {
+
+    }
 }

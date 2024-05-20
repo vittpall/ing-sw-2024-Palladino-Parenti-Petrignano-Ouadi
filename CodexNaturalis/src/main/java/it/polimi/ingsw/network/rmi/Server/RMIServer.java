@@ -12,6 +12,8 @@ import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.GameState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.observer.Observer;
+import it.polimi.ingsw.model.observer.Subject;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
@@ -24,7 +26,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-public class RMIServer implements VirtualServer {
+public class RMIServer implements VirtualServer, Subject {
     final List<VirtualView> clients = new ArrayList<>();
 
     private final LobbyController lobbyController;
@@ -287,4 +289,27 @@ public class RMIServer implements VirtualServer {
         return lobbyController.checkState(idGame, idClientIntoGame, requestedActions);
     }
 
+    /**
+     * @param o
+     */
+    @Override
+    public void register(Observer o) {
+
+    }
+
+    /**
+     * @param o
+     */
+    @Override
+    public void unregister(Observer o) {
+
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void notifyObserver() {
+
+    }
 }
