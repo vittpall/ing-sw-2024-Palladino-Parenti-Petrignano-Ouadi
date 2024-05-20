@@ -8,9 +8,7 @@ import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -30,6 +28,7 @@ public class GameController {
     public StackPane visibleCardDeck2Card2;
     public StackPane objectiveCard1;
     public StackPane objectiveCard2;
+    public VBox playerHandBox;
     @FXML
     private ImageView boardImage;
     @FXML
@@ -72,6 +71,16 @@ public class GameController {
         // Initialize visible cards from deck 1 and deck 2
         initializeVisibleCards(client.getVisibleCardsDeck(1), visibleCardDeck1Card1, visibleCardDeck1Card2);
         initializeVisibleCards(client.getVisibleCardsDeck(2), visibleCardDeck2Card1, visibleCardDeck2Card2);
+
+
+        ArrayList<GameCard> playerHand = client.getPlayerHand();
+        for (int i = 0; i < 3; i++) {
+            if (i < playerHand.size()) {
+                GameCard card = playerHand.get(i);
+                CardView cardView = new CardView(card, !card.isPlayedFaceDown());
+                playerHandBox.getChildren().add(cardView);
+            }
+        }
     }
 
     private void initializeVisibleCards(ArrayList<GameCard> cards, Pane pane1, Pane pane2) {
