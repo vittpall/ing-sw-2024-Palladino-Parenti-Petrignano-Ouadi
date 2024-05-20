@@ -48,7 +48,7 @@ public class MainMenuStateGUI implements ClientState {
     @Override
     public void display() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it.polimi.ingsw.gui/MainMenuState.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenuState.fxml"));
             loader.setController(this);
             Parent root = loader.load();
 

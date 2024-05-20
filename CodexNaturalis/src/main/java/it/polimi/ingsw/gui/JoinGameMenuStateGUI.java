@@ -24,7 +24,7 @@ public class JoinGameMenuStateGUI implements ClientState {
     @Override
     public void display() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it.polimi.ingsw.gui/JoinGameMenuState.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/JoinGameMenuState.fxml"));
             loader.setController(new JoinGameMenuController(stage, client));
             Parent root = loader.load();
 

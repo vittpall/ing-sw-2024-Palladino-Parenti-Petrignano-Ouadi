@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gui.Controller;
 
+import it.polimi.ingsw.gui.ObjectiveCardSelectionStateGUI;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.collections.FXCollections;
@@ -11,12 +12,14 @@ import javafx.scene.control.ListView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class ColorSelectionController {
+    private final Stage stage;
     @FXML
     private ListView<TokenColor> colorListView;
     @FXML
@@ -26,8 +29,9 @@ public class ColorSelectionController {
 
     private final VirtualView client;
 
-    public ColorSelectionController(VirtualView client) {
+    public ColorSelectionController(Stage stage, VirtualView client) {
         this.client = client;
+        this.stage = stage;
     }
 
     @FXML
@@ -73,7 +77,8 @@ public class ColorSelectionController {
         if (selectedColor != null) {
             try {
                 client.setTokenColor(selectedColor);
-                // Transition to next state
+                client.setCurrentState(new ObjectiveCardSelectionStateGUI(stage, client));
+                client.showState();
             } catch (RemoteException e) {
                 messageLabel.setText("Error selecting color: " + e.getMessage());
             } catch (IOException | InterruptedException e) {

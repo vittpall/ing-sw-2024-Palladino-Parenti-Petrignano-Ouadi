@@ -25,8 +25,8 @@ public class ColorSelectionGUI implements ClientState {
     @Override
     public void display() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it.polimi.ingsw.gui/ColorSelection.fxml"));
-            loader.setController(new ColorSelectionController(client));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ColorSelection.fxml"));
+            loader.setController(new ColorSelectionController(stage, client));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);

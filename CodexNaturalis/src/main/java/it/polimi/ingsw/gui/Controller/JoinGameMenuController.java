@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gui.Controller;
 
+import it.polimi.ingsw.gui.ColorSelectionGUI;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -73,7 +74,8 @@ public class JoinGameMenuController {
             try {
                 client.joinGame(selectedGame, client.getUsername());
                 messageLabel.setText("Joined game: " + selectedGame);
-                // Update state or navigate
+                client.setCurrentState(new ColorSelectionGUI(stage, client));
+                client.showState();
             } catch (Exception e) {
                 messageLabel.setText("Error joining game: " + e.getMessage());
             }

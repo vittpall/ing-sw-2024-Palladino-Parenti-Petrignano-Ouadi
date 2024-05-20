@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ObjectiveCardSelectionController {
     private final Stage stage;
@@ -40,8 +41,11 @@ public class ObjectiveCardSelectionController {
         try {
             playerObjectiveCards = client.getPlayerObjectiveCards();
             if (playerObjectiveCards.size() >= 2) {
-                card1ImageView.setImage(new Image(playerObjectiveCards.get(0).getImageFrontPath()));
-                card2ImageView.setImage(new Image(playerObjectiveCards.get(1).getImageFrontPath()));
+                String frontImagePath = Objects.requireNonNull(getClass().getResource("/Images/" + playerObjectiveCards.getFirst().getImageFrontPath())).toExternalForm();
+                String backImagePath = Objects.requireNonNull(getClass().getResource("/Images/" + playerObjectiveCards.get(1).getImageFrontPath())).toExternalForm();
+
+                card1ImageView.setImage(new Image(frontImagePath));
+                card2ImageView.setImage(new Image(backImagePath));
             } else {
                 messageLabel.setText("Not enough cards loaded.");
             }
@@ -67,8 +71,8 @@ public class ObjectiveCardSelectionController {
     private void selectCard(int cardIndex) {
         try {
             client.setObjectiveCard(cardIndex);
-            // Update the client state to the next state in the game
             client.setCurrentState(new InizializeStarterCardStateGUI(stage, client));
+            client.showState();
             messageLabel.setText("Card selected: " + playerObjectiveCards.get(cardIndex).getImageFrontPath());
         } catch (CardNotFoundException | IOException | InterruptedException ex) {
             messageLabel.setText("Error selecting card: " + ex.getMessage());

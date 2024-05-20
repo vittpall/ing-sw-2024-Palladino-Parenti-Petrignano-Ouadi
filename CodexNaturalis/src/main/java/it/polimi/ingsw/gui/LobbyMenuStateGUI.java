@@ -46,7 +46,7 @@ public class LobbyMenuStateGUI implements ClientState {
     @Override
     public void display() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it.polimi.ingsw.gui/LobbyMenuState.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/LobbyMenuState.fxml"));
             loader.setController(this);
             Parent root = loader.load();
 

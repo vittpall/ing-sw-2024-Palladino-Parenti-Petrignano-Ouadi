@@ -22,7 +22,7 @@ public class ObjectiveCardSelectionStateGUI implements ClientState {
     @Override
     public void display() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it.polimi.ingsw.gui/ObjectiveCardSelection.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ObjectiveCardSelection.fxml"));
             loader.setController(new ObjectiveCardSelectionController(stage, client));
             Parent root = loader.load();
 

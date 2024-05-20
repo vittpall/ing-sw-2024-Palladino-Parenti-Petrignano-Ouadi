@@ -1,6 +1,6 @@
 package it.polimi.ingsw.gui;
 
-import it.polimi.ingsw.gui.Controller.JoinGameMenuController;
+import it.polimi.ingsw.gui.Controller.InizializeStarterCardController;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
 import javafx.fxml.FXMLLoader;
@@ -24,8 +24,8 @@ public class InizializeStarterCardStateGUI implements ClientState {
     @Override
     public void display() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it.polimi.ingsw.gui/JoinGameMenuState.fxml"));
-            loader.setController(new JoinGameMenuController(stage, client));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/InitializeStarterCard.fxml"));
+            loader.setController(new InizializeStarterCardController(stage, client));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);

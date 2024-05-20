@@ -24,7 +24,7 @@ public class ObjectiveCard extends Card implements Serializable {
      * @param strategy it's the strategy we want to use
      */
     public ObjectiveCard(ObjectiveStrategy strategy, int points, String backImagePath, String frontImagePath) {
-        super(points, backImagePath, frontImagePath);
+        super(points, frontImagePath, backImagePath);
         this.strategy = strategy;
     }
 

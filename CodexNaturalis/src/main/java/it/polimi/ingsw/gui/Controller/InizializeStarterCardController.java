@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.Objects;
 
 public class InizializeStarterCardController {
     @FXML
@@ -32,8 +33,11 @@ public class InizializeStarterCardController {
     public void initialize() {
         try {
             StarterCard starterCard = client.getStarterCard();
-            frontImageView.setImage(new Image(starterCard.getImageFrontPath()));
-            backImageView.setImage(new Image(starterCard.getImageBackPath()));
+            String frontImagePath = Objects.requireNonNull(getClass().getResource("/Images/" + starterCard.getImageBackPath())).toExternalForm();
+            String backImagePath = Objects.requireNonNull(getClass().getResource("/Images/" + starterCard.getImageBackPath())).toExternalForm();
+
+            frontImageView.setImage(new Image(frontImagePath));
+            backImageView.setImage(new Image(backImagePath));
         } catch (RemoteException ex) {
             System.out.println("Error loading card images: " + ex.getMessage());
             // Optionally update a status label with this message if you have one in your FXML
@@ -58,7 +62,7 @@ public class InizializeStarterCardController {
             if (nextState.equals("PlayCardState")) {
                 //  client.setCurrentState(new PlayCardStateGUI(client));
             } else if (nextState.equals("WaitForYourTurnState")) {
-                // client.setCurrentState(new WaitForYourTurnStateGUI(client));
+                //  client.setCurrentState(new WaitForYourTurnStateGUI(client));
             } else {
                 System.out.println("Error transitioning to the next state");
             }

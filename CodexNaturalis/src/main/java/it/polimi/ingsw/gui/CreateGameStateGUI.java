@@ -25,8 +25,8 @@ public class CreateGameStateGUI implements ClientState {
     @Override
     public void display() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it.polimi.ingsw.gui/CreateGameState.fxml"));
-            loader.setController(new CreateGameMenuController(client));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CreateGameState.fxml"));
+            loader.setController(new CreateGameMenuController(stage, client));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
