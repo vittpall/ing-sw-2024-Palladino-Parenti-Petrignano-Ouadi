@@ -14,10 +14,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainMenuStateGUI implements ClientState {
-    private Stage stage;
+    private final Stage stage;
     public Label welcomeLabel;
     public Button playButton;
-    private VirtualView client;
+    private final VirtualView client;
 
     @FXML
     private TextField usernameField;
@@ -31,16 +31,14 @@ public class MainMenuStateGUI implements ClientState {
         WindowCloseHandler.setUpCloseRequestHandling(stage);
     }
 
-    public MainMenuStateGUI() {
-    }
-
     @FXML
     private void handlePlayButton() throws IOException, ClassNotFoundException, InterruptedException {
         String username = usernameField.getText();
-        if (client != null && client.checkUsername(username)) {
+        if (this.client != null && client.checkUsername(username)) {
             client.setUsername(username);
             client.setCurrentState(new LobbyMenuStateGUI(stage, client));
             errorLabel.setText("");
+            client.showState();
         } else {
             errorLabel.setText("Invalid username, please try again.");
             usernameField.setText("");
@@ -51,8 +49,8 @@ public class MainMenuStateGUI implements ClientState {
     public void display() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/it.polimi.ingsw.gui/MainMenuState.fxml"));
-            Parent root = loader.load();
             loader.setController(this);
+            Parent root = loader.load();
 
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -62,7 +60,6 @@ public class MainMenuStateGUI implements ClientState {
             e.printStackTrace();
         }
     }
-
 
 
     @Override

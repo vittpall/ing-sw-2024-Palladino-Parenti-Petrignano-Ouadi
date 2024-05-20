@@ -32,6 +32,7 @@ module PSP44 {
     exports it.polimi.ingsw.util;
 
     opens it.polimi.ingsw.gui to javafx.fxml;
+    opens it.polimi.ingsw.gui.Controller to javafx.fxml;
     opens it.polimi.ingsw.model to com.fasterxml.jackson.databind;
 
 }

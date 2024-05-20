@@ -10,13 +10,13 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class JoinGameMenuStateGUI implements ClientState {
+public class InizializeStarterCardStateGUI implements ClientState {
 
 
     private final VirtualView client;
     private final Stage stage;
 
-    public JoinGameMenuStateGUI(Stage stage, VirtualView client) {
+    public InizializeStarterCardStateGUI(Stage stage, VirtualView client) {
         this.client = client;
         this.stage = stage;
     }
@@ -37,6 +37,7 @@ public class JoinGameMenuStateGUI implements ClientState {
         }
     }
 
+
     @Override
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
 
@@ -46,5 +47,4 @@ public class JoinGameMenuStateGUI implements ClientState {
     public void promptForInput() {
 
     }
-
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+    <Label text="Choose a Color" style="-fx-font-size: 20px;"/>
+    <ListView fx:id="colorListView" prefHeight="200.0" prefWidth="200.0"/>
+    <Button fx:id="selectColorButton" text="Select Color" onAction="#handleSelectColor"/>
+    <Label fx:id="messageLabel" style="-fx-text-fill: red;"/>
+</VBox>

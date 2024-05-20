@@ -81,10 +81,12 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                 System.out.println("You have received a from " + msg.getSender());
         }
     }
+
     @Override
-    public void receiveNotification(Message msg) throws IOException, InterruptedException{
+    public void receiveNotification(Message msg) throws IOException, InterruptedException {
         System.out.println(msg.getContent());
     }
+
     @Override
     public boolean checkUsername(String username) throws IOException {
         return server.checkUsername(username);
@@ -94,6 +96,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     public ArrayList<Integer> getNotStartedGames() throws RemoteException {
         return server.getNotStartedGames();
     }
+
     @Override
     public ArrayList<Player> getAllPlayers() throws RemoteException {
         return server.getAllPlayers(idGame);
@@ -150,7 +153,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
 
     @Override
     public String getNextState() throws RemoteException {
-         if (currentState instanceof DrawCardState) {
+        if (currentState instanceof DrawCardState) {
             if (server.getIsLastRoundStarted(idGame))
                 return "LastRoundState";
             else
@@ -235,6 +238,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return this.server.getPlayerDesk(idGame, idClientIntoGame);
     }
 
+    @Override
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
         if (!isGUIMode)
@@ -243,7 +247,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
             showState();
     }
 
-    void showState() {
+    @Override
+    public void showState() {
         currentState.display();
         currentState.promptForInput();
     }
@@ -271,8 +276,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                     System.out.println("Invalid input: Please enter a number.");
                 }
             }
-        }while(!(currentState instanceof PlayCardState));
-        while(true){
+        } while (!(currentState instanceof PlayCardState));
+        while (true) {
             display();
             correctInput = false;
             while (!correctInput) {
@@ -318,7 +323,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
 
     private boolean gameLogicInputHandler(int i) {
-        try{
+        try {
             boolean checkState;
             switch (i) {
                 case 1:
@@ -332,7 +337,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
                     return checkState;
                 case 3:
                     checkState = server.checkState(idGame, idClientIntoGame, RequestedActions.SHOW_DESKS);
-                  //  if (checkState) currentState = new ShowDeskState(this, scan);
+                    //  if (checkState) currentState = new ShowDeskState(this, scan);
                     return checkState;
                 case 4:
                     checkState = server.checkState(idGame, idClientIntoGame, RequestedActions.SHOW_OBJ_CARDS);
@@ -359,7 +364,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
         return false;
     }
 
-    private void display(){
+    private void display() {
         System.out.println("\n--------------------------------");
         System.out.println("Choose an action:");
         System.out.println("1- Play a card");
@@ -415,7 +420,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView {
     }
 
     @Override
-    public ArrayList<Player> getPlayers(int idGame) throws IOException{
+    public ArrayList<Player> getPlayers(int idGame) throws IOException {
         return server.getPlayers(idGame);
     }
 

@@ -103,5 +103,7 @@ public interface VirtualView extends Remote {
 
     void receiveNotification(Message msg) throws IOException, InterruptedException;
 
-    void run() throws IOException, InterruptedException,ClassNotFoundException;
+    void run() throws IOException, InterruptedException, ClassNotFoundException;
+
+    void showState() throws RemoteException;
 }

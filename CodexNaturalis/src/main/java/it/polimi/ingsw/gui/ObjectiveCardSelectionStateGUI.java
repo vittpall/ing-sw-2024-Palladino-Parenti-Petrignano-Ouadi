@@ -1,6 +1,6 @@
 package it.polimi.ingsw.gui;
 
-import it.polimi.ingsw.gui.Controller.JoinGameMenuController;
+import it.polimi.ingsw.gui.Controller.ObjectiveCardSelectionController;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
 import javafx.fxml.FXMLLoader;
@@ -10,13 +10,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class JoinGameMenuStateGUI implements ClientState {
+public class ObjectiveCardSelectionStateGUI implements ClientState {
+    public final VirtualView client;
+    public Stage stage;
 
-
-    private final VirtualView client;
-    private final Stage stage;
-
-    public JoinGameMenuStateGUI(Stage stage, VirtualView client) {
+    public ObjectiveCardSelectionStateGUI(Stage stage, VirtualView client) {
         this.client = client;
         this.stage = stage;
     }
@@ -24,13 +22,13 @@ public class JoinGameMenuStateGUI implements ClientState {
     @Override
     public void display() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it.polimi.ingsw.gui/JoinGameMenuState.fxml"));
-            loader.setController(new JoinGameMenuController(stage, client));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/it.polimi.ingsw.gui/ObjectiveCardSelection.fxml"));
+            loader.setController(new ObjectiveCardSelectionController(stage, client));
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
             stage.setScene(scene);
-            stage.setTitle("Main Menu");
+            stage.setTitle("Lobby Menu");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,5 +44,4 @@ public class JoinGameMenuStateGUI implements ClientState {
     public void promptForInput() {
 
     }
-
 }

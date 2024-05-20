@@ -556,7 +556,8 @@ public class SocketClient implements VirtualView {
         System.out.println("10- Set your starter card");
     }
 
-    void showState() {
+    @Override
+    public void showState() {
         currentState.display();
         currentState.promptForInput();
     }
