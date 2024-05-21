@@ -343,7 +343,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
                     return checkState;
                 case 3:
                     checkState = server.checkState(idGame, idClientIntoGame, RequestedActions.SHOW_DESKS);
-                    //  if (checkState) currentState = new ShowDeskState(this, scan);
+                    if (checkState) currentState = new GetOtherPlayerDesk(this, scan);
                     return checkState;
                 case 4:
                     checkState = server.checkState(idGame, idClientIntoGame, RequestedActions.SHOW_OBJ_CARDS);
@@ -375,7 +375,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
         System.out.println("Choose an action:");
         System.out.println("1- Play a card");
         System.out.println("2- Draw a card");
-        System.out.println("3- Show your desk and others' desks");
+        System.out.println("3- Show your desk or others' desks");
         System.out.println("4- Show the shared objective cards and your objective card");
         System.out.println("5- Show players' points");
         System.out.println("6- Chat");
