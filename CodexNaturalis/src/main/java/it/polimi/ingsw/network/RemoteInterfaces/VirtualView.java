@@ -111,4 +111,6 @@ public interface VirtualView extends Remote {
     void run() throws IOException, InterruptedException, ClassNotFoundException;
 
     void showState() throws RemoteException;
+
+    boolean isGameStarted() throws RemoteException;
 }

@@ -1,13 +1,10 @@
 package it.polimi.ingsw.tui;
 
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Scanner;
 
 public class JoinGameMenuState implements ClientState {
@@ -59,10 +56,8 @@ public class JoinGameMenuState implements ClientState {
                 System.out.println("Invalid input");
                 return;
             }
-            System.out.println("Waiting for the game to start...");
             client.joinGame(input, client.getUsername());
-            client.setCurrentState(new ColorSelection(client, scanner));
-            System.out.println("The game " + client.getIdGame() + " has started.\nYou are the player number " + client.getIdClientIntoGame() + "\n");
+            client.setCurrentState(new WaitingForPlayersState(client, scanner));
         } catch (InterruptedException | IOException ex) {
             System.out.println("Error while joining the game");
         }

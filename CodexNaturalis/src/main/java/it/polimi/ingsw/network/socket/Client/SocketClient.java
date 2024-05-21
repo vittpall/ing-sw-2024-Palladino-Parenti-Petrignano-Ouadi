@@ -596,6 +596,11 @@ public class SocketClient implements VirtualView, Observer {
         currentState.promptForInput();
     }
 
+    @Override
+    public boolean isGameStarted() throws RemoteException {
+        return false;
+    }
+
     //what I receive from the server
     @SuppressWarnings("InfiniteLoopStatement")
     private void runVirtualServer() throws IOException, ClassNotFoundException {

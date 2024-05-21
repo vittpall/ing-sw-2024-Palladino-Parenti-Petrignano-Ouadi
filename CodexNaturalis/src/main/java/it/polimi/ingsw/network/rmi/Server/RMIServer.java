@@ -98,12 +98,25 @@ public class RMIServer implements VirtualServer, Subject {
 
     @Override
     public int joinGame(int id, String username) throws RemoteException, InterruptedException {
-        return lobbyController.joinGame(id, username);
+        int idPlayerIntoGame= lobbyController.joinGame(id, username);
+        String content = "\n----------------------------------" +
+                "\nPlayer " + lobbyController.getPlayers(id).get(idPlayerIntoGame).getUsername() + " joined the game\n";
+        if(lobbyController.getPlayers(id).size() == lobbyController.getnPlayer(id))
+            content += "You can now start the game";
+        else
+            content += "Waiting for "+(lobbyController.getnPlayer(id)-lobbyController.getPlayers(id).size())+" players to join";
+        Message msg = new Message(null, null, content, id);
+        this.broadcastWhatHappened(id, msg);
+        return idPlayerIntoGame;
     }
 
     @Override
     public int createGame(String username, int nPlayers) throws RemoteException, InterruptedException {
         return lobbyController.createGame(username, nPlayers);
+    }
+    @Override
+    public boolean isGameStarted(int idGame) throws RemoteException{
+        return !lobbyController.getCurrentGameState(idGame).equals(GameState.WAITING_FOR_PLAYERS.toString());
     }
 
     @Override
@@ -156,13 +169,15 @@ public class RMIServer implements VirtualServer, Subject {
             Message msg;
             String content;
             if (idClientIntoGame != lobbyController.getnPlayer(idGame) - 1) {
-                content = "----------------------------------" +
+                content = "\n----------------------------------\n" +
                         "Player " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getUsername() + " played his last card\n" +
                         "Now is " + lobbyController.getPlayers(idGame).get(lobbyController.getCurrentPlayer(idGame)).getUsername() + " turn.";
             } else
-                content = "----------------------------------" +
-                        "Every player finished his last turn\n" +
-                        "Now you can see the winner of the game";
+                content = """
+
+                        ----------------------------------
+                        Every player finished his last turn
+                        Now you can see the winner of the game""";
             msg = new Message(null, null, content, idGame);
             this.broadcastWhatHappened(idGame, msg);
         }
@@ -179,7 +194,7 @@ public class RMIServer implements VirtualServer, Subject {
         lobbyController.drawCard(idGame, idClientIntoGame, deckToChoose, inVisible);
         Message msg;
         String content;
-        content = "----------------------------------" +
+        content = "\n----------------------------------\n" +
                 "Player " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getUsername() + " drew a card\n" +
                 "Now is " + lobbyController.getPlayers(idGame).get(lobbyController.getCurrentPlayer(idGame)).getUsername() + " turn.";
         if (lobbyController.getCurrentGameState(idGame).equals(GameState.FINISHING_ROUND_BEFORE_LAST.toString()) ||
@@ -195,22 +210,11 @@ public class RMIServer implements VirtualServer, Subject {
      * @param idGame
      * @param idClientIntoGame
      * @throws RemoteException
-     * @throws InterruptedException
      */
     @Override
-    public void waitForYourTurn(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException {
+    public void waitForYourTurn(int idGame, int idClientIntoGame) throws RemoteException{
 
     }
-
-    /*private void switchTurns(int idGame) throws IOException, InterruptedException {
-       // Player nextPlayer = lobbyController.getNextPlayer(idGame);
-        for (VirtualView client : clients) {
-           // if (client.getIdGame() == idGame && (client.getUsername()).equals(nextPlayer.getUsername()))
-            {
-                client.notifyYourTurn();
-            }
-        }
-    }*/
 
 
     @Override
@@ -253,6 +257,11 @@ public class RMIServer implements VirtualServer, Subject {
     @Override
     public void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws RemoteException {
         lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor);
+        String message = "\n----------------------------------\n" +
+                "Player " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getUsername() +
+                " chose the color " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getTokenColor();
+        Message msg = new Message(null, null, message, idGame);
+        this.broadcastWhatHappened(idGame, msg);
     }
 
     public int getPoints(int idGame, int idClientIntoGame) throws RemoteException {

@@ -85,7 +85,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
     }
 
     @Override
-    public void receiveNotification(Message msg) throws IOException, InterruptedException {
+    public void receiveNotification(Message msg) {
         System.out.println(msg.getContent());
     }
 
@@ -251,6 +251,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
             inputHandler();
         else
             showState();
+    }
+    public boolean isGameStarted() throws RemoteException{
+        return server.isGameStarted(idGame);
     }
 
     @Override

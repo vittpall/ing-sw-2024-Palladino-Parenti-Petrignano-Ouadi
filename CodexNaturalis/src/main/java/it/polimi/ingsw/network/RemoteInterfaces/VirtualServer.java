@@ -94,4 +94,6 @@ public interface VirtualServer extends Remote {
     String getCurrentState(int idGame, int idClientIntoGame) throws RemoteException;
 
     boolean checkState(int idGame, int idClientIntoGame, RequestedActions requestedActions) throws RemoteException;
+
+    boolean isGameStarted(int idGame) throws RemoteException;
 }

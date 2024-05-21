@@ -67,10 +67,8 @@ public class CreateGameState implements ClientState {
         }
 
         try {
-            System.out.println("Creating game and waiting for the players...");
             client.createGame(client.getUsername(), nPlayers);
-            System.out.println("The game " + client.getIdGame() + " has started.\nYou are the player number " + client.getIdClientIntoGame() + "\n");
-            client.setCurrentState(new ColorSelection(client, scanner));
+            client.setCurrentState(new WaitingForPlayersState(client, scanner));
         } catch (InterruptedException | RemoteException e) {
             System.out.println("Error creating game. Please try again.");
         } catch (IOException e) {

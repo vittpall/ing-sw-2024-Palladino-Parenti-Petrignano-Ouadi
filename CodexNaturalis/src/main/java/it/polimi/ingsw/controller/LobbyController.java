@@ -62,17 +62,14 @@ public class LobbyController {
     }
 
     public int joinGame(int id, String username) throws InterruptedException {
-        synchronized (gameControllers.get(id)) {
-            int nPlayer = gameControllers.get(id).joinGame(username);
-            //int nPlayer = model.joinGame(id, player);
-            if (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer()) {
+            return gameControllers.get(id).joinGame(username);
+           /* if (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer()) {
                 while (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer())
                     gameControllers.get(id).wait();
             } else {
                 gameControllers.get(id).notifyAll();
-            }
-            return nPlayer;
-        }
+            }*/
+            //return nPlayer;
     }
 
     public int createGame(String username, int nPlayers) throws InterruptedException {
@@ -86,8 +83,6 @@ public class LobbyController {
         }
         GameController gameController = new GameController(id, nPlayers);
         gameControllers.put(id, gameController);
-
-        //int newGameId = model.createNewGame(nPlayers);
 
         int nPlayer = this.joinGame(id, username);
         if (nPlayer == 0) {
