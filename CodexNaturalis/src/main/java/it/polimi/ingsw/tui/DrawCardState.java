@@ -24,10 +24,14 @@ public class DrawCardState implements ClientState {
         System.out.println("|-------Draw card state--------|");
         //mostrare i deck e mostrare le carte da poter scegliere
         try {
+            System.out.println("|-------Resource deck: last hidden card--------|");
+            printer.printCard(client.getLastFromUsableCards(1), true);
             System.out.println("|-------Resource deck: visible cards--------|");
             for (GameCard card : client.getVisibleCardsDeck(1)) {
                 printer.printCard(card, false);
             }
+            System.out.println("|-------Gold deck: last hidden card--------|");
+            printer.printCard(client.getLastFromUsableCards(2), true);
             System.out.println("|-------Gold deck: visible cards--------|");
             for (GameCard card : client.getVisibleCardsDeck(2)) {
                 printer.printCard(card, false);
