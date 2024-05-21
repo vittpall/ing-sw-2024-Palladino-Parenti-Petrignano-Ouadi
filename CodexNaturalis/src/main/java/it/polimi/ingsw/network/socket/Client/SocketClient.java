@@ -410,15 +410,16 @@ public class SocketClient implements VirtualView, Observer {
         if (isGUIMode) {
             showState();
         } else {
-            new Thread(() -> {
-                try {
-                    runVirtualServer();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
             inputHandler();
         }
+        new Thread(() -> {
+            try {
+                runVirtualServer();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
