@@ -3,16 +3,15 @@ package it.polimi.ingsw.gui;
 import it.polimi.ingsw.gui.Controller.ObjectiveCardSelectionController;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class ObjectiveCardSelectionStateGUI implements ClientState {
-    public final VirtualView client;
-    public Stage stage;
+    private final VirtualView client;
+    private final Stage stage;
+    private ObjectiveCardSelectionController controller;
 
     public ObjectiveCardSelectionStateGUI(Stage stage, VirtualView client) {
         this.client = client;
@@ -21,18 +20,8 @@ public class ObjectiveCardSelectionStateGUI implements ClientState {
 
     @Override
     public void display() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ObjectiveCardSelection.fxml"));
-            loader.setController(new ObjectiveCardSelectionController(stage, client));
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setTitle("Lobby Menu");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/ObjectiveCardSelection.fxml", "/styles.css");
+        controller.loadCards();
     }
 
     @Override

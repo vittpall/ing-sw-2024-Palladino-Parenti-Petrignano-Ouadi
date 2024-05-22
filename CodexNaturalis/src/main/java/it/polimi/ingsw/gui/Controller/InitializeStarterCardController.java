@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -15,23 +16,19 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Objects;
 
-public class InitializeStarterCardController {
+public class InitializeStarterCardController implements FXMLController {
+    public Button playFrontButton;
+    public Button playBackButton;
     @FXML
     private ImageView frontImageView;
     @FXML
     private ImageView backImageView;
 
-    private final VirtualView client;
-    private final Stage stage;
-
-    public InitializeStarterCardController(Stage stage, VirtualView client) {
-        this.client = client;
-        this.stage = stage;
-    }
+    private VirtualView client;
+    private Stage stage;
 
 
-    @FXML
-    public void initialize() {
+    public void initializeStarterCard() {
         try {
             StarterCard starterCard = client.getStarterCard();
             String frontImagePath = Objects.requireNonNull(getClass().getResource("/Images/" + starterCard.getImageBackPath())).toExternalForm();
@@ -64,5 +61,14 @@ public class InitializeStarterCardController {
                  InterruptedException ex) {
             System.out.println("Error playing the card: " + ex.getMessage());
         }
+    }
+
+
+    public void setClient(VirtualView client) {
+        this.client = client;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

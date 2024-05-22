@@ -2,30 +2,21 @@ package it.polimi.ingsw.gui.Controller;
 
 import it.polimi.ingsw.gui.ColorSelectionGUI;
 import it.polimi.ingsw.gui.LobbyMenuStateGUI;
-import it.polimi.ingsw.gui.MainMenuStateGUI;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-import javafx.event.ActionEvent;
-
 import java.io.IOException;
-import java.rmi.RemoteException;
 
-public class CreateGameMenuController {
-    private final Stage stage;
+public class CreateGameMenuController  implements FXMLController {
+    private Stage stage;
     @FXML
     private ChoiceBox<Integer> playerChoiceBox;
     @FXML
     private Label feedbackLabel;
-    private final VirtualView client;
-
-    public CreateGameMenuController(Stage stage, VirtualView client) {
-        this.client = client;
-        this.stage = stage;
-    }
+    private VirtualView client;
 
 
     @FXML
@@ -46,7 +37,7 @@ public class CreateGameMenuController {
     }
 
 
-    public void handleBack(ActionEvent actionEvent) {
+    public void handleBack() {
         try {
             client.setCurrentState(new LobbyMenuStateGUI(stage, client));
             client.showState();
@@ -54,5 +45,14 @@ public class CreateGameMenuController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    public void setClient(VirtualView client) {
+        this.client = client;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 }

@@ -3,9 +3,7 @@ package it.polimi.ingsw.gui;
 import it.polimi.ingsw.gui.Controller.JoinGameMenuController;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,6 +13,7 @@ public class JoinGameMenuStateGUI implements ClientState {
 
     private final VirtualView client;
     private final Stage stage;
+    private JoinGameMenuController controller;
 
     public JoinGameMenuStateGUI(Stage stage, VirtualView client) {
         this.client = client;
@@ -23,18 +22,8 @@ public class JoinGameMenuStateGUI implements ClientState {
 
     @Override
     public void display() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/JoinGameMenuState.fxml"));
-            loader.setController(new JoinGameMenuController(stage, client));
-            Parent root = loader.load();
-
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.setTitle("Main Menu");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/JoinGameMenuState.fxml", "/styles.css");
+        controller.updateGamesList();
     }
 
     @Override

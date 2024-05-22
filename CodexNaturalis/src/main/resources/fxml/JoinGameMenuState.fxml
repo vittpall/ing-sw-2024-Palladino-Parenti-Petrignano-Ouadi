@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
+            fx:controller="it.polimi.ingsw.gui.Controller.JoinGameMenuController"
             prefHeight="400.0" prefWidth="600.0">
     <VBox spacing="10" layoutY="20" layoutX="20" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
         <Label text="Join Game Menu" style="-fx-font-size: 20px;"/>
@@ -13,7 +14,8 @@
         <Button fx:id="joinGameButton" text="Join Selected Game" onAction="#handleJoinGame" disable="true"/>
         <Button fx:id="createGameButton" text="Create New Game" onAction="#handleCreateGame"/>
         <Label fx:id="messageLabel" style="-fx-text-fill: red;"/>
-        <Button alignment="TOP_CENTER" layoutX="40.0" layoutY="325.0" onAction="#handleBack" styleClass="primary-button" text="Back" textFill="WHITE" />
+        <Button alignment="TOP_CENTER" layoutX="40.0" layoutY="325.0" onAction="#handleBack" styleClass="primary-button"
+                text="Back" textFill="WHITE"/>
     </VBox>
 
 </AnchorPane>

@@ -3,10 +3,7 @@ package it.polimi.ingsw.gui.Controller;
 import it.polimi.ingsw.gui.ColorSelectionGUI;
 import it.polimi.ingsw.gui.CreateGameStateGUI;
 import it.polimi.ingsw.gui.LobbyMenuStateGUI;
-import it.polimi.ingsw.gui.MainMenuStateGUI;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
-import it.polimi.ingsw.tui.MainMenuState;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,7 +15,8 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
-public class JoinGameMenuController {
+public class JoinGameMenuController implements FXMLController {
+    public Button createGameButton;
     @FXML
     private ListView<Integer> gamesListView;
     @FXML
@@ -26,55 +24,46 @@ public class JoinGameMenuController {
     @FXML
     private Button joinGameButton;
     @FXML
-    private Button createGameButton;
 
-    private final VirtualView client;
-    private final Stage stage;
+    private VirtualView client;
+    private Stage stage;
 
-    public JoinGameMenuController(Stage stage, VirtualView client) {
-        this.client = client;
-        this.stage = stage;
-    }
 
     @FXML
     private void initialize() {
-        gamesListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            joinGameButton.setDisable(newSelection == null);
-        });
-
-        try {
-            updateGamesList();
-        } catch (Exception e) {
-            messageLabel.setText("Failed to load games: " + e.getMessage());
-        }
+        gamesListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> joinGameButton.setDisable(newSelection == null));
     }
 
-    private void updateGamesList() throws Exception {
-        ArrayList<Integer> gameIds = client.getNotStartedGames();
-        if (gameIds.isEmpty()) {
-            messageLabel.setText("No games available. Create a new game.");
-            joinGameButton.setDisable(true);
-        } else {
-            gamesListView.getItems().setAll(gameIds);
-            gamesListView.setCellFactory(lv -> new ListCell<>() {
-                @Override
-                protected void updateItem(Integer gameId, boolean empty) {
-                    super.updateItem(gameId, empty);
-                    if (empty) {
-                        setText(null);
-                    } else {
-                        try {
-                            setText(gameId + " - Needs " + (client.getnPlayer(gameId) - client.getPlayers(gameId).size()) + " more players");
-                        } catch (Exception e) {
-                            setText("Error loading game data");
+    public void updateGamesList() {
+        try {
+            ArrayList<Integer> gameIds = client.getNotStartedGames();
+            if (gameIds.isEmpty()) {
+                messageLabel.setText("No games available. Create a new game.");
+                joinGameButton.setDisable(true);
+            } else {
+                gamesListView.getItems().setAll(gameIds);
+                gamesListView.setCellFactory(lv -> new ListCell<>() {
+                    @Override
+                    protected void updateItem(Integer gameId, boolean empty) {
+                        super.updateItem(gameId, empty);
+                        if (empty) {
+                            setText(null);
+                        } else {
+                            try {
+                                setText(gameId + " - Needs " + (client.getnPlayer(gameId) - client.getPlayers(gameId).size()) + " more players");
+                            } catch (Exception e) {
+                                setText("Error loading game data");
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void handleJoinGame(ActionEvent actionEvent) {
+    public void handleJoinGame() {
         Integer selectedGame = gamesListView.getSelectionModel().getSelectedItem();
         if (selectedGame != null) {
             try {
@@ -90,7 +79,7 @@ public class JoinGameMenuController {
         }
     }
 
-    public void handleCreateGame(ActionEvent actionEvent) {
+    public void handleCreateGame() {
         try {
             client.setCurrentState(new CreateGameStateGUI(stage, client));
             client.showState();
@@ -99,7 +88,7 @@ public class JoinGameMenuController {
         }
     }
 
-    public void handleBack(ActionEvent actionEvent) {
+    public void handleBack() {
         try {
             client.setCurrentState(new LobbyMenuStateGUI(stage, client));
             client.showState();
@@ -107,6 +96,14 @@ public class JoinGameMenuController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setClient(VirtualView client) {
+        this.client = client;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
 }

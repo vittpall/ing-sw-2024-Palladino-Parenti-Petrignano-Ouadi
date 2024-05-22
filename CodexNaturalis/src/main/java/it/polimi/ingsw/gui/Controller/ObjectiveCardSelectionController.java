@@ -15,8 +15,8 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class ObjectiveCardSelectionController {
-    private final Stage stage;
+public class ObjectiveCardSelectionController implements FXMLController {
+    private Stage stage;
     @FXML
     private ImageView card1ImageView;
     @FXML
@@ -24,20 +24,11 @@ public class ObjectiveCardSelectionController {
     @FXML
     private Label messageLabel;
 
-    private final VirtualView client;
+    private VirtualView client;
     private ArrayList<ObjectiveCard> playerObjectiveCards;
 
-    public ObjectiveCardSelectionController(Stage stage, VirtualView client) {
-        this.client = client;
-        this.stage = stage;
-    }
 
-    @FXML
-    public void initialize() {
-        loadCards();
-    }
-
-    private void loadCards() {
+    public void loadCards() {
         try {
             playerObjectiveCards = client.getPlayerObjectiveCards();
             if (playerObjectiveCards.size() >= 2) {
@@ -78,4 +69,13 @@ public class ObjectiveCardSelectionController {
             messageLabel.setText("Error selecting card: " + ex.getMessage());
         }
     }
+
+    public void setClient(VirtualView client) {
+        this.client = client;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
 }
