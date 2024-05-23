@@ -3,6 +3,7 @@ package it.polimi.ingsw.gui.Controller;
 import it.polimi.ingsw.gui.ColorSelectionGUI;
 import it.polimi.ingsw.gui.CreateGameStateGUI;
 import it.polimi.ingsw.gui.LobbyMenuStateGUI;
+import it.polimi.ingsw.gui.WaitingForPlayersGUI;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -69,7 +70,7 @@ public class JoinGameMenuController implements FXMLController {
             try {
                 client.joinGame(selectedGame, client.getUsername());
                 messageLabel.setText("Joined game: " + selectedGame);
-                client.setCurrentState(new ColorSelectionGUI(stage, client));
+                client.setCurrentState(new WaitingForPlayersGUI(stage, client));
                 client.showState();
             } catch (Exception e) {
                 messageLabel.setText("Error joining game: " + e.getMessage());

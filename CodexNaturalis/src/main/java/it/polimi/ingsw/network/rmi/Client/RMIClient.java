@@ -374,6 +374,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
     }
 
     private void display() {
+        //far mostrare i print solo quando si è nello stato giusto
         System.out.println("\n--------------------------------");
         System.out.println("Choose an action:");
         System.out.println("1- Play a card");

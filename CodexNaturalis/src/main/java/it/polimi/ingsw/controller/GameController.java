@@ -72,7 +72,6 @@ public class GameController {
     }
 
     public void setObjectiveCard(int idClientIntoGame, int idObjCard) throws CardNotFoundException {
-        //model.getGame(idGame).getPlayers().get(idClientIntoGame).setObjectiveCard(objCard);
         model.setObjectiveCards(idClientIntoGame, idObjCard);
     }
 

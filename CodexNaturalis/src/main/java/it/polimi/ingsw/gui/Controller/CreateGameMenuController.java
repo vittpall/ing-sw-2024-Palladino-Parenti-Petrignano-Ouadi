@@ -2,6 +2,7 @@ package it.polimi.ingsw.gui.Controller;
 
 import it.polimi.ingsw.gui.ColorSelectionGUI;
 import it.polimi.ingsw.gui.LobbyMenuStateGUI;
+import it.polimi.ingsw.gui.WaitingForPlayersGUI;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -29,10 +30,11 @@ public class CreateGameMenuController  implements FXMLController {
         try {
             feedbackLabel.setText("Creating game and waiting for the players...");
             client.createGame(client.getUsername(), nPlayers);
-            client.setCurrentState(new ColorSelectionGUI(stage, client));
+            client.setCurrentState(new WaitingForPlayersGUI(stage, client));
             client.showState();
         } catch (Exception e) {
             feedbackLabel.setText("Error creating game. Please try again: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

@@ -1,0 +1,87 @@
+package it.polimi.ingsw.gui.Controller;
+
+import it.polimi.ingsw.gui.ColorSelectionGUI;
+import it.polimi.ingsw.gui.GameState;
+import it.polimi.ingsw.gui.InizializeStarterCardStateGUI;
+import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
+import javafx.fxml.FXML;
+import javafx.stage.Stage;
+import javafx.scene.control.Label;
+
+import java.io.IOException;
+import java.rmi.RemoteException;
+
+public class WaitingForPlayersController implements FXMLController {
+    private VirtualView client;
+    private Stage stage;
+    @FXML
+    Label textWaitingPlayers;
+    @FXML
+    Label player2Entered;
+    @FXML
+    Label player3Entered;
+    @FXML
+    Label player4Entered;
+    @FXML
+    Label waitingForNPlayersLabel;
+    /*public WaitingForPlayersController(Stage stage, VirtualView client) {
+        this.client = client;
+        this.stage = stage;
+    }*/
+    public void initializeWaitingForPlayers() {
+        player2Entered.setVisible(false);
+        player3Entered.setVisible(false);
+        player4Entered.setVisible(false);
+        try{
+            if (!(client.getnPlayer(client.getIdGame()) > client.getPlayers(client.getIdGame()).size())) {
+                textWaitingPlayers.setText("You can start the game");
+            }
+            waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame())-client.getPlayers(client.getIdGame()).size()) + " players to join the game...");
+        }catch(IOException | InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+    public void handleStartGame(){
+        try{
+            if (client.isGameStarted()) {
+                client.setCurrentState(new ColorSelectionGUI(stage, client));
+                client.showState();
+            }
+        }catch(RemoteException e){
+            e.printStackTrace();
+        }
+    }
+    public void handleServerNotification(Message msg){
+        try{
+            if (client.getPlayers(client.getIdGame()).size() == 2) {
+                player2Entered.setText(msg.getContent());
+                player2Entered.setVisible(true);
+                waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame()-client.getPlayers(client.getIdGame()).size())) + " players to join the game...");
+            } else if (client.getPlayers(client.getIdGame()).size() == 3) {
+                player3Entered.setText(msg.getContent());
+                player3Entered.setVisible(true);
+                waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame()-client.getPlayers(client.getIdGame()).size())) + " players to join the game...");
+            } else if (client.getPlayers(client.getIdGame()).size() == 4) {
+                player4Entered.setText(msg.getContent());
+                player4Entered.setVisible(true);
+                waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame()-client.getPlayers(client.getIdGame()).size())) + " players to join the game...");
+            }
+            if (client.getnPlayer(client.getIdGame()) == client.getPlayers(client.getIdGame()).size()) {
+                waitingForNPlayersLabel.setText("You can start the game");
+            }
+        }catch(IOException | InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void setClient(VirtualView client) {
+        this.client = client;
+    }
+
+    @Override
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+}
