@@ -100,7 +100,6 @@ public interface VirtualView extends Remote {
 
     void closeGame() throws IOException, InterruptedException;
 
-    void notifyYourTurn() throws IOException, InterruptedException;
 
     int getnPlayer(int idGame) throws IOException, InterruptedException;
 

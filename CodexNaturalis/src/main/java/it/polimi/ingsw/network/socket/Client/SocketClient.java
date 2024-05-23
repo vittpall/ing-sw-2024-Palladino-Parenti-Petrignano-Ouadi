@@ -243,14 +243,6 @@ public class SocketClient implements VirtualView, Observer {
         ServerToClientMsg response = sendRequest(request);
     }
 
-    /**
-     * @throws IOException
-     * @throws InterruptedException
-     */
-    @Override
-    public void notifyYourTurn() throws IOException, InterruptedException {
-        //TODO
-    }
 
     /**
      * @param idGame

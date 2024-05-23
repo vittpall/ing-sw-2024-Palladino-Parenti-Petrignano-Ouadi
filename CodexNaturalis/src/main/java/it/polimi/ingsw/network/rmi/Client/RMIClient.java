@@ -423,10 +423,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
         server.closeGame(idGame);
     }
 
-    @Override
-    public void notifyYourTurn() throws RemoteException {
-        setCurrentState(new PlayCardState(this, scan));
-    }
+
 
     @Override
     public int getnPlayer(int idGame) throws IOException {
