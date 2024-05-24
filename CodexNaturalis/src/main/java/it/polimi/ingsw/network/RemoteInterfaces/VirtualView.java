@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.tui.ClientState;
 
 import java.awt.*;
@@ -69,10 +70,6 @@ public interface VirtualView extends Remote {
 
     void drawCard(int input, int inVisible) throws IOException, CardNotFoundException, InterruptedException;
 
-    void waitForYourTurn() throws IOException, InterruptedException;
-
-    ClientState getCurrentState() throws RemoteException;
-
     ArrayList<Message> getMessages(String receiver) throws IOException, InterruptedException;
 
     void sendMessage(String receiver, String input) throws IOException, InterruptedException;
@@ -95,8 +92,6 @@ public interface VirtualView extends Remote {
 
     void close() throws IOException, RemoteException, InterruptedException;
 
-    void removeUsername() throws IOException, InterruptedException;
-
     String getWinner() throws IOException, InterruptedException;
 
     void closeGame() throws IOException, InterruptedException;
@@ -106,7 +101,7 @@ public interface VirtualView extends Remote {
 
     ArrayList<Player> getPlayers(int idGame) throws IOException, InterruptedException;
 
-    void receiveNotification(Message msg) throws IOException, InterruptedException;
+    void receiveNotification(ReturnableObject msg) throws IOException, InterruptedException;
 
     void run() throws IOException, InterruptedException, ClassNotFoundException;
 

@@ -122,7 +122,6 @@ public class SocketClient implements VirtualView, Observer {
 
     private ServerToClientMsg sendRequest(ClientToServerMsg request) throws IOException, InterruptedException {
         TypeServerToClientMsg expectedResponse = request.getType();
-        System.out.println("Sending request: " + request.getType() + " to the server");
         out.writeObject(request);
         out.flush();
         out.reset();
@@ -172,11 +171,6 @@ public class SocketClient implements VirtualView, Observer {
     }
 
     @Override
-    public ClientState getCurrentState() {
-        return this.currentState;
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public ArrayList<Message> getMessages(String receiver) throws IOException, InterruptedException {
         GetMessageMsg request = new GetMessageMsg(receiver, this.idGame, this.username);
@@ -222,14 +216,6 @@ public class SocketClient implements VirtualView, Observer {
         System.exit(0);
     }
 
-    /**
-     * @throws IOException
-     * @throws InterruptedException
-     */
-    @Override
-    public void removeUsername() throws IOException, InterruptedException {
-
-    }
 
     @Override
     public String getWinner() throws IOException, InterruptedException {
@@ -273,9 +259,8 @@ public class SocketClient implements VirtualView, Observer {
     }
 
     @Override
-    public void receiveNotification(Message msg) throws IOException, InterruptedException {
-        String message = msg.getContent();
-        System.out.println(message);
+    public void receiveNotification(ReturnableObject msg) {
+        System.out.println(msg.getResponseReturnable());
     }
 
     @Override
@@ -359,7 +344,7 @@ public class SocketClient implements VirtualView, Observer {
     }
 
     @Override
-    public void playLastTurn(int chosenCard, boolean faceDown, Point chosenPosition) throws IOException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException, InterruptedException {
+    public void playLastTurn(int chosenCard, boolean faceDown, Point chosenPosition) throws IOException, InterruptedException {
         PlayLastTurnMsg request = new PlayLastTurnMsg(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
         ServerToClientMsg response = sendRequest(request);
     }
@@ -370,11 +355,6 @@ public class SocketClient implements VirtualView, Observer {
         ServerToClientMsg response = sendRequest(request);
     }
 
-    @Override
-    public void waitForYourTurn() throws IOException, InterruptedException {
-        WaitForYourTurnMsg request = new WaitForYourTurnMsg(idClientIntoGame, idGame);
-        ServerToClientMsg response = sendRequest(request);
-    }
 
     @Override
     @SuppressWarnings("unchecked")
@@ -400,11 +380,6 @@ public class SocketClient implements VirtualView, Observer {
     @Override
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
 
-        if (isGUIMode) {
-            showState();
-        } else {
-            inputHandler();
-        }
         new Thread(() -> {
             try {
                 runVirtualServer();
@@ -413,30 +388,17 @@ public class SocketClient implements VirtualView, Observer {
             }
         }).start();
 
+        if (isGUIMode) {
+            showState();
+        } else {
+            inputHandler();
+        }
+
+
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
     private void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
-       /* boolean correctInput;
-        Scanner scan = new Scanner(System.in);
-        while (true) {
-            correctInput = false;
-            currentState.display();
-            currentState.promptForInput();
-            int input = 0;
-            while (!correctInput) {
-                try {
-                    input = scan.nextInt();
-                    correctInput = true;
-                } catch (InputMismatchException e) {
-                    System.out.println("\nInvalid input: Reinsert the value: ");
-                } finally {
-                    scan.nextLine();
-                }
-            }
-            currentState.inputHandler(input);
-        }
-        */
         Scanner scan = new Scanner(System.in);
         boolean correctInput = false;
         String input = "";
@@ -612,7 +574,7 @@ public class SocketClient implements VirtualView, Observer {
                     this.receiveMessage((Message) msg.getResponse().getResponseReturnable());
                 }
                 if (msg.doItNeedToBeBroadCasted() && (msg.getIdGame() == idGame || msg.getIdGame() == -1)) {
-                    this.receiveNotification((Message) msg.getResponse().getResponseReturnable());
+                    this.receiveNotification(msg.getResponse());
                 }
             }
         } catch (Exception e) {

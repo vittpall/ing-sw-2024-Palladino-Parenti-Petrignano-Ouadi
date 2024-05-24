@@ -16,6 +16,7 @@ import it.polimi.ingsw.model.observer.Observer;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
+import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.tui.*;
 import javafx.stage.Stage;
 
@@ -86,8 +87,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
     }
 
     @Override
-    public void receiveNotification(Message msg) {
-        System.out.println(msg.getContent());
+    public void receiveNotification(ReturnableObject msg) {
+        System.out.println(msg.getResponseReturnable());
     }
 
     @Override
@@ -201,20 +202,12 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
         server.sendMessage(idGame, msg);
     }
 
-    @Override
-    public ClientState getCurrentState() throws RemoteException {
-        return currentState;
-    }
 
     @Override
     public void drawCard(int input, int inVisible) throws IOException, CardNotFoundException, InterruptedException {
         server.drawCard(idGame, idClientIntoGame, input, inVisible);
     }
 
-    @Override
-    public void waitForYourTurn() throws RemoteException, InterruptedException {
-        server.waitForYourTurn(idGame, idClientIntoGame);
-    }
 
     @Override
     public HashSet<Point> getAvailablePlaces() throws RemoteException {
