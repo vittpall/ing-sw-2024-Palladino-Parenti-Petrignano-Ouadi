@@ -1,28 +1,23 @@
 package it.polimi.ingsw.gui.Controller;
 
+import it.polimi.ingsw.gui.CardView;
 import it.polimi.ingsw.gui.InizializeStarterCardStateGUI;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ObjectiveCardSelectionController implements FXMLController {
+    public VBox card1Container;
+    public VBox card2Container;
     private Stage stage;
-    @FXML
-    private ImageView card1ImageView;
-    @FXML
-    private ImageView card2ImageView;
-    @FXML
-    private Label messageLabel;
+    public Label messageLabel;
 
     private VirtualView client;
     private ArrayList<ObjectiveCard> playerObjectiveCards;
@@ -32,11 +27,11 @@ public class ObjectiveCardSelectionController implements FXMLController {
         try {
             playerObjectiveCards = client.getPlayerObjectiveCards();
             if (playerObjectiveCards.size() >= 2) {
-                String frontImagePath = Objects.requireNonNull(getClass().getResource("/Images/" + playerObjectiveCards.getFirst().getImageFrontPath())).toExternalForm();
-                String backImagePath = Objects.requireNonNull(getClass().getResource("/Images/" + playerObjectiveCards.get(1).getImageFrontPath())).toExternalForm();
+                CardView card1 = new CardView(playerObjectiveCards.get(0), true);
+                CardView card2 = new CardView(playerObjectiveCards.get(1), true);
 
-                card1ImageView.setImage(new Image(frontImagePath));
-                card2ImageView.setImage(new Image(backImagePath));
+                card1Container.getChildren().addFirst(card1);
+                card2Container.getChildren().addFirst(card2);
             } else {
                 messageLabel.setText("Not enough cards loaded.");
             }

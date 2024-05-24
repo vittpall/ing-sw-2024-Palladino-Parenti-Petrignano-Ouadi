@@ -1,41 +1,35 @@
 package it.polimi.ingsw.gui.Controller;
 
+import it.polimi.ingsw.gui.CardView;
 import it.polimi.ingsw.gui.GameState;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.Objects;
 
 public class InitializeStarterCardController implements FXMLController {
     public Button playFrontButton;
     public Button playBackButton;
-    @FXML
-    private ImageView frontImageView;
-    @FXML
-    private ImageView backImageView;
-
+    public VBox frontCardContainer;
+    public VBox backCardContainer;
     private VirtualView client;
     private Stage stage;
-
 
     public void initializeStarterCard() {
         try {
             StarterCard starterCard = client.getStarterCard();
-            String frontImagePath = Objects.requireNonNull(getClass().getResource("/Images/" + starterCard.getImageBackPath())).toExternalForm();
-            String backImagePath = Objects.requireNonNull(getClass().getResource("/Images/" + starterCard.getImageBackPath())).toExternalForm();
+            CardView frontCardView = new CardView(starterCard, false);
+            CardView backCardView = new CardView(starterCard, true);
 
-            frontImageView.setImage(new Image(frontImagePath));
-            backImageView.setImage(new Image(backImagePath));
+            frontCardContainer.getChildren().add(1, frontCardView);
+            backCardContainer.getChildren().add(1, backCardView);
         } catch (RemoteException ex) {
             System.out.println("Error loading card images: " + ex.getMessage());
         } catch (IOException | InterruptedException e) {
