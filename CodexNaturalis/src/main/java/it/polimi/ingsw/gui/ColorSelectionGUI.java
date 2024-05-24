@@ -22,7 +22,7 @@ public class ColorSelectionGUI implements ClientState {
 
     @Override
     public void display() {
-        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/ColorSelection.fxml", "/styles.css");
+        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/ColorSelection.fxml");
         controller.updateColorList();
     }
 

@@ -21,7 +21,7 @@ public class MainMenuStateGUI implements ClientState {
 
     @Override
     public void display() {
-        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/MainMenuState.fxml", "/styles.css");
+        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/MainMenuState.fxml");
     }
 
 

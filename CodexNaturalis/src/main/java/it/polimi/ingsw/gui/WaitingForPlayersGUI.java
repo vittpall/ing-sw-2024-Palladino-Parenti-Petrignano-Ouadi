@@ -1,13 +1,9 @@
 package it.polimi.ingsw.gui;
 
-import it.polimi.ingsw.gui.Controller.ObjectiveCardSelectionController;
 import it.polimi.ingsw.gui.Controller.WaitingForPlayersController;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,9 +17,10 @@ public class WaitingForPlayersGUI implements ClientState {
         this.client = client;
         this.stage = stage;
     }
+
     @Override
     public void display() {
-        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/WaitingForPlayers.fxml", "/styles.css");
+        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/WaitingForPlayers.fxml");
         controller.initializeWaitingForPlayers();
     }
 

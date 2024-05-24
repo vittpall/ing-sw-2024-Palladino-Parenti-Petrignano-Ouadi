@@ -7,10 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.Objects;
-
 public class FXMLLoaderUtility {
-    public static <T extends FXMLController> T loadView(Stage stage, VirtualView client, String fxmlPath, String cssPath) {
+    public static <T extends FXMLController> T loadView(Stage stage, VirtualView client, String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(FXMLLoaderUtility.class.getResource(fxmlPath));
             Parent root = loader.load();
@@ -20,9 +18,7 @@ public class FXMLLoaderUtility {
             controller.setStage(stage);
 
             Scene scene = new Scene(root);
-            if (cssPath != null && !cssPath.isEmpty()) {
-                scene.getStylesheets().add(Objects.requireNonNull(FXMLLoaderUtility.class.getResource(cssPath)).toExternalForm());
-            }
+
             stage.setScene(scene);
             stage.show();
 

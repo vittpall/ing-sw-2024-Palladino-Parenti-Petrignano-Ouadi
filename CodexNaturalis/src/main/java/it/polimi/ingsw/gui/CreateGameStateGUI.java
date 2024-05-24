@@ -19,7 +19,7 @@ public class CreateGameStateGUI implements ClientState {
 
     @Override
     public void display() {
-        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/CreateGameState.fxml", "/styles.css");
+        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/CreateGameState.fxml");
     }
 
     @Override

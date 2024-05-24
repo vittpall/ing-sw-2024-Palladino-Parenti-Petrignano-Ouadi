@@ -22,7 +22,7 @@ public class GameState implements ClientState {
 
     @Override
     public void display() {
-        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/GameState.fxml", "/styles.css");
+        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/GameState.fxml");
         controller.initializeGame();
     }
 

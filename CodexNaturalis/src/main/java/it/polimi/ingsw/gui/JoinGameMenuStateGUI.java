@@ -22,7 +22,7 @@ public class JoinGameMenuStateGUI implements ClientState {
 
     @Override
     public void display() {
-        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/JoinGameMenuState.fxml", "/styles.css");
+        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/JoinGameMenuState.fxml");
         controller.updateGamesList();
     }
 

@@ -20,7 +20,7 @@ public class LobbyMenuStateGUI implements ClientState {
 
     @Override
     public void display() {
-        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/LobbyMenuState.fxml", "/styles.css");
+        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/LobbyMenuState.fxml");
     }
 
     @Override

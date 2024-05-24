@@ -113,6 +113,7 @@ public class GameController implements FXMLController {
         HashSet<Point> availablePlaces = client.getAvailablePlaces();
         availablePlaces.forEach(point -> {
             CardView placeholder = new CardView(true);
+            placeholder.getStyleClass().add("placeholder");
             placeholder.setOnMouseClicked(event -> handlePositionSelection(point));
             gameBoard.addCardView(placeholder, point.x, point.y);
         });
@@ -121,10 +122,10 @@ public class GameController implements FXMLController {
 
     private void handleCardSelection(int cardIndex, Node cardNode) throws IOException, InterruptedException {
         if (selectedCardIndex != null) {
-            playerHandBox.getChildren().get(selectedCardIndex).getStyleClass().remove("selected");
+            playerHandBox.getChildren().get(selectedCardIndex).getStyleClass().remove("selected-card");
         }
         selectedCardIndex = cardIndex;
-        cardNode.getStyleClass().add("selected");
+        cardNode.getStyleClass().add("selected-card");
         promptCardOrientation();
     }
 

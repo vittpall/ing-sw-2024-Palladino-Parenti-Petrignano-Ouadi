@@ -22,7 +22,7 @@ public class InizializeStarterCardStateGUI implements ClientState {
 
     @Override
     public void display() {
-        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/InitializeStarterCard.fxml", "/styles.css");
+        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/InitializeStarterCard.fxml");
         controller.initializeStarterCard();
     }
 
