@@ -54,12 +54,7 @@ public class CardView extends Pane {
     }
 
     private void setupPlaceholder() {
-        String placeHolderPath = Objects.requireNonNull(getClass().getResource("/Images/cardPlaceHolder.jpeg")).toExternalForm();
-        Image image = new Image(placeHolderPath);
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(CARD_WIDTH);
-        imageView.setFitHeight(CARD_HEIGHT);
-        this.getChildren().addAll(imageView);
-        imageView.setVisible(true);
+        this.setStyle("-fx-border-color: yellow; -fx-border-width: 2; -fx-background-color: rgba(255, 255, 0, 0.5);");
+        this.setPrefSize(CARD_WIDTH, CARD_HEIGHT);
     }
 }
