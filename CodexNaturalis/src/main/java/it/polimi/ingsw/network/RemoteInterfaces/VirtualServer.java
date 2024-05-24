@@ -1,11 +1,14 @@
 package it.polimi.ingsw.network.RemoteInterfaces;
 
-import it.polimi.ingsw.controller.GameController;
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
@@ -96,4 +99,6 @@ public interface VirtualServer extends Remote {
     boolean checkState(int idGame, int idClientIntoGame, RequestedActions requestedActions) throws RemoteException;
 
     boolean isGameStarted(int idGame) throws RemoteException;
+
+    PlayerState getCurrentPlayerState(int idGame, int idClientIntoGame) throws RemoteException;
 }

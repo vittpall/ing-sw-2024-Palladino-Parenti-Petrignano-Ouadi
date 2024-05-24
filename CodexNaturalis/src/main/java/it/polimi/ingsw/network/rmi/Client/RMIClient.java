@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.Observer;
@@ -252,8 +253,14 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
         else
             showState();
     }
-    public boolean isGameStarted() throws RemoteException{
+
+    public boolean isGameStarted() throws RemoteException {
         return server.isGameStarted(idGame);
+    }
+
+    @Override
+    public PlayerState getCurrentPlayerState() throws RemoteException {
+        return server.getCurrentPlayerState(idGame, idClientIntoGame);
     }
 
     @Override
@@ -422,7 +429,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
     public void closeGame() throws RemoteException {
         server.closeGame(idGame);
     }
-
 
 
     @Override

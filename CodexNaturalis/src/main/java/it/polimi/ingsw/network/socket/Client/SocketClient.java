@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
@@ -591,6 +592,11 @@ public class SocketClient implements VirtualView, Observer {
     @Override
     public boolean isGameStarted() throws RemoteException {
         return false;
+    }
+
+    @Override
+    public PlayerState getCurrentPlayerState() throws RemoteException {
+        return null;
     }
 
     //what I receive from the server

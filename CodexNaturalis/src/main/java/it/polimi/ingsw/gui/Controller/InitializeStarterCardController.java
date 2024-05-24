@@ -38,7 +38,6 @@ public class InitializeStarterCardController implements FXMLController {
             backImageView.setImage(new Image(backImagePath));
         } catch (RemoteException ex) {
             System.out.println("Error loading card images: " + ex.getMessage());
-            // Optionally update a status label with this message if you have one in your FXML
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

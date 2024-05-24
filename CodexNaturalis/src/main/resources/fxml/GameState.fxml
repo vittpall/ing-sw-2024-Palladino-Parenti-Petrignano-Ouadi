@@ -2,23 +2,23 @@
 
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.gui.Controller.GameController">
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.GameController">
     <ImageView fitHeight="453.0" fitWidth="257.0" layoutX="7.0" layoutY="8.0">
-        <Image url="@../Images/Board.jpg"/>
+        <Image url="@../Images/Board.jpg" />
     </ImageView>
-    <GridPane fx:id="playerDesk" layoutX="230.0" layoutY="483.0" prefHeight="317.0" prefWidth="570.0">
-        <!-- Cards will be added dynamically here -->
-    </GridPane>
-    <StackPane fx:id="objectiveCard1" layoutX="340.0" layoutY="38.0" prefHeight="150" prefWidth="100"/>
-    <StackPane fx:id="objectiveCard2" layoutX="513.0" layoutY="38.0" prefHeight="150" prefWidth="100"/>
-    <StackPane fx:id="visibleCardDeck1Card1" layoutX="433.0" layoutY="152.0"/>
-    <StackPane fx:id="visibleCardDeck1Card2" layoutX="593.0" layoutY="152.0"/>
-    <StackPane fx:id="visibleCardDeck2Card1" layoutX="433.0" layoutY="260.0"/>
-    <StackPane fx:id="visibleCardDeck2Card2" layoutX="593.0" layoutY="260.0"/>
-    <StackPane fx:id="usableCardDeck1Back" layoutX="273.0" layoutY="152.0"/>
-    <StackPane fx:id="usableCardDeck2Back" layoutX="273.0" layoutY="260.0"/>
-    <VBox fx:id="playerHandBox" layoutX="25.0" layoutY="469.0" prefHeight="317.0" prefWidth="205.0"/>
+    <AnchorPane fx:id="gameBoardContainer" layoutX="216.0" layoutY="461.0" prefHeight="317.0" prefWidth="570.0" />
+    <!-- Cards will be added dynamically here -->
+    <StackPane fx:id="objectiveCard1" layoutX="340.0" layoutY="38.0" prefHeight="150" prefWidth="100" />
+    <StackPane fx:id="objectiveCard2" layoutX="513.0" layoutY="38.0" prefHeight="150" prefWidth="100" />
+    <StackPane fx:id="visibleCardDeck1Card1" layoutX="433.0" layoutY="152.0" />
+    <StackPane fx:id="visibleCardDeck1Card2" layoutX="593.0" layoutY="152.0" />
+    <StackPane fx:id="visibleCardDeck2Card1" layoutX="433.0" layoutY="260.0" />
+    <StackPane fx:id="visibleCardDeck2Card2" layoutX="593.0" layoutY="260.0" />
+    <StackPane fx:id="usableCardDeck1Back" layoutX="273.0" layoutY="152.0" />
+    <StackPane fx:id="usableCardDeck2Back" layoutX="273.0" layoutY="260.0" />
+    <VBox fx:id="playerHandBox" layoutX="25.0" layoutY="469.0" prefHeight="317.0" prefWidth="205.0" />
 </AnchorPane>

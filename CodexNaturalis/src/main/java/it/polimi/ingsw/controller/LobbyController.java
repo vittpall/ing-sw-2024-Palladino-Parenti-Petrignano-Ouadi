@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
@@ -62,14 +63,7 @@ public class LobbyController {
     }
 
     public int joinGame(int id, String username) throws InterruptedException {
-            return gameControllers.get(id).joinGame(username);
-           /* if (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer()) {
-                while (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer())
-                    gameControllers.get(id).wait();
-            } else {
-                gameControllers.get(id).notifyAll();
-            }*/
-            //return nPlayer;
+        return gameControllers.get(id).joinGame(username);
     }
 
     public int createGame(String username, int nPlayers) throws InterruptedException {
@@ -217,5 +211,9 @@ public class LobbyController {
 
     public String getCurrentGameState(int idGame) {
         return gameControllers.get(idGame).getCurrentState();
+    }
+
+    public PlayerState getCurrentPlayerState(int idGame, int idClientIntoGame) {
+        return gameControllers.get(idGame).getPlayerState(idClientIntoGame);
     }
 }

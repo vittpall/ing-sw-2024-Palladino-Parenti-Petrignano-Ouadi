@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.GameState;
+import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.Observer;
@@ -117,6 +118,11 @@ public class RMIServer implements VirtualServer, Subject {
     @Override
     public boolean isGameStarted(int idGame) throws RemoteException{
         return !lobbyController.getCurrentGameState(idGame).equals(GameState.WAITING_FOR_PLAYERS.toString());
+    }
+
+    @Override
+    public PlayerState getCurrentPlayerState(int idGame, int idClientIntoGame) throws RemoteException {
+        return lobbyController.getCurrentPlayerState(idGame, idClientIntoGame);
     }
 
     @Override

@@ -35,10 +35,10 @@ public class GameController {
         return switch (requestedActions) {
             case RequestedActions.DRAW ->
                     (gameState == GameState.ROUNDS || gameState == GameState.FINISHING_ROUND_BEFORE_LAST)
-                            && model.getPlayers().get(idPlayerIntoGame).getPlayerState() == PlayerState.DRAW;
+                            && getPlayerState(idPlayerIntoGame) == PlayerState.DRAW;
             case RequestedActions.PLAY_CARD ->
                     (gameState == GameState.ROUNDS || gameState == GameState.LAST_ROUND || gameState == GameState.FINISHING_ROUND_BEFORE_LAST)
-                            && model.getPlayers().get(idPlayerIntoGame).getPlayerState() == PlayerState.PLAY_CARD;
+                            && getPlayerState(idPlayerIntoGame) == PlayerState.PLAY_CARD;
             case RequestedActions.SHOW_WINNER -> gameState == GameState.ENDGAME;
             case RequestedActions.SHOW_DESKS, RequestedActions.SHOW_OBJ_CARDS,
                  RequestedActions.SHOW_POINTS, RequestedActions.CHAT -> true;
@@ -46,7 +46,11 @@ public class GameController {
     }
 
     public String getCurrentState(int idClientIntoGame) {
-        return gameState.toString() + " " + model.getPlayers().get(idClientIntoGame).getPlayerState().toString();
+        return gameState.toString() + " " + getPlayerState(idClientIntoGame).toString();
+    }
+
+    public PlayerState getPlayerState(int idClientIntoGame) {
+        return model.getPlayers().get(idClientIntoGame).getPlayerState();
     }
 
     public String getCurrentState() {
