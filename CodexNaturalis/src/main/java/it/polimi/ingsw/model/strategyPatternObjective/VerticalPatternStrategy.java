@@ -80,7 +80,7 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
         HashMap<Point, GameCard> deskToUse = desk.getDesk();
         //iterate over desk until I found a position where the card's color is the primarySource
         for (Point point : desk.getDesk().keySet()) {
-            if (desk.getDesk().get(point).getBackSideResource().equals(primarySource)) {
+            if (desk.getDesk().get(point).getBackSideResource()!=null && desk.getDesk().get(point).getBackSideResource().equals(primarySource)) {
                 //instead of mapping the color to the corner that needs to be checked, it'll use the parameter WhichCorner
                 if (CheckCorner(deskToUse, point))
                     numberOfTimesVerifiedObjective++;
@@ -113,8 +113,12 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
         Point UpperCard = new Point(startingPoint.x, startingPoint.y + i + 2);
         Point CornerCard = new Point(LowerCard.x + whichCorner.x, LowerCard.y + whichCorner.y);
 
-        if (deskToUse.containsKey(LowerCard) && deskToUse.get(LowerCard).getBackSideResource() == primarySource && deskToUse.containsKey(UpperCard) && deskToUse.get(UpperCard).getBackSideResource() == primarySource) {
-            if (deskToUse.containsKey(CornerCard) && deskToUse.get(CornerCard).getBackSideResource() == secondarySource)
+        if (deskToUse.containsKey(LowerCard) && deskToUse.get(LowerCard).getBackSideResource()!=null &&
+                deskToUse.get(LowerCard).getBackSideResource() == primarySource &&
+                deskToUse.containsKey(UpperCard) && deskToUse.get(UpperCard).getBackSideResource()!=null &&
+                deskToUse.containsKey(UpperCard) && deskToUse.get(UpperCard).getBackSideResource() == primarySource) {
+            if (deskToUse.containsKey(CornerCard) && deskToUse.get(CornerCard).getBackSideResource()!=null &&
+                    deskToUse.get(CornerCard).getBackSideResource() == secondarySource)
                 IsVerified = true;
         }
 

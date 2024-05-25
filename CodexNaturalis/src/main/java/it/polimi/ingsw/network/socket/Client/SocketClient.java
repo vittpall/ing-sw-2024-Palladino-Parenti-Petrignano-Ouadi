@@ -343,11 +343,6 @@ public class SocketClient implements VirtualView, Observer {
         ServerToClientMsg response = sendRequest(request);
     }
 
-    @Override
-    public void playLastTurn(int chosenCard, boolean faceDown, Point chosenPosition) throws IOException, InterruptedException {
-        PlayLastTurnMsg request = new PlayLastTurnMsg(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
-        ServerToClientMsg response = sendRequest(request);
-    }
 
     @Override
     public void drawCard(int input, int inVisible) throws IOException, CardNotFoundException, InterruptedException {

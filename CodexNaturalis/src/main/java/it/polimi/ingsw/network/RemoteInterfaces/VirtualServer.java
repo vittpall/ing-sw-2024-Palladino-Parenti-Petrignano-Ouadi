@@ -63,8 +63,6 @@ public interface VirtualServer extends Remote {
 
     void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws IOException, CardNotFoundException, InterruptedException;
 
-    void waitForYourTurn(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException;
-
     boolean getIsLastRoundStarted(int idGame) throws RemoteException;
 
     HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame) throws RemoteException;
@@ -84,9 +82,6 @@ public interface VirtualServer extends Remote {
     HashMap<Point, GameCard> getPlayerDesk(int idGame, int idClientIntoGame) throws RemoteException;
 
     String getWinner(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException;
-
-    void playLastTurn(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
-            throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException;
 
     void closeGame(int idGame) throws RemoteException;
 

@@ -142,29 +142,17 @@ public class GameController {
         model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.DRAW);
         if (gameState == GameState.LAST_ROUND) {
             model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.ENDGAME);
-            if (model.getnPlayer() != idClientIntoGame + 1)
+            if (model.getnPlayer() != idClientIntoGame + 1) {
                 model.advanceToNextPlayer();
+                model.getPlayers().get(model.getCurrentPlayerIndex()).setPlayerState(PlayerState.PLAY_CARD);
+            }
             else {
-                gameState = GameState.ENDGAME;
                 winner = model.endGame();
+                gameState = GameState.ENDGAME;
             }
         }
     }
 
-    public synchronized void playLastTurn(int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
-            throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
-
-        this.playCard(idClientIntoGame, chosenCard, faceDown, chosenPosition);
-        model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.ENDGAME);
-        if (model.getnPlayer() != idClientIntoGame + 1)
-            model.advanceToNextPlayer();
-        else {
-            gameState = GameState.ENDGAME;
-            winner = model.endGame();
-        }
-        // TODO: cambiare stato game
-        //TODO: mandare messaggino ai client notificando che è cambiato il turno (vedi notifiche chat)
-    }
 
     public synchronized void drawCard(int idClientIntoGame, int deckToChoose, int inVisible) throws CardNotFoundException {
         //TODO: fare il check che sia il suo turno
@@ -183,7 +171,7 @@ public class GameController {
                 chosenCard = chosenDeck.getVisibleCards().get(1);
             model.drawVisibleCard(chosenDeck, chosenCard);
         }
-        if (gameState != GameState.LAST_ROUND && model.getPlayers().get(model.getCurrentPlayerIndex()).getPoints() >= 20) {
+        if (gameState != GameState.FINISHING_ROUND_BEFORE_LAST && model.getPlayers().get(model.getCurrentPlayerIndex()).getPoints() >= 20) {
             if (model.getCurrentPlayerIndex() == model.getnPlayer() - 1)
                 gameState = GameState.LAST_ROUND;
             else

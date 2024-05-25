@@ -23,7 +23,7 @@ public class ShowPointsState implements ClientState {
             System.out.println("|---- Provisional Ranking:----|");
             ArrayList<Player> allPlayers = client.getAllPlayers();
             for (Player player : allPlayers) {
-                int playerScore = client.getPoints();
+                int playerScore = player.getPoints();
                 System.out.println("Player: " + player.getUsername() + " | Score: " + playerScore);
             }
             System.out.println("--------------------------------");

@@ -174,9 +174,10 @@ public class RMIServer implements VirtualServer, Subject {
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
         lobbyController.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
 
-        if (lobbyController.getCurrentGameState(idGame).equals(GameState.LAST_ROUND.toString())) {
+        if (lobbyController.getCurrentGameState(idGame).equals(GameState.LAST_ROUND.toString()) ||
+                lobbyController.getCurrentGameState(idGame).equals(GameState.ENDGAME.toString())) {
             String content;
-            if (idClientIntoGame != lobbyController.getnPlayer(idGame) - 1) {
+            if (lobbyController.getCurrentGameState(idGame).equals(GameState.LAST_ROUND.toString())) {
                 content = "\n----------------------------------\n" +
                         "Player " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getUsername() + " played his last card\n" +
                         "Now is " + lobbyController.getPlayers(idGame).get(lobbyController.getCurrentPlayer(idGame)).getUsername() + " turn.";
@@ -193,12 +194,6 @@ public class RMIServer implements VirtualServer, Subject {
     }
 
     @Override
-    public void playLastTurn(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
-            throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
-        lobbyController.playLastTurn(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
-    }
-
-    @Override
     public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws IOException, CardNotFoundException, InterruptedException {
         lobbyController.drawCard(idGame, idClientIntoGame, deckToChoose, inVisible);
         String content;
@@ -207,22 +202,12 @@ public class RMIServer implements VirtualServer, Subject {
                 "Now is " + lobbyController.getPlayers(idGame).get(lobbyController.getCurrentPlayer(idGame)).getUsername() + " turn.";
         if (lobbyController.getCurrentGameState(idGame).equals(GameState.FINISHING_ROUND_BEFORE_LAST.toString()) ||
                 lobbyController.getCurrentGameState(idGame).equals(GameState.LAST_ROUND.toString())) {
-            content = "The game is ending. Player " + lobbyController.getUsernamePlayerThatStoppedTheGame(idGame) +
-                    "has reached 20 points or more\n " + content;
+            content = "\nThe game is ending. Player " + lobbyController.getUsernamePlayerThatStoppedTheGame(idGame) +
+                    " has reached 20 points or more\n " + content;
         }
         ReturnableObject response = new ReturnableObject();
         response.setResponseReturnable(content);
         this.broadcastWhatHappened(idGame, response);
-    }
-
-    /**
-     * @param idGame
-     * @param idClientIntoGame
-     * @throws RemoteException
-     */
-    @Override
-    public void waitForYourTurn(int idGame, int idClientIntoGame) throws RemoteException {
-
     }
 
 

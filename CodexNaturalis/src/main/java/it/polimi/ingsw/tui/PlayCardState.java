@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
@@ -51,10 +52,15 @@ public class PlayCardState implements ClientState {
             boolean faceDown = chooseIfFaceDown();
             try {
                 client.playCard(input - 1, faceDown, pointChosen);
-                System.out.println("Card played successfully");
-                System.out.println("You should now draw a card");
+                if(client.getCurrentPlayerState()!= PlayerState.ENDGAME){
+                    System.out.println("Card played successfully");
+                    System.out.println("You should now draw a card");
+                }else{
+                    System.out.println("Wait for everyone to finish");
+                }
             } catch (RemoteException ex) {
                 System.out.println(ex.getMessage());
+                ex.printStackTrace();
             } catch (PlaceNotAvailableException ex) {
                 System.out.println("Place not available");
             } catch (CardNotFoundException ex) {
@@ -84,7 +90,7 @@ public class PlayCardState implements ClientState {
         System.out.println("--------------------------------");
         System.out.println("Provisional Ranking:");
         for (Player player : allPlayers) {
-            int playerScore = client.getPoints();
+            int playerScore = player.getPoints();
             System.out.println("Player: " + player.getUsername() + " | Score: " + playerScore);
         }
         System.out.println("--------------------------------");

@@ -136,20 +136,9 @@ public class LobbyController {
         gameControllers.get(idGame).playCard(idClientIntoGame, chosenCard, faceDown, chosenPosition);
     }
 
-    public void playLastTurn(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
-            throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
-        gameControllers.get(idGame).playLastTurn(chosenCard, idClientIntoGame, faceDown, chosenPosition);
-    }
-
     public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws CardNotFoundException {
         gameControllers.get(idGame).drawCard(idClientIntoGame, deckToChoose, inVisible);
     }
-
-    /*public void waitForYourTurn(int idGame, int idClientIntoGame) throws InterruptedException {
-        synchronized (model.getGame(idGame)) {
-            while (model.getGame(idGame).getCurrentPlayerIndex() != idClientIntoGame) model.getGame(idGame).wait();
-        }
-    }*/
 
     public boolean getIsLastRoundStarted(int idGame) {
         return gameControllers.get(idGame).getIsLastRoundStarted();
@@ -182,11 +171,6 @@ public class LobbyController {
     public String getWinner(int idGame, int idClientIntoGame) throws InterruptedException {
         return gameControllers.get(idGame).getWinner(idClientIntoGame);
     }
-
-    /*public Player getNextPlayer(int idGame) {
-        model.getGame(idGame).advanceToNextPlayer();
-        return model.getGame(idGame).getCurrentPlayer();
-    }*/
 
     public void closeGame(int idGame) {
         //TODO:notificare i giocatori del gioco specifico che il gioco viene chiuso dato che un giocatore l'ha fatto

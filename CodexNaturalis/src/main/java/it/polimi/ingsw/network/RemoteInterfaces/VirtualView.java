@@ -65,9 +65,6 @@ public interface VirtualView extends Remote {
     void playCard(int chosenCard, boolean faceDown, Point chosenPosition)
             throws IOException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException, InterruptedException;
 
-    void playLastTurn(int chosenCard, boolean faceDown, Point chosenPosition)
-            throws IOException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException, InterruptedException;
-
     void drawCard(int input, int inVisible) throws IOException, CardNotFoundException, InterruptedException;
 
     ArrayList<Message> getMessages(String receiver) throws IOException, InterruptedException;

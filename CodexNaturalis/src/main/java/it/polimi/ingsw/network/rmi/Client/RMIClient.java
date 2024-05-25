@@ -173,12 +173,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
     }
 
     @Override
-    public void playLastTurn(int chosenCard, boolean faceDown, Point chosenPosition)
-            throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
-        server.playLastTurn(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
-    }
-
-    @Override
     public ArrayList<GameCard> getVisibleCardsDeck(int deck) throws RemoteException {
         return server.getVisibleCardsDeck(idGame, deck);
     }
