@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.socket.ClientToServerMsg;
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class GetMessageMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject<ArrayList<Message>> functionToCall(LobbyController controller) throws InterruptedException {
+    public ReturnableObject<ArrayList<Message>> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException {
         ReturnableObject<ArrayList<Message>> response = new ReturnableObject<>();
         response.setResponseReturnable((controller.getMessages(receiver, gameId, sender)));
         for(Message message : controller.getMessages(receiver, gameId, sender)){

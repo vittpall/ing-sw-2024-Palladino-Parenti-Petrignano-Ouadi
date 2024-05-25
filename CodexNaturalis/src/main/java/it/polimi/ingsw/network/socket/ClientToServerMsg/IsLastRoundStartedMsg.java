@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
@@ -14,7 +15,7 @@ public class IsLastRoundStartedMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject<Boolean> functionToCall(LobbyController controller) throws InterruptedException {
+    public ReturnableObject<Boolean> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException {
         ReturnableObject<Boolean> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.getIsLastRoundStarted(idGame));
         return response;

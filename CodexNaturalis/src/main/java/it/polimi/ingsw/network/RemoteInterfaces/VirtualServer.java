@@ -1,16 +1,14 @@
 package it.polimi.ingsw.network.RemoteInterfaces;
 
-import it.polimi.ingsw.model.Card;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.GameCard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;
@@ -22,8 +20,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public interface VirtualServer extends Remote {
-    void connect(VirtualView client) throws RemoteException;
 
+    void connect(VirtualView client) throws RemoteException;
 
     boolean checkUsername(String username) throws RemoteException;
 
@@ -35,9 +33,9 @@ public interface VirtualServer extends Remote {
 
     void sendMessage(int idGame, Message msg) throws RemoteException;
 
-    int joinGame(int id, String username) throws RemoteException, InterruptedException;
+    int joinGame(int id, String username, GameListener playerListener) throws RemoteException, InterruptedException;
 
-    int createGame(String username, int nPlayers) throws RemoteException, InterruptedException;
+    int createGame(String username, int nPlayers, GameListener playerListener) throws RemoteException, InterruptedException;
 
     void removeUsername(String username) throws RemoteException;
 

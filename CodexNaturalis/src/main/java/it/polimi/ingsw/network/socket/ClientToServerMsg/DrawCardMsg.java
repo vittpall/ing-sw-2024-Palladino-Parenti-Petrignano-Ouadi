@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.socket.ClientToServerMsg;
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 public class DrawCardMsg extends ClientToServerMsg{
@@ -20,7 +21,7 @@ public class DrawCardMsg extends ClientToServerMsg{
         this.broadCastMessage = broadCastMessage;
     }
     @Override
-    public ReturnableObject<Integer> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException {
+    public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
         controller.drawCard(idGame, idClientIntoGame, input, inVisible);
         response.setResponseReturnable(-1);

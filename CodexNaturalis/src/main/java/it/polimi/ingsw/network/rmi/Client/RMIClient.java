@@ -12,21 +12,24 @@ import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.observer.Observer;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
+import it.polimi.ingsw.network.socket.ClientToServerMsg.JoinGameMsg;
 import it.polimi.ingsw.tui.*;
 import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
-public class RMIClient extends UnicastRemoteObject implements VirtualView, Observer {
+public class RMIClient extends UnicastRemoteObject implements VirtualView, GameListener, Serializable {
     public final VirtualServer server;
     ClientState currentState;
     private String username;
@@ -65,7 +68,6 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
     public int getIdGame() {
         return idGame;
     }
-
 
     public int getIdClientIntoGame() {
         return idClientIntoGame;
@@ -108,7 +110,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
 
     @Override
     public void joinGame(int input, String username) throws RemoteException, InterruptedException {
-        idClientIntoGame = server.joinGame(input, username);
+        idClientIntoGame = server.joinGame(input, username, (GameListener) this);
         idGame = input;
 
     }
@@ -125,10 +127,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
 
     @Override
     public void createGame(String username, int nPlayers) throws RemoteException, InterruptedException {
-        idGame = server.createGame(username, nPlayers);
+   //     GameListener gameListener = (GameListener)UnicastRemoteObject.exportObject(this, 0);
+        idGame = server.createGame(username, nPlayers, (GameListener) this);
         idClientIntoGame = 0;
     }
-
     @Override
     public StarterCard getStarterCard() throws RemoteException {
         return server.getStarterCard(idGame, idClientIntoGame);
@@ -432,7 +434,13 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, Obser
      *
      */
     @Override
-    public void update() {
-
+    public void update() throws RemoteException{
+        //TODO logic to implement. I would consider to use a switch case to handle the different states
+        if (currentState instanceof JoinGameMenuState) {
+            currentState.display();
+        }
+        if(currentState instanceof WaitingForPlayersState){
+            System.out.println("another player joined the game");
+        }
     }
 }

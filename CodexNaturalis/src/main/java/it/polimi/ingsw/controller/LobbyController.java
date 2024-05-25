@@ -1,19 +1,18 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.Card;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.GameCard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.util.*;
 
 public class LobbyController {
@@ -62,11 +61,11 @@ public class LobbyController {
         return gameControllers.get(gameId).getMessages(receiver, sender);
     }
 
-    public int joinGame(int id, String username) throws InterruptedException {
-        return gameControllers.get(id).joinGame(username);
+    public int joinGame(int id, String username, GameListener playerListener) throws InterruptedException, RemoteException {
+        return gameControllers.get(id).joinGame(username, playerListener);
     }
 
-    public int createGame(String username, int nPlayers) throws InterruptedException {
+    public int createGame(String username, int nPlayers, GameListener playerListener) throws InterruptedException, RemoteException {
         int id;
         if (!unusedIdGame.isEmpty()) {
             id = unusedIdGame.getFirst();
@@ -78,7 +77,7 @@ public class LobbyController {
         GameController gameController = new GameController(id, nPlayers);
         gameControllers.put(id, gameController);
 
-        int nPlayer = this.joinGame(id, username);
+        int nPlayer = this.joinGame(id, username, playerListener);
         if (nPlayer == 0) {
             return id;
         }

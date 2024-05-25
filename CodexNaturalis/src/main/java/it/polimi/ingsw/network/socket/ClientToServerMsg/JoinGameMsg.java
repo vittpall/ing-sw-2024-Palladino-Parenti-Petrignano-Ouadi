@@ -2,7 +2,10 @@ package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
+
+import java.rmi.RemoteException;
 
 public class JoinGameMsg extends ClientToServerMsg{
 
@@ -17,9 +20,9 @@ public class JoinGameMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject<Integer> functionToCall(LobbyController controller) throws InterruptedException {
+    public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, RemoteException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
-        response.setResponseReturnable(controller.joinGame(this.id, this.username));
+        response.setResponseReturnable(controller.joinGame(this.id, this.username, playerListener));
         this.gameId = response.getResponseReturnable();
         return response;
     }

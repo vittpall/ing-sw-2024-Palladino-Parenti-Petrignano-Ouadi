@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
@@ -17,7 +18,7 @@ public class ClosedConnectionMsg extends ClientToServerMsg {
     }
 
     @Override
-    public ReturnableObject<String> functionToCall(LobbyController controller) {
+    public ReturnableObject<String> functionToCall(LobbyController controller, GameListener playerListener) {
         ReturnableObject<String> response = new ReturnableObject<>();
         response.setResponseReturnable("connection closed");
         return response;

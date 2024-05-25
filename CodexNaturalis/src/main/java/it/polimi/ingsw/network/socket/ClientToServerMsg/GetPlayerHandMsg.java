@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
@@ -23,7 +24,7 @@ public class GetPlayerHandMsg extends ClientToServerMsg{
 
 
     @Override
-    public ReturnableObject<ArrayList<GameCard>> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
+    public ReturnableObject<ArrayList<GameCard>> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
         ReturnableObject<ArrayList<GameCard>> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.getPlayerHand(idGame, idPlayer));
         return response;

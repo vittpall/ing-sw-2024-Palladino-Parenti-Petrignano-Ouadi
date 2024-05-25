@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.socket.ClientToServerMsg;
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
@@ -19,7 +20,7 @@ public class GetPlayerDesk extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject<HashMap<Point, GameCard>> functionToCall(LobbyController controller) throws InterruptedException {
+    public ReturnableObject<HashMap<Point, GameCard>> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException {
         ReturnableObject<HashMap<Point, GameCard>> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.getPlayerDesk(idGame, idPlayer));
         return response;

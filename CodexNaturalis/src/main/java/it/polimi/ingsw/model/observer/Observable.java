@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.observer;
 
-public interface Subject {
+public interface Observable {
     public void register(Observer o);
     public void unregister(Observer o);
     public void notifyObserver();

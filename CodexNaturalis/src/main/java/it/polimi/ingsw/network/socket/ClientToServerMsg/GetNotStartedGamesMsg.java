@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.socket.ClientToServerMsg;
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class GetNotStartedGamesMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject<ArrayList<Integer>> functionToCall(LobbyController controller) {
+    public ReturnableObject<ArrayList<Integer>> functionToCall(LobbyController controller, GameListener playerListener) {
         ReturnableObject<ArrayList<Integer>> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.getVisibleGames());
         return response;

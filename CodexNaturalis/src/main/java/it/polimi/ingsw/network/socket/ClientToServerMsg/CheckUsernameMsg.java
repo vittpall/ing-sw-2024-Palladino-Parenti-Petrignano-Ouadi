@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.socket.ClientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 public class CheckUsernameMsg extends ClientToServerMsg {
@@ -11,7 +12,7 @@ public class CheckUsernameMsg extends ClientToServerMsg {
         this.username = username;
     }
 
-    public ReturnableObject<Boolean> functionToCall(LobbyController controller) {
+    public ReturnableObject<Boolean> functionToCall(LobbyController controller, GameListener playerListener) {
         ReturnableObject<Boolean> toReturn = new ReturnableObject<>();
         toReturn.setResponseReturnable(controller.checkUsername(username));
         return toReturn;

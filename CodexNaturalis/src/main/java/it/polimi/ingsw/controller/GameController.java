@@ -9,10 +9,13 @@ import it.polimi.ingsw.model.enumeration.GameState;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class GameController {
@@ -21,6 +24,7 @@ public class GameController {
     int nPlayersPlaying;
     GameState gameState;
     String winner;
+    HashMap<String, ArrayList<GameListener>> listeners;
 
     //come creare il gioco e la classe
     public GameController(int idGame, int nPlayers) {
@@ -29,6 +33,7 @@ public class GameController {
         nPlayersPlaying = 0;
         gameState = GameState.WAITING_FOR_PLAYERS;
         winner = "No winner";
+        listeners = new HashMap<>();
     }
 
     public boolean checkState(int idPlayerIntoGame, RequestedActions requestedActions) {
@@ -57,7 +62,7 @@ public class GameController {
         return gameState.toString();
     }
 
-    public synchronized int joinGame(String username) throws InterruptedException {
+    public synchronized int joinGame(String username, GameListener playerListener) throws InterruptedException, RemoteException {
         Player player = new Player(username);
         int idPlayer = model.addPlayer(player);
         nPlayersPlaying++;
@@ -68,7 +73,25 @@ public class GameController {
                 model.getPlayers().get(i).setPlayerState(PlayerState.SETUP_GAME);
             }
         }
+        subscribeListener(playerListener, "WaitingForPlayersState");
+        notifyPlayers("WaitingForPlayersState");
+
         return idPlayer;
+    }
+
+    public void subscribeListener(GameListener playerListener,String eventToListen) {
+        listeners.computeIfAbsent(eventToListen, k -> new ArrayList<>());
+        listeners.get(eventToListen).add(playerListener);
+    }
+
+    public void unSubscribeListener(GameListener playerListener, String eventToListen) {
+        listeners.get(eventToListen).remove(playerListener);
+    }
+
+    public void notifyPlayers(String eventToListen) throws RemoteException {
+        for (GameListener listener : listeners.get(eventToListen)) {
+            listener.update();
+        }
     }
 
     public ArrayList<ObjectiveCard> getObjectiveCards(int idPlayer) {

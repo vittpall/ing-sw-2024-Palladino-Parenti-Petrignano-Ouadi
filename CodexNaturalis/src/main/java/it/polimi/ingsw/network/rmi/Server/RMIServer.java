@@ -1,20 +1,18 @@
 package it.polimi.ingsw.network.rmi.Server;
 
 import it.polimi.ingsw.controller.LobbyController;
-import it.polimi.ingsw.model.Card;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.GameCard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.GameState;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.observer.Observer;
-import it.polimi.ingsw.model.observer.Subject;
+import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
@@ -28,8 +26,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-public class RMIServer implements VirtualServer, Subject {
+public class RMIServer implements VirtualServer, Observable {
     final List<VirtualView> clients = new ArrayList<>();
+    final List<GameListener> gameListeners = new ArrayList<>();
 
     private final LobbyController lobbyController;
 
@@ -40,8 +39,11 @@ public class RMIServer implements VirtualServer, Subject {
 
     @Override
     public synchronized void connect(VirtualView client) throws RemoteException {
-        System.err.println("new client connected");
-        this.clients.add(client);
+ /*       System.err.println("new client connected");
+        this.clients.add(client);*/
+            System.err.println("New client connected");
+            clients.add(client);
+                gameListeners.add((GameListener) client);  // Make sure this casting is correct
     }
 
     @Override
@@ -99,8 +101,8 @@ public class RMIServer implements VirtualServer, Subject {
     }
 
     @Override
-    public int joinGame(int id, String username) throws RemoteException, InterruptedException {
-        int idPlayerIntoGame = lobbyController.joinGame(id, username);
+    public int joinGame(int id, String username, GameListener playerListener) throws RemoteException, InterruptedException {
+        int idPlayerIntoGame = lobbyController.joinGame(id, username, playerListener);
         String content = "\n----------------------------------" +
                 "\nPlayer " + lobbyController.getPlayers(id).get(idPlayerIntoGame).getUsername() + " joined the game\n";
         if (lobbyController.getPlayers(id).size() == lobbyController.getnPlayer(id))
@@ -114,8 +116,16 @@ public class RMIServer implements VirtualServer, Subject {
     }
 
     @Override
-    public int createGame(String username, int nPlayers) throws RemoteException, InterruptedException {
-        return lobbyController.createGame(username, nPlayers);
+    public int createGame(String username, int nPlayers, GameListener playerListener) throws RemoteException, InterruptedException {
+        int idGame = lobbyController.createGame(username, nPlayers, playerListener);
+        notifyPlayers();
+        return idGame;
+    }
+
+    private void notifyPlayers() throws RemoteException {
+        for (GameListener listener : gameListeners) {
+            listener.update();
+        }
     }
 
     @Override

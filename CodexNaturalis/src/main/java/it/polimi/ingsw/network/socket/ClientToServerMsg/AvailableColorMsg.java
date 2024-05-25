@@ -3,6 +3,7 @@ package it.polimi.ingsw.network.socket.ClientToServerMsg;
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class AvailableColorMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject<ArrayList<TokenColor>> functionToCall(LobbyController controller) throws InterruptedException {
+    public ReturnableObject<ArrayList<TokenColor>> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException {
         ReturnableObject<ArrayList<TokenColor>> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.getAvailableColors(idGame));
         return response;

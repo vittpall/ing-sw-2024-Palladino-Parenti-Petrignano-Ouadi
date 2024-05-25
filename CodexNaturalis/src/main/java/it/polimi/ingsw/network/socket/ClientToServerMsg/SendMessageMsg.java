@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 public class SendMessageMsg extends ClientToServerMsg{
@@ -14,7 +15,7 @@ public class SendMessageMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject<Message> functionToCall(LobbyController controller) throws InterruptedException, CardNotFoundException {
+    public ReturnableObject<Message> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException {
        ReturnableObject<Message> response = new ReturnableObject<>();
        controller.sendMessage(msg.getGameId(), msg);
        response.setResponseReturnable(msg);
