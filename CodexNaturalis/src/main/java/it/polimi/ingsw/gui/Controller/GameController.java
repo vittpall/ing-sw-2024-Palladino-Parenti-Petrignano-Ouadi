@@ -3,6 +3,9 @@ package it.polimi.ingsw.gui.Controller;
 import it.polimi.ingsw.gui.CardView;
 import it.polimi.ingsw.gui.GameBoard;
 import it.polimi.ingsw.model.Card;
+import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
+import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
@@ -11,29 +14,24 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.*;
 
 public class GameController implements FXMLController {
     public AnchorPane gameBoardContainer;
+    public HBox objectiveCardsContainer;
+    public HBox resourceDeck;
+    public HBox goldenDeck;
+    public VBox playerHandBox;
     private VirtualView client;
     private Stage stage;
-    public StackPane usableCardDeck1Back;
-    public StackPane usableCardDeck2Back;
-    public StackPane visibleCardDeck1Card1;
-    public StackPane visibleCardDeck1Card2;
-    public StackPane visibleCardDeck2Card1;
-    public StackPane visibleCardDeck2Card2;
-    public StackPane objectiveCard1;
-    public StackPane objectiveCard2;
-    public VBox playerHandBox;
     private Integer selectedCardIndex = null;
     private boolean playCardFaceDown;
     private GameBoard gameBoard;
@@ -68,11 +66,12 @@ public class GameController implements FXMLController {
     }
 
     private void loadObjectiveCards() throws IOException, InterruptedException {
-        ObjectiveCard[] sharedObjectiveCards = client.getSharedObjectiveCards();
-        CardView objCard1 = new CardView(sharedObjectiveCards[0], true);
-        CardView objCard2 = new CardView(sharedObjectiveCards[1], true);
-        objectiveCard1.getChildren().add(objCard1);
-        objectiveCard2.getChildren().add(objCard2);
+        List<ObjectiveCard> objectiveCards = new ArrayList<>(Arrays.asList(client.getSharedObjectiveCards()));
+        objectiveCards.add(client.getPlayerObjectiveCard());
+        for (ObjectiveCard objCard : objectiveCards) {
+            CardView objCardView = new CardView(objCard, true);
+            objectiveCardsContainer.getChildren().add(objCardView);
+        }
     }
 
     private void loadUsableCards() throws IOException {
@@ -80,13 +79,13 @@ public class GameController implements FXMLController {
         Card usableCard2 = client.getLastFromUsableCards(2);
         CardView usableCardBackView1 = new CardView(usableCard1, false);
         CardView usableCardBackView2 = new CardView(usableCard2, false);
-        usableCardDeck1Back.getChildren().add(usableCardBackView1);
-        usableCardDeck2Back.getChildren().add(usableCardBackView2);
+        resourceDeck.getChildren().add(usableCardBackView1);
+        goldenDeck.getChildren().add(usableCardBackView2);
     }
 
     private void loadVisibleCards() throws IOException, InterruptedException {
-        initializeVisibleCards(client.getVisibleCardsDeck(1), visibleCardDeck1Card1, visibleCardDeck1Card2);
-        initializeVisibleCards(client.getVisibleCardsDeck(2), visibleCardDeck2Card1, visibleCardDeck2Card2);
+        initializeVisibleCards(client.getVisibleCardsDeck(1), resourceDeck);
+        initializeVisibleCards(client.getVisibleCardsDeck(2), goldenDeck);
     }
 
     private void loadPlayerHand() throws IOException, InterruptedException {
@@ -101,11 +100,11 @@ public class GameController implements FXMLController {
     }
 
 
-    private void initializeVisibleCards(ArrayList<GameCard> cards, Pane pane1, Pane pane2) {
+    private void initializeVisibleCards(ArrayList<GameCard> cards, HBox pane) {
         CardView card1 = new CardView(cards.get(0), true);
         CardView card2 = new CardView(cards.get(1), true);
-        pane1.getChildren().add(card1);
-        pane2.getChildren().add(card2);
+        pane.getChildren().add(card1);
+        pane.getChildren().add(card2);
     }
 
 
@@ -114,7 +113,14 @@ public class GameController implements FXMLController {
         availablePlaces.forEach(point -> {
             CardView placeholder = new CardView(true);
             placeholder.getStyleClass().add("placeholder");
-            placeholder.setOnMouseClicked(event -> handlePositionSelection(point));
+            placeholder.setOnMouseClicked(event -> {
+                try {
+                    handlePositionSelection(point);
+                } catch (PlaceNotAvailableException | RequirementsNotMetException | IOException | InterruptedException |
+                         CardNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            });
             gameBoard.addCardView(placeholder, point.x, point.y);
         });
     }
@@ -131,7 +137,6 @@ public class GameController implements FXMLController {
 
 
     private void promptCardOrientation() throws IOException, InterruptedException {
-        // Example: Use a dialog with two buttons "Face Up" and "Face Down"
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Card Orientation");
         alert.setHeaderText("Choose how you want to play the card:");
@@ -140,13 +145,9 @@ public class GameController implements FXMLController {
         alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
 
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == buttonTypeOne) {
-            playCardFaceDown = false; // This is a field in your controller
-        } else {
-            playCardFaceDown = true;
-        }
+        playCardFaceDown = result.isEmpty() || result.get() != buttonTypeOne;
 
-        showAvailablePositions(); // Now show the positions
+        showAvailablePositions();
     }
 
     private void updatePlayerHandInteraction() throws RemoteException {
@@ -174,18 +175,14 @@ public class GameController implements FXMLController {
     }
 
 
-    private void handlePositionSelection(Point selectedPoint) {
+    private void handlePositionSelection(Point selectedPoint) throws PlaceNotAvailableException, RequirementsNotMetException, IOException, InterruptedException, CardNotFoundException {
         int cardIndex = getSelectedCardIndex();
         if (cardIndex == -1) {
             showError("No card selected");
             return;
         }
-        try {
-            client.playCard(cardIndex, playCardFaceDown, selectedPoint);
-            // Refresh UI or move to next state
-        } catch (Exception e) {
-            showError("Cannot play card here: " + e.getMessage());
-        }
+        client.playCard(cardIndex, playCardFaceDown, selectedPoint);
+
     }
 
 

@@ -25,8 +25,8 @@ public class InitializeStarterCardController implements FXMLController {
     public void initializeStarterCard() {
         try {
             StarterCard starterCard = client.getStarterCard();
-            CardView frontCardView = new CardView(starterCard, false);
-            CardView backCardView = new CardView(starterCard, true);
+            CardView frontCardView = new CardView(starterCard, true);
+            CardView backCardView = new CardView(starterCard, false);
 
             frontCardContainer.getChildren().add(1, frontCardView);
             backCardContainer.getChildren().add(1, backCardView);
