@@ -57,4 +57,8 @@ public class GetWinnerState implements ClientState {
         System.out.println("3. Chat");
 
     }
+
+    public String toString() {
+        return "GetWinnerState";
+    }
 }

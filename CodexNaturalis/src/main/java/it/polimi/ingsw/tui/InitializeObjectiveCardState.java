@@ -75,4 +75,8 @@ public class InitializeObjectiveCardState implements ClientState {
                 System.out.print("Invalid input");
         }
     }
+
+    public String toString() {
+        return "InitializeObjectiveCardState";
+    }
 }

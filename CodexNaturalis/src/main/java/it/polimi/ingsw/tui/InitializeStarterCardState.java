@@ -89,4 +89,8 @@ public class InitializeStarterCardState implements ClientState {
         }
 
     }
+
+    public String toString() {
+        return "InitializeStarterCardState";
+    }
 }

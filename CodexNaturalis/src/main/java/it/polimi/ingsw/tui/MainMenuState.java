@@ -70,4 +70,8 @@ public class MainMenuState implements ClientState, Remote {
             requestUsername();
         }
     }
+
+    public String toString() {
+        return "MainMenuState";
+    }
 }

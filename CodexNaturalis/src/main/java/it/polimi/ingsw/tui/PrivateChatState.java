@@ -68,4 +68,8 @@ public class PrivateChatState implements ClientState{
     public void promptForInput() {
 
     }
+
+    public String toString() {
+        return "PrivateChatState";
+    }
 }

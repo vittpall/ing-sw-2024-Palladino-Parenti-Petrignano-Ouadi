@@ -40,4 +40,8 @@ public class ShowObjectiveCardsState implements ClientState{
     public void promptForInput() {
         System.out.println("1. Return to main menu");
     }
+
+    public String toString() {
+        return "ShowObjectiveCardsState";
+    }
 }

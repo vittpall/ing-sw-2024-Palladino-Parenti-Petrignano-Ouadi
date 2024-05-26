@@ -76,4 +76,8 @@ public class CreateGameState implements ClientState {
         }
     }
 
+    public String toString() {
+        return "CreaetGameState";
+    }
+
 }

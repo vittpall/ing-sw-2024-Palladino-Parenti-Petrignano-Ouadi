@@ -35,7 +35,7 @@ public interface VirtualServer extends Remote {
 
     int joinGame(int id, String username, GameListener playerListener) throws RemoteException, InterruptedException;
 
-    int createGame(String username, int nPlayers, GameListener playerListener) throws RemoteException, InterruptedException;
+    int createGame(String username, int nPlayers, GameListener playerListener) throws IOException, InterruptedException;
 
     void removeUsername(String username) throws RemoteException;
 

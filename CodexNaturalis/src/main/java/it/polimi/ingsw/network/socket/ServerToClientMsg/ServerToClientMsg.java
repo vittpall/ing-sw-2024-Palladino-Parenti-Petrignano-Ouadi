@@ -14,6 +14,12 @@ public class ServerToClientMsg implements Serializable {
     protected boolean doItNeedToBeBroadCasted;
     protected int idGame;
 
+    public ServerToClientMsg(TypeServerToClientMsg type) {
+        this.type = type;
+        this.doItNeedToBeBroadCasted = false;
+        this.response = new ReturnableObject<>();
+    }
+
     public ServerToClientMsg(TypeServerToClientMsg type, boolean doItNeedToBeBroadCasted) {
         this.type = type;
         this.doItNeedToBeBroadCasted = doItNeedToBeBroadCasted;

@@ -62,4 +62,8 @@ public class GlobalChatState implements ClientState{
     @Override
     public void promptForInput() {
     }
+
+    public String toString() {
+        return "GlobalChatState";
+    }
 }

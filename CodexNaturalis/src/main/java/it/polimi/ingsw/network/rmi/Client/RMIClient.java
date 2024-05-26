@@ -126,7 +126,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
     }
 
     @Override
-    public void createGame(String username, int nPlayers) throws RemoteException, InterruptedException {
+    public void createGame(String username, int nPlayers) throws IOException, InterruptedException {
    //     GameListener gameListener = (GameListener)UnicastRemoteObject.exportObject(this, 0);
         idGame = server.createGame(username, nPlayers, (GameListener) this);
         idClientIntoGame = 0;
@@ -434,13 +434,23 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
      *
      */
     @Override
-    public void update() throws RemoteException{
+    public void update(ReturnableObject messageToShow) throws RemoteException{
         //TODO logic to implement. I would consider to use a switch case to handle the different states
-        if (currentState instanceof JoinGameMenuState) {
-            currentState.display();
+        switch (currentState.toString())
+        {
+                case "JoinGameMenuState":
+                currentState.display();
+                break;
+                case "WaitingForPlayersState":
+                currentState.display();
+                break;
+                case "ColorSelectionState":
+                currentState.display();
+                break;
+                default:
+                break;
+
         }
-        if(currentState instanceof WaitingForPlayersState){
-            System.out.println("another player joined the game");
-        }
+
     }
 }

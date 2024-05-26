@@ -105,4 +105,8 @@ public class PrivateChatSelectingReceiverState implements ClientState {
     public void promptForInput() {
         System.out.println(this.finalOption+1 +".Exit chat");
     }
+
+    public String toString() {
+        return "PrivateChatSelectingReceiverState";
+    }
 }

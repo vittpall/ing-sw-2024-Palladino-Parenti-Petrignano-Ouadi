@@ -179,5 +179,8 @@ public class PlayCardState implements ClientState {
         return coordinate;
     }
 
+    public String toString() {
+        return "PlayCardState";
+    }
 
 }

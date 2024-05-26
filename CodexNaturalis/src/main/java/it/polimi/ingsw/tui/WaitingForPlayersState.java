@@ -44,4 +44,8 @@ public class WaitingForPlayersState implements ClientState{
     public void promptForInput() {
 
     }
+
+    public String toString() {
+        return "WaitingForPlayersState";
+    }
 }

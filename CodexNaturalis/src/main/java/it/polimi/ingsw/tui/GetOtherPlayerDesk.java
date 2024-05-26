@@ -60,4 +60,8 @@ public class GetOtherPlayerDesk implements ClientState{
         }
         return null;
     }
+
+    public String toString() {
+        return "GetOtherPlayerDesk";
+    }
 }

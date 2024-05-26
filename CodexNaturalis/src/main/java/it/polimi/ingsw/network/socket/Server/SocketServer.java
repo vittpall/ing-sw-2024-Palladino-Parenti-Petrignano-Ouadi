@@ -54,19 +54,12 @@ public class SocketServer implements Remote {
         }
     }
 
-    /*
-    public static void broadCastMsg(ReturnableObject message, TypeServerToClientMsg type, int idGame) throws IOException {
-        ServerToClientMsg receivedMessage = new ServerToClientMsg(type, false, idGame);
-        receivedMessage.setResponse(message);
-        for (ClientHandler client : clients) {
-            client.sendMessage(receivedMessage);
-        }
-    }
-    */
 
     public static void broadCastWhatHappened(ReturnableObject messageToBroadCast, TypeServerToClientMsg type, int idGame) throws IOException {
         ServerToClientMsg receivedMessage = new ServerToClientMsg(type, true, idGame);
-        receivedMessage.setResponse(messageToBroadCast);
+        ReturnableObject<Integer> test = new ReturnableObject<>();
+        test.setResponseReturnable(1);
+        //receivedMessage.setResponse(messageToBroadCast);
         for (ClientHandler client : clients) {
             client.sendMessage(receivedMessage);
         }

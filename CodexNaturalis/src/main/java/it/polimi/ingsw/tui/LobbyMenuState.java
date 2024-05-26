@@ -52,4 +52,8 @@ public class LobbyMenuState implements ClientState {
                 System.out.print("Invalid input");
         }
     }
+
+    public String toString() {
+        return "LobbyMenuState";
+    }
 }

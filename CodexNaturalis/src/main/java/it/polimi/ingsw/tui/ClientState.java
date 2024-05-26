@@ -11,4 +11,7 @@ public interface ClientState extends Remote {
     void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException;
 
     void promptForInput();
+
+    @Override
+    String toString();
 }

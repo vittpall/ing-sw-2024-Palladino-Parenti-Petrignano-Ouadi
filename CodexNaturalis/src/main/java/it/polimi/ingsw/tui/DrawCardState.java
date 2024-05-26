@@ -85,4 +85,8 @@ public class DrawCardState implements ClientState {
         System.out.println("3. Chat");
 
     }
+
+    public String toString() {
+        return "DrawCardState";
+    }
 }

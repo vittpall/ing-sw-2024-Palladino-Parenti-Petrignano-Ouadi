@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.observer.Observer;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
@@ -35,7 +36,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * This class represents the client side of a socket connection.
  * It implements the VirtualView interface, which provides methods for interacting with the game model.
  */
-public class SocketClient implements VirtualView, Observer {
+public class SocketClient implements VirtualView, GameListener {
 
     private final ObjectOutputStream out;
     private final ObjectInputStream in;
@@ -135,7 +136,6 @@ public class SocketClient implements VirtualView, Observer {
     public ArrayList<Integer> getNotStartedGames() throws IOException, InterruptedException {
         GetNotStartedGamesMsg request = new GetNotStartedGamesMsg();
         ServerToClientMsg response = sendRequest(request);
-        System.out.println("Received response: " + response.getResponse().getResponseReturnable());
         return (ArrayList<Integer>) response.getResponse().getResponseReturnable();
     }
 
@@ -564,12 +564,8 @@ public class SocketClient implements VirtualView, Observer {
                 ServerToClientMsg msg = (ServerToClientMsg) in.readObject();
                 TypeServerToClientMsg responseType = msg.getType();
                 responseQueues.computeIfAbsent(responseType, k -> new LinkedBlockingQueue<>()).put(msg);
-                if (responseType == TypeServerToClientMsg.RECEIVED_MESSAGE) {
-                    //  System.out.println(msg.getResponse().getMessageResponse().getContent());
-                    this.receiveMessage((Message) msg.getResponse().getResponseReturnable());
-                }
-                if (msg.doItNeedToBeBroadCasted() && (msg.getIdGame() == idGame || msg.getIdGame() == -1)) {
-                    this.receiveNotification(msg.getResponse());
+                if (responseType.equals(TypeServerToClientMsg.RECEIVED_MESSAGE)) {
+                    this.update(null);
                 }
             }
         } catch (Exception e) {
@@ -600,7 +596,23 @@ public class SocketClient implements VirtualView, Observer {
      *
      */
     @Override
-    public void update() {
+    public void update(ReturnableObject messageToShow) throws IOException {
+        //TODO logic to implement. I would consider to use a switch case to handle the different states
+        switch (currentState.toString())
+        {
+            case "JoinGameMenuState":
+                currentState.display();
+                break;
+            case "WaitingForPlayersState":
+                System.out.println("caionnee");
+                currentState.display();
+                break;
+            case "ColorSelectionState":
+                currentState.display();
+                break;
+            default:
+                break;
 
+        }
     }
 }

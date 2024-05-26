@@ -79,4 +79,9 @@ public class ColorSelection implements ClientState {
             case GREEN -> "4. GREEN";
         };
     }
+
+    @Override
+    public String toString(){
+        return "ColorSelection";
+    }
 }

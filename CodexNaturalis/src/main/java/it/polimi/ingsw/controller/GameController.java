@@ -13,6 +13,7 @@ import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,8 +74,9 @@ public class GameController {
                 model.getPlayers().get(i).setPlayerState(PlayerState.SETUP_GAME);
             }
         }
-        subscribeListener(playerListener, "WaitingForPlayersState");
+
         notifyPlayers("WaitingForPlayersState");
+        subscribeListener(playerListener, "WaitingForPlayersState");
 
         return idPlayer;
     }
@@ -88,9 +90,15 @@ public class GameController {
         listeners.get(eventToListen).remove(playerListener);
     }
 
-    public void notifyPlayers(String eventToListen) throws RemoteException {
+    public void notifyPlayers(String eventToListen) {
+        if(listeners.get(eventToListen) == null)
+            return;
         for (GameListener listener : listeners.get(eventToListen)) {
-            listener.update();
+            try {
+                listener.update(null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

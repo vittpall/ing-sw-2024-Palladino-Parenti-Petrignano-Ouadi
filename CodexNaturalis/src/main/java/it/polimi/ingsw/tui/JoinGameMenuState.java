@@ -62,6 +62,10 @@ public class JoinGameMenuState implements ClientState {
             System.out.println("Error while joining the game");
         }
     }
+
+    public String toString() {
+        return "JoinGameMenuState";
+    }
 }
 
 

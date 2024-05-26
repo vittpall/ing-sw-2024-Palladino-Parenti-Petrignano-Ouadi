@@ -116,15 +116,15 @@ public class RMIServer implements VirtualServer, Observable {
     }
 
     @Override
-    public int createGame(String username, int nPlayers, GameListener playerListener) throws RemoteException, InterruptedException {
+    public int createGame(String username, int nPlayers, GameListener playerListener) throws IOException, InterruptedException {
         int idGame = lobbyController.createGame(username, nPlayers, playerListener);
-        notifyPlayers();
+        notifyPlayers(null);
         return idGame;
     }
 
-    private void notifyPlayers() throws RemoteException {
+    private void notifyPlayers(ReturnableObject messageToShow) throws IOException {
         for (GameListener listener : gameListeners) {
-            listener.update();
+            listener.update(null);
         }
     }
 

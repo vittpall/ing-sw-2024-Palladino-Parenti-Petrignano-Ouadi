@@ -4,6 +4,8 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.observer.Observer;
 import it.polimi.ingsw.model.observer.Observable;
@@ -15,8 +17,9 @@ import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.rmi.RemoteException;
 
-public class ClientHandler{
+public class ClientHandler implements GameListener {
     final SocketServer server;
     final ObjectInputStream input;
     final LobbyController controller;
@@ -36,23 +39,28 @@ public class ClientHandler{
         // Read message type
         try {
             while ((request = (ClientToServerMsg) input.readObject()) != null) {
-                if (request instanceof SendMessageMsg) {
-                    ReturnableObject message = request.functionToCall(controller, null);
+                response = new ServerToClientMsg(request.getType(), false);
+                response.setResponse(request.functionToCall(controller, (GameListener) this));
+                output.writeObject(response);
+                output.flush();
+                output.reset();
+                /*if (request instanceof SendMessageMsg) {
+                    ReturnableObject message = request.functionToCall(controller, (GameListener) this);
                     SocketServer.broadCastWhatHappened(message, request.getType(), request.getIdGame());
                 }
                 if (request.getDoItNeedToBeBroadcasted()) {
-                    ReturnableObject responseReturnable = request.functionToCall(controller, null);
+                    ReturnableObject responseReturnable = request.functionToCall(controller, (GameListener) this);
                     ReturnableObject messageToBroadCast = new ReturnableObject<>();
                     //to align with what happen in the rmi server, i pass a message instead of just a string
                     messageToBroadCast.setResponseReturnable(request.getBroadCastMessage());
                     SocketServer.broadCastWhatHappened(messageToBroadCast, request.getType(), request.getIdGame());
                 } else {
                     response = new ServerToClientMsg(request.getType(), false);
-                    response.setResponse(request.functionToCall(controller, null));
+                    response.setResponse(request.functionToCall(controller, (GameListener) this));
                     output.writeObject(response);
                     output.flush();
                     output.reset();
-                }
+                }*/
 
 
             }
@@ -69,4 +77,13 @@ public class ClientHandler{
     }
 
 
+    /**
+     * @throws RemoteException
+     */
+    @Override
+    public void update(ReturnableObject messageToShow) throws IOException {
+        ServerToClientMsg msg = new ServerToClientMsg(TypeServerToClientMsg.RECEIVED_MESSAGE);
+        msg.setResponse(messageToShow);
+        sendMessage(msg);
+    }
 }
