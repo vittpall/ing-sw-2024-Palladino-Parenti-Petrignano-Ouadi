@@ -1,29 +1,35 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.GameListener;
+import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;
 import java.rmi.RemoteException;
 import java.util.*;
 
-public class LobbyController {
+public class LobbyController implements Observable {
 
     private final Set<String> usernames = new HashSet<>();
     private final Map<Integer, GameController> gameControllers;
     private final ArrayList<Integer> unusedIdGame;
+    private final Map<String, ArrayList<GameListener>> listeners;
     private int nextGameId;
 
 
     public LobbyController() {
+        this.listeners = new HashMap<>();
         gameControllers = new HashMap<>();
         unusedIdGame = new ArrayList<>();
         nextGameId = 1;
@@ -135,8 +141,8 @@ public class LobbyController {
         gameControllers.get(idGame).playCard(idClientIntoGame, chosenCard, faceDown, chosenPosition);
     }
 
-    public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws CardNotFoundException {
-        gameControllers.get(idGame).drawCard(idClientIntoGame, deckToChoose, inVisible);
+    public void drawCard(int idGame, int deckToChoose, int inVisible) throws CardNotFoundException {
+        gameControllers.get(idGame).drawCard(deckToChoose, inVisible);
     }
 
     public boolean getIsLastRoundStarted(int idGame) {
@@ -167,8 +173,8 @@ public class LobbyController {
         return gameControllers.get(idGame).getPlayers().get(idClientIntoGame).getPlayerDesk().getDesk();
     }
 
-    public String getWinner(int idGame, int idClientIntoGame) throws InterruptedException {
-        return gameControllers.get(idGame).getWinner(idClientIntoGame);
+    public String getWinner(int idGame) {
+        return gameControllers.get(idGame).getWinner();
     }
 
     public void closeGame(int idGame) {
@@ -198,5 +204,22 @@ public class LobbyController {
 
     public PlayerState getCurrentPlayerState(int idGame, int idClientIntoGame) {
         return gameControllers.get(idGame).getPlayerState(idClientIntoGame);
+    }
+
+
+    @Override
+    public void subscribeListener(GameListener listener, String eventToListen) {
+        listeners.computeIfAbsent(eventToListen, k -> new ArrayList<>());
+        listeners.get(eventToListen).add(listener);
+    }
+
+    @Override
+    public void unSubscribeListener(GameListener listener, String eventToListen) {
+        listeners.get(eventToListen).remove(listener);
+    }
+
+    @Override
+    public void notifyObserver(String eventToListen) {
+
     }
 }

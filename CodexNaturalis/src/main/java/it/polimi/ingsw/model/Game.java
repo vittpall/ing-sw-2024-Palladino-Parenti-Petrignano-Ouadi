@@ -36,7 +36,7 @@ public class Game implements Serializable {
     private boolean gameStarted;
     private final ArrayList<StarterCard> starterCards;
     private final ArrayList<ObjectiveCard> objectiveCards;
-    private Chat chats;
+    private final Chat chats;
 
     /**
      * constructor
@@ -150,7 +150,7 @@ public class Game implements Serializable {
      * @return players
      */
     public ArrayList<Player> getPlayers() {
-        return new ArrayList<Player>(players);
+        return new ArrayList<>(players);
     }
 
     /**

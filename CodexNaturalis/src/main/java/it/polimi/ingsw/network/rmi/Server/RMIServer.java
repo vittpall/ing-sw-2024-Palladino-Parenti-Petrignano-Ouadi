@@ -1,18 +1,19 @@
 package it.polimi.ingsw.network.rmi.Server;
 
 import it.polimi.ingsw.controller.LobbyController;
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.GameState;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.GameListener;
-import it.polimi.ingsw.model.observer.Observer;
-import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-public class RMIServer implements VirtualServer, Observable {
+public class RMIServer implements VirtualServer {
     final List<VirtualView> clients = new ArrayList<>();
     final List<GameListener> gameListeners = new ArrayList<>();
 
@@ -41,9 +42,9 @@ public class RMIServer implements VirtualServer, Observable {
     public synchronized void connect(VirtualView client) throws RemoteException {
  /*       System.err.println("new client connected");
         this.clients.add(client);*/
-            System.err.println("New client connected");
-            clients.add(client);
-                gameListeners.add((GameListener) client);  // Make sure this casting is correct
+        System.err.println("New client connected");
+        clients.add(client);
+        gameListeners.add((GameListener) client);  // Make sure this casting is correct
     }
 
     @Override
@@ -205,7 +206,7 @@ public class RMIServer implements VirtualServer, Observable {
 
     @Override
     public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws IOException, CardNotFoundException, InterruptedException {
-        lobbyController.drawCard(idGame, idClientIntoGame, deckToChoose, inVisible);
+        lobbyController.drawCard(idGame, deckToChoose, inVisible);
         String content;
         content = "\n----------------------------------\n" +
                 "Player " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getUsername() + " drew a card\n" +
@@ -274,8 +275,8 @@ public class RMIServer implements VirtualServer, Observable {
     }
 
     @Override
-    public String getWinner(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException {
-        return lobbyController.getWinner(idGame, idClientIntoGame);
+    public String getWinner(int idGame) throws RemoteException {
+        return lobbyController.getWinner(idGame);
     }
 
     @Override
@@ -303,27 +304,4 @@ public class RMIServer implements VirtualServer, Observable {
         return lobbyController.checkState(idGame, idClientIntoGame, requestedActions);
     }
 
-    /**
-     * @param o
-     */
-    @Override
-    public void register(Observer o) {
-
-    }
-
-    /**
-     * @param o
-     */
-    @Override
-    public void unregister(Observer o) {
-
-    }
-
-    /**
-     *
-     */
-    @Override
-    public void notifyObserver() {
-
-    }
 }

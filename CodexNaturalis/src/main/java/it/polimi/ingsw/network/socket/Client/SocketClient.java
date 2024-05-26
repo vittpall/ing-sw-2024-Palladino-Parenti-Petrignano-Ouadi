@@ -13,7 +13,6 @@ import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
-import it.polimi.ingsw.model.observer.Observer;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.*;
@@ -219,7 +218,7 @@ public class SocketClient implements VirtualView, GameListener {
 
     @Override
     public String getWinner() throws IOException, InterruptedException {
-        GetWinnerMsg request = new GetWinnerMsg(idGame, idClientIntoGame);
+        GetWinnerMsg request = new GetWinnerMsg(idGame);
         ServerToClientMsg response = sendRequest(request);
         return (String) response.getResponse().getResponseReturnable();
     }
@@ -346,7 +345,7 @@ public class SocketClient implements VirtualView, GameListener {
 
     @Override
     public void drawCard(int input, int inVisible) throws IOException, CardNotFoundException, InterruptedException {
-        DrawCardMsg request = new DrawCardMsg(idGame, idClientIntoGame, input, inVisible, this.username + " has drawn a card");
+        DrawCardMsg request = new DrawCardMsg(idGame, input, inVisible, this.username + " has drawn a card");
         ServerToClientMsg response = sendRequest(request);
     }
 
@@ -484,7 +483,7 @@ public class SocketClient implements VirtualView, GameListener {
 
     private boolean gameLogicInputHandler(int i) {
         try {
-            boolean checkState = false;
+            boolean checkState;
             switch (i) {
                 //probabilmente è meglio mandare l'input al server e poi è il GameController che gestisce lo stato di richiesta
                 //per questo ho commentato la chiamata al metodo checkState
@@ -558,7 +557,7 @@ public class SocketClient implements VirtualView, GameListener {
 
     //what I receive from the server
     @SuppressWarnings("InfiniteLoopStatement")
-    private void runVirtualServer() throws IOException, ClassNotFoundException {
+    private void runVirtualServer() {
         try {
             while (true) {
                 ServerToClientMsg msg = (ServerToClientMsg) in.readObject();
@@ -596,10 +595,9 @@ public class SocketClient implements VirtualView, GameListener {
      *
      */
     @Override
-    public void update(ReturnableObject messageToShow) throws IOException {
+    public void update(ReturnableObject messageToShow) {
         //TODO logic to implement. I would consider to use a switch case to handle the different states
-        switch (currentState.toString())
-        {
+        switch (currentState.toString()) {
             case "JoinGameMenuState":
                 currentState.display();
                 break;

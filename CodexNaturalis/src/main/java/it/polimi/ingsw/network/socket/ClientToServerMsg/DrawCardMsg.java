@@ -6,24 +6,23 @@ import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
-public class DrawCardMsg extends ClientToServerMsg{
+public class DrawCardMsg extends ClientToServerMsg {
 
-    private int idGame;
-    private int idClientIntoGame;
-    private int input;
-    private int inVisible;
+    private final int idGame;
+    private final int input;
+    private final int inVisible;
 
-    public DrawCardMsg(int idGame, int idClientIntoGame, int input, int inVisible, String broadCastMessage){
+    public DrawCardMsg(int idGame, int input, int inVisible, String broadCastMessage) {
         this.idGame = idGame;
-        this.idClientIntoGame = idClientIntoGame;
         this.input = input;
         this.inVisible = inVisible;
         this.broadCastMessage = broadCastMessage;
     }
+
     @Override
     public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
-        controller.drawCard(idGame, idClientIntoGame, input, inVisible);
+        controller.drawCard(idGame, input, inVisible);
         response.setResponseReturnable(-1);
         return response;
     }

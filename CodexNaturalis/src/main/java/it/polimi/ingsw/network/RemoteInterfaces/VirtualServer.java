@@ -1,9 +1,12 @@
 package it.polimi.ingsw.network.RemoteInterfaces;
 
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
@@ -79,7 +82,7 @@ public interface VirtualServer extends Remote {
 
     HashMap<Point, GameCard> getPlayerDesk(int idGame, int idClientIntoGame) throws RemoteException;
 
-    String getWinner(int idGame, int idClientIntoGame) throws RemoteException, InterruptedException;
+    String getWinner(int idGame) throws RemoteException, InterruptedException;
 
     void closeGame(int idGame) throws RemoteException;
 

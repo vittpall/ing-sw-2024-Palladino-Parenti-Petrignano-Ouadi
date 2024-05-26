@@ -4,14 +4,10 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
-import it.polimi.ingsw.model.observer.Observer;
-import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.ClientToServerMsg;
-import it.polimi.ingsw.network.socket.ClientToServerMsg.SendMessageMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 import java.io.IOException;
@@ -40,29 +36,10 @@ public class ClientHandler implements GameListener {
         try {
             while ((request = (ClientToServerMsg) input.readObject()) != null) {
                 response = new ServerToClientMsg(request.getType(), false);
-                response.setResponse(request.functionToCall(controller, (GameListener) this));
+                response.setResponse(request.functionToCall(controller, this));
                 output.writeObject(response);
                 output.flush();
                 output.reset();
-                /*if (request instanceof SendMessageMsg) {
-                    ReturnableObject message = request.functionToCall(controller, (GameListener) this);
-                    SocketServer.broadCastWhatHappened(message, request.getType(), request.getIdGame());
-                }
-                if (request.getDoItNeedToBeBroadcasted()) {
-                    ReturnableObject responseReturnable = request.functionToCall(controller, (GameListener) this);
-                    ReturnableObject messageToBroadCast = new ReturnableObject<>();
-                    //to align with what happen in the rmi server, i pass a message instead of just a string
-                    messageToBroadCast.setResponseReturnable(request.getBroadCastMessage());
-                    SocketServer.broadCastWhatHappened(messageToBroadCast, request.getType(), request.getIdGame());
-                } else {
-                    response = new ServerToClientMsg(request.getType(), false);
-                    response.setResponse(request.functionToCall(controller, (GameListener) this));
-                    output.writeObject(response);
-                    output.flush();
-                    output.reset();
-                }*/
-
-
             }
         } catch (IOException | ClassNotFoundException | InterruptedException | CardNotFoundException |
                  PlaceNotAvailableException | RequirementsNotMetException e) {

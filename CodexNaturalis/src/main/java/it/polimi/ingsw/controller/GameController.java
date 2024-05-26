@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.GameListener;
+import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;
@@ -19,19 +20,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class GameController {
-    Game model;
-    int nPlayers;
-    int nPlayersPlaying;
-    GameState gameState;
-    String winner;
-    HashMap<String, ArrayList<GameListener>> listeners;
+public class GameController implements Observable {
+    private final Game model;
+    private final int nPlayers;
+    private GameState gameState;
+    private String winner;
+    private final HashMap<String, ArrayList<GameListener>> listeners;
 
     //come creare il gioco e la classe
     public GameController(int idGame, int nPlayers) {
         this.nPlayers = nPlayers;
         model = new Game(idGame, nPlayers);
-        nPlayersPlaying = 0;
         gameState = GameState.WAITING_FOR_PLAYERS;
         winner = "No winner";
         listeners = new HashMap<>();
@@ -66,32 +65,34 @@ public class GameController {
     public synchronized int joinGame(String username, GameListener playerListener) throws InterruptedException, RemoteException {
         Player player = new Player(username);
         int idPlayer = model.addPlayer(player);
-        nPlayersPlaying++;
-        if (model.getPlayers().size() == model.getnPlayer()) {
+        if (model.getPlayers().size() == nPlayers) {
             model.setUpGame();
             gameState = GameState.SETUP_GAME;
-            for (int i = 0; i < model.getnPlayer(); i++) {
+            for (int i = 0; i < nPlayers; i++) {
                 model.getPlayers().get(i).setPlayerState(PlayerState.SETUP_GAME);
             }
         }
 
-        notifyPlayers("WaitingForPlayersState");
+        notifyObserver("WaitingForPlayersState");
         subscribeListener(playerListener, "WaitingForPlayersState");
 
         return idPlayer;
     }
 
-    public void subscribeListener(GameListener playerListener,String eventToListen) {
+    @Override
+    public void subscribeListener(GameListener listener, String eventToListen) {
         listeners.computeIfAbsent(eventToListen, k -> new ArrayList<>());
-        listeners.get(eventToListen).add(playerListener);
+        listeners.get(eventToListen).add(listener);
     }
 
-    public void unSubscribeListener(GameListener playerListener, String eventToListen) {
-        listeners.get(eventToListen).remove(playerListener);
+    @Override
+    public void unSubscribeListener(GameListener listener, String eventToListen) {
+        listeners.get(eventToListen).remove(listener);
     }
 
-    public void notifyPlayers(String eventToListen) {
-        if(listeners.get(eventToListen) == null)
+    @Override
+    public void notifyObserver(String eventToListen) {
+        if (listeners.get(eventToListen) == null)
             return;
         for (GameListener listener : listeners.get(eventToListen)) {
             try {
@@ -173,11 +174,10 @@ public class GameController {
         model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.DRAW);
         if (gameState == GameState.LAST_ROUND) {
             model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.ENDGAME);
-            if (model.getnPlayer() != idClientIntoGame + 1) {
+            if (nPlayers != idClientIntoGame + 1) {
                 model.advanceToNextPlayer();
                 model.getPlayers().get(model.getCurrentPlayerIndex()).setPlayerState(PlayerState.PLAY_CARD);
-            }
-            else {
+            } else {
                 winner = model.endGame();
                 gameState = GameState.ENDGAME;
             }
@@ -185,7 +185,7 @@ public class GameController {
     }
 
 
-    public synchronized void drawCard(int idClientIntoGame, int deckToChoose, int inVisible) throws CardNotFoundException {
+    public synchronized void drawCard(int deckToChoose, int inVisible) throws CardNotFoundException {
         //TODO: fare il check che sia il suo turno
         Deck chosenDeck;
         if (deckToChoose == 1)
@@ -203,12 +203,12 @@ public class GameController {
             model.drawVisibleCard(chosenDeck, chosenCard);
         }
         if (gameState != GameState.FINISHING_ROUND_BEFORE_LAST && model.getPlayers().get(model.getCurrentPlayerIndex()).getPoints() >= 20) {
-            if (model.getCurrentPlayerIndex() == model.getnPlayer() - 1)
+            if (model.getCurrentPlayerIndex() == nPlayers - 1)
                 gameState = GameState.LAST_ROUND;
             else
                 gameState = GameState.FINISHING_ROUND_BEFORE_LAST;
         }
-        if (gameState == GameState.FINISHING_ROUND_BEFORE_LAST && model.getCurrentPlayerIndex() == model.getnPlayer() - 1) {
+        if (gameState == GameState.FINISHING_ROUND_BEFORE_LAST && model.getCurrentPlayerIndex() == nPlayers - 1) {
             gameState = GameState.LAST_ROUND;
         }
         model.getCurrentPlayer().setPlayerState(PlayerState.WAITING);
@@ -242,7 +242,7 @@ public class GameController {
         return model.getUsernamePlayerThatStoppedTheGame();
     }
 
-    public synchronized String getWinner(int idClientIntoGame) throws InterruptedException {
+    public synchronized String getWinner() {
         return winner;
     }
 
@@ -252,7 +252,7 @@ public class GameController {
     }
 
     public int getnPlayer() {
-        return model.getnPlayer();
+        return nPlayers;
     }
 
     public Deck getResourceDeck() {
@@ -262,5 +262,5 @@ public class GameController {
     public Deck getGoldDeck() {
         return model.getGoldDeck();
     }
-    //gestire la chiusura
+
 }

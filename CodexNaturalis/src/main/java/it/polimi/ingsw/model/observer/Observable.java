@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model.observer;
 
 public interface Observable {
-    public void register(Observer o);
-    public void unregister(Observer o);
-    public void notifyObserver();
+    void subscribeListener(GameListener listener, String eventToListen);
+
+    void unSubscribeListener(GameListener listener, String eventToListen);
+
+    void notifyObserver(String eventToListen);
 }

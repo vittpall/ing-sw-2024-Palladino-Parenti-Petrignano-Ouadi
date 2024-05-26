@@ -7,22 +7,20 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
-public class GetWinnerMsg extends ClientToServerMsg{
+public class GetWinnerMsg extends ClientToServerMsg {
 
     private final int idGame;
-    private final int idClientIntoGame;
 
-    public GetWinnerMsg(int idGame, int idClientIntoGame) {
+    public GetWinnerMsg(int idGame) {
         this.idGame = idGame;
-        this.idClientIntoGame = idClientIntoGame;
 
     }
+
     @Override
     public ReturnableObject<String> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
         ReturnableObject<String> response = new ReturnableObject<>();
-        response.setResponseReturnable(controller.getWinner(idGame, idClientIntoGame));
+        response.setResponseReturnable(controller.getWinner(idGame));
         this.broadCastMessage = "The game is over!!!" + "The winner is:" + response.getResponseReturnable();
         return response;
     }

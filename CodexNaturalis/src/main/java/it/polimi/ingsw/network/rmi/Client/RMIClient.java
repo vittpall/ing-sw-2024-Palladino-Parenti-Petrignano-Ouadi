@@ -13,12 +13,10 @@ import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.GameListener;
-import it.polimi.ingsw.model.observer.Observer;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ClientToServerMsg.JoinGameMsg;
 import it.polimi.ingsw.tui.*;
 import javafx.stage.Stage;
 
@@ -110,7 +108,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
 
     @Override
     public void joinGame(int input, String username) throws RemoteException, InterruptedException {
-        idClientIntoGame = server.joinGame(input, username, (GameListener) this);
+        idClientIntoGame = server.joinGame(input, username, this);
         idGame = input;
 
     }
@@ -127,10 +125,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
 
     @Override
     public void createGame(String username, int nPlayers) throws IOException, InterruptedException {
-   //     GameListener gameListener = (GameListener)UnicastRemoteObject.exportObject(this, 0);
-        idGame = server.createGame(username, nPlayers, (GameListener) this);
+        idGame = server.createGame(username, nPlayers, this);
         idClientIntoGame = 0;
     }
+
     @Override
     public StarterCard getStarterCard() throws RemoteException {
         return server.getStarterCard(idGame, idClientIntoGame);
@@ -212,7 +210,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
 
     @Override
     public String getWinner() throws RemoteException, InterruptedException {
-        return server.getWinner(idGame, idClientIntoGame);
+        return server.getWinner(idGame);
     }
 
     @Override
@@ -434,20 +432,19 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
      *
      */
     @Override
-    public void update(ReturnableObject messageToShow) throws RemoteException{
+    public void update(ReturnableObject messageToShow) throws RemoteException {
         //TODO logic to implement. I would consider to use a switch case to handle the different states
-        switch (currentState.toString())
-        {
-                case "JoinGameMenuState":
+        switch (currentState.toString()) {
+            case "JoinGameMenuState":
                 currentState.display();
                 break;
-                case "WaitingForPlayersState":
+            case "WaitingForPlayersState":
                 currentState.display();
                 break;
-                case "ColorSelectionState":
+            case "ColorSelectionState":
                 currentState.display();
                 break;
-                default:
+            default:
                 break;
 
         }
