@@ -27,10 +27,9 @@ public class GameController implements Observable {
     private String winner;
     private final HashMap<String, ArrayList<GameListener>> listeners;
 
-    //come creare il gioco e la classe
-    public GameController(int idGame, int nPlayers) {
+    public GameController(int nPlayers) {
         this.nPlayers = nPlayers;
-        model = new Game(idGame, nPlayers);
+        model = new Game(nPlayers);
         gameState = GameState.WAITING_FOR_PLAYERS;
         winner = "No winner";
         listeners = new HashMap<>();

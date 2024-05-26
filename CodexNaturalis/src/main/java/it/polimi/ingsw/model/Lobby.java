@@ -39,7 +39,7 @@ public class Lobby {
             id = nextGameId;
             nextGameId++;
         }
-        Game newGame = new Game(id, numberOfPlayers);
+        Game newGame = new Game(numberOfPlayers);
         games.put(id, newGame);
         return id;
     }

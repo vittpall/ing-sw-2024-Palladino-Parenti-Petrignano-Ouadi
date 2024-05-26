@@ -80,7 +80,7 @@ public class LobbyController implements Observable {
             id = nextGameId;
             nextGameId++;
         }
-        GameController gameController = new GameController(id, nPlayers);
+        GameController gameController = new GameController(nPlayers);
         gameControllers.put(id, gameController);
 
         int nPlayer = this.joinGame(id, username, playerListener);

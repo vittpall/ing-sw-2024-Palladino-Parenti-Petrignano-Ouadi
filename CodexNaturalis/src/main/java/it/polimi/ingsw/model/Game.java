@@ -24,7 +24,6 @@ import java.util.Arrays;
  * starterCards and objectiveCards are lists of all the possible starter and objective cards that are not played or drawn yet
  */
 public class Game implements Serializable {
-    private final int gameId;
     private final int nPlayer;
     private final ArrayList<Player> players;
     private ObjectiveCard[] sharedObjectiveCards;
@@ -33,7 +32,6 @@ public class Game implements Serializable {
     private int currentPlayerIndex;
     private boolean isLastRoundStarted;
     private int playerWhoStoppedTheGame;
-    private boolean gameStarted;
     private final ArrayList<StarterCard> starterCards;
     private final ArrayList<ObjectiveCard> objectiveCards;
     private final Chat chats;
@@ -41,16 +39,13 @@ public class Game implements Serializable {
     /**
      * constructor
      * creates the starterCards, players and objectiveCards lists as empty
-     * sets gameId, nPlayer, isLastRoundStarted, gameStarted and currentPlayerIndex
+     * sets  nPlayer, isLastRoundStarted, gameStarted and currentPlayerIndex
      *
-     * @param id the gameId
-     * @param n  the number of player chosen
+     * @param n the number of player chosen
      */
-    public Game(int id, int n) {
+    public Game(int n) {
         nPlayer = n;
-        gameId = id;
         isLastRoundStarted = false;
-        gameStarted = false;
         currentPlayerIndex = 0;
         playerWhoStoppedTheGame = 0;
         starterCards = new ArrayList<>();
@@ -107,7 +102,6 @@ public class Game implements Serializable {
             playerObjCards.add(objectiveCards.remove((int) nRandom));
             player.setDrawnObjectiveCards(playerObjCards);
         }
-        setGameStarted();
     }
 
     public ArrayList<TokenColor> getAvailableColors() {
@@ -128,12 +122,6 @@ public class Game implements Serializable {
         players.get(idPlayer).setTokenColor(color);
     }
 
-    /**
-     * @return gameId
-     */
-    public int getGameId() {
-        return gameId;
-    }
 
     public void setObjectiveCards(int idPlayer, int chosenCard) throws CardNotFoundException {
         players.get(idPlayer).setObjectiveCard(chosenCard);
@@ -192,12 +180,6 @@ public class Game implements Serializable {
         return chats;
     }
 
-    /**
-     * @return gameStarted
-     */
-    public boolean isGameStarted() {
-        return gameStarted;
-    }
 
     /**
      * adds the player playerToAdd to the list of players of the game
@@ -210,12 +192,6 @@ public class Game implements Serializable {
         return players.size() - 1;
     }
 
-    /**
-     * sets gameStarted as true
-     */
-    public void setGameStarted() {
-        gameStarted = true;
-    }
 
     /**
      * places the card into the current player's desk at (x,y) position
