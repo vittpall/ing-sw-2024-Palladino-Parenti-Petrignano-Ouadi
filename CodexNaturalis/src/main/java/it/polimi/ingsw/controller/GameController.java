@@ -140,16 +140,16 @@ public class GameController implements Observable {
         return model.getSharedObjectiveCards();
     }
 
-    public ArrayList<TokenColor> getAvailableColors(GameListener playerListener){
+    public synchronized ArrayList<TokenColor> getAvailableColors(GameListener playerListener) {
         unSubscribeListener(playerListener, "WaitingForPlayersState");
         subscribeListener(playerListener, "ColorSelection");
 
         return model.getAvailableColors();
     }
 
-    public void setTokenColor(int idClientIntoGame, TokenColor tokenColor) throws IOException {
+    public synchronized void setTokenColor(int idClientIntoGame, TokenColor tokenColor) throws IOException {
         model.setTokenColor(idClientIntoGame, tokenColor);
-   //     notifyPlayers("ColorSelection");
+        //     notifyPlayers("ColorSelection");
         notifySelectedColor("ColorSelection");
     }
 
@@ -252,7 +252,6 @@ public class GameController implements Observable {
     }
 
 
-
     public ArrayList<Player> getPlayers() {
         return model.getPlayers();
     }
@@ -271,8 +270,7 @@ public class GameController implements Observable {
     //gestire la chiusura
 
     public void notifySelectedColor(String state) throws IOException {
-        for(GameListener client : listeners.get(state))
-        {
+        for (GameListener client : listeners.get(state)) {
             new Thread(() -> {
                 try {
                     client.updateSelectedColor();
