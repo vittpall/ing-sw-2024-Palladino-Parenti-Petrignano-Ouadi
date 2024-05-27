@@ -107,7 +107,8 @@ public class Game implements Serializable {
     public ArrayList<TokenColor> getAvailableColors() {
         ArrayList<TokenColor> usedColors = new ArrayList<>();
         for (Player player : players) {
-            usedColors.add(player.getTokenColor());
+            if(player.getTokenColor() != null)
+                usedColors.add(player.getTokenColor());
         }
         ArrayList<TokenColor> availableColors = new ArrayList<>();
         for (TokenColor color : TokenColor.values()) {

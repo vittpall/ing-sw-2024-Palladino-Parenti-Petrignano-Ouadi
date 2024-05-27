@@ -48,8 +48,8 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public boolean checkUsername(String username) throws RemoteException {
-        return lobbyController.checkUsername(username);
+    public boolean checkUsername(String username, GameListener playerListener) throws RemoteException {
+        return lobbyController.checkUsername(username, playerListener);
     }
 
     public void removeUsername(String username) {
@@ -119,7 +119,7 @@ public class RMIServer implements VirtualServer {
     @Override
     public int createGame(String username, int nPlayers, GameListener playerListener) throws IOException, InterruptedException {
         int idGame = lobbyController.createGame(username, nPlayers, playerListener);
-        notifyPlayers(null);
+   //     notifyPlayers(null);
         return idGame;
     }
 
@@ -255,12 +255,12 @@ public class RMIServer implements VirtualServer {
 
 
     @Override
-    public ArrayList<TokenColor> getAvailableColors(int idGame) throws RemoteException {
-        return lobbyController.getAvailableColors(idGame);
+    public ArrayList<TokenColor> getAvailableColors(int idGame, GameListener playerListener) throws RemoteException {
+        return lobbyController.getAvailableColors(idGame, playerListener);
     }
 
     @Override
-    public void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws RemoteException {
+    public void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws IOException {
         lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor);
         String message = "\n----------------------------------\n" +
                 "Player " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getUsername() +

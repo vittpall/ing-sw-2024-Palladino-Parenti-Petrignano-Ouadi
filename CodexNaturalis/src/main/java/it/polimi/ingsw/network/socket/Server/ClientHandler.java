@@ -54,13 +54,20 @@ public class ClientHandler implements GameListener {
     }
 
 
-    /**
-     * @throws RemoteException
-     */
+
     @Override
     public void update(ReturnableObject messageToShow) throws IOException {
         ServerToClientMsg msg = new ServerToClientMsg(TypeServerToClientMsg.RECEIVED_MESSAGE);
         msg.setResponse(messageToShow);
         sendMessage(msg);
+    }
+
+    /**
+     * @throws IOException
+     */
+    @Override
+    public void updateSelectedColor() throws IOException {
+        //TODO
+
     }
 }

@@ -14,7 +14,7 @@ public class CheckUsernameMsg extends ClientToServerMsg {
 
     public ReturnableObject<Boolean> functionToCall(LobbyController controller, GameListener playerListener) {
         ReturnableObject<Boolean> toReturn = new ReturnableObject<>();
-        toReturn.setResponseReturnable(controller.checkUsername(username));
+        toReturn.setResponseReturnable(controller.checkUsername(username, playerListener));
         return toReturn;
     }
 

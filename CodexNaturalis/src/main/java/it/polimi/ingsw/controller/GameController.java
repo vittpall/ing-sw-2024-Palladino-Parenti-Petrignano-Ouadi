@@ -24,6 +24,7 @@ public class GameController implements Observable {
     private final Game model;
     private final int nPlayers;
     private GameState gameState;
+    private int nPlayersPlaying;
     private String winner;
     private final HashMap<String, ArrayList<GameListener>> listeners;
 
@@ -139,12 +140,17 @@ public class GameController implements Observable {
         return model.getSharedObjectiveCards();
     }
 
-    public synchronized ArrayList<TokenColor> getAvailableColors() {
+    public ArrayList<TokenColor> getAvailableColors(GameListener playerListener){
+        unSubscribeListener(playerListener, "WaitingForPlayersState");
+        subscribeListener(playerListener, "ColorSelection");
+
         return model.getAvailableColors();
     }
 
-    public synchronized void setTokenColor(int idClientIntoGame, TokenColor tokenColor) {
+    public void setTokenColor(int idClientIntoGame, TokenColor tokenColor) throws IOException {
         model.setTokenColor(idClientIntoGame, tokenColor);
+   //     notifyPlayers("ColorSelection");
+        notifySelectedColor("ColorSelection");
     }
 
     public ArrayList<Player> getAllPlayers() {
@@ -246,6 +252,7 @@ public class GameController implements Observable {
     }
 
 
+
     public ArrayList<Player> getPlayers() {
         return model.getPlayers();
     }
@@ -260,6 +267,21 @@ public class GameController implements Observable {
 
     public Deck getGoldDeck() {
         return model.getGoldDeck();
+    }
+    //gestire la chiusura
+
+    public void notifySelectedColor(String state) throws IOException {
+        for(GameListener client : listeners.get(state))
+        {
+            new Thread(() -> {
+                try {
+                    client.updateSelectedColor();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }).start();
+
+        }
     }
 
 }

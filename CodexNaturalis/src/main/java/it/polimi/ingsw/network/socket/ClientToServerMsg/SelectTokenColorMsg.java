@@ -6,6 +6,8 @@ import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
+import java.io.IOException;
+
 public class SelectTokenColorMsg extends ClientToServerMsg{
 
     private final int idGame;
@@ -20,7 +22,7 @@ public class SelectTokenColorMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException {
+    public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, IOException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
         controller.setTokenColor(idGame, idClientIntoGame, tokenColor);
         response.setResponseReturnable(-1);

@@ -26,7 +26,7 @@ public interface VirtualServer extends Remote {
 
     void connect(VirtualView client) throws RemoteException;
 
-    boolean checkUsername(String username) throws RemoteException;
+    boolean checkUsername(String username, GameListener playerListener) throws RemoteException;
 
     ArrayList<Integer> getNotStartedGames() throws RemoteException;
 
@@ -68,9 +68,9 @@ public interface VirtualServer extends Remote {
 
     HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame) throws RemoteException;
 
-    ArrayList<TokenColor> getAvailableColors(int idGame) throws RemoteException;
+    ArrayList<TokenColor> getAvailableColors(int idGame, GameListener playerListener) throws RemoteException;
 
-    void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws RemoteException;
+    void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws IOException;
 
     int getPoints(int idGame, int idClientIntoGame) throws RemoteException;
 

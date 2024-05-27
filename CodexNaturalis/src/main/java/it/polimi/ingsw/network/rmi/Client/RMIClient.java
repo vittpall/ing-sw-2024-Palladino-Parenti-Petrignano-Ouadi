@@ -93,7 +93,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
 
     @Override
     public boolean checkUsername(String username) throws IOException {
-        return server.checkUsername(username);
+        return server.checkUsername(username, (GameListener) this);
     }
 
     @Override
@@ -215,11 +215,11 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
 
     @Override
     public ArrayList<TokenColor> getAvailableColors() throws RemoteException {
-        return server.getAvailableColors(idGame);
+        return server.getAvailableColors(idGame, (GameListener) this);
     }
 
     @Override
-    public void setTokenColor(TokenColor tokenColor) throws RemoteException {
+    public void setTokenColor(TokenColor tokenColor) throws IOException {
         server.setTokenColor(idGame, idClientIntoGame, tokenColor);
     }
 
@@ -442,6 +442,8 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
                 currentState.display();
                 break;
             case "ColorSelectionState":
+                case "ColorSelection":
+                    System.out.println("ciaooo");
                 currentState.display();
                 break;
             default:
@@ -449,5 +451,13 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
 
         }
 
+    }
+
+    /**
+     * @throws IOException
+     */
+    @Override
+    public void updateSelectedColor() throws IOException {
+        this.currentState.display();
     }
 }

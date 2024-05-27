@@ -19,7 +19,7 @@ public class AvailableColorMsg extends ClientToServerMsg{
     @Override
     public ReturnableObject<ArrayList<TokenColor>> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException {
         ReturnableObject<ArrayList<TokenColor>> response = new ReturnableObject<>();
-        response.setResponseReturnable(controller.getAvailableColors(idGame));
+        response.setResponseReturnable(controller.getAvailableColors(idGame, playerListener));
         return response;
     }
 

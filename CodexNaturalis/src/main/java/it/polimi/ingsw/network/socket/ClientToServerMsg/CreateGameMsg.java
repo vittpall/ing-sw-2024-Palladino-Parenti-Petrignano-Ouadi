@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 
 public class CreateGameMsg extends ClientToServerMsg{
@@ -17,7 +18,7 @@ public class CreateGameMsg extends ClientToServerMsg{
     }
 
     @Override
-    public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, RemoteException {
+    public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, IOException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.createGame(this.username, this.numberOfPlayers, playerListener));
         return response;

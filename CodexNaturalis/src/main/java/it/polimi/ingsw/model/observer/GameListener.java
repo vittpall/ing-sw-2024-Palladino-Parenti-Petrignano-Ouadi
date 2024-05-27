@@ -17,4 +17,5 @@ import java.util.ArrayList;
 public interface GameListener extends Remote {
 
     void update(ReturnableObject messageToShow) throws IOException;
+    void updateSelectedColor() throws IOException;
 }

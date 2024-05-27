@@ -613,4 +613,14 @@ public class SocketClient implements VirtualView, GameListener {
 
         }
     }
+
+    /**
+     * @throws IOException
+     */
+    @Override
+    public void updateSelectedColor() throws IOException {
+
+    }
+
+
 }

@@ -13,9 +13,12 @@ import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.observer.Observable;
+import it.polimi.ingsw.model.observer.Observer;
+import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.*;
 
@@ -26,6 +29,7 @@ public class LobbyController implements Observable {
     private final ArrayList<Integer> unusedIdGame;
     private final Map<String, ArrayList<GameListener>> listeners;
     private int nextGameId;
+    private ArrayList<GameListener> lobbyListeners;
 
 
     public LobbyController() {
@@ -33,13 +37,21 @@ public class LobbyController implements Observable {
         gameControllers = new HashMap<>();
         unusedIdGame = new ArrayList<>();
         nextGameId = 1;
+        lobbyListeners = new ArrayList<>();
     }
 
-    public boolean checkUsername(String username) {
+    public boolean checkUsername(String username, GameListener lobbyListener) {
         synchronized (this.usernames) {
-            return usernames.add(username);
+            boolean addedUsername = usernames.add(username);
+            if(addedUsername){
+                registerLobbyListener(lobbyListener);
+            }
+            return addedUsername;
         }
 
+    }
+
+    private void registerLobbyListener(GameListener lobbyListener) {
     }
 
     public synchronized void removeUsername(String username) {
@@ -71,7 +83,7 @@ public class LobbyController implements Observable {
         return gameControllers.get(id).joinGame(username, playerListener);
     }
 
-    public int createGame(String username, int nPlayers, GameListener playerListener) throws InterruptedException, RemoteException {
+    public int createGame(String username, int nPlayers, GameListener playerListener) throws InterruptedException, IOException {
         int id;
         if (!unusedIdGame.isEmpty()) {
             id = unusedIdGame.getFirst();
@@ -83,11 +95,21 @@ public class LobbyController implements Observable {
         GameController gameController = new GameController(nPlayers);
         gameControllers.put(id, gameController);
 
+        //to move the user to the another list, 'cause he is not the in the lobby anymore
+        unregisterLobbyListener(playerListener);
+        notifyLobbyListeners();
+
         int nPlayer = this.joinGame(id, username, playerListener);
         if (nPlayer == 0) {
             return id;
         }
         return -1;
+    }
+
+    private void notifyLobbyListeners() {
+    }
+
+    private void unregisterLobbyListener(GameListener playerListener) {
     }
 
     public ArrayList<ObjectiveCard> getObjectiveCards(int idGame, int idPlayer) {
@@ -120,11 +142,11 @@ public class LobbyController implements Observable {
         return gameControllers.get(idGame).getSharedObjectiveCards();
     }
 
-    public synchronized ArrayList<TokenColor> getAvailableColors(int idGame) {
-        return gameControllers.get(idGame).getAvailableColors();
+    public synchronized ArrayList<TokenColor> getAvailableColors(int idGame, GameListener playerListener) {
+        return gameControllers.get(idGame).getAvailableColors(playerListener);
     }
 
-    public synchronized void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) {
+    public synchronized void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws IOException {
         gameControllers.get(idGame).setTokenColor(idClientIntoGame, tokenColor);
     }
 
