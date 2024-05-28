@@ -16,6 +16,7 @@ import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.observer.Observer;
 import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.awt.*;
 import java.io.IOException;
@@ -241,7 +242,7 @@ public class LobbyController implements Observable {
     }
 
     @Override
-    public void notifyObserver(String eventToListen) {
+    public void notifyObserver(String eventToListen, ReturnableObject messageToShow) {
 
     }
 }

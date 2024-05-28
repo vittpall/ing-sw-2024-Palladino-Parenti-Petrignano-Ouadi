@@ -34,6 +34,7 @@ public class ShowObjectiveCardsState implements ClientState{
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
         if(input!=1)
             System.out.println("Invalid input");
+        client.setCurrentState(null);
     }
 
     @Override

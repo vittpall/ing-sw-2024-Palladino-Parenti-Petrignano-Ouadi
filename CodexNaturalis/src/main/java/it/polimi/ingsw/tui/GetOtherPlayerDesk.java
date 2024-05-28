@@ -38,6 +38,7 @@ public class GetOtherPlayerDesk implements ClientState{
             CardPrinter printer = new CardPrinter();
             PlayerDesk playerDesk= selectedPlayer.getPlayerDesk();
             printer.printDesk(playerDesk.getDesk());
+            client.setCurrentState(null);
         }
         else {
             System.out.println("Invalid input, please use a valid number:");

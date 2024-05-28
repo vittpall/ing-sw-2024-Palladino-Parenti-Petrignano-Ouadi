@@ -51,7 +51,7 @@ public class DrawCardState implements ClientState {
                 int inVisible = chooseWhichCardToDraw();
                 try {
                     client.drawCard(input, inVisible);
-
+                    client.setCurrentState(null);
                 } catch (CardNotFoundException ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -82,7 +82,6 @@ public class DrawCardState implements ClientState {
     public void promptForInput() {
         System.out.println("1. Draw resource card(visible or hidden)");
         System.out.println("2. Draw gold card(visible or hidden)");
-        System.out.println("3. Chat");
 
     }
 

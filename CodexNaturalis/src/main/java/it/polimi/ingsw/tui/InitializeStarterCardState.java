@@ -52,7 +52,6 @@ public class InitializeStarterCardState implements ClientState {
             printer.printCard(playerStarterCard, false);
             System.out.println("|   2. Play faced down 🎮            |");
             printer.printCard(playerStarterCard, true);
-            System.out.println("|   3. Chat 💬                        |");
         } catch (RemoteException ex) {
             System.out.println("Error while getting the drawn objective cards");
             System.out.println(ex.getMessage());
@@ -68,7 +67,7 @@ public class InitializeStarterCardState implements ClientState {
                 try {
                     client.playStarterCard(false);
                     String nextState = client.getNextState();
-                    client.setCurrentState(new PlayCardState(client, scanner));
+                    client.setCurrentState(null);
                 } catch (PlaceNotAvailableException | CardNotFoundException | RequirementsNotMetException |
                          IOException | InterruptedException ex) {
                     System.out.println("Card not found. Please try again");
@@ -77,7 +76,7 @@ public class InitializeStarterCardState implements ClientState {
             case 2:
                 try {
                     client.playStarterCard(true);
-                    client.setCurrentState(new PlayCardState(client, scanner));
+                    client.setCurrentState(null);
                 } catch (RemoteException | PlaceNotAvailableException | CardNotFoundException |
                          RequirementsNotMetException ex) {
                     System.out.println("Card not found. Please try again");

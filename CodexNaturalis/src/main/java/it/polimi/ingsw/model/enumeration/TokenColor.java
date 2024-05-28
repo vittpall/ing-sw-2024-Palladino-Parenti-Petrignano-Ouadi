@@ -1,11 +1,13 @@
 package it.polimi.ingsw.model.enumeration;
 
+import java.io.Serializable;
+
 /**
  * this enum contains the possible colors that can be associated to the players' token
  *
  * @author Carolina Parenti
  */
-public enum TokenColor {
+public enum TokenColor implements Serializable {
     RED("Red"), BLUE("Blue"), YELLOW("Yellow"), GREEN("Green");
 
     private final String value;

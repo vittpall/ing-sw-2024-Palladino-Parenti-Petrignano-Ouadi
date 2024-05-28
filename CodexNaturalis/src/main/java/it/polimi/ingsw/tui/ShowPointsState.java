@@ -34,9 +34,10 @@ public class ShowPointsState implements ClientState {
     }
 
     @Override
-    public void inputHandler(int input) {
+    public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException{
         if(input!=1)
             System.out.println("Invalid input");
+        client.setCurrentState(null);
     }
 
     @Override

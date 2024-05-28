@@ -36,7 +36,6 @@ public class InitializeObjectiveCardState implements ClientState {
                 printer.printCard(card, false);
                 nObjectiveCard++;
             }
-            System.out.println("|   3. Chat 💬                        |");
         } catch (RemoteException ex) {
             System.out.println("Error while getting the drawn objective cards");
             System.out.println(ex.getMessage());

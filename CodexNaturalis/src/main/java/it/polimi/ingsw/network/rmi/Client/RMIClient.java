@@ -279,23 +279,30 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
                     System.out.println("Invalid input: Please enter a number.");
                 }
             }
-        } while (!(currentState instanceof PlayCardState));
+        } while (currentState !=null);
         while (true) {
-            display();
-            correctInput = false;
-            while (!correctInput) {
-                try {
-                    System.out.print("Type your command or 'exit' to quit: ");
-                    input = scan.nextLine().trim().toLowerCase();
-                    correctInput = true;
-                } catch (InputMismatchException e) {
-                    System.out.println("\nInvalid input: Reinsert the value: ");
+            if(currentState==null){
+                display();
+                correctInput = false;
+                while (!correctInput) {
+                    try {
+                        System.out.print("Type your command or 'exit' to quit: ");
+                        input = scan.nextLine().trim().toLowerCase();
+                        correctInput = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("\nInvalid input: Reinsert the value: ");
+                    }
                 }
-            }
+            }else
+                input = "no display";
 
             if (!handleCommonInput(input)) {
                 try {
-                    boolean checkState = gameLogicInputHandler(Integer.parseInt(input));
+                    boolean checkState;
+                    if(currentState==null)
+                        checkState = gameLogicInputHandler(Integer.parseInt(input));
+                    else
+                        checkState=true;
                     if (checkState) {
                         showState();
                         boolean correctInput2 = false;
@@ -368,16 +375,27 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
     }
 
     private void display() {
-        //far mostrare i print solo quando si è nello stato giusto
-        System.out.println("\n--------------------------------");
-        System.out.println("Choose an action:");
-        System.out.println("1- Play a card");
-        System.out.println("2- Draw a card");
-        System.out.println("3- Show your desk or others' desks");
-        System.out.println("4- Show the shared objective cards and your objective card");
-        System.out.println("5- Show players' points");
-        System.out.println("6- Chat");
-        System.out.println("7- Show winner\n");
+        System.out.println("⚔️  _________________________________  ⚔️");
+        System.out.println("|                                       |");
+        System.out.println("|   Please choose an action:            |");
+        try{
+            if (server.getCurrentPlayerState(idGame, idClientIntoGame).equals(PlayerState.PLAY_CARD))
+                System.out.println("|   1. Play a card🎮                    |");
+
+            else if (server.getCurrentPlayerState(idGame, idClientIntoGame).equals(PlayerState.DRAW))
+                System.out.println("|   2. Draw a card🎴                    |");
+            System.out.println("|   3. Show your desk or others' desks  |");
+            System.out.println("|   4. Show the shared objective cards  |");
+            System.out.println("|      and your objective card          |");
+            System.out.println("|   5. Show players' points             |");
+            System.out.println("|   6. Chat 💬                          |");
+            if (server.getCurrentPlayerState(idGame, idClientIntoGame).equals(PlayerState.ENDGAME))
+                System.out.println("|   7. Show winner                      |");
+            System.out.println("|_______________________________________|\n");
+        }catch(RemoteException e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public void close() throws RemoteException {
@@ -441,9 +459,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
             case "WaitingForPlayersState":
                 currentState.display();
                 break;
-            case "ColorSelectionState":
-                case "ColorSelection":
-                    System.out.println("ciaooo");
+            case "ColorSelection":
                 currentState.display();
                 break;
             default:

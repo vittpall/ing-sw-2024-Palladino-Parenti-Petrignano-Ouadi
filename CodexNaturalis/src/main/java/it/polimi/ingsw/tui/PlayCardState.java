@@ -58,6 +58,7 @@ public class PlayCardState implements ClientState {
                 }else{
                     System.out.println("Wait for everyone to finish");
                 }
+                client.setCurrentState(null);
             } catch (RemoteException ex) {
                 System.out.println(ex.getMessage());
                 ex.printStackTrace();
@@ -81,7 +82,6 @@ public class PlayCardState implements ClientState {
         System.out.println("1. Play card 1");
         System.out.println("2. Play card 2");
         System.out.println("3. Play card 3");
-        System.out.println("4. Chat");
     }
 
 

@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.awt.*;
 import java.io.IOException;
@@ -24,7 +25,6 @@ public class GameController implements Observable {
     private final Game model;
     private final int nPlayers;
     private GameState gameState;
-    private int nPlayersPlaying;
     private String winner;
     private final HashMap<String, ArrayList<GameListener>> listeners;
 
@@ -73,7 +73,7 @@ public class GameController implements Observable {
             }
         }
 
-        notifyObserver("WaitingForPlayersState");
+        notifyObserver("WaitingForPlayersState", null);
         subscribeListener(playerListener, "WaitingForPlayersState");
 
         return idPlayer;
@@ -91,15 +91,17 @@ public class GameController implements Observable {
     }
 
     @Override
-    public void notifyObserver(String eventToListen) {
+    public void notifyObserver(String eventToListen, ReturnableObject messageToShow) {
         if (listeners.get(eventToListen) == null)
             return;
         for (GameListener listener : listeners.get(eventToListen)) {
-            try {
-                listener.update(null);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            new Thread(()->{
+                try {
+                    listener.update(messageToShow);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+           }).start();
         }
     }
 
@@ -149,8 +151,8 @@ public class GameController implements Observable {
 
     public synchronized void setTokenColor(int idClientIntoGame, TokenColor tokenColor) throws IOException {
         model.setTokenColor(idClientIntoGame, tokenColor);
-        //     notifyPlayers("ColorSelection");
-        notifySelectedColor("ColorSelection");
+
+        notifyObserver("ColorSelection", null);
     }
 
     public ArrayList<Player> getAllPlayers() {
@@ -260,13 +262,6 @@ public class GameController implements Observable {
         return nPlayers;
     }
 
-    public Deck getResourceDeck() {
-        return model.getResourceDeck();
-    }
-
-    public Deck getGoldDeck() {
-        return model.getGoldDeck();
-    }
     //gestire la chiusura
 
     public void notifySelectedColor(String state) throws IOException {

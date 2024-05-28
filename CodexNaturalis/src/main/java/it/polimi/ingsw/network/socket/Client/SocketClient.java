@@ -364,7 +364,10 @@ public class SocketClient implements VirtualView, GameListener {
         ServerToClientMsg response = sendRequest(request);
 
     }
-
+    @Override
+    public boolean isGameStarted() throws RemoteException {
+        return false;
+    }
     public int getPoints() throws IOException, InterruptedException {
         GetPoints request = new GetPoints(username, idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
@@ -416,24 +419,31 @@ public class SocketClient implements VirtualView, GameListener {
                     System.out.println("Invalid input: Please enter a number.");
                 }
             }
-        } while (!(currentState instanceof PlayCardState));
+        } while (currentState != null);
         while (true) {
             System.out.println("You are in the game: " + idGame + " as player: " + idClientIntoGame);
-            display();
-            correctInput = false;
-            while (!correctInput) {
-                try {
-                    System.out.print("Type your command or 'exit' to quit: ");
-                    input = scan.nextLine().trim().toLowerCase();
-                    correctInput = true;
-                } catch (InputMismatchException e) {
-                    System.out.println("\nInvalid input: Reinsert the value: ");
+            if(currentState == null){
+                display();
+                correctInput = false;
+                while (!correctInput) {
+                    try {
+                        System.out.print("Type your command or 'exit' to quit: ");
+                        input = scan.nextLine().trim().toLowerCase();
+                        correctInput = true;
+                    } catch (InputMismatchException e) {
+                        System.out.println("\nInvalid input: Reinsert the value: ");
+                    }
                 }
-            }
+            }else
+                input = "no display";
 
             if (!handleCommonInput(input)) {
                 try {
-                    boolean checkState = gameLogicInputHandler(Integer.parseInt(input));
+                    boolean checkState ;
+                    if(currentState==null)
+                        checkState = gameLogicInputHandler(Integer.parseInt(input));
+                    else
+                        checkState=true;
                     if (checkState) {
                         showState();
                         boolean correctInput2 = false;
@@ -528,26 +538,33 @@ public class SocketClient implements VirtualView, GameListener {
 
 
     private void display() {
-        System.out.println("1- Draw a card");
-        System.out.println("2- Play a card");
-        System.out.println("3- Show your desk and others' desks");
-        System.out.println("4- Show the shared objective cards and your objective card");
-        System.out.println("5- Show players' points");
-        System.out.println("6- Chat");
-        System.out.println("8- Set your token color");
-        System.out.println("9- Set your objective card");
-        System.out.println("10- Set your starter card");
+        System.out.println("⚔️  _________________________________  ⚔️");
+        System.out.println("|                                       |");
+        System.out.println("|   Please choose an action:            |");
+        try{
+            if (checkState(idGame, idClientIntoGame, RequestedActions.PLAY_CARD))
+                System.out.println("|   1. Play a card🎮                    |");
+
+            else if (checkState(idGame, idClientIntoGame, RequestedActions.DRAW))
+                System.out.println("|   2. Draw a card🎴                    |");
+            System.out.println("|   3. Show your desk or others' desks  |");
+            System.out.println("|   4. Show the shared objective cards  |");
+            System.out.println("|      and your objective card          |");
+            System.out.println("|   5. Show players' points             |");
+            System.out.println("|   6. Chat 💬                          |");
+            if (checkState(idGame, idClientIntoGame, RequestedActions.SHOW_WINNER))
+                System.out.println("|   7. Show winner                      |");
+            System.out.println("|_______________________________________|\n");
+        }catch(IOException | InterruptedException | ClassNotFoundException e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void showState() {
         currentState.display();
         currentState.promptForInput();
-    }
-
-    @Override
-    public boolean isGameStarted() throws RemoteException {
-        return false;
     }
 
     @Override
