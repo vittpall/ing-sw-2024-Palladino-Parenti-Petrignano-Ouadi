@@ -13,13 +13,10 @@ import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.observer.Observable;
-import it.polimi.ingsw.model.observer.Observer;
-import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.*;
 
 public class LobbyController{
@@ -28,7 +25,7 @@ public class LobbyController{
     private final Map<Integer, GameController> gameControllers;
     private final ArrayList<Integer> unusedIdGame;
     private int nextGameId;
-    private Observable lobbyListeners;
+    private final Observable lobbyListeners;
 
 
     public LobbyController() {

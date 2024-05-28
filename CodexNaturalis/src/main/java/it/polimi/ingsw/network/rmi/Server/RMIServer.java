@@ -119,15 +119,9 @@ public class RMIServer implements VirtualServer {
     @Override
     public int createGame(String username, int nPlayers, GameListener playerListener) throws IOException, InterruptedException {
         int idGame = lobbyController.createGame(username, nPlayers, playerListener);
-   //     notifyPlayers(null);
         return idGame;
     }
 
-    private void notifyPlayers(ReturnableObject messageToShow) throws IOException {
-        for (GameListener listener : gameListeners) {
-            listener.update(null);
-        }
-    }
 
     @Override
     public boolean isGameStarted(int idGame) throws RemoteException {

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.rmi.Client;
 
-import it.polimi.ingsw.gui.JoinGameMenuStateGUI;
 import it.polimi.ingsw.gui.MainMenuStateGUI;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
@@ -23,12 +22,11 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
-import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.*;
 
-public class RMIClient extends UnicastRemoteObject implements VirtualView, GameListener, Serializable {
+public class RMIClient extends UnicastRemoteObject implements VirtualView, GameListener {
     public final VirtualServer server;
     ClientState currentState;
     private String username;
@@ -94,7 +92,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
 
     @Override
     public boolean checkUsername(String username) throws IOException {
-        return server.checkUsername(username, (GameListener) this);
+        return server.checkUsername(username, this);
     }
 
     @Override
@@ -216,7 +214,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
 
     @Override
     public ArrayList<TokenColor> getAvailableColors() throws RemoteException {
-        return server.getAvailableColors(idGame, (GameListener) this);
+        return server.getAvailableColors(idGame, this);
     }
 
     @Override
@@ -280,9 +278,9 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
                     System.out.println("Invalid input: Please enter a number.");
                 }
             }
-        } while (currentState !=null);
+        } while (currentState != null);
         while (true) {
-            if(currentState==null){
+            if (currentState == null) {
                 display();
                 correctInput = false;
                 while (!correctInput) {
@@ -294,16 +292,16 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
                         System.out.println("\nInvalid input: Reinsert the value: ");
                     }
                 }
-            }else
+            } else
                 input = "no display";
 
             if (!handleCommonInput(input)) {
                 try {
                     boolean checkState;
-                    if(currentState==null)
+                    if (currentState == null)
                         checkState = gameLogicInputHandler(Integer.parseInt(input));
                     else
-                        checkState=true;
+                        checkState = true;
                     if (checkState) {
                         showState();
                         boolean correctInput2 = false;
@@ -379,7 +377,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
         System.out.println("⚔️  _________________________________  ⚔️");
         System.out.println("|                                       |");
         System.out.println("|   Please choose an action:            |");
-        try{
+        try {
             if (server.getCurrentPlayerState(idGame, idClientIntoGame).equals(PlayerState.PLAY_CARD))
                 System.out.println("|   1. Play a card🎮                    |");
 
@@ -393,7 +391,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
             if (server.getCurrentPlayerState(idGame, idClientIntoGame).equals(PlayerState.ENDGAME))
                 System.out.println("|   7. Show winner                      |");
             System.out.println("|_______________________________________|\n");
-        }catch(RemoteException e){
+        } catch (RemoteException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
@@ -447,39 +445,24 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
         return server.getPlayers(idGame);
     }
 
-    /**
-     *
-     */
+
     @Override
-    public void update(ReturnableObject messageToShow) throws RemoteException {
-        //TODO logic to implement. I would consider to use a switch case to handle the different states
+    public void onTokenColorSelected() throws RemoteException {
+        this.currentState.display();
+    }
 
-        switch (currentState.toString()) {
-            case "JoinGameMenuState":
-                currentState.display();
-                break;
-            case "WaitingForPlayersState":
-                currentState.display();
-                break;
-            case "ColorSelection":
-                currentState.display();
-                break;
-                case "JoinGameMenuStateGUI":
-                    currentState.refresh();
-                break;
-
-            default:
-                break;
-
-        }
+    @Override
+    public void onGameJoined() throws RemoteException {
 
     }
 
-    /**
-     * @throws IOException
-     */
     @Override
-    public void updateSelectedColor() throws IOException {
-        this.currentState.display();
+    public void onGameCreated() throws RemoteException {
+
+    }
+
+    @Override
+    public void onChatMessageReceived() throws RemoteException {
+
     }
 }

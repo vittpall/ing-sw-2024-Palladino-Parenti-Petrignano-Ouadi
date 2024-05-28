@@ -364,10 +364,12 @@ public class SocketClient implements VirtualView, GameListener {
         ServerToClientMsg response = sendRequest(request);
 
     }
+
     @Override
     public boolean isGameStarted() throws RemoteException {
         return false;
     }
+
     public int getPoints() throws IOException, InterruptedException {
         GetPoints request = new GetPoints(username, idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
@@ -397,7 +399,7 @@ public class SocketClient implements VirtualView, GameListener {
     @SuppressWarnings("InfiniteLoopStatement")
     private void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
         Scanner scan = new Scanner(System.in);
-        boolean correctInput = false;
+        boolean correctInput;
         String input = "";
         do {
             showState();
@@ -422,7 +424,7 @@ public class SocketClient implements VirtualView, GameListener {
         } while (currentState != null);
         while (true) {
             System.out.println("You are in the game: " + idGame + " as player: " + idClientIntoGame);
-            if(currentState == null){
+            if (currentState == null) {
                 display();
                 correctInput = false;
                 while (!correctInput) {
@@ -434,16 +436,16 @@ public class SocketClient implements VirtualView, GameListener {
                         System.out.println("\nInvalid input: Reinsert the value: ");
                     }
                 }
-            }else
+            } else
                 input = "no display";
 
             if (!handleCommonInput(input)) {
                 try {
-                    boolean checkState ;
-                    if(currentState==null)
+                    boolean checkState;
+                    if (currentState == null)
                         checkState = gameLogicInputHandler(Integer.parseInt(input));
                     else
-                        checkState=true;
+                        checkState = true;
                     if (checkState) {
                         showState();
                         boolean correctInput2 = false;
@@ -541,7 +543,7 @@ public class SocketClient implements VirtualView, GameListener {
         System.out.println("⚔️  _________________________________  ⚔️");
         System.out.println("|                                       |");
         System.out.println("|   Please choose an action:            |");
-        try{
+        try {
             if (checkState(idGame, idClientIntoGame, RequestedActions.PLAY_CARD))
                 System.out.println("|   1. Play a card🎮                    |");
 
@@ -555,7 +557,7 @@ public class SocketClient implements VirtualView, GameListener {
             if (checkState(idGame, idClientIntoGame, RequestedActions.SHOW_WINNER))
                 System.out.println("|   7. Show winner                      |");
             System.out.println("|_______________________________________|\n");
-        }catch(IOException | InterruptedException | ClassNotFoundException e){
+        } catch (IOException | InterruptedException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
@@ -572,7 +574,6 @@ public class SocketClient implements VirtualView, GameListener {
         return null;
     }
 
-    //what I receive from the server
     @SuppressWarnings("InfiniteLoopStatement")
     private void runVirtualServer() {
         try {
@@ -581,7 +582,7 @@ public class SocketClient implements VirtualView, GameListener {
                 TypeServerToClientMsg responseType = msg.getType();
                 responseQueues.computeIfAbsent(responseType, k -> new LinkedBlockingQueue<>()).put(msg);
                 if (responseType.equals(TypeServerToClientMsg.RECEIVED_MESSAGE)) {
-                    this.update(null);
+                    this.onChatMessageReceived();
                 }
             }
         } catch (Exception e) {
@@ -608,34 +609,25 @@ public class SocketClient implements VirtualView, GameListener {
         return (boolean) response.getResponse().getResponseReturnable();
     }
 
-    /**
-     *
-     */
-    @Override
-    public void update(ReturnableObject messageToShow) {
-        //TODO logic to implement. I would consider to use a switch case to handle the different states
-        switch (currentState.toString()) {
-            case "JoinGameMenuState":
-                currentState.display();
-                break;
-            case "WaitingForPlayersState":
-                System.out.println("caionnee");
-                currentState.display();
-                break;
-            case "ColorSelectionState":
-                currentState.display();
-                break;
-            default:
-                break;
 
-        }
+    @Override
+    public void onTokenColorSelected() throws RemoteException {
+
+
     }
 
-    /**
-     * @throws IOException
-     */
     @Override
-    public void updateSelectedColor() throws IOException {
+    public void onGameJoined() throws RemoteException {
+
+    }
+
+    @Override
+    public void onGameCreated() throws RemoteException {
+
+    }
+
+    @Override
+    public void onChatMessageReceived() throws RemoteException {
 
     }
 

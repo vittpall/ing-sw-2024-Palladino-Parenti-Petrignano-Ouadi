@@ -4,9 +4,7 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
-import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.ClientToServerMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
@@ -32,7 +30,6 @@ public class ClientHandler implements GameListener {
     public void runVirtualView() throws IOException, ClassNotFoundException, InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
         ClientToServerMsg request;
         ServerToClientMsg response;
-        // Read message type
         try {
             while ((request = (ClientToServerMsg) input.readObject()) != null) {
                 response = new ServerToClientMsg(request.getType(), false);
@@ -54,20 +51,23 @@ public class ClientHandler implements GameListener {
     }
 
 
-
     @Override
-    public void update(ReturnableObject messageToShow) throws IOException {
-        ServerToClientMsg msg = new ServerToClientMsg(TypeServerToClientMsg.RECEIVED_MESSAGE);
-        msg.setResponse(messageToShow);
-        sendMessage(msg);
+    public void onTokenColorSelected() throws RemoteException {
+
     }
 
-    /**
-     * @throws IOException
-     */
     @Override
-    public void updateSelectedColor() throws IOException {
-        //TODO
+    public void onGameJoined() throws RemoteException {
+
+    }
+
+    @Override
+    public void onGameCreated() throws RemoteException {
+
+    }
+
+    @Override
+    public void onChatMessageReceived() throws RemoteException {
 
     }
 }

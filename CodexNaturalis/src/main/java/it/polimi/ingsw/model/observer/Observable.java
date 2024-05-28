@@ -1,36 +1,32 @@
 package it.polimi.ingsw.model.observer;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class Observable {
     private ArrayList<GameListener> listeners;
 
-    public Observable()
-    {
+    public Observable() {
         listeners = new ArrayList<>();
     }
 
-    public void subscribeListener(GameListener listener)
-    {
-        if(listeners == null)
-        {
+    public void subscribeListener(GameListener listener) {
+        if (listeners == null) {
             listeners = new ArrayList<>();
         }
         listeners.add(listener);
     }
 
-    public void unSubscribeListener(GameListener listener)
-    {
+    public void unSubscribeListener(GameListener listener) {
         listeners.remove(listener);
     }
 
-    public void notifyColorSelection() throws IOException {
-        for(GameListener listener : listeners)
-        {
+    public void notifyColorSelection() {
+        for (GameListener listener : listeners) {
             new Thread(() -> {
                 try {
-                    listener.update(null);
+                    listener.onTokenColorSelected();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -38,19 +34,17 @@ public class Observable {
         }
     }
 
-    public void notifyJoinedGame() throws IOException {
-        for(GameListener listener : listeners)
-        {
-            listener.update(null);
+    public void notifyJoinedGame() throws RemoteException {
+        for (GameListener listener : listeners) {
+            listener.onGameJoined();
         }
     }
 
-    public void notifyCreatedGame() throws IOException {
-        for(GameListener listener : listeners)
-        {
+    public void notifyCreatedGame() {
+        for (GameListener listener : listeners) {
             new Thread(() -> {
                 try {
-                    listener.update(null);
+                    listener.onGameCreated();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
