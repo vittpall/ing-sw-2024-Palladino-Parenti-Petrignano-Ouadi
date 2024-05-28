@@ -12,6 +12,7 @@ import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.tui.WaitingForPlayersState;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.awt.*;
@@ -21,12 +22,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class GameController implements Observable {
+public class GameController{
     private final Game model;
     private final int nPlayers;
     private GameState gameState;
+    private int nPlayersPlaying;
     private String winner;
-    private final HashMap<String, ArrayList<GameListener>> listeners;
+    private final HashMap<String, Observable> listeners;
 
     public GameController(int nPlayers) {
         this.nPlayers = nPlayers;
@@ -62,7 +64,7 @@ public class GameController implements Observable {
         return gameState.toString();
     }
 
-    public synchronized int joinGame(String username, GameListener playerListener) throws InterruptedException, RemoteException {
+    public synchronized int joinGame(String username, GameListener playerListener) throws InterruptedException, IOException {
         Player player = new Player(username);
         int idPlayer = model.addPlayer(player);
         if (model.getPlayers().size() == nPlayers) {
@@ -72,37 +74,17 @@ public class GameController implements Observable {
                 model.getPlayers().get(i).setPlayerState(PlayerState.SETUP_GAME);
             }
         }
-
-        notifyObserver("WaitingForPlayersState", null);
-        subscribeListener(playerListener, "WaitingForPlayersState");
+//at the moment i init. the value if its null, then if everything it's working fine we can add a lazy variable.
+        addListenerList("WaitingForPlayersState");
+        listeners.get("WaitingForPlayersState").notifyJoinedGame();
+        listeners.get("WaitingForPlayersState").subscribeListener(playerListener);
 
         return idPlayer;
     }
 
-    @Override
-    public void subscribeListener(GameListener listener, String eventToListen) {
-        listeners.computeIfAbsent(eventToListen, k -> new ArrayList<>());
-        listeners.get(eventToListen).add(listener);
-    }
-
-    @Override
-    public void unSubscribeListener(GameListener listener, String eventToListen) {
-        listeners.get(eventToListen).remove(listener);
-    }
-
-    @Override
-    public void notifyObserver(String eventToListen, ReturnableObject messageToShow) {
-        if (listeners.get(eventToListen) == null)
-            return;
-        for (GameListener listener : listeners.get(eventToListen)) {
-            new Thread(()->{
-                try {
-                    listener.update(messageToShow);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-           }).start();
-        }
+    private void addListenerList(String state){
+        if (!listeners.containsKey(state))
+            listeners.put(state, new Observable());
     }
 
     public ArrayList<ObjectiveCard> getObjectiveCards(int idPlayer) {
@@ -142,17 +124,17 @@ public class GameController implements Observable {
         return model.getSharedObjectiveCards();
     }
 
-    public synchronized ArrayList<TokenColor> getAvailableColors(GameListener playerListener) {
-        unSubscribeListener(playerListener, "WaitingForPlayersState");
-        subscribeListener(playerListener, "ColorSelection");
+    public synchronized ArrayList<TokenColor> getAvailableColors(GameListener playerListener){
+        listeners.get("WaitingForPlayersState").unSubscribeListener(playerListener);
+        addListenerList("ColorSelection");
+        listeners.get("ColorSelection").subscribeListener(playerListener);
 
         return model.getAvailableColors();
     }
 
     public synchronized void setTokenColor(int idClientIntoGame, TokenColor tokenColor) throws IOException {
         model.setTokenColor(idClientIntoGame, tokenColor);
-
-        notifyObserver("ColorSelection", null);
+        listeners.get("ColorSelection").notifyColorSelection();
     }
 
     public ArrayList<Player> getAllPlayers() {
@@ -254,6 +236,7 @@ public class GameController implements Observable {
     }
 
 
+
     public ArrayList<Player> getPlayers() {
         return model.getPlayers();
     }
@@ -262,19 +245,5 @@ public class GameController implements Observable {
         return nPlayers;
     }
 
-    //gestire la chiusura
-
-    public void notifySelectedColor(String state) throws IOException {
-        for (GameListener client : listeners.get(state)) {
-            new Thread(() -> {
-                try {
-                    client.updateSelectedColor();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
-
-        }
-    }
 
 }

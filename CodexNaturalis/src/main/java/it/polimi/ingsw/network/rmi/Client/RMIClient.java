@@ -107,7 +107,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
     }
 
     @Override
-    public void joinGame(int input, String username) throws RemoteException, InterruptedException {
+    public void joinGame(int input, String username) throws IOException, InterruptedException {
         idClientIntoGame = server.joinGame(input, username, this);
         idGame = input;
 

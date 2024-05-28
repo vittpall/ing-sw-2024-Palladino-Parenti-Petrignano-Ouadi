@@ -16,43 +16,37 @@ import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.observer.Observer;
 import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
-import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.awt.*;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.*;
 
-public class LobbyController implements Observable {
+public class LobbyController{
 
     private final Set<String> usernames = new HashSet<>();
     private final Map<Integer, GameController> gameControllers;
     private final ArrayList<Integer> unusedIdGame;
-    private final Map<String, ArrayList<GameListener>> listeners;
     private int nextGameId;
-    private ArrayList<GameListener> lobbyListeners;
+    private Observable lobbyListeners;
 
 
     public LobbyController() {
-        this.listeners = new HashMap<>();
         gameControllers = new HashMap<>();
         unusedIdGame = new ArrayList<>();
         nextGameId = 1;
-        lobbyListeners = new ArrayList<>();
+        lobbyListeners = new Observable();
     }
 
     public boolean checkUsername(String username, GameListener lobbyListener) {
         synchronized (this.usernames) {
             boolean addedUsername = usernames.add(username);
             if(addedUsername){
-                registerLobbyListener(lobbyListener);
+                lobbyListeners.subscribeListener(lobbyListener);
             }
             return addedUsername;
         }
 
-    }
-
-    private void registerLobbyListener(GameListener lobbyListener) {
     }
 
     public synchronized void removeUsername(String username) {
@@ -80,7 +74,7 @@ public class LobbyController implements Observable {
         return gameControllers.get(gameId).getMessages(receiver, sender);
     }
 
-    public int joinGame(int id, String username, GameListener playerListener) throws InterruptedException, RemoteException {
+    public int joinGame(int id, String username, GameListener playerListener) throws InterruptedException, IOException {
         return gameControllers.get(id).joinGame(username, playerListener);
     }
 
@@ -97,20 +91,15 @@ public class LobbyController implements Observable {
         gameControllers.put(id, gameController);
 
         //to move the user to the another list, 'cause he is not the in the lobby anymore
-        unregisterLobbyListener(playerListener);
-        notifyLobbyListeners();
+        lobbyListeners.notifyCreatedGame();
+        lobbyListeners.subscribeListener(playerListener);
+
 
         int nPlayer = this.joinGame(id, username, playerListener);
         if (nPlayer == 0) {
             return id;
         }
         return -1;
-    }
-
-    private void notifyLobbyListeners() {
-    }
-
-    private void unregisterLobbyListener(GameListener playerListener) {
     }
 
     public ArrayList<ObjectiveCard> getObjectiveCards(int idGame, int idPlayer) {
@@ -230,19 +219,4 @@ public class LobbyController implements Observable {
     }
 
 
-    @Override
-    public void subscribeListener(GameListener listener, String eventToListen) {
-        listeners.computeIfAbsent(eventToListen, k -> new ArrayList<>());
-        listeners.get(eventToListen).add(listener);
-    }
-
-    @Override
-    public void unSubscribeListener(GameListener listener, String eventToListen) {
-        listeners.get(eventToListen).remove(listener);
-    }
-
-    @Override
-    public void notifyObserver(String eventToListen, ReturnableObject messageToShow) {
-
-    }
 }

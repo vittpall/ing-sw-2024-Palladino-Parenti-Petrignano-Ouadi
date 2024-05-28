@@ -102,7 +102,7 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public int joinGame(int id, String username, GameListener playerListener) throws RemoteException, InterruptedException {
+    public int joinGame(int id, String username, GameListener playerListener) throws IOException, InterruptedException {
         int idPlayerIntoGame = lobbyController.joinGame(id, username, playerListener);
         String content = "\n----------------------------------" +
                 "\nPlayer " + lobbyController.getPlayers(id).get(idPlayerIntoGame).getUsername() + " joined the game\n";
