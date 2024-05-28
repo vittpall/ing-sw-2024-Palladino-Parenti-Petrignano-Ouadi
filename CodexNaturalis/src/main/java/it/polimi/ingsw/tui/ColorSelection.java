@@ -33,9 +33,7 @@ public class ColorSelection implements ClientState {
             }
         } catch (RemoteException ex) {
             System.out.println("Remote exception: " + ex.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
         System.out.println("------------------------------------\n");
@@ -43,19 +41,14 @@ public class ColorSelection implements ClientState {
 
     @Override
     public void inputHandler(int input) throws IOException, InterruptedException {
-        ArrayList<TokenColor> currentColorList = client.getAvailableColors();
         TokenColor selectedColor = getColorFromInput(input);
 
-        if (selectedColor != null && currentColorList.contains(selectedColor)) {
+        if (selectedColor != null) {
             client.setTokenColor(selectedColor);
             client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
-        } else if (selectedColor != null) {
+        } else {
             System.out.println("Color not available, please select another color.");
             display();
-            promptForInput();
-            inputHandler(scanner.nextInt());
-        } else {
-            System.out.println("Invalid input, please use a valid number (1-4):");
             promptForInput();
             inputHandler(scanner.nextInt());
         }
@@ -81,7 +74,7 @@ public class ColorSelection implements ClientState {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "ColorSelection";
     }
 

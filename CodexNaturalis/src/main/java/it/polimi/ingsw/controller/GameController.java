@@ -137,7 +137,10 @@ public class GameController {
 
     public synchronized void setTokenColor(int idClientIntoGame, TokenColor tokenColor) throws IOException {
         model.setTokenColor(idClientIntoGame, tokenColor);
-        listeners.get("ColorSelection").notifyColorSelection();
+        String message = "\n----------------------------------\n" +
+                "Player " + model.getPlayers().get(idClientIntoGame).getUsername() +
+                " chose the color " + model.getPlayers().get(idClientIntoGame).getTokenColor();
+        listeners.get("ColorSelection").notifyColorSelection(message);
     }
 
     public ArrayList<Player> getAllPlayers() {

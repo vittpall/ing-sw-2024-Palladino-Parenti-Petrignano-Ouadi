@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 
 public interface GameListener extends Remote {
 
-    void onTokenColorSelected() throws RemoteException;
+    void onTokenColorSelected(String msg) throws RemoteException;
 
     void onGameJoined(String msg) throws RemoteException;
 

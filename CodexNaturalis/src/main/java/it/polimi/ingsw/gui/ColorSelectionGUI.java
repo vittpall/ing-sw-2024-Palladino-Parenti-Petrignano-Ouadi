@@ -4,6 +4,7 @@ import it.polimi.ingsw.gui.Controller.ColorSelectionController;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.tui.ClientState;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -38,8 +39,7 @@ public class ColorSelectionGUI implements ClientState {
 
     }
 
-    public String toString()
-    {
+    public String toString() {
         return "ColorSelectionGUI";
     }
 
@@ -48,7 +48,6 @@ public class ColorSelectionGUI implements ClientState {
      */
     @Override
     public void refresh(String msg) {
-        controller.updateColorList();
-
+        Platform.runLater(() -> controller.updateColorList());
     }
 }

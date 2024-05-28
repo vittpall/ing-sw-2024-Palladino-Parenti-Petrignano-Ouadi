@@ -280,20 +280,6 @@ public class RMIClient extends BaseClient {
     }
 
 
-    private boolean handleCommonInput(String input) {
-        if ("exit".equals(input)) {
-            try {
-                System.out.println("Exiting game...");
-                close();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
-            return true;
-        }
-        return false;
-    }
-
-
     @Override
     public void closeGame() throws RemoteException {
         server.closeGame(idGame);
@@ -312,8 +298,13 @@ public class RMIClient extends BaseClient {
 
 
     @Override
-    public void onTokenColorSelected() throws RemoteException {
-        this.currentState.display();
+    public void onTokenColorSelected(String msg) throws RemoteException {
+        if (!isGUIMode) {
+            System.out.println(msg);
+            this.currentState.display();
+        } else {
+            currentState.refresh(msg);
+        }
     }
 
     @Override

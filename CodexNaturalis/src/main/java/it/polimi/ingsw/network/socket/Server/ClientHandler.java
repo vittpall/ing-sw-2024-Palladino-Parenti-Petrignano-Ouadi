@@ -52,7 +52,7 @@ public class ClientHandler implements GameListener {
 
 
     @Override
-    public void onTokenColorSelected() throws RemoteException {
+    public void onTokenColorSelected(String msg) throws RemoteException {
 
     }
 

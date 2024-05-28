@@ -441,7 +441,7 @@ public class SocketClient extends BaseClient {
 
 
     @Override
-    public void onTokenColorSelected() throws RemoteException {
+    public void onTokenColorSelected(String msg) throws RemoteException {
 
 
     }

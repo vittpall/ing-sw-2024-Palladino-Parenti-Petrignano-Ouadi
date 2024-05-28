@@ -192,7 +192,7 @@ public class RMIServer implements VirtualServer {
         }
         ReturnableObject response = new ReturnableObject();
         response.setResponseReturnable(content);
-      /*  this.broadcastWhatHappened(idGame, response);*/
+        /*  this.broadcastWhatHappened(idGame, response);*/
     }
 
 
@@ -236,12 +236,6 @@ public class RMIServer implements VirtualServer {
     @Override
     public void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws IOException {
         lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor);
-        String message = "\n----------------------------------\n" +
-                "Player " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getUsername() +
-                " chose the color " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getTokenColor();
-        ReturnableObject response = new ReturnableObject();
-        response.setResponseReturnable(message);
-       /* this.broadcastWhatHappened(idGame, response);*/
     }
 
     public int getPoints(int idGame, int idClientIntoGame) throws RemoteException {
