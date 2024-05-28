@@ -61,4 +61,12 @@ public class GetWinnerState implements ClientState {
     public String toString() {
         return "GetWinnerState";
     }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

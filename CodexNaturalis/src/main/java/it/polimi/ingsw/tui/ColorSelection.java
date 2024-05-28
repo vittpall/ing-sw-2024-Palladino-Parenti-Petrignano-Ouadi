@@ -84,4 +84,12 @@ public class ColorSelection implements ClientState {
     public String toString(){
         return "ColorSelection";
     }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

@@ -32,4 +32,17 @@ public class CreateGameStateGUI implements ClientState {
         // GUI interactions are direct, so this method might not be necessary
     }
 
+    public String toString()
+    {
+        return "CreateGameStateGUI";
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
+
 }

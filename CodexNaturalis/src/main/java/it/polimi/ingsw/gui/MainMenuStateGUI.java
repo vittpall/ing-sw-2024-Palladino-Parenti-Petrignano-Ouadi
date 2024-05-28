@@ -34,4 +34,17 @@ public class MainMenuStateGUI implements ClientState {
     public void promptForInput() {
 
     }
+
+    public String toString()
+    {
+        return "MainMenuStateGUI";
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

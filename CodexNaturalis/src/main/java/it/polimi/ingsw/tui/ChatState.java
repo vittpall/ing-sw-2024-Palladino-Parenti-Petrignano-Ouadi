@@ -55,6 +55,14 @@ public class ChatState implements ClientState {
         System.out.println("3. Return to the game");
     }
 
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
+
     private void sendGlobalMessage() {
         //client.server.sendMessage(client.getUsername(), null, scanner.nextLine());
     }

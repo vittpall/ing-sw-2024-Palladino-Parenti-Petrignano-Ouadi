@@ -26,6 +26,11 @@ public class JoinGameMenuStateGUI implements ClientState {
         controller.updateGamesList();
     }
 
+    public void refresh()
+    {
+        controller.updateGamesList();
+    }
+
     @Override
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
 
@@ -34,6 +39,11 @@ public class JoinGameMenuStateGUI implements ClientState {
     @Override
     public void promptForInput() {
 
+    }
+
+    public String toString()
+    {
+        return "JoinGameMenuStateGUI";
     }
 
 }

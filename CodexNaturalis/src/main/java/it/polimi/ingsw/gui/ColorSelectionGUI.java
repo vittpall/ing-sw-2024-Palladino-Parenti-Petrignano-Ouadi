@@ -23,8 +23,10 @@ public class ColorSelectionGUI implements ClientState {
     @Override
     public void display() {
         controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/ColorSelection.fxml");
+
         controller.updateColorList();
     }
+
 
     @Override
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
@@ -33,6 +35,20 @@ public class ColorSelectionGUI implements ClientState {
 
     @Override
     public void promptForInput() {
+
+    }
+
+    public String toString()
+    {
+        return "ColorSelectionGUI";
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+        controller.updateColorList();
 
     }
 }

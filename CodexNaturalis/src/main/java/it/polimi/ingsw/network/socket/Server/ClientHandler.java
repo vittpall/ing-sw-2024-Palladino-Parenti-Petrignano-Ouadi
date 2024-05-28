@@ -17,9 +17,9 @@ import java.rmi.RemoteException;
 
 public class ClientHandler implements GameListener {
     final SocketServer server;
-    final ObjectInputStream input;
+    final transient ObjectInputStream input;
     final LobbyController controller;
-    final ObjectOutputStream output;
+    final transient ObjectOutputStream output;
 
     public ClientHandler(SocketServer server, ObjectInputStream input, ObjectOutputStream output, LobbyController controller) {
         this.server = server;

@@ -57,4 +57,12 @@ public class WaitingForPlayersState implements ClientState{
     public String toString() {
         return "WaitingForPlayersState";
     }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

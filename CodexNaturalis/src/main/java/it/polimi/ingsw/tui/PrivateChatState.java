@@ -72,4 +72,12 @@ public class PrivateChatState implements ClientState{
     public String toString() {
         return "PrivateChatState";
     }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

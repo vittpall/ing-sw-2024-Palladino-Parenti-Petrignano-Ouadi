@@ -66,6 +66,14 @@ public class JoinGameMenuState implements ClientState {
     public String toString() {
         return "JoinGameMenuState";
     }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }
 
 

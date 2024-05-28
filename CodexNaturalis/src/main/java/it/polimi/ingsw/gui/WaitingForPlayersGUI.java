@@ -33,4 +33,17 @@ public class WaitingForPlayersGUI implements ClientState {
     public void promptForInput() {
 
     }
+
+    public String toString()
+    {
+        return "WaitingForPlayersGUI";
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

@@ -33,5 +33,18 @@ public class LobbyMenuStateGUI implements ClientState {
         // Mostra prompt all'utente se applicabile in un contesto GUI
     }
 
+    public String toString()
+    {
+        return "LobbyMenuStateGUI";
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
+
 
 }

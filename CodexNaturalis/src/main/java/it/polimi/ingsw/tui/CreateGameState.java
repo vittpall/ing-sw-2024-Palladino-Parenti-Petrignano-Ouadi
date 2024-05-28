@@ -80,4 +80,12 @@ public class CreateGameState implements ClientState {
         return "CreateGameState";
     }
 
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
+
 }

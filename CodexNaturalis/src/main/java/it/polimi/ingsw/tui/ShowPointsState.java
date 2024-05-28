@@ -48,4 +48,12 @@ public class ShowPointsState implements ClientState {
     public String toString() {
         return "ShowPointsState";
     }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

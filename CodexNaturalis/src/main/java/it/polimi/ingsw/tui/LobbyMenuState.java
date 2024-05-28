@@ -56,4 +56,12 @@ public class LobbyMenuState implements ClientState {
     public String toString() {
         return "LobbyMenuState";
     }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

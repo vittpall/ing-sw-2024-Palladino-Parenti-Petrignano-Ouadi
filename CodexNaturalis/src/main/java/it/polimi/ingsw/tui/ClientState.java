@@ -14,4 +14,6 @@ public interface ClientState extends Remote {
 
     @Override
     String toString();
+
+    void refresh();
 }

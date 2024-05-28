@@ -66,4 +66,12 @@ public class GlobalChatState implements ClientState{
     public String toString() {
         return "GlobalChatState";
     }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

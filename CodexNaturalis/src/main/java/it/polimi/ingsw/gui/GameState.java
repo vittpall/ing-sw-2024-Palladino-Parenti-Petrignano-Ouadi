@@ -35,4 +35,17 @@ public class GameState implements ClientState {
     public void promptForInput() {
 
     }
+
+    public String toString()
+    {
+        return "GameState";
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

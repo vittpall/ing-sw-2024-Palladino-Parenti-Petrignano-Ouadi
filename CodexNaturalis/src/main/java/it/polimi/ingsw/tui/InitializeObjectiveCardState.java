@@ -78,4 +78,12 @@ public class InitializeObjectiveCardState implements ClientState {
     public String toString() {
         return "InitializeObjectiveCardState";
     }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

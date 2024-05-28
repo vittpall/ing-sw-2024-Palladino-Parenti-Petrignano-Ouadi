@@ -36,4 +36,17 @@ public class InizializeStarterCardStateGUI implements ClientState {
     public void promptForInput() {
 
     }
+
+    public String toString()
+    {
+        return "InizializeStarterCardStateGUI";
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

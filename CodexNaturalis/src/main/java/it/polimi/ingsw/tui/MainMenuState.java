@@ -74,4 +74,12 @@ public class MainMenuState implements ClientState, Remote {
     public String toString() {
         return "MainMenuState";
     }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

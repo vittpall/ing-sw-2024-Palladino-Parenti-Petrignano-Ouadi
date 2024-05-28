@@ -45,4 +45,12 @@ public class ShowObjectiveCardsState implements ClientState{
     public String toString() {
         return "ShowObjectiveCardsState";
     }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

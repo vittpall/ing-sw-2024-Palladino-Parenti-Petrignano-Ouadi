@@ -183,4 +183,12 @@ public class PlayCardState implements ClientState {
         return "PlayCardState";
     }
 
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
+
 }

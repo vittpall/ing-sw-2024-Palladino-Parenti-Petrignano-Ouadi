@@ -88,4 +88,12 @@ public class DrawCardState implements ClientState {
     public String toString() {
         return "DrawCardState";
     }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

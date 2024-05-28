@@ -26,7 +26,6 @@ public class GameController{
     private final Game model;
     private final int nPlayers;
     private GameState gameState;
-    private int nPlayersPlaying;
     private String winner;
     private final HashMap<String, Observable> listeners;
 

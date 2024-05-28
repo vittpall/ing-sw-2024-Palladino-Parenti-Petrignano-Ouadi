@@ -109,4 +109,12 @@ public class PrivateChatSelectingReceiverState implements ClientState {
     public String toString() {
         return "PrivateChatSelectingReceiverState";
     }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

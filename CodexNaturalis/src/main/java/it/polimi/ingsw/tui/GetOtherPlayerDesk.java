@@ -65,4 +65,12 @@ public class GetOtherPlayerDesk implements ClientState{
     public String toString() {
         return "GetOtherPlayerDesk";
     }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }

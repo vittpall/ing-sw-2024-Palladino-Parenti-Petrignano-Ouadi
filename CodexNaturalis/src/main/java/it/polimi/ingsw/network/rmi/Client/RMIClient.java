@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.rmi.Client;
 
+import it.polimi.ingsw.gui.JoinGameMenuStateGUI;
 import it.polimi.ingsw.gui.MainMenuStateGUI;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
@@ -452,6 +453,7 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
     @Override
     public void update(ReturnableObject messageToShow) throws RemoteException {
         //TODO logic to implement. I would consider to use a switch case to handle the different states
+
         switch (currentState.toString()) {
             case "JoinGameMenuState":
                 currentState.display();
@@ -462,6 +464,10 @@ public class RMIClient extends UnicastRemoteObject implements VirtualView, GameL
             case "ColorSelection":
                 currentState.display();
                 break;
+                case "JoinGameMenuStateGUI":
+                    currentState.refresh();
+                break;
+
             default:
                 break;
 

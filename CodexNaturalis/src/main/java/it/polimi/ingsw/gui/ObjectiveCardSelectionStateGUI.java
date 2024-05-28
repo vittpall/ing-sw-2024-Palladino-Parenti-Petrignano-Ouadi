@@ -33,4 +33,17 @@ public class ObjectiveCardSelectionStateGUI implements ClientState {
     public void promptForInput() {
 
     }
+
+    public String toString()
+    {
+        return "ObjectiveCardSelectionStateGUI";
+    }
+
+    /**
+     *
+     */
+    @Override
+    public void refresh() {
+
+    }
 }
