@@ -15,7 +15,6 @@ import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
-import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.tui.DrawCardState;
 import it.polimi.ingsw.tui.GlobalChatState;
 import it.polimi.ingsw.tui.MainMenuState;
@@ -89,10 +88,6 @@ public class RMIClient extends BaseClient {
         }
     }
 
-    @Override
-    public void receiveNotification(ReturnableObject msg) {
-        System.out.println(msg.getResponseReturnable());
-    }
 
     @Override
     public boolean checkUsername(String username) throws IOException {
@@ -322,9 +317,14 @@ public class RMIClient extends BaseClient {
     }
 
     @Override
-    public void onGameJoined() throws RemoteException {
+    public void onGameJoined(String msg) throws RemoteException {
+        if (!isGUIMode)
+            System.out.println(msg);
+        else
+            currentState.refresh(msg);
 
     }
+
 
     @Override
     public void onGameCreated() throws RemoteException {

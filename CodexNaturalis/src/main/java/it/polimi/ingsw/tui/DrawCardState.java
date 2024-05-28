@@ -3,11 +3,8 @@ package it.polimi.ingsw.tui;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
-import java.rmi.UnexpectedException;
 import java.util.Scanner;
 
 public class DrawCardState implements ClientState {
@@ -94,7 +91,7 @@ public class DrawCardState implements ClientState {
      *
      */
     @Override
-    public void refresh() {
+    public void refresh(String msg) {
 
     }
 }

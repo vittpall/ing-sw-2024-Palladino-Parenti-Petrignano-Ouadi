@@ -51,7 +51,7 @@ public class LobbyMenuState implements ClientState {
      *
      */
     @Override
-    public void refresh() {
+    public void refresh(String msg) {
 
     }
 }

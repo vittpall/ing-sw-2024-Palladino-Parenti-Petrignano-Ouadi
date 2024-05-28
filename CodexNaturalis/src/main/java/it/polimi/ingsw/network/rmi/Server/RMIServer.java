@@ -90,30 +90,10 @@ public class RMIServer implements VirtualServer {
 
     }
 
-    public void broadcastWhatHappened(int idGame, ReturnableObject msg) throws RemoteException {
-        try {
-            for (VirtualView client : clients) {
-                if (client.getIdGame() == idGame)
-                    client.receiveNotification(msg);
-            }
-        } catch (IOException | InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     @Override
     public int joinGame(int id, String username, GameListener playerListener) throws IOException, InterruptedException {
-        int idPlayerIntoGame = lobbyController.joinGame(id, username, playerListener);
-        String content = "\n----------------------------------" +
-                "\nPlayer " + lobbyController.getPlayers(id).get(idPlayerIntoGame).getUsername() + " joined the game\n";
-        if (lobbyController.getPlayers(id).size() == lobbyController.getnPlayer(id))
-            content += "You can now start the game";
-        else
-            content += "Waiting for " + (lobbyController.getnPlayer(id) - lobbyController.getPlayers(id).size()) + " players to join";
-        ReturnableObject response = new ReturnableObject();
-        response.setResponseReturnable(content);
-        this.broadcastWhatHappened(id, response);
-        return idPlayerIntoGame;
+        return lobbyController.joinGame(id, username, playerListener);
     }
 
     @Override
@@ -194,7 +174,7 @@ public class RMIServer implements VirtualServer {
                         Now you can see the winner of the game""";
             ReturnableObject response = new ReturnableObject();
             response.setResponseReturnable(content);
-            this.broadcastWhatHappened(idGame, response);
+            /*this.broadcastWhatHappened(idGame, response);*/
         }
     }
 
@@ -212,7 +192,7 @@ public class RMIServer implements VirtualServer {
         }
         ReturnableObject response = new ReturnableObject();
         response.setResponseReturnable(content);
-        this.broadcastWhatHappened(idGame, response);
+      /*  this.broadcastWhatHappened(idGame, response);*/
     }
 
 
@@ -261,7 +241,7 @@ public class RMIServer implements VirtualServer {
                 " chose the color " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getTokenColor();
         ReturnableObject response = new ReturnableObject();
         response.setResponseReturnable(message);
-        this.broadcastWhatHappened(idGame, response);
+       /* this.broadcastWhatHappened(idGame, response);*/
     }
 
     public int getPoints(int idGame, int idClientIntoGame) throws RemoteException {

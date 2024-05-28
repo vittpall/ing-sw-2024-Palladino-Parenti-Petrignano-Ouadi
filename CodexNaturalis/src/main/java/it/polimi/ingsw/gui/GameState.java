@@ -2,7 +2,6 @@ package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.gui.Controller.GameController;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.stage.Stage;
@@ -46,7 +45,7 @@ public class GameState implements ClientState {
      *
      */
     @Override
-    public void refresh() {
+    public void refresh(String msg) {
 
     }
 }

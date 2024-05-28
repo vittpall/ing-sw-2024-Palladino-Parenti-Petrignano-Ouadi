@@ -2,7 +2,6 @@ package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -51,7 +50,7 @@ public class ShowObjectiveCardsState implements ClientState{
      *
      */
     @Override
-    public void refresh() {
+    public void refresh(String msg) {
 
     }
 }

@@ -7,7 +7,7 @@ public interface GameListener extends Remote {
 
     void onTokenColorSelected() throws RemoteException;
 
-    void onGameJoined() throws RemoteException;
+    void onGameJoined(String msg) throws RemoteException;
 
     void onGameCreated() throws RemoteException;
 

@@ -5,16 +5,13 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class Observable {
-    private ArrayList<GameListener> listeners;
+    private final ArrayList<GameListener> listeners;
 
     public Observable() {
         listeners = new ArrayList<>();
     }
 
     public void subscribeListener(GameListener listener) {
-        if (listeners == null) {
-            listeners = new ArrayList<>();
-        }
         listeners.add(listener);
     }
 
@@ -22,21 +19,15 @@ public class Observable {
         listeners.remove(listener);
     }
 
-    public void notifyColorSelection() {
+    public void notifyColorSelection() throws RemoteException {
         for (GameListener listener : listeners) {
-            new Thread(() -> {
-                try {
-                    listener.onTokenColorSelected();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }).start();
+            listener.onTokenColorSelected();
         }
     }
 
-    public void notifyJoinedGame() throws RemoteException {
+    public void notifyJoinedGame(String msg) throws RemoteException {
         for (GameListener listener : listeners) {
-            listener.onGameJoined();
+            listener.onGameJoined(msg);
         }
     }
 

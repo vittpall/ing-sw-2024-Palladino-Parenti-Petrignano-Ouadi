@@ -11,8 +11,6 @@ import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
-import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.tui.ClientState;
 
 import java.awt.*;
 import java.io.IOException;
@@ -96,7 +94,6 @@ public interface VirtualView extends Remote {
 
     ArrayList<Player> getPlayers(int idGame) throws IOException, InterruptedException;
 
-    void receiveNotification(ReturnableObject msg) throws IOException, InterruptedException;
 
     void run() throws IOException, InterruptedException, ClassNotFoundException;
 

@@ -70,9 +70,16 @@ public class GameController {
                 model.getPlayers().get(i).setPlayerState(PlayerState.SETUP_GAME);
             }
         }
-//at the moment i init. the value if its null, then if everything it's working fine we can add a lazy variable.
+
+        String content = "\n----------------------------------" +
+                "\nPlayer " + username + " joined the game\n";
+        if (model.getPlayers().size() == nPlayers)
+            content += "You can now start the game";
+        else
+            content += "Waiting for " + (nPlayers - model.getPlayers().size()) + " players to join";
+
         addListenerList("WaitingForPlayersState");
-        listeners.get("WaitingForPlayersState").notifyJoinedGame();
+        listeners.get("WaitingForPlayersState").notifyJoinedGame(content);
         listeners.get("WaitingForPlayersState").subscribeListener(playerListener);
 
         return idPlayer;

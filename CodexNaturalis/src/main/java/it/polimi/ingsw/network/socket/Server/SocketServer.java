@@ -5,10 +5,6 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.chat.Message;
-import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
-import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -54,14 +50,4 @@ public class SocketServer implements Remote {
         }
     }
 
-
-    public static void broadCastWhatHappened(ReturnableObject messageToBroadCast, TypeServerToClientMsg type, int idGame) throws IOException {
-        ServerToClientMsg receivedMessage = new ServerToClientMsg(type, true, idGame);
-        ReturnableObject<Integer> test = new ReturnableObject<>();
-        test.setResponseReturnable(1);
-        //receivedMessage.setResponse(messageToBroadCast);
-        for (ClientHandler client : clients) {
-            client.sendMessage(receivedMessage);
-        }
-    }
 }

@@ -57,7 +57,7 @@ public class ClientHandler implements GameListener {
     }
 
     @Override
-    public void onGameJoined() throws RemoteException {
+    public void onGameJoined(String msg) throws RemoteException {
 
     }
 

@@ -2,12 +2,8 @@ package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
-import it.polimi.ingsw.network.rmi.Client.RMIClient;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -78,7 +74,7 @@ public class PrivateChatState implements ClientState{
      *
      */
     @Override
-    public void refresh() {
+    public void refresh(String msg) {
 
     }
 }

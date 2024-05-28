@@ -257,10 +257,6 @@ public class SocketClient extends BaseClient {
         return (ArrayList<Player>) response.getResponse().getResponseReturnable();
     }
 
-    @Override
-    public void receiveNotification(ReturnableObject msg) {
-        System.out.println(msg.getResponseReturnable());
-    }
 
     @Override
     public String getUsernamePlayerThatStoppedTheGame() throws IOException, InterruptedException {
@@ -451,7 +447,7 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
-    public void onGameJoined() throws RemoteException {
+    public void onGameJoined(String msg) throws RemoteException {
 
     }
 

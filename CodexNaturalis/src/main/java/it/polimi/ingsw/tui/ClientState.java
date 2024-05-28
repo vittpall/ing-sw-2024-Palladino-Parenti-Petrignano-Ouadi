@@ -2,7 +2,6 @@ package it.polimi.ingsw.tui;
 
 import java.io.IOException;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 
 public interface ClientState extends Remote {
 
@@ -15,5 +14,5 @@ public interface ClientState extends Remote {
     @Override
     String toString();
 
-    void refresh();
+    void refresh(String msg);
 }

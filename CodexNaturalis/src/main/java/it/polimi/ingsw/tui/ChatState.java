@@ -1,15 +1,12 @@
 package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
-import it.polimi.ingsw.network.rmi.Client.RMIClient;
 
 import java.rmi.RemoteException;
-import java.time.temporal.ValueRange;
 import java.util.Scanner;
 
 public class ChatState implements ClientState {
-    private BaseClient client;
+    private final BaseClient client;
     private final Scanner scanner;
     private ClientState returnState;
 
@@ -60,7 +57,7 @@ public class ChatState implements ClientState {
      *
      */
     @Override
-    public void refresh() {
+    public void refresh(String msg) {
 
     }
 

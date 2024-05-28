@@ -8,7 +8,6 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.awt.*;
 import java.io.IOException;
@@ -188,7 +187,7 @@ public class PlayCardState implements ClientState {
      *
      */
     @Override
-    public void refresh() {
+    public void refresh(String msg) {
 
     }
 
