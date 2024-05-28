@@ -12,9 +12,8 @@ import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
-import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.*;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 import it.polimi.ingsw.tui.*;
@@ -25,7 +24,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -35,16 +37,14 @@ import java.util.concurrent.LinkedBlockingQueue;
  * This class represents the client side of a socket connection.
  * It implements the VirtualView interface, which provides methods for interacting with the game model.
  */
-public class SocketClient implements VirtualView, GameListener {
+public class SocketClient extends BaseClient {
 
     private final ObjectOutputStream out;
     private final ObjectInputStream in;
-    ClientState currentState;
     private String username;
     private final ConcurrentMap<TypeServerToClientMsg, BlockingQueue<ServerToClientMsg>> responseQueues = new ConcurrentHashMap<>();
     private int idGame;
     private int idClientIntoGame;
-    private Scanner scan;
     private final boolean isGUIMode;
 
     /**
@@ -64,8 +64,8 @@ public class SocketClient implements VirtualView, GameListener {
                 break;
             case "TUI":
                 isGUIMode = false;
-                this.scan = new Scanner(System.in);
-                currentState = new MainMenuState(this, new Scanner(System.in));
+                scan = new Scanner(System.in);
+                currentState = new MainMenuState(this, scan);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported mode");
@@ -120,7 +120,7 @@ public class SocketClient implements VirtualView, GameListener {
     }
 
 
-    private ServerToClientMsg sendRequest(ClientToServerMsg request) throws IOException, InterruptedException {
+    private ServerToClientMsg sendRequest(ClientToServerMsg request) throws InterruptedException, IOException {
         TypeServerToClientMsg expectedResponse = request.getType();
         out.writeObject(request);
         out.flush();
@@ -201,11 +201,6 @@ public class SocketClient implements VirtualView, GameListener {
     }
 
     @Override
-    public GameCard getLastFromUsableCards(int deck) throws RemoteException {
-        return null;
-    }
-
-    @Override
     public void close() throws IOException, InterruptedException {
         ClosedConnectionMsg request = new ClosedConnectionMsg(username, idGame);
         System.out.println("Closing connection!!!");
@@ -213,6 +208,11 @@ public class SocketClient implements VirtualView, GameListener {
         response.getResponse();
 
         System.exit(0);
+    }
+
+    @Override
+    public GameCard getLastFromUsableCards(int deck) throws RemoteException {
+        return null;
     }
 
 
@@ -392,175 +392,6 @@ public class SocketClient implements VirtualView, GameListener {
         } else {
             inputHandler();
         }
-
-
-    }
-
-    @SuppressWarnings("InfiniteLoopStatement")
-    private void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
-        Scanner scan = new Scanner(System.in);
-        boolean correctInput;
-        String input = "";
-        do {
-            showState();
-            correctInput = false;
-            while (!correctInput) {
-                try {
-                    System.out.print("Type your command or 'exit' to quit: ");
-                    input = scan.nextLine().trim().toLowerCase();
-                    correctInput = true;
-                } catch (InputMismatchException e) {
-                    System.out.println("\nInvalid input: Reinsert the value: ");
-                }
-            }
-
-            if (!handleCommonInput(input)) {
-                try {
-                    currentState.inputHandler(Integer.parseInt(input));
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid input: Please enter a number.");
-                }
-            }
-        } while (currentState != null);
-        while (true) {
-            System.out.println("You are in the game: " + idGame + " as player: " + idClientIntoGame);
-            if (currentState == null) {
-                display();
-                correctInput = false;
-                while (!correctInput) {
-                    try {
-                        System.out.print("Type your command or 'exit' to quit: ");
-                        input = scan.nextLine().trim().toLowerCase();
-                        correctInput = true;
-                    } catch (InputMismatchException e) {
-                        System.out.println("\nInvalid input: Reinsert the value: ");
-                    }
-                }
-            } else
-                input = "no display";
-
-            if (!handleCommonInput(input)) {
-                try {
-                    boolean checkState;
-                    if (currentState == null)
-                        checkState = gameLogicInputHandler(Integer.parseInt(input));
-                    else
-                        checkState = true;
-                    if (checkState) {
-                        showState();
-                        boolean correctInput2 = false;
-                        while (!correctInput2) {
-                            try {
-                                System.out.print("Type your command or 'exit' to quit: ");
-                                input = scan.nextLine().trim().toLowerCase();
-                                correctInput2 = true;
-                            } catch (InputMismatchException e) {
-                                System.out.println("\nInvalid input: Reinsert the value: ");
-                            }
-                        }
-                        if (!handleCommonInput(input)) {
-                            try {
-                                //TODO: vedere se cambiare qui il current state oppure nel gameLogicInputHandler
-                                currentState.inputHandler(Integer.parseInt(input));
-                            } catch (NumberFormatException e) {
-                                System.out.println("Invalid input: Please enter a number.");
-                            }
-                        }
-                    } else {
-                        System.out.println("The input was not valid. You can " + getCurrentState(idGame, idClientIntoGame));
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid input: Please enter a number.");
-                }
-            }
-        }
-
-    }
-
-
-    private boolean handleCommonInput(String input) {
-        if ("exit".equals(input)) {
-            try {
-                System.out.println("Exiting game...");
-                close();
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            return true;
-        }
-        return false;
-    }
-
-    private boolean gameLogicInputHandler(int i) {
-        try {
-            boolean checkState;
-            switch (i) {
-                //probabilmente è meglio mandare l'input al server e poi è il GameController che gestisce lo stato di richiesta
-                //per questo ho commentato la chiamata al metodo checkState
-                case 1:
-                    checkState = checkState(idGame, idClientIntoGame, RequestedActions.DRAW);
-                    if (checkState) currentState = new DrawCardState(this, scan);
-                    return checkState;
-                case 2:
-                    checkState = checkState(idGame, idClientIntoGame, RequestedActions.PLAY_CARD);
-                    if (checkState) currentState = new PlayCardState(this, scan);
-                    return checkState;
-                case 3:
-                    checkState = checkState(idGame, idClientIntoGame, RequestedActions.SHOW_DESKS);
-                    //  if (checkState) currentState = new ShowDeskState(this, scan);
-                    return checkState;
-                case 4:
-                    checkState = checkState(idGame, idClientIntoGame, RequestedActions.SHOW_OBJ_CARDS);
-                    if (checkState) currentState = new ShowObjectiveCardsState(this, scan);
-                    return checkState;
-                case 5:
-                    checkState = checkState(idGame, idClientIntoGame, RequestedActions.SHOW_POINTS);
-                    if (checkState) currentState = new ShowPointsState(this, scan);
-                    return checkState;
-                case 6:
-                    checkState = checkState(idGame, idClientIntoGame, RequestedActions.CHAT);
-                    if (checkState) currentState = new ChatState(this, scan);
-                    return checkState;
-                case 7:
-                    checkState = checkState(idGame, idClientIntoGame, RequestedActions.SHOW_WINNER);
-                    if (checkState) currentState = new GetWinnerState(this, scan);
-                    return checkState;
-                default:
-                    return false;
-            }
-        } catch (RemoteException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException | ClassNotFoundException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        return false;
-    }
-
-
-    private void display() {
-        System.out.println("⚔️  _________________________________  ⚔️");
-        System.out.println("|                                       |");
-        System.out.println("|   Please choose an action:            |");
-        try {
-            if (checkState(idGame, idClientIntoGame, RequestedActions.PLAY_CARD))
-                System.out.println("|   1. Play a card🎮                    |");
-
-            else if (checkState(idGame, idClientIntoGame, RequestedActions.DRAW))
-                System.out.println("|   2. Draw a card🎴                    |");
-            System.out.println("|   3. Show your desk or others' desks  |");
-            System.out.println("|   4. Show the shared objective cards  |");
-            System.out.println("|      and your objective card          |");
-            System.out.println("|   5. Show players' points             |");
-            System.out.println("|   6. Chat 💬                          |");
-            if (checkState(idGame, idClientIntoGame, RequestedActions.SHOW_WINNER))
-                System.out.println("|   7. Show winner                      |");
-            System.out.println("|_______________________________________|\n");
-        } catch (IOException | InterruptedException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -569,10 +400,6 @@ public class SocketClient implements VirtualView, GameListener {
         currentState.promptForInput();
     }
 
-    @Override
-    public PlayerState getCurrentPlayerState() throws RemoteException {
-        return null;
-    }
 
     @SuppressWarnings("InfiniteLoopStatement")
     private void runVirtualServer() {
@@ -590,13 +417,20 @@ public class SocketClient implements VirtualView, GameListener {
         }
     }
 
-    public String getCurrentState(int idGame, int idClientIntoGame) throws IOException, InterruptedException {
+    public String getCurrentState() throws IOException, InterruptedException {
         GetCurrentStateMsg request = new GetCurrentStateMsg(idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
         return (String) response.getResponse().getResponseReturnable();
     }
 
-    public boolean checkState(int idGame, int idClientIntoGame, RequestedActions requestedActions) throws IOException, ClassNotFoundException, InterruptedException {
+    @Override
+    public PlayerState getCurrentPlayerState() throws IOException, InterruptedException {
+        GetCurrentPlayerState request = new GetCurrentPlayerState(idGame, idClientIntoGame);
+        ServerToClientMsg response = sendRequest(request);
+        return (PlayerState) response.getResponse().getResponseReturnable();
+    }
+
+    public boolean checkState(RequestedActions requestedActions) throws IOException, ClassNotFoundException, InterruptedException {
         CheckStateMsg request = new CheckStateMsg(idGame, idClientIntoGame, requestedActions);
         ServerToClientMsg response = sendRequest(request);
         return (boolean) response.getResponse().getResponseReturnable();

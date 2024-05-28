@@ -1,5 +1,6 @@
 package it.polimi.ingsw.tui;
 
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.IOException;
@@ -8,10 +9,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class JoinGameMenuState implements ClientState {
-    VirtualView client;
+    BaseClient client;
     Scanner scanner;
 
-    public JoinGameMenuState(VirtualView client, Scanner scanner) {
+    public JoinGameMenuState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
     }

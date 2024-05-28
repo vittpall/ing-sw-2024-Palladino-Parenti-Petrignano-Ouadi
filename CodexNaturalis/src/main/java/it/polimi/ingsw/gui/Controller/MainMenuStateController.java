@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gui.Controller;
 
 import it.polimi.ingsw.gui.LobbyMenuStateGUI;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,7 +15,7 @@ public class MainMenuStateController implements FXMLController {
 
     public Label welcomeLabel;
     public Button playButton;
-    private VirtualView client;
+    private BaseClient client;
     private Stage stage;
 
     @FXML
@@ -37,7 +38,7 @@ public class MainMenuStateController implements FXMLController {
         }
     }
 
-    public void setClient(VirtualView client) {
+    public void setClient(BaseClient client) {
         this.client = client;
     }
 

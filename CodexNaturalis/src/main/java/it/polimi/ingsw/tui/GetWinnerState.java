@@ -1,5 +1,6 @@
 package it.polimi.ingsw.tui;
 
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.IOException;
@@ -7,10 +8,10 @@ import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public class GetWinnerState implements ClientState {
-    VirtualView client;
+    BaseClient client;
     private final Scanner scanner;
 
-    public GetWinnerState(VirtualView client, Scanner scanner) {
+    public GetWinnerState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
 

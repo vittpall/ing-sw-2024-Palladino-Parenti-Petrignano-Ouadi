@@ -1,6 +1,7 @@
 package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.IOException;
@@ -8,10 +9,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ShowPointsState implements ClientState {
-    VirtualView client;
+    BaseClient client;
     private final Scanner scanner;
 
-    public ShowPointsState(VirtualView client, Scanner scanner) {
+    public ShowPointsState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
     }

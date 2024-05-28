@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.IOException;
@@ -14,10 +15,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InitializeStarterCardState implements ClientState {
-    VirtualView client;
+    BaseClient client;
     private final Scanner scanner;
 
-    public InitializeStarterCardState(VirtualView client, Scanner scanner) {
+    public InitializeStarterCardState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
     }

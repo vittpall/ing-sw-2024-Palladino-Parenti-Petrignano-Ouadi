@@ -2,6 +2,7 @@ package it.polimi.ingsw.gui.Controller;
 
 import it.polimi.ingsw.gui.ObjectiveCardSelectionStateGUI;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -27,7 +28,7 @@ public class ColorSelectionController implements FXMLController {
     @FXML
     private Button selectColorButton;
 
-    private VirtualView client;
+    private BaseClient client;
 
 
     @FXML
@@ -92,7 +93,7 @@ public class ColorSelectionController implements FXMLController {
         };
     }
 
-    public void setClient(VirtualView client) {
+    public void setClient(BaseClient client) {
         this.client = client;
     }
 

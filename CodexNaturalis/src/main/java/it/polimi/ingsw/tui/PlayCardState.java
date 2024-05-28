@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.awt.*;
@@ -17,10 +18,10 @@ import java.util.HashSet;
 import java.util.Scanner;
 
 public class PlayCardState implements ClientState {
-    VirtualView client;
+    BaseClient client;
     private final Scanner scanner;
 
-    public PlayCardState(VirtualView client, Scanner scanner) {
+    public PlayCardState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
     }

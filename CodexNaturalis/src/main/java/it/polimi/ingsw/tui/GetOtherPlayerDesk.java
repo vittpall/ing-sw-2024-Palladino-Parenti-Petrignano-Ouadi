@@ -3,19 +3,20 @@ package it.polimi.ingsw.tui;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.PlayerDesk;
 import it.polimi.ingsw.model.enumeration.PlayerState;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GetOtherPlayerDesk implements ClientState{
-    VirtualView client;
+    BaseClient client;
     private final Scanner scanner;
     @Override
     public void promptForInput() {
     }
 
-    public GetOtherPlayerDesk(VirtualView client, Scanner scanner) {
+    public GetOtherPlayerDesk(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
     }

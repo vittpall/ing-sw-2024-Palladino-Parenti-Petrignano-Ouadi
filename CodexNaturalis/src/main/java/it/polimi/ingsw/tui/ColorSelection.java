@@ -1,6 +1,7 @@
 package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.IOException;
@@ -9,14 +10,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ColorSelection implements ClientState {
-    VirtualView client;
+    BaseClient client;
     private final Scanner scanner;
 
     @Override
     public void promptForInput() {
     }
 
-    public ColorSelection(VirtualView client, Scanner scanner) {
+    public ColorSelection(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
     }

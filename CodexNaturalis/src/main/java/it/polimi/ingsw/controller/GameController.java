@@ -12,17 +12,14 @@ import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
-import it.polimi.ingsw.tui.WaitingForPlayersState;
-import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.awt.*;
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class GameController{
+public class GameController {
     private final Game model;
     private final int nPlayers;
     private GameState gameState;
@@ -52,14 +49,14 @@ public class GameController{
     }
 
     public String getCurrentState(int idClientIntoGame) {
-        return gameState.toString() + " " + getPlayerState(idClientIntoGame).toString();
+        return getGameState() + " " + getPlayerState(idClientIntoGame).toString();
     }
 
     public PlayerState getPlayerState(int idClientIntoGame) {
         return model.getPlayers().get(idClientIntoGame).getPlayerState();
     }
 
-    public String getCurrentState() {
+    public String getGameState() {
         return gameState.toString();
     }
 
@@ -81,7 +78,7 @@ public class GameController{
         return idPlayer;
     }
 
-    private void addListenerList(String state){
+    private void addListenerList(String state) {
         if (!listeners.containsKey(state))
             listeners.put(state, new Observable());
     }
@@ -123,7 +120,7 @@ public class GameController{
         return model.getSharedObjectiveCards();
     }
 
-    public synchronized ArrayList<TokenColor> getAvailableColors(GameListener playerListener){
+    public synchronized ArrayList<TokenColor> getAvailableColors(GameListener playerListener) {
         listeners.get("WaitingForPlayersState").unSubscribeListener(playerListener);
         addListenerList("ColorSelection");
         listeners.get("ColorSelection").subscribeListener(playerListener);
@@ -233,7 +230,6 @@ public class GameController{
     public synchronized String getWinner() {
         return winner;
     }
-
 
 
     public ArrayList<Player> getPlayers() {

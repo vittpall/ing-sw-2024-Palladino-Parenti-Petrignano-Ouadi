@@ -3,6 +3,7 @@ package it.polimi.ingsw.gui.Controller;
 import it.polimi.ingsw.gui.ColorSelectionGUI;
 import it.polimi.ingsw.gui.LobbyMenuStateGUI;
 import it.polimi.ingsw.gui.WaitingForPlayersGUI;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -17,7 +18,7 @@ public class CreateGameMenuController  implements FXMLController {
     private ChoiceBox<Integer> playerChoiceBox;
     @FXML
     private Label feedbackLabel;
-    private VirtualView client;
+    private BaseClient client;
 
 
     @FXML
@@ -50,7 +51,7 @@ public class CreateGameMenuController  implements FXMLController {
     }
 
 
-    public void setClient(VirtualView client) {
+    public void setClient(BaseClient client) {
         this.client = client;
     }
 

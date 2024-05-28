@@ -1,7 +1,7 @@
 package it.polimi.ingsw.main;
 
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.rmi.Client.RMIClient;
 import it.polimi.ingsw.network.socket.Client.SocketClient;
 import javafx.application.Application;
@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class ClientMain extends Application {
 
-    private VirtualView client;
+    private BaseClient client;
 
     public static void main(String[] args) {
         launch(args); // Use launch to start JavaFX application and pass arguments
@@ -50,7 +50,8 @@ public class ClientMain extends Application {
                 setupRMIClient(useTUI ? "TUI" : "GUI", stage);
             }
         } catch (Exception e) {
-            throw new RuntimeException("Failed to initialize client: " + e.getMessage(), e);
+            System.out.println("Failed to initialize client: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

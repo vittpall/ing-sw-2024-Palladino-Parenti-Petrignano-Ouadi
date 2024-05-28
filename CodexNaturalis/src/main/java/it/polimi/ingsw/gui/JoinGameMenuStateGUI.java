@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.gui.Controller.JoinGameMenuController;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
@@ -11,11 +12,11 @@ import java.io.IOException;
 public class JoinGameMenuStateGUI implements ClientState {
 
 
-    private final VirtualView client;
+    private final BaseClient client;
     private final Stage stage;
     private JoinGameMenuController controller;
 
-    public JoinGameMenuStateGUI(Stage stage, VirtualView client) {
+    public JoinGameMenuStateGUI(Stage stage, BaseClient client) {
         this.client = client;
         this.stage = stage;
     }

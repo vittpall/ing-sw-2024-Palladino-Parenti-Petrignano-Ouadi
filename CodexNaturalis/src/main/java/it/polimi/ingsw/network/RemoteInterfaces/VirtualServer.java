@@ -97,4 +97,5 @@ public interface VirtualServer extends Remote {
     boolean isGameStarted(int idGame) throws RemoteException;
 
     PlayerState getCurrentPlayerState(int idGame, int idClientIntoGame) throws RemoteException;
+
 }

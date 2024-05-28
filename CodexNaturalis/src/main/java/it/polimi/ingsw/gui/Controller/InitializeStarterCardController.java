@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.StarterCard;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -19,7 +20,7 @@ public class InitializeStarterCardController implements FXMLController {
     public Button playBackButton;
     public VBox frontCardContainer;
     public VBox backCardContainer;
-    private VirtualView client;
+    private BaseClient client;
     private Stage stage;
 
     public void initializeStarterCard() {
@@ -57,7 +58,7 @@ public class InitializeStarterCardController implements FXMLController {
     }
 
 
-    public void setClient(VirtualView client) {
+    public void setClient(BaseClient client) {
         this.client = client;
     }
 

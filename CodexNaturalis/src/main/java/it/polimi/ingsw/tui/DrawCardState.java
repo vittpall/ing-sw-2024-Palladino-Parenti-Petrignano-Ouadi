@@ -2,6 +2,7 @@ package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.IOException;
@@ -10,10 +11,10 @@ import java.rmi.UnexpectedException;
 import java.util.Scanner;
 
 public class DrawCardState implements ClientState {
-    VirtualView client;
+    BaseClient client;
     private final Scanner scanner;
 
-    public DrawCardState(VirtualView client, Scanner scanner) {
+    public DrawCardState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
     }

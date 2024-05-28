@@ -1,6 +1,7 @@
 package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.rmi.Client.RMIClient;
@@ -11,13 +12,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PrivateChatState implements ClientState{
-    private VirtualView client;
+    private BaseClient client;
     private final Scanner scanner;
     private String receiver;
     private int lastMessageReceived;
     private ClientState returnState;
 
-    public PrivateChatState(VirtualView client, Scanner scanner, String receiver, ChatState returnState) {
+    public PrivateChatState(BaseClient client, Scanner scanner, String receiver, ChatState returnState) {
         this.client = client;
         this.scanner = scanner;
         this.receiver = receiver;

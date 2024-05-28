@@ -9,6 +9,7 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -30,7 +31,7 @@ public class GameController implements FXMLController {
     public HBox resourceDeck;
     public HBox goldenDeck;
     public VBox playerHandBox;
-    private VirtualView client;
+    private BaseClient client;
     private Stage stage;
     private Integer selectedCardIndex = null;
     private boolean playCardFaceDown;
@@ -150,7 +151,7 @@ public class GameController implements FXMLController {
         showAvailablePositions();
     }
 
-    private void updatePlayerHandInteraction() throws RemoteException {
+    private void updatePlayerHandInteraction() throws IOException, InterruptedException {
         PlayerState state = client.getCurrentPlayerState();
         boolean canPlay = state == PlayerState.PLAY_CARD;
         int index = 0;
@@ -191,7 +192,7 @@ public class GameController implements FXMLController {
     }
 
 
-    public void setClient(VirtualView client) {
+    public void setClient(BaseClient client) {
         this.client = client;
     }
 

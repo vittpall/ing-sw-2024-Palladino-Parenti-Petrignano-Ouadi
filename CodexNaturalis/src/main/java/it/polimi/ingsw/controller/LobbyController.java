@@ -19,7 +19,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.*;
 
-public class LobbyController{
+public class LobbyController {
 
     private final Set<String> usernames = new HashSet<>();
     private final Map<Integer, GameController> gameControllers;
@@ -38,7 +38,7 @@ public class LobbyController{
     public boolean checkUsername(String username, GameListener lobbyListener) {
         synchronized (this.usernames) {
             boolean addedUsername = usernames.add(username);
-            if(addedUsername){
+            if (addedUsername) {
                 lobbyListeners.subscribeListener(lobbyListener);
             }
             return addedUsername;
@@ -208,7 +208,7 @@ public class LobbyController{
     }
 
     public String getCurrentGameState(int idGame) {
-        return gameControllers.get(idGame).getCurrentState();
+        return gameControllers.get(idGame).getGameState();
     }
 
     public PlayerState getCurrentPlayerState(int idGame, int idClientIntoGame) {

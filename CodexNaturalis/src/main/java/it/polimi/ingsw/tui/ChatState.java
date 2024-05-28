@@ -1,5 +1,6 @@
 package it.polimi.ingsw.tui;
 
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.rmi.Client.RMIClient;
 
@@ -8,7 +9,7 @@ import java.time.temporal.ValueRange;
 import java.util.Scanner;
 
 public class ChatState implements ClientState {
-    private VirtualView client;
+    private BaseClient client;
     private final Scanner scanner;
     private ClientState returnState;
 
@@ -17,12 +18,12 @@ public class ChatState implements ClientState {
         System.out.println("Chat-------------------");
     }
 
-    public ChatState(VirtualView client, Scanner scanner) {
+    public ChatState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
     }
 
-    public ChatState(VirtualView client, Scanner scanner, ClientState returnState) {
+    public ChatState(BaseClient client, Scanner scanner, ClientState returnState) {
         this.client = client;
         this.scanner = scanner;
         this.returnState = returnState;

@@ -32,7 +32,6 @@ public interface VirtualView extends Remote {
 
     void createGame(String username, int nPlayers) throws IOException, InterruptedException;
 
-    void setCurrentState(ClientState state) throws RemoteException;
 
     String getUsername() throws RemoteException;
 
@@ -87,7 +86,6 @@ public interface VirtualView extends Remote {
 
     String getUsernamePlayerThatStoppedTheGame() throws IOException, InterruptedException;
 
-    void close() throws IOException, RemoteException, InterruptedException;
 
     String getWinner() throws IOException, InterruptedException;
 
@@ -106,5 +104,7 @@ public interface VirtualView extends Remote {
 
     boolean isGameStarted() throws RemoteException;
 
-    PlayerState getCurrentPlayerState() throws RemoteException;
+    void close() throws IOException, InterruptedException;
+
+    PlayerState getCurrentPlayerState() throws IOException, InterruptedException;
 }

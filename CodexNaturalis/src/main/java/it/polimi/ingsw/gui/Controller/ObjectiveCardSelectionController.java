@@ -4,6 +4,7 @@ import it.polimi.ingsw.gui.CardView;
 import it.polimi.ingsw.gui.InizializeStarterCardStateGUI;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -19,7 +20,7 @@ public class ObjectiveCardSelectionController implements FXMLController {
     private Stage stage;
     public Label messageLabel;
 
-    private VirtualView client;
+    private BaseClient client;
     private ArrayList<ObjectiveCard> playerObjectiveCards;
 
 
@@ -65,7 +66,7 @@ public class ObjectiveCardSelectionController implements FXMLController {
         }
     }
 
-    public void setClient(VirtualView client) {
+    public void setClient(BaseClient client) {
         this.client = client;
     }
 

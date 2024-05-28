@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.gui.Controller.ColorSelectionController;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
@@ -11,11 +12,11 @@ import java.io.IOException;
 public class ColorSelectionGUI implements ClientState {
 
 
-    private final VirtualView client;
+    private final BaseClient client;
     private final Stage stage;
     private ColorSelectionController controller;
 
-    public ColorSelectionGUI(Stage stage, VirtualView client) {
+    public ColorSelectionGUI(Stage stage, BaseClient client) {
         this.client = client;
         this.stage = stage;
     }

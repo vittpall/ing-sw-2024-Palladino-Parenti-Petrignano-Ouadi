@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.gui.Controller.WaitingForPlayersController;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.ClientState;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
@@ -9,11 +10,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class WaitingForPlayersGUI implements ClientState {
-    public final VirtualView client;
+    public final BaseClient client;
     public Stage stage;
     private WaitingForPlayersController controller;
 
-    public WaitingForPlayersGUI(Stage stage, VirtualView client) {
+    public WaitingForPlayersGUI(Stage stage, BaseClient client) {
         this.client = client;
         this.stage = stage;
     }

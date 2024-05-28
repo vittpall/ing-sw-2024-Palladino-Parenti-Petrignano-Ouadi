@@ -1,5 +1,6 @@
 package it.polimi.ingsw.tui;
 
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 
 import java.io.IOException;
@@ -8,10 +9,10 @@ import java.util.Scanner;
 
 public class MainMenuState implements ClientState, Remote {
 
-    VirtualView client;
+    BaseClient client;
     private final Scanner scanner;
 
-    public MainMenuState(VirtualView client, Scanner scanner) {
+    public MainMenuState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
     }

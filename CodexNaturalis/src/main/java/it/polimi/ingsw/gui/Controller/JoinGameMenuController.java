@@ -1,10 +1,9 @@
 package it.polimi.ingsw.gui.Controller;
 
-import it.polimi.ingsw.gui.ColorSelectionGUI;
 import it.polimi.ingsw.gui.CreateGameStateGUI;
 import it.polimi.ingsw.gui.LobbyMenuStateGUI;
 import it.polimi.ingsw.gui.WaitingForPlayersGUI;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
+import it.polimi.ingsw.network.BaseClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,7 +25,7 @@ public class JoinGameMenuController implements FXMLController {
     private Button joinGameButton;
     @FXML
 
-    private VirtualView client;
+    private BaseClient client;
     private Stage stage;
 
 
@@ -99,7 +98,7 @@ public class JoinGameMenuController implements FXMLController {
         }
     }
 
-    public void setClient(VirtualView client) {
+    public void setClient(BaseClient client) {
         this.client = client;
     }
 
