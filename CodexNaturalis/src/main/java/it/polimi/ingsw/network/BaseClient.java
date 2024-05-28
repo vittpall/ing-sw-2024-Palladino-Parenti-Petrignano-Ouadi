@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.observer.GameListener;
@@ -12,8 +13,33 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 abstract public class BaseClient implements VirtualView, GameListener {
-    protected Scanner scan;
-    protected ClientState currentState;
+    private Scanner scan;
+    private ClientState currentState;
+    private String username;
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setScan(Scanner scan) {
+        this.scan = scan;
+    }
+
+    public Scanner getScan() {
+        return scan;
+    }
+
+    public ClientState getClientCurrentState() {
+        return currentState;
+    }
+
+    public void setCurrentState(ClientState currentState) {
+        this.currentState = currentState;
+    }
 
     protected abstract boolean checkState(RequestedActions action) throws IOException, InterruptedException, ClassNotFoundException;
 
@@ -21,7 +47,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     public abstract PlayerState getCurrentPlayerState() throws IOException, InterruptedException;
 
-    protected abstract String getCurrentState() throws IOException, InterruptedException;
+    protected abstract String getServerCurrentState() throws IOException, InterruptedException;
 
     protected void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
         boolean correctInput;
@@ -39,7 +65,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 }
             }
 
-            if (!handleCommonInput(input)) {
+            if (handleCommonInput(input)) {
                 try {
                     currentState.inputHandler(Integer.parseInt(input));
                 } catch (NumberFormatException e) {
@@ -63,7 +89,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
             } else
                 input = "no display";
 
-            if (!handleCommonInput(input)) {
+            if (handleCommonInput(input)) {
                 try {
                     boolean checkState;
                     if (currentState == null)
@@ -82,7 +108,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                                 System.out.println("\nInvalid input: Reinsert the value: ");
                             }
                         }
-                        if (!handleCommonInput(input)) {
+                        if (handleCommonInput(input)) {
                             try {
                                 currentState.inputHandler(Integer.parseInt(input));
                             } catch (NumberFormatException e) {
@@ -90,7 +116,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                             }
                         }
                     } else {
-                        System.out.println("The input was not valid. You can " + getCurrentState());
+                        System.out.println("The input was not valid. You can " + getServerCurrentState());
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid input: Please enter a number.");
@@ -99,9 +125,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
         }
     }
 
-    public void setCurrentState(ClientState state) {
-        this.currentState = state;
-    }
 
     private boolean gameLogicInputHandler(int i) {
         try {
@@ -164,11 +187,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
             if (getCurrentPlayerState().equals(PlayerState.ENDGAME))
                 System.out.println("|   7. Show winner                      |");
             System.out.println("|_______________________________________|\n");
-        } catch (RemoteException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -181,10 +201,23 @@ abstract public class BaseClient implements VirtualView, GameListener {
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
+    public void receiveMessage(Message msg) throws RemoteException {
+        if (currentState instanceof GlobalChatState || currentState instanceof PrivateChatState) {
+            if (msg.getSender().equals(username))
+                System.out.println("You: " + msg.getContent());
+            else
+                System.out.println(msg.getSender() + ": " + msg.getContent());
+        } else {
+            if (msg.getReceiver() == null)
+                System.out.println("You have received a message");
+            else
+                System.out.println("You have received a from " + msg.getSender());
+        }
+    }
 
 }

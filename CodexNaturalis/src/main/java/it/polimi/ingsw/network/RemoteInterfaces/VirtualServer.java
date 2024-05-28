@@ -57,8 +57,6 @@ public interface VirtualServer extends Remote {
 
     ObjectiveCard[] getSharedObjectiveCards(int idGame) throws RemoteException;
 
-    int getCurrentPlayer(int idGame) throws RemoteException;
-
     void playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException;
 
@@ -90,7 +88,7 @@ public interface VirtualServer extends Remote {
 
     ArrayList<Player> getPlayers(int idGame) throws RemoteException;
 
-    String getCurrentState(int idGame, int idClientIntoGame) throws RemoteException;
+    String getServerCurrentState(int idGame, int idClientIntoGame) throws RemoteException;
 
     boolean checkState(int idGame, int idClientIntoGame, RequestedActions requestedActions) throws RemoteException;
 

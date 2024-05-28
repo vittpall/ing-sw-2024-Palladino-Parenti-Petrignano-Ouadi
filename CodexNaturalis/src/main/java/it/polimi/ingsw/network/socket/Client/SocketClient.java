@@ -16,7 +16,9 @@ import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.*;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
-import it.polimi.ingsw.tui.*;
+import it.polimi.ingsw.tui.DrawCardState;
+import it.polimi.ingsw.tui.InitializeStarterCardState;
+import it.polimi.ingsw.tui.MainMenuState;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -60,12 +62,12 @@ public class SocketClient extends BaseClient {
         switch (mode) {
             case "GUI":
                 isGUIMode = true;
-                currentState = new MainMenuStateGUI(stage, this);
+                setCurrentState(new MainMenuStateGUI(stage, this));
                 break;
             case "TUI":
                 isGUIMode = false;
-                scan = new Scanner(System.in);
-                currentState = new MainMenuState(this, scan);
+                setScan(new Scanner(System.in));
+                setCurrentState(new MainMenuState(this, getScan()));
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported mode");
@@ -76,14 +78,6 @@ public class SocketClient extends BaseClient {
         this.idGame = idGame;
     }
 
-    public void setCurrentState(ClientState state) {
-        this.currentState = state;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.username;
-    }
 
     @Override
     public int getIdGame() {
@@ -101,17 +95,6 @@ public class SocketClient extends BaseClient {
         GetAllPlayersMsg request = new GetAllPlayersMsg(idGame);
         ServerToClientMsg response = sendRequest(request);
         return (ArrayList<Player>) response.getResponse().getResponseReturnable();
-    }
-
-    @Override
-    public void receiveMessage(Message msg) throws RemoteException {
-        if (currentState instanceof GlobalChatState || currentState instanceof PrivateChatState) {
-            if (msg.getSender().equals(this.username)) System.out.println("You: " + msg.getContent());
-            else System.out.println(msg.getSender() + ": " + msg.getContent());
-        } else {
-            if (msg.getReceiver() == null) System.out.println("You have received a message");
-            else System.out.println("You have received a from " + msg.getSender());
-        }
     }
 
     @Override
@@ -310,10 +293,10 @@ public class SocketClient extends BaseClient {
 
     @Override
     public String getNextState() throws IOException, InterruptedException {
-        if (currentState instanceof InitializeStarterCardState) {
+        if (getClientCurrentState() instanceof InitializeStarterCardState) {
             if (this.getCurrentPlayer(idGame) == idClientIntoGame) return "PlayCardState";
             else return "WaitForYourTurnState";
-        } else if (currentState instanceof DrawCardState) {
+        } else if (getClientCurrentState() instanceof DrawCardState) {
             if (this.getIsLastRoundStarted(idGame)) return "LastRoundState";
             else return "WaitForYourTurnState";
         }
@@ -392,8 +375,8 @@ public class SocketClient extends BaseClient {
 
     @Override
     public void showState() {
-        currentState.display();
-        currentState.promptForInput();
+        getClientCurrentState().display();
+        getClientCurrentState().promptForInput();
     }
 
 
@@ -413,7 +396,7 @@ public class SocketClient extends BaseClient {
         }
     }
 
-    public String getCurrentState() throws IOException, InterruptedException {
+    public String getServerCurrentState() throws IOException, InterruptedException {
         GetCurrentStateMsg request = new GetCurrentStateMsg(idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
         return (String) response.getResponse().getResponseReturnable();
@@ -426,7 +409,7 @@ public class SocketClient extends BaseClient {
         return (PlayerState) response.getResponse().getResponseReturnable();
     }
 
-    public boolean checkState(RequestedActions requestedActions) throws IOException, ClassNotFoundException, InterruptedException {
+    public boolean checkState(RequestedActions requestedActions) throws IOException, InterruptedException {
         CheckStateMsg request = new CheckStateMsg(idGame, idClientIntoGame, requestedActions);
         ServerToClientMsg response = sendRequest(request);
         return (boolean) response.getResponse().getResponseReturnable();

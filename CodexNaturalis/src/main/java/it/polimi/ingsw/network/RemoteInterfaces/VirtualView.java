@@ -22,16 +22,11 @@ import java.util.HashSet;
 
 public interface VirtualView extends Remote {
 
-    void setUsername(String username) throws RemoteException;
-
     ArrayList<Integer> getNotStartedGames() throws IOException, InterruptedException;
 
     void setObjectiveCard(int idCard) throws IOException, CardNotFoundException, InterruptedException;
 
     void createGame(String username, int nPlayers) throws IOException, InterruptedException;
-
-
-    String getUsername() throws RemoteException;
 
     int getIdGame() throws RemoteException;
 

@@ -16,14 +16,11 @@ import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.tui.DrawCardState;
-import it.polimi.ingsw.tui.GlobalChatState;
 import it.polimi.ingsw.tui.MainMenuState;
-import it.polimi.ingsw.tui.PrivateChatState;
 import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
-import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -33,12 +30,11 @@ import java.util.Scanner;
 
 public class RMIClient extends BaseClient {
     public final VirtualServer server;
-    private String username;
     private int idGame;
     private int idClientIntoGame;
     private final boolean isGUIMode;
 
-    public RMIClient(VirtualServer server, String mode, Stage stage) throws RemoteException, AlreadyBoundException {
+    public RMIClient(VirtualServer server, String mode, Stage stage) throws RemoteException {
         UnicastRemoteObject.exportObject(this, 0);
         this.server = server;
         switch (mode) {
@@ -48,8 +44,8 @@ public class RMIClient extends BaseClient {
                 break;
             case "TUI":
                 isGUIMode = false;
-                this.scan = new Scanner(System.in);
-                setCurrentState(new MainMenuState(this, scan));
+                setScan(new Scanner(System.in));
+                setCurrentState(new MainMenuState(this, getScan()));
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported mode");
@@ -57,35 +53,12 @@ public class RMIClient extends BaseClient {
     }
 
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
     public int getIdGame() {
         return idGame;
     }
 
     public int getIdClientIntoGame() {
         return idClientIntoGame;
-    }
-
-    @Override
-    public void receiveMessage(Message msg) throws RemoteException {
-        if (currentState instanceof GlobalChatState || currentState instanceof PrivateChatState) {
-            if (msg.getSender().equals(this.username))
-                System.out.println("You: " + msg.getContent());
-            else
-                System.out.println(msg.getSender() + ": " + msg.getContent());
-        } else {
-            if (msg.getReceiver() == null)
-                System.out.println("You have received a message");
-            else
-                System.out.println("You have received a from " + msg.getSender());
-        }
     }
 
 
@@ -155,7 +128,7 @@ public class RMIClient extends BaseClient {
 
     @Override
     public String getNextState() throws RemoteException {
-        if (currentState instanceof DrawCardState) {
+        if (getClientCurrentState() instanceof DrawCardState) {
             if (server.getIsLastRoundStarted(idGame))
                 return "LastRoundState";
             else
@@ -186,11 +159,11 @@ public class RMIClient extends BaseClient {
     }
 
     public ArrayList<Message> getMessages(String receiver) throws RemoteException {
-        return server.getMessages(receiver, this.idGame, this.username);
+        return server.getMessages(receiver, this.idGame, getUsername());
     }
 
     public void sendMessage(String receiver, String message) throws RemoteException {
-        Message msg = new Message(this.username, receiver, message, this.idGame);
+        Message msg = new Message(getUsername(), receiver, message, this.idGame);
         server.sendMessage(idGame, msg);
     }
 
@@ -249,14 +222,14 @@ public class RMIClient extends BaseClient {
     }
 
     @Override
-    public String getCurrentState() throws RemoteException {
-        return server.getCurrentState(idGame, idClientIntoGame);
+    public String getServerCurrentState() throws RemoteException {
+        return server.getServerCurrentState(idGame, idClientIntoGame);
     }
 
     @Override
     public void showState() {
-        currentState.display();
-        currentState.promptForInput();
+        getClientCurrentState().display();
+        getClientCurrentState().promptForInput();
     }
 
 
@@ -267,12 +240,12 @@ public class RMIClient extends BaseClient {
 
 
     public void close() throws RemoteException {
-        server.removeUsername(username);
+        server.removeUsername(getUsername());
         System.exit(0);
     }
 
     public void removeUsername() throws RemoteException {
-        server.removeUsername(username);
+        server.removeUsername(getUsername());
     }
 
     public void setIdGame(int idGame) {
@@ -301,9 +274,9 @@ public class RMIClient extends BaseClient {
     public void onTokenColorSelected(String msg) throws RemoteException {
         if (!isGUIMode) {
             System.out.println(msg);
-            this.currentState.display();
+            getClientCurrentState().display();
         } else {
-            currentState.refresh(msg);
+            getClientCurrentState().refresh(msg);
         }
     }
 
@@ -312,7 +285,7 @@ public class RMIClient extends BaseClient {
         if (!isGUIMode)
             System.out.println(msg);
         else
-            currentState.refresh(msg);
+            getClientCurrentState().refresh(msg);
 
     }
 

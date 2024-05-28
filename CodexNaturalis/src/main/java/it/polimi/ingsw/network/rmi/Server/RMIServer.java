@@ -98,8 +98,7 @@ public class RMIServer implements VirtualServer {
 
     @Override
     public int createGame(String username, int nPlayers, GameListener playerListener) throws IOException, InterruptedException {
-        int idGame = lobbyController.createGame(username, nPlayers, playerListener);
-        return idGame;
+        return lobbyController.createGame(username, nPlayers, playerListener);
     }
 
 
@@ -149,10 +148,6 @@ public class RMIServer implements VirtualServer {
         return lobbyController.getSharedObjectiveCards(idGame);
     }
 
-    @Override
-    public int getCurrentPlayer(int idGame) throws RemoteException {
-        return lobbyController.getCurrentPlayer(idGame);
-    }
 
     @Override
     public void playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
@@ -263,7 +258,7 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public String getCurrentState(int idGame, int idClientIntoGame) throws RemoteException {
+    public String getServerCurrentState(int idGame, int idClientIntoGame) throws RemoteException {
         return lobbyController.getCurrentState(idGame, idClientIntoGame);
     }
 
