@@ -6,14 +6,13 @@ import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 
-public class JoinGameMsg extends ClientToServerMsg{
+public class JoinGameMsg extends ClientToServerMsg {
 
     private final int id;
     private int gameId;
 
-    public JoinGameMsg (String username, int id) {
+    public JoinGameMsg(String username, int id) {
         this.username = username;
         this.id = id;
         this.broadCastMessage = "User " + username + " joined the game";
@@ -34,21 +33,6 @@ public class JoinGameMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.JOIN_GAME;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return true;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return this.broadCastMessage;
-    }
 
     /**
      * @return

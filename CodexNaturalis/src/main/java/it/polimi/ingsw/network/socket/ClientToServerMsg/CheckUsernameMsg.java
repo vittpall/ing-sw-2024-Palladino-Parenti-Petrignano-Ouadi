@@ -23,21 +23,6 @@ public class CheckUsernameMsg extends ClientToServerMsg {
         return TypeServerToClientMsg.USER_ALREADY_TAKEN;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return

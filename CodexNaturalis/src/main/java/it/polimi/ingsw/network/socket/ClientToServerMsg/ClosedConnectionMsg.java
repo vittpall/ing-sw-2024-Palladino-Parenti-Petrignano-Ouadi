@@ -4,7 +4,6 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 public class ClosedConnectionMsg extends ClientToServerMsg {
 
@@ -29,21 +28,6 @@ public class ClosedConnectionMsg extends ClientToServerMsg {
         return TypeServerToClientMsg.CONNECTION_CLOSED;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return true;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return this.broadCastMessage;
-    }
 
     /**
      * @return

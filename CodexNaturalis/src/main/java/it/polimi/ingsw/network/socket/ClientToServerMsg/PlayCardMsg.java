@@ -10,12 +10,12 @@ import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.awt.*;
 
-public class PlayCardMsg extends ClientToServerMsg{
-    private int idGame;
-    private int idClientIntoGame;
-    private int chosenCard;
-    private boolean faceDown;
-    private Point chosenPosition;
+public class PlayCardMsg extends ClientToServerMsg {
+    private final int idGame;
+    private final int idClientIntoGame;
+    private final int chosenCard;
+    private final boolean faceDown;
+    private final Point chosenPosition;
 
     public PlayCardMsg(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition) {
         this.idClientIntoGame = idClientIntoGame;
@@ -39,21 +39,6 @@ public class PlayCardMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.PLAY_CARD;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return true;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return this.broadCastMessage;
-    }
 
     /**
      * @return

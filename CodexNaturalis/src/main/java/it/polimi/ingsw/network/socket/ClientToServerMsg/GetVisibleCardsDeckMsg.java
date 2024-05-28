@@ -8,11 +8,10 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 import java.util.ArrayList;
 
-public class GetVisibleCardsDeckMsg extends ClientToServerMsg{
+public class GetVisibleCardsDeckMsg extends ClientToServerMsg {
 
     int deck;
     int idGame;
@@ -41,22 +40,6 @@ public class GetVisibleCardsDeckMsg extends ClientToServerMsg{
     @Override
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.GET_VISIBLE_CARDS_DECK;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
     }
 
     /**

@@ -7,13 +7,12 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
-public class PlayStarterCard extends ClientToServerMsg{
+public class PlayStarterCard extends ClientToServerMsg {
 
-    private int idGame;
-    private int idClientIntoGame;
-    private boolean playedFacedDown;
+    private final int idGame;
+    private final int idClientIntoGame;
+    private final boolean playedFacedDown;
 
     public PlayStarterCard(int idGame, int idClientIntoGame, boolean playedFacedDown) {
         this.idGame = idGame;
@@ -34,21 +33,6 @@ public class PlayStarterCard extends ClientToServerMsg{
         return TypeServerToClientMsg.PLAY_STARTED_CARD;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return

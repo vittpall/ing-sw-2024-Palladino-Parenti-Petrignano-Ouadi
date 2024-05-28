@@ -8,7 +8,7 @@ import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.util.ArrayList;
 
-public class GetMessageMsg extends ClientToServerMsg{
+public class GetMessageMsg extends ClientToServerMsg {
     private final String receiver;
     private final int gameId;
     private final String sender;
@@ -23,7 +23,7 @@ public class GetMessageMsg extends ClientToServerMsg{
     public ReturnableObject<ArrayList<Message>> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException {
         ReturnableObject<ArrayList<Message>> response = new ReturnableObject<>();
         response.setResponseReturnable((controller.getMessages(receiver, gameId, sender)));
-        for(Message message : controller.getMessages(receiver, gameId, sender)){
+        for (Message message : controller.getMessages(receiver, gameId, sender)) {
             System.out.println(message.getSender() + ": " + message.getContent());
         }
         System.out.println("Messages received: " + response.getResponseReturnable());
@@ -35,21 +35,6 @@ public class GetMessageMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.GET_MESSAGE;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return

@@ -8,7 +8,7 @@ import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.io.IOException;
 
-public class SelectTokenColorMsg extends ClientToServerMsg{
+public class SelectTokenColorMsg extends ClientToServerMsg {
 
     private final int idGame;
     private final int idClientIntoGame;
@@ -34,21 +34,6 @@ public class SelectTokenColorMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.SELECTED_TOKEN_COLOR;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return true;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return this.broadCastMessage;
-    }
 
     /**
      * @return

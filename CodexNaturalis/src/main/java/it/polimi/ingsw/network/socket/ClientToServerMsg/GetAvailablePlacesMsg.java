@@ -9,10 +9,10 @@ import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import java.awt.*;
 import java.util.HashSet;
 
-public class GetAvailablePlacesMsg extends ClientToServerMsg{
+public class GetAvailablePlacesMsg extends ClientToServerMsg {
 
-    private int idGame;
-    private int idClientIntoGame;
+    private final int idGame;
+    private final int idClientIntoGame;
 
     public GetAvailablePlacesMsg(int idGame, int idClientIntoGame) {
         this.idGame = idGame;
@@ -29,22 +29,6 @@ public class GetAvailablePlacesMsg extends ClientToServerMsg{
     @Override
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.AVAILABLE_PLACES;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
     }
 
     /**

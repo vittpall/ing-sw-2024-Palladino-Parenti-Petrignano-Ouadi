@@ -5,14 +5,13 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 import java.awt.*;
 import java.util.HashMap;
 
-public class GetPlayerDesk extends ClientToServerMsg{
-    private int idGame;
-    private int idPlayer;
+public class GetPlayerDesk extends ClientToServerMsg {
+    private final int idGame;
+    private final int idPlayer;
 
     public GetPlayerDesk(int idGame, int idPlayer) {
         this.idGame = idGame;
@@ -31,21 +30,6 @@ public class GetPlayerDesk extends ClientToServerMsg{
         return TypeServerToClientMsg.GET_PLAYER_DESK;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return

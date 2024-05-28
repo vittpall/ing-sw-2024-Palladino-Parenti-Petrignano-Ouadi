@@ -4,18 +4,16 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 import java.util.ArrayList;
 
-public class GetPlayerHandMsg extends ClientToServerMsg{
-    private int idGame;
-    private int idPlayer;
+public class GetPlayerHandMsg extends ClientToServerMsg {
+    private final int idGame;
+    private final int idPlayer;
 
     public GetPlayerHandMsg(int idGame, int idPlayer) {
         this.idGame = idGame;
@@ -35,21 +33,6 @@ public class GetPlayerHandMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.GET_PLAYER_HAND;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return

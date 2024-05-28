@@ -7,9 +7,8 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
-public class CloseGameMsg extends ClientToServerMsg{
+public class CloseGameMsg extends ClientToServerMsg {
     int idGame;
 
     public CloseGameMsg(int idGame) {
@@ -38,21 +37,6 @@ public class CloseGameMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.CLOSED_GAME;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return true;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return this.broadCastMessage;
-    }
 
     /**
      * @return

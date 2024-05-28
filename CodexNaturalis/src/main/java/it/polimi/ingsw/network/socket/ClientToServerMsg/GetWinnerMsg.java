@@ -31,21 +31,6 @@ public class GetWinnerMsg extends ClientToServerMsg {
         return TypeServerToClientMsg.GET_WINNER;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return true;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return this.broadCastMessage;
-    }
 
     /**
      * @return

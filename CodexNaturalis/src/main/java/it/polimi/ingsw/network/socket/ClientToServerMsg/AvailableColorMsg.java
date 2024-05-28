@@ -8,9 +8,10 @@ import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.util.ArrayList;
 
-public class AvailableColorMsg extends ClientToServerMsg{
+public class AvailableColorMsg extends ClientToServerMsg {
 
-    private int idGame;
+    private final int idGame;
+
     public AvailableColorMsg(String username, int idGame) {
         this.username = username;
         this.idGame = idGame;
@@ -28,21 +29,6 @@ public class AvailableColorMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.AVAILABLE_COLORS;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return

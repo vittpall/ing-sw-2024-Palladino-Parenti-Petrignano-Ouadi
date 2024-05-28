@@ -5,10 +5,10 @@ import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
-public class GetPoints extends ClientToServerMsg{
+public class GetPoints extends ClientToServerMsg {
 
-    private int idGame;
-    private int idClientIntoGame;
+    private final int idGame;
+    private final int idClientIntoGame;
 
     public GetPoints(String username, int idGame, int idClientIntoGame) {
         this.username = username;
@@ -28,21 +28,6 @@ public class GetPoints extends ClientToServerMsg{
         return TypeServerToClientMsg.GET_POINTS;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return

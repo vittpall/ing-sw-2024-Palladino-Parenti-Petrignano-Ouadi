@@ -32,21 +32,6 @@ public class DrawCardMsg extends ClientToServerMsg {
         return TypeServerToClientMsg.DRAWN_CARD;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return true;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return this.broadCastMessage;
-    }
 
     /**
      * @return

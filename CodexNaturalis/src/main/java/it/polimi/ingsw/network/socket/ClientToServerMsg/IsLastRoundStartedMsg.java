@@ -4,10 +4,9 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
-public class IsLastRoundStartedMsg extends ClientToServerMsg{
-    private int idGame;
+public class IsLastRoundStartedMsg extends ClientToServerMsg {
+    private final int idGame;
 
     public IsLastRoundStartedMsg(int idGame) {
         this.idGame = idGame;
@@ -26,21 +25,6 @@ public class IsLastRoundStartedMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.IS_LAST_ROUND_STARTED;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return true;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return this.broadCastMessage;
-    }
 
     /**
      * @return

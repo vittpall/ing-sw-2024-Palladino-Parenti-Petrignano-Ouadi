@@ -9,12 +9,12 @@ import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.util.ArrayList;
 
-public class GetPlayerObjectiveCardsMsg extends ClientToServerMsg{
+public class GetPlayerObjectiveCardsMsg extends ClientToServerMsg {
 
-    private int idGame;
-    private int idPlayer;
+    private final int idGame;
+    private final int idPlayer;
 
-    public GetPlayerObjectiveCardsMsg(int idGame, int idClientIntoGame){
+    public GetPlayerObjectiveCardsMsg(int idGame, int idClientIntoGame) {
         this.idGame = idGame;
         this.idPlayer = idClientIntoGame;
     }
@@ -31,21 +31,6 @@ public class GetPlayerObjectiveCardsMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.GET_PLAYER_OBJECTIVE_CARDS;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return

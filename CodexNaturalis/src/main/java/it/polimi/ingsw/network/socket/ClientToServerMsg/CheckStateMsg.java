@@ -44,21 +44,7 @@ public class CheckStateMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.CHECK_STATE;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
 
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return

@@ -5,10 +5,9 @@ import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
-public class GetSharedObjectiveCardsMsg extends ClientToServerMsg{
-    private int idGame;
+public class GetSharedObjectiveCardsMsg extends ClientToServerMsg {
+    private final int idGame;
 
     public GetSharedObjectiveCardsMsg(int idGame) {
         this.idGame = idGame;
@@ -26,21 +25,6 @@ public class GetSharedObjectiveCardsMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.GET_SHARED_OBJECTIVE_CARDS;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return

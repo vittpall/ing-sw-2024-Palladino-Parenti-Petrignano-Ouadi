@@ -8,13 +8,14 @@ import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
-public class GetNPlayer extends ClientToServerMsg{
+public class GetNPlayer extends ClientToServerMsg {
 
     private final int idGame;
 
     public GetNPlayer(int idGame) {
         this.idGame = idGame;
     }
+
     /**
      * @param controller
      * @return
@@ -38,21 +39,6 @@ public class GetNPlayer extends ClientToServerMsg{
         return TypeServerToClientMsg.ALL_PLAYERS;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return

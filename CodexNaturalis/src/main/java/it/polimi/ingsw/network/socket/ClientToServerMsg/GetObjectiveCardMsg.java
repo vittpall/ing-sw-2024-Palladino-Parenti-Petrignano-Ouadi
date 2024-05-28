@@ -8,14 +8,13 @@ import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
-public class GetObjectiveCardMsg extends ClientToServerMsg{
+public class GetObjectiveCardMsg extends ClientToServerMsg {
 
     private final int idGame;
     private final int idClientIntoGame;
 
-    public GetObjectiveCardMsg(int idGame, int idClientIntoGame){
+    public GetObjectiveCardMsg(int idGame, int idClientIntoGame) {
         this.idGame = idGame;
         this.idClientIntoGame = idClientIntoGame;
     }
@@ -33,21 +32,6 @@ public class GetObjectiveCardMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.GET_OBJECTIVE_CARD;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return

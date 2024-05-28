@@ -31,15 +31,6 @@ public class GetCurrentPlayerState extends ClientToServerMsg {
         return TypeServerToClientMsg.GET_CURRENT_STATE;
     }
 
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     @Override
     public int getIdGame() {

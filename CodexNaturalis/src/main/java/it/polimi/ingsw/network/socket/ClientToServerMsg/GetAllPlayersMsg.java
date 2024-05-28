@@ -9,9 +9,9 @@ import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.util.ArrayList;
 
-public class GetAllPlayersMsg extends ClientToServerMsg{
+public class GetAllPlayersMsg extends ClientToServerMsg {
 
-    private int gameId;
+    private final int gameId;
 
     public GetAllPlayersMsg(int gameId) {
         this.gameId = gameId;
@@ -29,21 +29,6 @@ public class GetAllPlayersMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.ALL_PLAYERS;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return

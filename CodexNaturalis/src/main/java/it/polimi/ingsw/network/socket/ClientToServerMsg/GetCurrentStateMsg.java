@@ -4,12 +4,11 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
-public class GetCurrentStateMsg extends ClientToServerMsg{
+public class GetCurrentStateMsg extends ClientToServerMsg {
 
     private final int idGame;
     private final int idClientIntoGame;
@@ -18,6 +17,7 @@ public class GetCurrentStateMsg extends ClientToServerMsg{
         this.idGame = idGae;
         this.idClientIntoGame = idClientIntoGame;
     }
+
     /**
      * @param controller
      * @return
@@ -41,21 +41,6 @@ public class GetCurrentStateMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.GET_CURRENT_STATE;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return

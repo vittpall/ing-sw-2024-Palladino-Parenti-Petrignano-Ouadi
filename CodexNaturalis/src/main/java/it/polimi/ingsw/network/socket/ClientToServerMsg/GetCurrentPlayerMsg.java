@@ -4,43 +4,27 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
-public class GetCurrentPlayerMsg extends ClientToServerMsg{
+public class GetCurrentPlayerMsg extends ClientToServerMsg {
 
-        private int idGame;
+    private final int idGame;
 
-        public GetCurrentPlayerMsg(int idGame) {
-            this.idGame = idGame;
-        }
-
-        @Override
-        public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException {
-            ReturnableObject<Integer> response = new ReturnableObject<>();
-            response.setResponseReturnable(controller.getCurrentPlayer(idGame));
-            return response;
-        }
-
-        @Override
-        public TypeServerToClientMsg getType() {
-            return TypeServerToClientMsg.CURRENT_PLAYER;
-        }
-
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
+    public GetCurrentPlayerMsg(int idGame) {
+        this.idGame = idGame;
     }
 
-    /**
-     * @return
-     */
     @Override
-    public String getBroadCastMessage() {
-        return "";
+    public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException {
+        ReturnableObject<Integer> response = new ReturnableObject<>();
+        response.setResponseReturnable(controller.getCurrentPlayer(idGame));
+        return response;
     }
+
+    @Override
+    public TypeServerToClientMsg getType() {
+        return TypeServerToClientMsg.CURRENT_PLAYER;
+    }
+
 
     /**
      * @return

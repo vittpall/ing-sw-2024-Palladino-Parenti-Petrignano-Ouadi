@@ -7,7 +7,7 @@ import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
-public class SendMessageMsg extends ClientToServerMsg{
+public class SendMessageMsg extends ClientToServerMsg {
     private final Message msg;
 
     public SendMessageMsg(Message msg) {
@@ -16,10 +16,10 @@ public class SendMessageMsg extends ClientToServerMsg{
 
     @Override
     public ReturnableObject<Message> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException {
-       ReturnableObject<Message> response = new ReturnableObject<>();
-       controller.sendMessage(msg.getGameId(), msg);
-       response.setResponseReturnable(msg);
-       return response;
+        ReturnableObject<Message> response = new ReturnableObject<>();
+        controller.sendMessage(msg.getGameId(), msg);
+        response.setResponseReturnable(msg);
+        return response;
     }
 
     @Override
@@ -27,28 +27,13 @@ public class SendMessageMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.RECEIVED_MESSAGE;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return null;
-    }
 
     /**
      * @return
      */
     @Override
     public int getIdGame() {
-       return this.msg.getGameId();
+        return this.msg.getGameId();
     }
 
 }

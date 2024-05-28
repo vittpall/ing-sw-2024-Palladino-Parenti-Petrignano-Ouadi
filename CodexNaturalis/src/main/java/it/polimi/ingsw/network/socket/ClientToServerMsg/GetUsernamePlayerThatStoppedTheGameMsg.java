@@ -7,15 +7,15 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
-public class GetUsernamePlayerThatStoppedTheGameMsg extends ClientToServerMsg{
+public class GetUsernamePlayerThatStoppedTheGameMsg extends ClientToServerMsg {
 
-    private int idGame;
+    private final int idGame;
 
     public GetUsernamePlayerThatStoppedTheGameMsg(int idGame) {
         this.idGame = idGame;
     }
+
     /**
      * @param controller
      * @return
@@ -37,21 +37,6 @@ public class GetUsernamePlayerThatStoppedTheGameMsg extends ClientToServerMsg{
         return TypeServerToClientMsg.GET_USERNAME_PLAYER_THAT_STOPPED_THE_GAME;
     }
 
-    /**
-     * @return
-     */
-    @Override
-    public boolean getDoItNeedToBeBroadcasted() {
-        return false;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String getBroadCastMessage() {
-        return "";
-    }
 
     /**
      * @return
