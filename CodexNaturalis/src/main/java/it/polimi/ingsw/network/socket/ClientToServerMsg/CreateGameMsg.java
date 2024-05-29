@@ -14,7 +14,6 @@ public class CreateGameMsg extends ClientToServerMsg {
     public CreateGameMsg(String username, int numberOfPlayers) {
         this.username = username;
         this.numberOfPlayers = numberOfPlayers;
-        this.broadCastMessage = "User " + username + " has created a game with " + numberOfPlayers + " players";
     }
 
     @Override

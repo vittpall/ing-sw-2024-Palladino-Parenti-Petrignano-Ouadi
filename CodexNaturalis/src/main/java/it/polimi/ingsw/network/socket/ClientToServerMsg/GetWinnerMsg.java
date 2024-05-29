@@ -21,7 +21,6 @@ public class GetWinnerMsg extends ClientToServerMsg {
     public ReturnableObject<String> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
         ReturnableObject<String> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.getWinner(idGame));
-        this.broadCastMessage = "The game is over!!!" + "The winner is:" + response.getResponseReturnable();
         return response;
     }
 

@@ -14,7 +14,6 @@ import java.io.Serializable;
 public abstract class ClientToServerMsg implements Serializable {
 
     protected String username;
-    protected String broadCastMessage;
 
     public abstract ReturnableObject functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException, IOException;
 

@@ -15,7 +15,6 @@ public class JoinGameMsg extends ClientToServerMsg {
     public JoinGameMsg(String username, int id) {
         this.username = username;
         this.id = id;
-        this.broadCastMessage = "User " + username + " joined the game";
         gameId = 0;
     }
 

@@ -10,7 +10,6 @@ public class IsLastRoundStartedMsg extends ClientToServerMsg {
 
     public IsLastRoundStartedMsg(int idGame) {
         this.idGame = idGame;
-        this.broadCastMessage = "Last round started";
     }
 
     @Override

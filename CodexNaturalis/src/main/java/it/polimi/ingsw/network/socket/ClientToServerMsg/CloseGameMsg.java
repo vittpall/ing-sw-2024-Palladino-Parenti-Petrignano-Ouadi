@@ -13,7 +13,6 @@ public class CloseGameMsg extends ClientToServerMsg {
 
     public CloseGameMsg(int idGame) {
         this.idGame = idGame;
-        broadCastMessage = "Game " + idGame + " has been closed";
     }
 
     /**

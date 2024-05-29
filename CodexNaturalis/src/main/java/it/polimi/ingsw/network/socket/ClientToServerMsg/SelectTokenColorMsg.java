@@ -18,7 +18,6 @@ public class SelectTokenColorMsg extends ClientToServerMsg {
         this.idGame = idGame;
         this.idClientIntoGame = idClientIntoGame;
         this.tokenColor = tokenColor;
-        this.broadCastMessage = tokenColor + " has been selected!";
     }
 
     @Override

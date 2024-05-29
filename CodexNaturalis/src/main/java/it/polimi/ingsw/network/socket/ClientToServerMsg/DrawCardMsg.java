@@ -16,7 +16,6 @@ public class DrawCardMsg extends ClientToServerMsg {
         this.idGame = idGame;
         this.input = input;
         this.inVisible = inVisible;
-        this.broadCastMessage = broadCastMessage;
     }
 
     @Override

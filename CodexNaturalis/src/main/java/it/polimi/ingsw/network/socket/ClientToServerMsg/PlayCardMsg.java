@@ -23,7 +23,6 @@ public class PlayCardMsg extends ClientToServerMsg {
         this.chosenCard = chosenCard;
         this.faceDown = faceDown;
         this.chosenPosition = chosenPosition;
-        this.broadCastMessage = "Player " + idClientIntoGame + " played a card";
     }
 
     @Override

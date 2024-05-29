@@ -12,7 +12,6 @@ public class ClosedConnectionMsg extends ClientToServerMsg {
 
     public ClosedConnectionMsg(String username, int idGame) {
         this.username = username;
-        this.broadCastMessage = "User " + username + " has left the game";
         this.idGame = idGame;
     }
 
