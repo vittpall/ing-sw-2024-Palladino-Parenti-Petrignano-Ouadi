@@ -8,10 +8,7 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.chat.Message;
-import it.polimi.ingsw.model.enumeration.PlayerState;
-import it.polimi.ingsw.model.enumeration.RequestedActions;
-import it.polimi.ingsw.model.enumeration.TokenColor;
-import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.model.enumeration.*;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.*;
@@ -345,8 +342,10 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
-    public boolean isGameStarted() throws RemoteException {
-        return false;
+    public boolean isGameStarted() throws IOException, InterruptedException{
+        IsGameStartedMsg request = new IsGameStartedMsg(idGame);
+        ServerToClientMsg response = sendRequest(request);
+        return !(response.getResponse().getResponseReturnable().equals(GameState.WAITING_FOR_PLAYERS.toString()));
     }
 
     public int getPoints() throws IOException, InterruptedException {

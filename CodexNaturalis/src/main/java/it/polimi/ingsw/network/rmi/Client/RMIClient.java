@@ -212,7 +212,7 @@ public class RMIClient extends BaseClient {
             showState();
     }
 
-    public boolean isGameStarted() throws RemoteException {
+    public boolean isGameStarted() throws IOException, InterruptedException {
         return server.isGameStarted(idGame);
     }
 

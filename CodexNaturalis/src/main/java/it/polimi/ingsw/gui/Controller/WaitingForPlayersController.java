@@ -44,7 +44,7 @@ public class WaitingForPlayersController implements FXMLController {
                 client.setCurrentState(new ColorSelectionGUI(stage, client));
                 client.showState();
             }
-        } catch (RemoteException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
