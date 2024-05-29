@@ -343,7 +343,7 @@ public class SocketClient extends BaseClient {
 
     @Override
     public boolean isGameStarted() throws IOException, InterruptedException{
-        IsGameStartedMsg request = new IsGameStartedMsg(idGame);
+        GetCurrentGameStateMsg request = new GetCurrentGameStateMsg(idGame);
         ServerToClientMsg response = sendRequest(request);
         return !(response.getResponse().getResponseReturnable().equals(GameState.WAITING_FOR_PLAYERS.toString()));
     }

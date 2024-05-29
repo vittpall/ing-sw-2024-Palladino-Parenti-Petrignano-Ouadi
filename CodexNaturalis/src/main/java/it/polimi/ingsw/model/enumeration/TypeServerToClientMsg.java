@@ -14,7 +14,7 @@ public enum TypeServerToClientMsg {
     CURRENT_PLAYER("CurrentPlayer"),
     GET_MESSAGE("GetMessage"),
     NOT_STARTED_GAMES("NotStartedGames"),
-    IS_GAME_STARTED("IsGameStarted"),
+    GET_CURRENT_GAME_STATE("GetCurrentGameState"),
     GET_OBJECTIVE_CARD("GetObjectiveCard"),
     GET_PLAYER_DESK("GetPlayerDesk"),
     GET_PLAYER_HAND("GetPlayerHand"),

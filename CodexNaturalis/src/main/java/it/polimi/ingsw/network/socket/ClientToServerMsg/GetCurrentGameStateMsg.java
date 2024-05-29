@@ -4,16 +4,15 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.enumeration.GameState;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.io.IOException;
 
-public class IsGameStartedMsg extends ClientToServerMsg{
+public class GetCurrentGameStateMsg extends ClientToServerMsg{
     private final int idGame;
-    public IsGameStartedMsg(int idGame) {
+    public GetCurrentGameStateMsg(int idGame) {
         this.idGame = idGame;
     }
     @Override
@@ -25,7 +24,7 @@ public class IsGameStartedMsg extends ClientToServerMsg{
 
     @Override
     public TypeServerToClientMsg getType() {
-        return TypeServerToClientMsg.IS_GAME_STARTED;
+        return TypeServerToClientMsg.GET_CURRENT_GAME_STATE;
     }
 
     @Override
