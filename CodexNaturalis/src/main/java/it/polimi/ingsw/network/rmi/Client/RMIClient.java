@@ -127,17 +127,6 @@ public class RMIClient extends BaseClient {
     }
 
     @Override
-    public String getNextState() throws RemoteException {
-        if (getClientCurrentState() instanceof DrawCardState) {
-            if (server.getIsLastRoundStarted(idGame))
-                return "LastRoundState";
-            else
-                return "WaitForYourTurnState";
-        }
-        return "Error";
-    }
-
-    @Override
     public void playCard(int chosenCard, boolean faceDown, Point chosenPosition)
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
         server.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);

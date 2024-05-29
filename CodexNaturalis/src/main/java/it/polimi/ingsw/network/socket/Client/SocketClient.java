@@ -94,10 +94,7 @@ public class SocketClient extends BaseClient {
         return (ArrayList<Player>) response.getResponse().getResponseReturnable();
     }
 
-    @Override
-    public void setUsername(String username) {
-        this.username = username;
-    }
+
 
 
     private ServerToClientMsg sendRequest(ClientToServerMsg request) throws InterruptedException, IOException {
@@ -286,18 +283,6 @@ public class SocketClient extends BaseClient {
         GetSharedObjectiveCardsMsg request = new GetSharedObjectiveCardsMsg(idGame);
         ServerToClientMsg response = sendRequest(request);
         return (ObjectiveCard[]) response.getResponse().getResponseReturnable();
-    }
-
-    @Override
-    public String getNextState() throws IOException, InterruptedException {
-        if (getClientCurrentState() instanceof InitializeStarterCardState) {
-            if (this.getCurrentPlayer(idGame) == idClientIntoGame) return "PlayCardState";
-            else return "WaitForYourTurnState";
-        } else if (getClientCurrentState() instanceof DrawCardState) {
-            if (this.getIsLastRoundStarted(idGame)) return "LastRoundState";
-            else return "WaitForYourTurnState";
-        }
-        return "Error";
     }
 
     public boolean getIsLastRoundStarted(int idGame) throws IOException, InterruptedException {

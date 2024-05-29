@@ -24,11 +24,11 @@ public class WaitingForPlayersState implements ClientState{
 
                 int i=0;
                 for (Player player : client.getPlayers(client.getIdGame())) {
-                    System.out.println("|   Player "+i+" : "+player.getUsername()+"            |");
+                    System.out.println("|   Player "+i+" : "+player.getUsername()+"                                   |");
                     i++;
                 }
                 System.out.println("|   Waiting for "+(client.getnPlayer(client.getIdGame())-client.getPlayers(client.getIdGame()).size())+
-                        " more players to join the game.  |");
+                        " more players to join the game.      |");
                 System.out.println("|   Please select 1 to start the game as soon as the  |");
                 System.out.println("|   right number of players have joined.              |");
             }else

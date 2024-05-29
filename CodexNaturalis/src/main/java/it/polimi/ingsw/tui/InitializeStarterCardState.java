@@ -66,7 +66,6 @@ public class InitializeStarterCardState implements ClientState {
             case 1:
                 try {
                     client.playStarterCard(false);
-                    String nextState = client.getNextState();
                     client.setCurrentState(null);
                 } catch (PlaceNotAvailableException | CardNotFoundException | RequirementsNotMetException |
                          IOException | InterruptedException ex) {
