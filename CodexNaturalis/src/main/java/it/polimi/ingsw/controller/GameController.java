@@ -165,17 +165,27 @@ public class GameController {
 
     public void playCard(int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
+        String content;
         model.playCard(chosenCard, idClientIntoGame, faceDown, chosenPosition);
         model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.DRAW);
         if (gameState == GameState.LAST_ROUND) {
+            content = "\n----------------------------------\n" +
+                    "Player " + model.getPlayers().get(idClientIntoGame).getUsername() + " played his last card\n" +
+                    "Now is " + model.getPlayers().get(getCurrentPlayer()).getUsername() + " turn.";
             model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.ENDGAME);
             if (nPlayers != idClientIntoGame + 1) {
                 model.advanceToNextPlayer();
                 model.getPlayers().get(model.getCurrentPlayerIndex()).setPlayerState(PlayerState.PLAY_CARD);
             } else {
+                content = """
+
+                        ----------------------------------
+                        Every player finished his last turn
+                        Now you can see the winner of the game""";
                 winner = model.endGame();
                 gameState = GameState.ENDGAME;
             }
+          //  listeners.get("LastRound").notifyLastTurn(content);
         }
     }
 

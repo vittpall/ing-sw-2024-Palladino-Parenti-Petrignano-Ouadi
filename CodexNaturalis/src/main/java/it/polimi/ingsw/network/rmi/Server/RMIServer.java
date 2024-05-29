@@ -153,24 +153,6 @@ public class RMIServer implements VirtualServer {
     public void playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
         lobbyController.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
-
-        if (lobbyController.getCurrentGameState(idGame).equals(GameState.LAST_ROUND.toString()) ||
-                lobbyController.getCurrentGameState(idGame).equals(GameState.ENDGAME.toString())) {
-            String content;
-            if (lobbyController.getCurrentGameState(idGame).equals(GameState.LAST_ROUND.toString())) {
-                content = "\n----------------------------------\n" +
-                        "Player " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getUsername() + " played his last card\n" +
-                        "Now is " + lobbyController.getPlayers(idGame).get(lobbyController.getCurrentPlayer(idGame)).getUsername() + " turn.";
-            } else
-                content = """
-
-                        ----------------------------------
-                        Every player finished his last turn
-                        Now you can see the winner of the game""";
-            ReturnableObject response = new ReturnableObject();
-            response.setResponseReturnable(content);
-            /*this.broadcastWhatHappened(idGame, response);*/
-        }
     }
 
     @Override
