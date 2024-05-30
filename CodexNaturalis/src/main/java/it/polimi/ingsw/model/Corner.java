@@ -18,71 +18,92 @@ public class Corner implements Serializable {
     private final CornerObject object;
 
     /**
-     * constructor to call if the corner does not have resources or objects
-     * @param hidden
+     * Constructor for creating a corner without any resources or objects.
+     *
+     * @param hidden whether the corner is hidden or not
      */
-    public Corner(boolean hidden){
-        this.hidden=hidden;
-        this.resource=null;
-        this.object=null;
+    public Corner(boolean hidden) {
+        this.hidden = hidden;
+        this.resource = null;
+        this.object = null;
     }
 
     /**
-     * constructor to call if the corner has a resource
-     * @param resource
+     * Constructor for creating a corner with a resource.
+     *
+     * @param resource the resource to be placed in the corner
      */
-    public Corner(Resource resource){
-        this.hidden=false;
-        this.resource=resource;
-        this.object=null;
+    public Corner(Resource resource) {
+        this.hidden = false;
+        this.resource = resource;
+        this.object = null;
     }
 
     /**
-     * constructor to call if the corner has an object
-     * @param object
+     * Constructor for creating a corner with an object.
+     *
+     * @param object the object to be placed in the corner
      */
-    public Corner(CornerObject object){
-        this.hidden=false;
-        this.resource=null;
-        this.object=object;
+    public Corner(CornerObject object) {
+        this.hidden = false;
+        this.resource = null;
+        this.object = object;
     }
 
     /**
-     * constructor to call when we want to create a new corner that is a copy of the parameter
-     * @param cornerToCopy
+     * Copy constructor for creating a new corner that is a copy of the given corner.
+     *
+     * @param cornerToCopy the corner to be copied
      */
-    public Corner(Corner cornerToCopy){
-        this.hidden=cornerToCopy.hidden;
-        this.resource=cornerToCopy.resource;
-        this.object=cornerToCopy.object;
+    public Corner(Corner cornerToCopy) {
+        this.hidden = cornerToCopy.hidden;
+        this.resource = cornerToCopy.resource;
+        this.object = cornerToCopy.object;
     }
 
     /**
-     * @return hidden
+     * @return whether the corner is hidden or not
      */
     public boolean isHidden() {
         return hidden;
     }
 
     /**
-     * @return resource
+     * @return the resource present in the corner, if any
      */
     public Resource getResource() {
         return resource;
     }
 
     /**
-     * @return object
+     * @return the object present in the corner, if any
      */
     public CornerObject getObject() {
         return object;
     }
 
     /**
-     * sets hidden as true
+     * This method hides the corner.
      */
-    public void coverCorner(){
-        this.hidden=true;
+    public void coverCorner() {
+        this.hidden = true;
+    }
+
+
+    /**
+     * This method checks if the current corner is equal to the given object.
+     *
+     * @param o the object to be compared with the current corner
+     * @return whether the current corner is equal to the given object
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Corner corner = (Corner) o;
+        return hidden == corner.hidden &&
+                resource == corner.resource &&
+                object == corner.object;
     }
 
 }

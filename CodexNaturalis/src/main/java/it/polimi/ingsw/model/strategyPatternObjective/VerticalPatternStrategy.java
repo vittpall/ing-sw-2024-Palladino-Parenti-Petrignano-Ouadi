@@ -10,27 +10,80 @@ import java.awt.*;
 import java.util.HashMap;
 
 /**
- * Concrete strategy of the strategy design pattern, check the vertical objective
+ * This class represents a strategy for checking vertical patterns in the game.
+ * It implements the ObjectiveStrategy interface.
  */
-
 public class VerticalPatternStrategy implements ObjectiveStrategy {
     private final Resource primarySource;
     private final Resource secondarySource;
-    private final Point whichCorner;
+    private final Offset whichCorner;
 
     /**
-     * Constructor which assigns the Strategy that needs to be checked inside the class VerticalPatternStrategy (which requires two resources, the number of points of the objective card and the position of the secondary resource)
-     *
-     * @param primarySource
-     * @param secondarySource
-     * @param whichCorner
+     * Enum representing the offset for the vertical pattern.
      */
-    public VerticalPatternStrategy(Resource primarySource, Resource secondarySource, Point whichCorner) {
+    public enum Offset {
+        BOTTOM_LEFT(new Point(-1, -1)),
+        TOP_RIGHT(new Point(1, 3)),
+        TOP_LEFT(new Point(-1, 3)),
+        BOTTOM_RIGHT(new Point(1, -1));
+
+        private final Point point;
+
+
+        Offset(Point point) {
+            this.point = point;
+        }
+
+        public Point getPoint() {
+            return point;
+        }
+
+        public int getX() {
+            return point.x;
+        }
+
+        public int getY() {
+            return point.y;
+        }
+
+
+        /**
+         * This method returns the Offset enum value corresponding to the given coordinates.
+         *
+         * @param x the x-coordinate
+         * @param y the y-coordinate
+         * @return the Offset enum value corresponding to the given coordinates
+         */
+        public static Offset fromCoordinates(int x, int y) {
+            for (Offset offset : Offset.values()) {
+                if (offset.getY() == x && offset.getY() == y) {
+                    return offset;
+                }
+            }
+            return null;
+        }
+
+    }
+
+
+    /**
+     * Constructor for creating a VerticalPatternStrategy with a primary resource, a secondary resource, and an offset.
+     *
+     * @param primarySource   the primary resource for the vertical pattern
+     * @param secondarySource the secondary resource for the vertical pattern
+     * @param whichCorner     the offset for the vertical pattern
+     */
+    public VerticalPatternStrategy(Resource primarySource, Resource secondarySource, Offset whichCorner) {
         this.primarySource = primarySource;
         this.secondarySource = secondarySource;
         this.whichCorner = whichCorner;
     }
 
+    /**
+     * This method prints the vertical pattern objective.
+     *
+     * @param context the print context
+     */
     @Override
     public void print(PrintContext context) {
         int cardWidth = context.getCardWidth();
@@ -48,8 +101,8 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
         int primaryY2 = primaryY1 - 1;
 
         // Calculate position for the secondary square using the offset
-        int secondaryX = primaryX + whichCorner.x * 2;
-        int secondaryY = primaryY1 - whichCorner.y;
+        int secondaryX = primaryX + whichCorner.getX() * 2;
+        int secondaryY = primaryY1 - whichCorner.getY();
 
         for (int y = 0; y < cardHeight; y++) {
             StringBuilder line = new StringBuilder();
@@ -73,14 +126,18 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
      * on the PlayerDesk meet the requirements of the objective card.
      * in this case it will analyze the objective that requires two vertical cards and another one over one corner.
      *
-     * @param desk
+     * @param desk the player's desk
+     * @return the number of times the objective is satisfied
      */
     public int isSatisfied(PlayerDesk desk) {
         int numberOfTimesVerifiedObjective = 0;
         HashMap<Point, GameCard> deskToUse = desk.getDesk();
+        Point starterCardLocation = new Point(0, 0);
+        deskToUse.remove(starterCardLocation);
+
         //iterate over desk until I found a position where the card's color is the primarySource
         for (Point point : desk.getDesk().keySet()) {
-            if (desk.getDesk().get(point).getBackSideResource()!=null && desk.getDesk().get(point).getBackSideResource().equals(primarySource)) {
+            if (desk.getDesk().get(point).getBackSideResource() != null && desk.getDesk().get(point).getBackSideResource().equals(primarySource)) {
                 //instead of mapping the color to the corner that needs to be checked, it'll use the parameter WhichCorner
                 if (CheckCorner(deskToUse, point))
                     numberOfTimesVerifiedObjective++;
@@ -90,20 +147,21 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
     }
 
     /**
-     * Scan the map until it finds at least a card matching the color of the research objective, then it checks if the pattern is verified and will return false otherwise will return false.
+     * This method checks if a vertical pattern is satisfied starting from a given point.
      *
-     * @param deskToUse
-     * @param startingPoint
-     * @return
+     * @param deskToUse     the player's desk
+     * @param startingPoint the starting point for the check
+     * @return true if the pattern is satisfied, false otherwise
      */
     boolean CheckCorner(HashMap<Point, GameCard> deskToUse, Point startingPoint) {
         int i = 0;
+        Point starterCardLocation = new Point(0, 0);
+        deskToUse.remove(starterCardLocation);
         boolean IsVerified = false;
 
         if (!deskToUse.containsKey(startingPoint))
             return false;
 
-        //scan the desk until it finds the first card that doesn't match the primarySource going down the desk
         while (deskToUse.containsKey(new Point(startingPoint.x, startingPoint.y + i)) && deskToUse.get(new Point(startingPoint.x, startingPoint.y + i)).getBackSideResource().equals(primarySource))
             i -= 2;
 
@@ -111,14 +169,10 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
 
         Point LowerCard = new Point(startingPoint.x, startingPoint.y + i);
         Point UpperCard = new Point(startingPoint.x, startingPoint.y + i + 2);
-        Point CornerCard = new Point(LowerCard.x + whichCorner.x, LowerCard.y + whichCorner.y);
+        Point CornerCard = new Point(LowerCard.x + whichCorner.getX(), LowerCard.y + whichCorner.getY());
 
-        if (deskToUse.containsKey(LowerCard) && deskToUse.get(LowerCard).getBackSideResource()!=null &&
-                deskToUse.get(LowerCard).getBackSideResource() == primarySource &&
-                deskToUse.containsKey(UpperCard) && deskToUse.get(UpperCard).getBackSideResource()!=null &&
-                deskToUse.containsKey(UpperCard) && deskToUse.get(UpperCard).getBackSideResource() == primarySource) {
-            if (deskToUse.containsKey(CornerCard) && deskToUse.get(CornerCard).getBackSideResource()!=null &&
-                    deskToUse.get(CornerCard).getBackSideResource() == secondarySource)
+        if (deskToUse.get(LowerCard).getBackSideResource() == primarySource && deskToUse.containsKey(UpperCard) && deskToUse.get(UpperCard).getBackSideResource() == primarySource) {
+            if (deskToUse.get(CornerCard).getBackSideResource() == secondarySource)
                 IsVerified = true;
         }
 

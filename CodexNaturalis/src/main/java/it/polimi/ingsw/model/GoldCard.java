@@ -8,7 +8,9 @@ import it.polimi.ingsw.tui.CardPrinter;
 import it.polimi.ingsw.tui.PrintContext;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.Objects;
 
 /**
  * This class represents a GoldCard in the game.
@@ -74,5 +76,21 @@ public class GoldCard extends GameCard {
                 System.out.println(colorBackground + context.repeat(context.getCardWidth()) + CardPrinter.RESET);
             }
         }
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GoldCard that = (GoldCard) o;
+        return getPoints() == that.getPoints() &&
+                Objects.equals(getBackSideResource(), that.getBackSideResource()) &&
+                Objects.equals(getImageFrontPath(), that.getImageFrontPath()) &&
+                Objects.equals(getImageBackPath(), that.getImageBackPath()) &&
+                getPointType() == that.getPointType() &&
+                requirements.equals(that.requirements) &&
+                Objects.equals(getFrontSideResources(), that.getFrontSideResources()) &&
+                Arrays.equals(getCorners(), that.getCorners());
     }
 }

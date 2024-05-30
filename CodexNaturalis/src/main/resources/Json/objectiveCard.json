@@ -48,7 +48,7 @@
     "primaryResource": "FUNGI_KINGDOM",
     "secondaryResource": "PLANT_KINGDOM",
     "secondaryOffset": [
-      -1,
+      1,
       -1
     ],
     "points": 3,
@@ -73,7 +73,7 @@
     "secondaryResource": "FUNGI_KINGDOM",
     "secondaryOffset": [
       1,
-      2
+      3
     ],
     "points": 3,
     "frontImagePath": "img_93_fronte.png",
@@ -85,7 +85,7 @@
     "secondaryResource": "ANIMAL_KINGDOM",
     "secondaryOffset": [
       -1,
-      2
+      3
     ],
     "points": 3,
     "frontImagePath": "img_94_fronte.png",

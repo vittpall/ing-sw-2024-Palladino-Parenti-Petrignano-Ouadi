@@ -2,26 +2,20 @@ package it.polimi.ingsw.model.strategyPatternObjective;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.model.enumeration.CornerObject;
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumMap;
-import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DiagonalPatternStrategyTest {
 
     // Test for the method isSatisfied in DiagonalPatternStrategy
     @Test
     void isSatisfied() {
-        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.ANIMAL_KINGDOM, new Point(1,1));
+        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.ANIMAL_KINGDOM, new Point(1, 1));
         PlayerDesk desk = new PlayerDesk();
         assertEquals(0, diagonalPatternStrategy.isSatisfied(desk));
     }
@@ -32,7 +26,6 @@ class DiagonalPatternStrategyTest {
 
         Resource resourceBack = Resource.INSECT_KINGDOM;
         PointType pointType = PointType.CORNER;
-        int points = 5;
         String imageFrontPath = "path/to/front/image";
         String imageBackPath = "path/to/back/image";
 
@@ -52,15 +45,15 @@ class DiagonalPatternStrategyTest {
         PlayerDesk desk = new PlayerDesk();
 
         try {
-            desk.addCard(card1, new Point(0,0));
-            desk.addCard(card2, new Point(-1,1));
-            desk.addCard(card3, new Point(-2,2));
+            desk.addCard(card1, new Point(0, 0));
+            desk.addCard(card2, new Point(-1, 1));
+            desk.addCard(card3, new Point(-2, 2));
         } catch (PlaceNotAvailableException e) {
             throw new RuntimeException(e);
         }
 
 
-        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.INSECT_KINGDOM, new Point(1,-1));
+        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.INSECT_KINGDOM, new Point(1, -1));
 
         assertEquals(1, diagonalPatternStrategy.isSatisfied(desk));
 
@@ -70,7 +63,6 @@ class DiagonalPatternStrategyTest {
     @Test
     void checkDiagonal_givenDiagonal_returnMoreThanOne() {
         PointType pointType = PointType.CORNER;
-        int points = 5;
         String imageFrontPath = "path/to/front/image";
         String imageBackPath = "path/to/back/image";
 
@@ -92,18 +84,18 @@ class DiagonalPatternStrategyTest {
         PlayerDesk desk = new PlayerDesk();
 
         try {
-            desk.addCard(card1, new Point(0,0));
-            desk.addCard(card2, new Point(-1,1));
-            desk.addCard(card3, new Point(-2,2));
-            desk.addCard(card4, new Point(-3,3));
-            desk.addCard(card5, new Point(-4,4));
-            desk.addCard(card6, new Point(-5,5));
+            desk.addCard(card1, new Point(0, 0));
+            desk.addCard(card2, new Point(-1, 1));
+            desk.addCard(card3, new Point(-2, 2));
+            desk.addCard(card4, new Point(-3, 3));
+            desk.addCard(card5, new Point(-4, 4));
+            desk.addCard(card6, new Point(-5, 5));
         } catch (PlaceNotAvailableException e) {
             throw new RuntimeException(e);
         }
 
 
-        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.INSECT_KINGDOM, new Point(1,-1));
+        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.INSECT_KINGDOM, new Point(1, -1));
 
         assertEquals(2, diagonalPatternStrategy.isSatisfied(desk));
 
@@ -134,19 +126,19 @@ class DiagonalPatternStrategyTest {
         PlayerDesk desk = new PlayerDesk();
 
         try {
-            desk.addCard(card1, new Point(0,0));
-            desk.addCard(card2, new Point(-1,1));
-            desk.addCard(card3, new Point(-2,2));
-            desk.addCard(card4, new Point(-3,3));
-            desk.addCard(card5, new Point(-4,4));
-            desk.addCard(card6, new Point(-5,5));
-            desk.addCard(card7, new Point(-6,6));
+            desk.addCard(card1, new Point(0, 0));
+            desk.addCard(card2, new Point(-1, 1));
+            desk.addCard(card3, new Point(-2, 2));
+            desk.addCard(card4, new Point(-3, 3));
+            desk.addCard(card5, new Point(-4, 4));
+            desk.addCard(card6, new Point(-5, 5));
+            desk.addCard(card7, new Point(-6, 6));
         } catch (PlaceNotAvailableException e) {
             throw new RuntimeException(e);
         }
 
 
-        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.INSECT_KINGDOM, new Point(1,-1));
+        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.INSECT_KINGDOM, new Point(1, -1));
 
         assertEquals(2, diagonalPatternStrategy.isSatisfied(desk));
 
@@ -177,19 +169,19 @@ class DiagonalPatternStrategyTest {
         PlayerDesk desk = new PlayerDesk();
 
         try {
-            desk.addCard(card1, new Point(0,0));
-            desk.addCard(card2, new Point(1,1));
-            desk.addCard(card3, new Point(2,2));
-            desk.addCard(card4, new Point(3,3));
-            desk.addCard(card5, new Point(4,4));
-            desk.addCard(card6, new Point(5,5));
-            desk.addCard(card7, new Point(6,6));
+            desk.addCard(card1, new Point(0, 0));
+            desk.addCard(card2, new Point(1, 1));
+            desk.addCard(card3, new Point(2, 2));
+            desk.addCard(card4, new Point(3, 3));
+            desk.addCard(card5, new Point(4, 4));
+            desk.addCard(card6, new Point(5, 5));
+            desk.addCard(card7, new Point(6, 6));
         } catch (PlaceNotAvailableException e) {
             throw new RuntimeException(e);
         }
 
 
-        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.INSECT_KINGDOM, new Point(1,1));
+        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.INSECT_KINGDOM, new Point(1, 1));
 
         assertEquals(2, diagonalPatternStrategy.isSatisfied(desk));
 
@@ -219,18 +211,18 @@ class DiagonalPatternStrategyTest {
         PlayerDesk desk = new PlayerDesk();
 
         try {
-            desk.addCard(card1, new Point(0,0));
-            desk.addCard(card2, new Point(1,1));
-            desk.addCard(card3, new Point(2,2));
-            desk.addCard(card4, new Point(3,3));
-            desk.addCard(card5, new Point(4,4));
+            desk.addCard(card1, new Point(0, 0));
+            desk.addCard(card2, new Point(1, 1));
+            desk.addCard(card3, new Point(2, 2));
+            desk.addCard(card4, new Point(3, 3));
+            desk.addCard(card5, new Point(4, 4));
 
         } catch (PlaceNotAvailableException e) {
             throw new RuntimeException(e);
         }
 
 
-        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.INSECT_KINGDOM, new Point(1,1));
+        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.INSECT_KINGDOM, new Point(1, 1));
 
         assertEquals(1, diagonalPatternStrategy.isSatisfied(desk));
 
@@ -250,7 +242,7 @@ class DiagonalPatternStrategyTest {
         }
 
 
-        ResourceCard card1 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+        StarterCard card1 = new StarterCard(null, imageFrontPath, imageBackPath, 0, pointType, null, corners);
         ResourceCard card2 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
         ResourceCard card3 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
         ResourceCard card4 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
@@ -260,19 +252,19 @@ class DiagonalPatternStrategyTest {
         PlayerDesk desk = new PlayerDesk();
 
         try {
-            desk.addCard(card1, new Point(0,0));
-            desk.addCard(card2, new Point(1,1));
-            desk.addCard(card6, new Point(2,2));
-            desk.addCard(card3, new Point(3,3));
-            desk.addCard(card4, new Point(4,4));
-            desk.addCard(card5, new Point(5,5));
+            desk.addCard(card1, new Point(0, 0));
+            desk.addCard(card2, new Point(1, 1));
+            desk.addCard(card6, new Point(2, 2));
+            desk.addCard(card3, new Point(3, 3));
+            desk.addCard(card4, new Point(4, 4));
+            desk.addCard(card5, new Point(5, 5));
 
         } catch (PlaceNotAvailableException e) {
             throw new RuntimeException(e);
         }
 
 
-        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.INSECT_KINGDOM, new Point(1,1));
+        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.INSECT_KINGDOM, new Point(1, 1));
 
         assertEquals(1, diagonalPatternStrategy.isSatisfied(desk));
 

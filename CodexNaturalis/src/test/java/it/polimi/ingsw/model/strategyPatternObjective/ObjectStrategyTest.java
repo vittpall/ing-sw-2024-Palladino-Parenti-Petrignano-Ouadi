@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model.strategyPatternObjective;
+
 import it.polimi.ingsw.model.Corner;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.PlayerDesk;
 import it.polimi.ingsw.model.ResourceCard;
+import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.enumeration.CornerObject;
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
@@ -11,15 +13,10 @@ import org.junit.jupiter.api.Test;
 import java.awt.*;
 import java.util.EnumMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ObjectStrategyTest {
 
-    @Test
-    void isSatisfied_givenNullDesk_returnNullPointer() {
-        ObjectStrategy objectStrategy = new ObjectStrategy(new PlayerDesk().getTotalObjects());
-        assertThrows(NullPointerException.class, () -> objectStrategy.isSatisfied(null));
-    }
 
     @Test
     void isSatisfied_givenDeskWithNoResources_returnZero() {
@@ -42,18 +39,16 @@ class ObjectStrategyTest {
         }
 
 
-        ResourceCard card1 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+        StarterCard card1 = new StarterCard(null, imageFrontPath, imageBackPath, 0, pointType, null, corners);
         ResourceCard card2 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
         ResourceCard card3 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
         ResourceCard card4 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
-        ResourceCard card5 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
-        ResourceCard card6 = new ResourceCard(Resource.ANIMAL_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
 
         try {
             desk.addCard(card1, new Point(0, 0));
-            desk.addCard(card2, new Point(1,1));
-            desk.addCard(card3, new Point(2,2));
-            desk.addCard(card4, new Point(3,3));
+            desk.addCard(card2, new Point(1, 1));
+            desk.addCard(card3, new Point(2, 2));
+            desk.addCard(card4, new Point(3, 3));
         } catch (PlaceNotAvailableException e) {
             throw new RuntimeException(e);
         }

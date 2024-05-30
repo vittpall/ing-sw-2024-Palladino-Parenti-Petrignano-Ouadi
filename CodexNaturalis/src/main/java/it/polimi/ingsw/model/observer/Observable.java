@@ -19,7 +19,7 @@ public class Observable {
         listeners.remove(listener);
     }
 
-    public void notifyColorSelection(String msg) throws RemoteException {
+    public void notifyColorSelection(String msg) {
         for (GameListener listener : listeners) {
             new Thread(() -> {
                 try {

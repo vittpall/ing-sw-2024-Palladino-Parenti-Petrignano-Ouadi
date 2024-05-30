@@ -19,21 +19,26 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
     private final Point diagonalOffset;
 
     /**
-     * Constructor which assigns the Strategy that needs to be checked inside the class DiagonalPatternStrategy (the required resource, the number of points of the objectiveCard and the direction of the diagonal)
+     * Constructor for creating a DiagonalPatternStrategy with a primary resource and a diagonal offset.
      *
-     * @param primarySource
-     * @param diagonalOffset
+     * @param primarySource  the primary resource for the diagonal pattern
+     * @param diagonalOffset the offset for the diagonal pattern
      */
     public DiagonalPatternStrategy(Resource primarySource, Point diagonalOffset) {
         this.primarySource = primarySource;
         this.diagonalOffset = diagonalOffset;
     }
 
-
+    /**
+     * @return the primary resource for the diagonal pattern
+     */
     public Resource getPrimarySource() {
         return primarySource;
     }
 
+    /**
+     * @return the offset for the diagonal pattern
+     */
     public Point getDiagonalOffset() {
         return diagonalOffset;
     }
@@ -43,12 +48,15 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
      * on the PlayerDesk meet the requirements of the objective card.
      * in this case it will analyze the objective that requires two vertical cards and another one over one corner.
      *
-     * @param desk
+     * @param desk the player's desk
+     * @return the number of times the objective is satisfied
      */
     public int isSatisfied(PlayerDesk desk) {
 
         int numberOfTimesVerifiedObjective = 0;
         HashMap<Point, GameCard> deskToUse = desk.getDesk();
+        Point starterCardLocation = new Point(0, 0);
+        deskToUse.remove(starterCardLocation);
 
         //iterate over desk until I found a position where the card's color is the primarySource
         for (Point point : desk.getDesk().keySet()) {
@@ -58,6 +66,11 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
         return numberOfTimesVerifiedObjective;
     }
 
+    /**
+     * This method prints the diagonal pattern objective.
+     *
+     * @param context the print context
+     */
     @Override
     public void print(PrintContext context) {
         Point offset = getDiagonalOffset();
@@ -93,11 +106,11 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
     }
 
     /**
-     * scan the entire board (hashmap) until it founds a matching pattern and then return true if the pattern complete the objective otherwise will return false
+     * This method checks if a diagonal pattern is satisfied starting from a given point.
      *
-     * @param deskToUse
-     * @param startingPoint
-     * @return
+     * @param deskToUse     the player's desk
+     * @param startingPoint the starting point for the check
+     * @return true if the pattern is satisfied, false otherwise
      */
     private boolean CheckDiagonal(HashMap<Point, GameCard> deskToUse, Point startingPoint) {
         int i = 0;
@@ -114,7 +127,6 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
 
         //scan the diagonal until it finds a card that doesn't match the color of the research objective going up and left or right depending on the changeDiagonal
         while (deskToUse.containsKey(new Point(startingPoint.x + i * changeDiagonal, startingPoint.y + i)) &&
-                deskToUse.get(new Point(startingPoint.x + i * changeDiagonal, startingPoint.y + i)).getBackSideResource()!=null &&
                 deskToUse.get(new Point(startingPoint.x + i * changeDiagonal, startingPoint.y + i)).getBackSideResource().equals(primarySource)) {
             i++;
         }
@@ -124,11 +136,8 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
         Point secondPoint = new Point(firstPoint.x - changeDiagonal, firstPoint.y - 1);
         Point thirdPoint = new Point(secondPoint.x - changeDiagonal, secondPoint.y - 1);
 
-        if (deskToUse.containsKey(firstPoint) && deskToUse.get(firstPoint).getBackSideResource()!=null &&
-                deskToUse.get(firstPoint).getBackSideResource() == primarySource &&
-                deskToUse.containsKey(secondPoint) && deskToUse.get(secondPoint).getBackSideResource()!=null &&
+        if (deskToUse.get(firstPoint).getBackSideResource() == primarySource &&
                 deskToUse.containsKey(secondPoint) && deskToUse.get(secondPoint).getBackSideResource() == primarySource &&
-                deskToUse.containsKey(thirdPoint) && deskToUse.get(thirdPoint).getBackSideResource()!=null &&
                 deskToUse.containsKey(thirdPoint) && deskToUse.get(thirdPoint).getBackSideResource() == primarySource) {
             isVerified = true;
         }
