@@ -180,7 +180,7 @@ public class RMIClient extends BaseClient {
 
     @Override
     public void setTokenColor(TokenColor tokenColor) throws IOException {
-        server.setTokenColor(idGame, idClientIntoGame, tokenColor);
+        server.setTokenColor(idGame, idClientIntoGame, tokenColor, this);
     }
 
     public int getPoints() throws RemoteException {
@@ -260,7 +260,7 @@ public class RMIClient extends BaseClient {
 
 
     @Override
-    public void onTokenColorSelected(String msg) throws RemoteException {
+    synchronized public void onTokenColorSelected(String msg) throws RemoteException {
         if (!isGUIMode) {
             System.out.println(msg);
             getClientCurrentState().display();
@@ -270,7 +270,7 @@ public class RMIClient extends BaseClient {
     }
 
     @Override
-    public void onGameJoined(String msg) throws RemoteException {
+    synchronized public void onGameJoined(String msg) throws RemoteException {
         if (!isGUIMode)
             System.out.println(msg);
         else
@@ -280,12 +280,12 @@ public class RMIClient extends BaseClient {
 
 
     @Override
-    public void onGameCreated() throws RemoteException {
-
+    synchronized public void onGameCreated() throws RemoteException {
+            System.out.println("Game created");
     }
 
     @Override
-    public void onChatMessageReceived() throws RemoteException {
-
+    synchronized public void onChatMessageReceived() throws RemoteException {
+            System.out.println("New message received");
     }
 }

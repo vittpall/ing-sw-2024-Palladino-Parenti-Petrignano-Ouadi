@@ -27,7 +27,7 @@ public class MainMenuStateController implements FXMLController {
     @FXML
     private void handlePlayButton() throws IOException, ClassNotFoundException, InterruptedException {
         String username = usernameField.getText();
-        if (this.client != null && client.checkUsername(username)) {
+        if (!username.isEmpty() && this.client != null && client.checkUsername(username)) {
             client.setUsername(username);
             client.setCurrentState(new LobbyMenuStateGUI(stage, client));
             errorLabel.setText("");
