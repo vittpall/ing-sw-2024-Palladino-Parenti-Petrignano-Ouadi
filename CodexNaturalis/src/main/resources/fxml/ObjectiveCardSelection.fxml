@@ -5,20 +5,26 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="it.polimi.ingsw.gui.Controller.ObjectiveCardSelectionController"
-      prefHeight="430.0" prefWidth="600.0" spacing="10" alignment="CENTER">
-    <HBox prefHeight="400.0" prefWidth="600.0" spacing="50" alignment="CENTER">
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="430.0" prefWidth="600.0" spacing="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.ObjectiveCardSelectionController">
+    <HBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="50" style="-fx-background-color: #fffeb3;">
         <padding>
-            <Insets bottom="20" left="20" right="20" top="20"/>
+            <Insets bottom="20" left="20" right="20" top="20" />
         </padding>
-        <VBox fx:id="card1Container"  spacing="10" alignment="CENTER">
-            <Button text="Choose This Card" onAction="#handleSelectCard1"/>
+        <VBox fx:id="card1Container" alignment="CENTER" spacing="10">
+            <Button onAction="#handleSelectCard1" style="-fx-background-color: #a2ecbb;" text="Choose This Card">
+            <font>
+               <Font name="Book Antiqua Bold Italic" size="12.0" />
+            </font></Button>
         </VBox>
-        <VBox fx:id="card2Container" spacing="10" alignment="CENTER">
-            <Button text="Choose This Card" onAction="#handleSelectCard2"/>
+        <VBox fx:id="card2Container" alignment="CENTER" spacing="10">
+            <Button onAction="#handleSelectCard2" style="-fx-background-color: #a6f84b;" text="Choose This Card">
+            <font>
+               <Font name="Book Antiqua Bold Italic" size="12.0" />
+            </font></Button>
         </VBox>
     </HBox>
     <!-- Label for displaying messages -->
-    <Label fx:id="messageLabel" prefWidth="600.0" alignment="CENTER"/>
+    <Label fx:id="messageLabel" alignment="CENTER" prefWidth="600.0" style="-fx-background-color: #fff5b3;" />
 </VBox>
