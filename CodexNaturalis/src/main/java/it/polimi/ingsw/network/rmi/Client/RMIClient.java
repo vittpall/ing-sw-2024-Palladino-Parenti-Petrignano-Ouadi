@@ -57,15 +57,6 @@ public class RMIClient extends BaseClient {
         }
     }
 
-    @SuppressWarnings("InfiniteLoopStatement")
-    public void loopNotifications() throws InterruptedException, RemoteException {
-        while(true)
-        {
-                ServerToClientMsg msg = notificationsQueue.take();
-                msg.functionToCall(this);
-        }
-    }
-
     public int getIdGame() {
         return idGame;
     }

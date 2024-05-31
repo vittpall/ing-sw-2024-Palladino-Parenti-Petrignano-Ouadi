@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.socket.ServerToClientMsg;
 
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
@@ -50,6 +51,6 @@ public class ServerToClientMsg implements Serializable {
         return this.idGame;
     }
 
-    public void functionToCall(VirtualView client) throws RemoteException {
+    public void functionToCall(BaseClient client) throws RemoteException {
     }
 }
