@@ -7,9 +7,9 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<AnchorPane styleClass="scene" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21"
+<AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.MainMenuStateController">
-    <StackPane styleClass="scene">
+    <StackPane styleClass="scene-dimensions,scene-background">
         <VBox alignment="CENTER" spacing="10">
             <ImageView fitHeight="235.0" fitWidth="251.0" pickOnBounds="true" smooth="false">
                 <Image url="@../Images/LogoCodexNaturalis.jpg"/>
@@ -23,14 +23,14 @@
                 </font>
             </Label>
             <TextField fx:id="usernameField" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="19.0"
-                       prefWidth="231.0" promptText="Enter your username here"/>
-            <Label fx:id="errorLabel" prefHeight="26.0" prefWidth="231.0" textAlignment="JUSTIFY" textFill="red">
+                       prefWidth="200.0" promptText="Enter your username here"/>
+            <Label fx:id="errorLabel" managed="false" prefHeight="26.0" prefWidth="200.0" textAlignment="JUSTIFY"
+                   textFill="red">
                 <font>
                     <Font size="14.0"/>
                 </font>
             </Label>
-            <Button fx:id="playButton" onAction="#handlePlayButton"
-                    styleClass="primary-button" text="Play"/>
+            <Button fx:id="playButton" onAction="#handlePlayButton" styleClass="primary-button" text="Play"/>
         </VBox>
     </StackPane>
     <!-- Top-left Corner -->

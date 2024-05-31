@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane styleClass="scene" stylesheets="@../styles.css"
+<AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css"
             xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.polimi.ingsw.gui.Controller.JoinGameMenuController">
     <VBox layoutX="10.0" layoutY="8.0" spacing="10" style="-fx-background-color: #fff5b3;" AnchorPane.leftAnchor="10.0"
@@ -41,18 +41,14 @@
     </VBox>
     <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="400.0" layoutY="319.0" pickOnBounds="true"
                preserveRatio="true" rotate="180.0">
-        <image>
-            <Image url="@../Images/CN_Decoration1.jpg"/>
-        </image>
         <rotationAxis>
             <Point3D y="90.0" z="1.0"/>
         </rotationAxis>
+        <Image url="@../Images/CN_Decoration1.jpg"/>
     </ImageView>
     <ImageView fitHeight="39.0" fitWidth="565.0" layoutX="32.0" layoutY="388.0" pickOnBounds="true"
                preserveRatio="true">
-        <image>
-            <Image url="@../Images/CN_Decoration3.png"/>
-        </image>
+        <Image url="@../Images/CN_Decoration3.png"/>
     </ImageView>
 
 </AnchorPane>

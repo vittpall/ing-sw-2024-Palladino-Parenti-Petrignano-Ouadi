@@ -3,7 +3,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<AnchorPane styleClass="scene" stylesheets="@../styles.css"
+<AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css"
             xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.polimi.ingsw.gui.Controller.GameController">
     <ImageView fitHeight="453.0" fitWidth="257.0" layoutX="7.0" layoutY="8.0">

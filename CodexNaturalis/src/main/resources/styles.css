@@ -14,9 +14,13 @@
 
 .primary-button {
     -fx-background-color: #a6f84b;
-    -fx-text-fill: white;
     -fx-font-family: 'Book Antiqua';
+    -fx-min-width: 200;
+    -fx-min-height: 40;
     -fx-font-size: 14px;
+    -fx-prefHeight: 40;
+    -fx-prefWidth: 200;
+    -fx-text-fill: black;
 }
 
 .primary-button:hover {
@@ -38,9 +42,12 @@
     -fx-border-style: dashed;
 }
 
-.scene {
+.scene-dimensions {
     -fx-pref-width: 800px;
     -fx-pref-height: 800px;
+}
+
+.scene-background {
     -fx-background-color: #fff5b3;
 }
 
@@ -49,4 +56,13 @@
     -fx-preserve-ratio: true;
     -fx-fit-height: 150px;
     -fx-fit-width: 200px;
+}
+
+.inputs-width {
+    -fx-min-width: 200;
+    -fx-prefWidth: 200;
+}
+
+.choice-box-popup .list-cell {
+    min-width: 200px;
 }

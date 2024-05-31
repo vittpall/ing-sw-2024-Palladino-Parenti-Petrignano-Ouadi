@@ -2,7 +2,6 @@ package it.polimi.ingsw.gui.Controller;
 
 import it.polimi.ingsw.gui.LobbyMenuStateGUI;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,7 +12,6 @@ import java.io.IOException;
 
 public class MainMenuStateController implements FXMLController {
 
-    public Label welcomeLabel;
     public Button playButton;
     private BaseClient client;
     private Stage stage;
@@ -33,6 +31,7 @@ public class MainMenuStateController implements FXMLController {
             errorLabel.setText("");
             client.showState();
         } else {
+            errorLabel.setManaged(true);
             errorLabel.setText("Invalid username, please try again.");
             usernameField.setText("");
         }

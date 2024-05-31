@@ -1,62 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
-<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import java.lang.Integer?>
-<AnchorPane styleClass="scene"
-            stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane prefHeight="870.0" prefWidth="928.0" styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="it.polimi.ingsw.gui.Controller.CreateGameMenuController">
+    <StackPane styleClass="scene-dimensions,scene-background">
+        <VBox alignment="CENTER" spacing="10">
+            <Label text="Create A New Game" textAlignment="JUSTIFY">
+                <font>
+                    <Font name="Book Antiqua Bold Italic" size="36.0"/>
+                </font>
+            </Label>
+            <Label fx:id="feedbackLabel" styleClass="normal-label"
+                   text="Select number of players (2-4):"/>
+            <ChoiceBox styleClass="inputs-width" fx:id="playerChoiceBox">
+                <tooltip>
+                    <Tooltip text="Choose how many players will be in the game"/>
+                </tooltip>
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <Integer fx:value="2"/>
+                        <Integer fx:value="3"/>
+                        <Integer fx:value="4"/>
+                    </FXCollections>
+                </items>
+            </ChoiceBox>
+            <Button onAction="#handleCreateGame" style="-fx-background-color: #a2ecbb;"
+                    styleClass="primary-button" text="Create Game">
+            </Button>
 
-    <padding>
-        <Insets bottom="20" left="20" right="20" top="20"/>
-    </padding>
-    <Label fx:id="feedbackLabel" layoutX="46.0" layoutY="134.0" styleClass="normal-label"
-           text="Select number of players (2-4):" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="114.0"
-           AnchorPane.topAnchor="134.0"/>
-    <ChoiceBox fx:id="playerChoiceBox" layoutX="40.0" layoutY="173.0" AnchorPane.leftAnchor="40.0"
-               AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="173.0">
-        <tooltip>
-            <Tooltip text="Choose how many players will be in the game"/>
-        </tooltip>
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <Integer fx:value="2"/>
-                <Integer fx:value="3"/>
-                <Integer fx:value="4"/>
-            </FXCollections>
-        </items>
-    </ChoiceBox>
-    <Button layoutX="40.0" layoutY="205.0" onAction="#handleCreateGame" style="-fx-background-color: #a2ecbb;"
-            styleClass="primary-button" text="Create Game" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0"
-            AnchorPane.topAnchor="205.0">
-    </Button>
-    <Button alignment="TOP_CENTER" layoutX="66.0" layoutY="322.0" onAction="#handleBack"
-            style="-fx-background-color: #a6f84b;" styleClass="primary-button" text="Back" textFill="WHITE"/>
-    <Label layoutX="172.0" layoutY="79.0" text="Create A New Game" textAlignment="JUSTIFY">
-        <font>
-            <Font name="Book Antiqua Bold Italic" size="36.0"/>
-        </font>
-    </Label>
-    <ImageView fitHeight="37.0" fitWidth="607.0" layoutX="80.0" layoutY="392.0" pickOnBounds="true"
-               preserveRatio="true">
-        <image>
-            <Image url="@../Images/CN_Decoration3.png"/>
-        </image>
+        </VBox>
+
+    </StackPane>
+    <Button onAction="#handleBack" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0"
+            styleClass="primary-button" text="Back"/>
+    <ImageView fitWidth="607.0" preserveRatio="true" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="112.0">
+        <Image url="@../Images/CN_Decoration3.png"/>
     </ImageView>
-    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="429.0" layoutY="322.0" pickOnBounds="true"
-               preserveRatio="true" rotate="180.0">
-        <image>
-            <Image url="@../Images/CN_Decoration1.jpg"/>
-        </image>
-        <rotationAxis>
-            <Point3D y="90.0" z="1.0"/>
-        </rotationAxis>
+    <ImageView fitHeight="150.0" fitWidth="200.0" preserveRatio="true" rotate="180.0" scaleY="-1"
+               AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0">
+
+        <Image url="@../Images/CN_Decoration1.jpg"/>
     </ImageView>
 
 </AnchorPane>

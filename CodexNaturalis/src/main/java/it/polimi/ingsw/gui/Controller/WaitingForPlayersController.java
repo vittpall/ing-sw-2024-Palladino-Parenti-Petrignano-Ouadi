@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 
 public class WaitingForPlayersController implements FXMLController {
     private BaseClient client;
