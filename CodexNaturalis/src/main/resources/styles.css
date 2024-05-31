@@ -13,11 +13,10 @@
 }
 
 .primary-button {
-    -fx-background-color: #a2ecbb;
+    -fx-background-color: #a6f84b;
     -fx-text-fill: white;
     -fx-font-family: 'Book Antiqua';
     -fx-font-size: 14px;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);
 }
 
 .primary-button:hover {
@@ -39,3 +38,15 @@
     -fx-border-style: dashed;
 }
 
+.scene {
+    -fx-pref-width: 800px;
+    -fx-pref-height: 800px;
+    -fx-background-color: #fff5b3;
+}
+
+.corner-image {
+    -fx-image: url("Images/CN_Decoration1.jpg");
+    -fx-preserve-ratio: true;
+    -fx-fit-height: 150px;
+    -fx-fit-width: 200px;
+}

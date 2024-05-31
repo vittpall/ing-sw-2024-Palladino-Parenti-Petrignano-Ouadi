@@ -1,38 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="20" style="-fx-background-color: #fff5b3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.InitializeStarterCardController">
+<VBox alignment="CENTER" spacing="20" styleClass="scene" stylesheets="@../styles.css"
+      xmlns="http://javafx.com/javafx/8.0.171"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="it.polimi.ingsw.gui.Controller.InitializeStarterCardController">
     <padding>
-        <Insets bottom="20" left="20" right="20" top="20" />
+        <Insets bottom="20" left="20" right="20" top="20"/>
     </padding>
 
-    <Label style="-fx-font-size: 16px;" text="Play Your Starter Card:" />
+    <Label style="-fx-font-size: 16px;" text="Play Your Starter Card:"/>
     <HBox alignment="CENTER" spacing="20">
         <VBox fx:id="frontCardContainer" alignment="CENTER" spacing="10">
             <Label text="Front:">
-            <font>
-               <Font name="Book Antiqua Bold Italic" size="12.0" />
-            </font></Label>
-            <Button fx:id="playFrontButton" onAction="#handlePlayFront" style="-fx-background-color: #a2ecbb;" text="Play Front">
-            <font>
-               <Font name="Book Antiqua Bold Italic" size="12.0" />
-            </font></Button>
+                <font>
+                    <Font name="Book Antiqua Bold Italic" size="12.0"/>
+                </font>
+            </Label>
+            <Button fx:id="playFrontButton" onAction="#handlePlayFront" style="-fx-background-color: #a2ecbb;"
+                    text="Play Front">
+                <font>
+                    <Font name="Book Antiqua Bold Italic" size="12.0"/>
+                </font>
+            </Button>
         </VBox>
         <VBox fx:id="backCardContainer" alignment="CENTER" spacing="10">
             <Label text="Back:">
-            <font>
-               <Font name="Book Antiqua Bold Italic" size="12.0" />
-            </font></Label>
-            <Button fx:id="playBackButton" onAction="#handlePlayBack" style="-fx-background-color: #a6f84b;" text="Play Back">
-            <font>
-               <Font name="Book Antiqua Bold Italic" size="12.0" />
-            </font></Button>
+                <font>
+                    <Font name="Book Antiqua Bold Italic" size="12.0"/>
+                </font>
+            </Label>
+            <Button fx:id="playBackButton" onAction="#handlePlayBack" style="-fx-background-color: #a6f84b;"
+                    text="Play Back">
+                <font>
+                    <Font name="Book Antiqua Bold Italic" size="12.0"/>
+                </font>
+            </Button>
         </VBox>
     </HBox>
 </VBox>

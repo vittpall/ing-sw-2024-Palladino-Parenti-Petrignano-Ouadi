@@ -2,18 +2,17 @@
 
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-
-<AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: #fff5b3;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.GameController">
+<?import javafx.scene.layout.*?>
+<AnchorPane styleClass="scene" stylesheets="@../styles.css"
+            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.gui.Controller.GameController">
     <ImageView fitHeight="453.0" fitWidth="257.0" layoutX="7.0" layoutY="8.0">
-        <Image url="@../Images/Board.jpg" />
+        <Image url="@../Images/Board.jpg"/>
     </ImageView>
-    <AnchorPane fx:id="gameBoardContainer" layoutX="216.0" layoutY="461.0" prefHeight="317.0" prefWidth="570.0" />
+    <AnchorPane fx:id="gameBoardContainer" layoutX="216.0" layoutY="461.0" prefHeight="317.0" prefWidth="570.0"/>
 
-    <HBox fx:id="objectiveCardsContainer" layoutX="300.0" layoutY="24.0" spacing="10" />
-    <HBox fx:id="resourceDeck" layoutX="300.0" layoutY="152.0" spacing="10" />
-    <HBox fx:id="goldenDeck" layoutX="300.0" layoutY="280.0" spacing="10" />
-    <VBox fx:id="playerHandBox" layoutX="25.0" layoutY="469.0" spacing="10" />
+    <HBox fx:id="objectiveCardsContainer" layoutX="300.0" layoutY="24.0" spacing="10"/>
+    <HBox fx:id="resourceDeck" layoutX="300.0" layoutY="152.0" spacing="10"/>
+    <HBox fx:id="goldenDeck" layoutX="300.0" layoutY="280.0" spacing="10"/>
+    <VBox fx:id="playerHandBox" layoutX="25.0" layoutY="469.0" spacing="10"/>
 </AnchorPane>

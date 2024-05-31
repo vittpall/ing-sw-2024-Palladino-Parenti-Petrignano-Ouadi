@@ -1,58 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<AnchorPane prefHeight="800.0" prefWidth="800.0" style="-fx-background-color: #fff5b3;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.WaitingForPlayersController">
-   <children>
-      <ImageView fitHeight="800.0" fitWidth="800.0" opacity="0.47" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../Images/CN_copertina.jpg" />
-         </image>
-      </ImageView>
-      <VBox alignment="CENTER" layoutX="146.0" layoutY="289.0" prefHeight="223.0" prefWidth="504.0">
-         <children>
+<?import javafx.scene.text.*?>
+<AnchorPane stylesheets="@../styles.css" styleClass="scene" xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.gui.Controller.WaitingForPlayersController">
+    <ImageView fitHeight="800.0" fitWidth="800.0" opacity="0.47" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../Images/CN_copertina.jpg"/>
+    </ImageView>
+    <VBox alignment="CENTER" layoutX="146.0" layoutY="289.0" prefHeight="223.0" prefWidth="504.0">
+        <children>
             <Label prefHeight="35.0" prefWidth="422.0" text="Waiting for players to join the game">
-               <font>
-                  <Font name="Book Antiqua Bold Italic" size="26.0" />
-               </font>
+                <font>
+                    <Font name="Book Antiqua Bold Italic" size="26.0"/>
+                </font>
             </Label>
             <Label fx:id="textWaitingPlayers" text="You will be notified when the new players have joined the game">
-               <font>
-                  <Font name="Book Antiqua" size="14.0" />
-               </font>
+                <font>
+                    <Font name="Book Antiqua" size="14.0"/>
+                </font>
             </Label>
             <Label fx:id="player2Entered" text="Player 2 has entered">
-               <font>
-                  <Font name="Book Antiqua" size="14.0" />
-               </font>
+                <font>
+                    <Font name="Book Antiqua" size="14.0"/>
+                </font>
             </Label>
             <Label fx:id="player3Entered" text="Player 3 has entered">
-               <font>
-                  <Font name="Book Antiqua" size="14.0" />
-               </font>
+                <font>
+                    <Font name="Book Antiqua" size="14.0"/>
+                </font>
             </Label>
             <Label fx:id="player4Entered" text="Player 4 has entered">
-               <font>
-                  <Font name="Book Antiqua" size="14.0" />
-               </font>
+                <font>
+                    <Font name="Book Antiqua" size="14.0"/>
+                </font>
             </Label>
             <Label fx:id="waitingForNPlayersLabel" text="Waiting for 2 players to join">
-               <font>
-                  <Font name="Book Antiqua" size="14.0" />
-               </font>
+                <font>
+                    <Font name="Book Antiqua" size="14.0"/>
+                </font>
             </Label>
-            <Button id="StartGameButton" fx:id="StartGameButton" mnemonicParsing="false" onAction="#handleStartGame" style="-fx-background-color: #a2ecbb;" text="Start game">
-               <font>
-                  <Font name="Book Antiqua Bold Italic" size="15.0" />
-               </font>
+            <Button id="StartGameButton" fx:id="StartGameButton" mnemonicParsing="false" onAction="#handleStartGame"
+                    style="-fx-background-color: #a2ecbb;" text="Start game">
+                <font>
+                    <Font name="Book Antiqua Bold Italic" size="15.0"/>
+                </font>
             </Button>
-         </children>
-      </VBox>
-   </children>
+        </children>
+    </VBox>
 </AnchorPane>

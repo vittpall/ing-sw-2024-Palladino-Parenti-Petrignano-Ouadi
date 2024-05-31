@@ -6,19 +6,23 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-<VBox accessibleRole="LIST_VIEW" alignment="CENTER" prefHeight="400.0" prefWidth="600.0" spacing="10" style="-fx-background-color: #fff5b3;"  stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.ColorSelectionController">
+<VBox styleClass="scene" accessibleRole="LIST_VIEW" alignment="CENTER" spacing="10"
+      stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.ColorSelectionController">
     <padding>
-        <Insets bottom="10" left="10" right="10" top="10" />
+        <Insets bottom="10" left="10" right="10" top="10"/>
     </padding>
-   <Label text="Choose a Color">
-      <font>
-         <Font name="Book Antiqua Bold Italic" size="24.0" />
-      </font>
-   </Label>
-    <ListView fx:id="colorListView" accessibleRole="LIST_ITEM" prefHeight="150.0" prefWidth="580.0" style="-fx-background-color: #fffeb3;" />
-    <Button fx:id="selectColorButton" onAction="#handleSelectColor" style="-fx-background-color: #a2ecbb;" text="Select Color">
-      <font>
-         <Font name="Book Antiqua Bold" size="12.0" />
-      </font></Button>
+    <Label text="Choose a Color">
+        <font>
+            <Font name="Book Antiqua Bold Italic" size="24.0"/>
+        </font>
+    </Label>
+    <ListView fx:id="colorListView" accessibleRole="LIST_ITEM" prefHeight="150.0" prefWidth="580.0"
+              style="-fx-background-color: #fffeb3;"/>
+    <Button fx:id="selectColorButton" onAction="#handleSelectColor" style="-fx-background-color: #a2ecbb;"
+            text="Select Color">
+        <font>
+            <Font name="Book Antiqua Bold" size="12.0"/>
+        </font>
+    </Button>
 </VBox>
