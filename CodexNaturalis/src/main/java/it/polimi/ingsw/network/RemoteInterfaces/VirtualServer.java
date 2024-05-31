@@ -68,7 +68,7 @@ public interface VirtualServer extends Remote {
 
     ArrayList<TokenColor> getAvailableColors(int idGame, GameListener playerListener) throws RemoteException;
 
-    void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws IOException;
+    void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor, GameListener playerListener) throws IOException;
 
     int getPoints(int idGame, int idClientIntoGame) throws RemoteException;
 

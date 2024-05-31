@@ -211,8 +211,8 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws IOException {
-        lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor);
+    public void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor, GameListener playerListener) throws IOException {
+        lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor, playerListener);
     }
 
     public int getPoints(int idGame, int idClientIntoGame) throws RemoteException {

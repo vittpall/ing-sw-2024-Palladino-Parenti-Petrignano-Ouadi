@@ -133,8 +133,8 @@ public class LobbyController {
         return gameControllers.get(idGame).getAvailableColors(playerListener);
     }
 
-    public synchronized void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws IOException {
-        gameControllers.get(idGame).setTokenColor(idClientIntoGame, tokenColor);
+    public synchronized void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor, GameListener playerListener) throws IOException {
+        gameControllers.get(idGame).setTokenColor(idClientIntoGame, tokenColor, playerListener);
     }
 
     public int getPoints(int idGame, int idClientIntoGame) {

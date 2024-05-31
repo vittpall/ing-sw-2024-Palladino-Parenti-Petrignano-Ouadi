@@ -135,11 +135,12 @@ public class GameController {
         return model.getAvailableColors();
     }
 
-    public synchronized void setTokenColor(int idClientIntoGame, TokenColor tokenColor) throws IOException {
+    public synchronized void setTokenColor(int idClientIntoGame, TokenColor tokenColor, GameListener playerListener) throws IOException {
         model.setTokenColor(idClientIntoGame, tokenColor);
         String message = "\n----------------------------------\n" +
                 "Player " + model.getPlayers().get(idClientIntoGame).getUsername() +
                 " chose the color " + model.getPlayers().get(idClientIntoGame).getTokenColor();
+        listeners.get("ColorSelection").unSubscribeListener(playerListener);
         listeners.get("ColorSelection").notifyColorSelection(message);
     }
 
@@ -250,7 +251,6 @@ public class GameController {
     public synchronized String getWinner() {
         return winner;
     }
-
 
     public ArrayList<Player> getPlayers() {
         return model.getPlayers();
