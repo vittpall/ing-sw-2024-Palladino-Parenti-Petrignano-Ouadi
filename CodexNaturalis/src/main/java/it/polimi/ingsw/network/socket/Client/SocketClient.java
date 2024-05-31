@@ -13,8 +13,6 @@ import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.*;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
-import it.polimi.ingsw.tui.DrawCardState;
-import it.polimi.ingsw.tui.InitializeStarterCardState;
 import it.polimi.ingsw.tui.MainMenuState;
 import javafx.stage.Stage;
 
@@ -93,8 +91,6 @@ public class SocketClient extends BaseClient {
         ServerToClientMsg response = sendRequest(request);
         return (ArrayList<Player>) response.getResponse().getResponseReturnable();
     }
-
-
 
 
     private ServerToClientMsg sendRequest(ClientToServerMsg request) throws InterruptedException, IOException {
@@ -327,7 +323,7 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
-    public boolean isGameStarted() throws IOException, InterruptedException{
+    public boolean isGameStarted() throws IOException, InterruptedException {
         GetCurrentGameStateMsg request = new GetCurrentGameStateMsg(idGame);
         ServerToClientMsg response = sendRequest(request);
         return !(response.getResponse().getResponseReturnable().equals(GameState.WAITING_FOR_PLAYERS.toString()));
@@ -408,25 +404,26 @@ public class SocketClient extends BaseClient {
 
 
     @Override
-    public void onTokenColorSelected(String msg) throws RemoteException {
+    public void onTokenColorSelected(String msg) {
 
 
     }
 
     @Override
-    public void onGameJoined(String msg) throws RemoteException {
+    public void onGameJoined(String msg) {
 
     }
 
     @Override
-    public void onGameCreated() throws RemoteException {
+    public void onGameCreated() {
 
     }
 
     @Override
-    public void onChatMessageReceived() throws RemoteException {
+    public void onChatMessageReceived() {
 
     }
+
 
 
 }

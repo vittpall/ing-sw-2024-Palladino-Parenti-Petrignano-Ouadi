@@ -15,7 +15,6 @@ import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
-import it.polimi.ingsw.tui.DrawCardState;
 import it.polimi.ingsw.tui.MainMenuState;
 import javafx.stage.Stage;
 
@@ -260,7 +259,7 @@ public class RMIClient extends BaseClient {
 
 
     @Override
-    synchronized public void onTokenColorSelected(String msg) throws RemoteException {
+    synchronized public void onTokenColorSelected(String msg) {
         if (!isGUIMode) {
             System.out.println(msg);
             getClientCurrentState().display();
@@ -270,7 +269,7 @@ public class RMIClient extends BaseClient {
     }
 
     @Override
-    synchronized public void onGameJoined(String msg) throws RemoteException {
+    synchronized public void onGameJoined(String msg) {
         if (!isGUIMode)
             System.out.println(msg);
         else
@@ -280,12 +279,12 @@ public class RMIClient extends BaseClient {
 
 
     @Override
-    synchronized public void onGameCreated() throws RemoteException {
-            System.out.println("Game created");
+    synchronized public void onGameCreated() {
+        System.out.println("Game created");
     }
 
     @Override
-    synchronized public void onChatMessageReceived() throws RemoteException {
-            System.out.println("New message received");
+    synchronized public void onChatMessageReceived() {
+        System.out.println("New message received");
     }
 }

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.observer;
 
+import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
+
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.HashSet;
@@ -23,9 +25,11 @@ public class Observable {
         for (GameListener listener : listeners) {
             new Thread(() -> {
                 try {
-                    listener.onTokenColorSelected(msg);
+                    listener.update(new ServerToClientMsg(null));
                 } catch (RemoteException e) {
                     e.printStackTrace();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }).start();
         }
@@ -35,9 +39,11 @@ public class Observable {
         for (GameListener listener : listeners) {
             new Thread(() -> {
                 try {
-                      listener.onGameJoined(msg);
+                    listener.update(new ServerToClientMsg(null));
                 } catch (RemoteException e) {
                     e.printStackTrace();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }).start();
         }
@@ -47,7 +53,7 @@ public class Observable {
         for (GameListener listener : listeners) {
             new Thread(() -> {
                 try {
-                    listener.onGameCreated();
+                    listener.update(new ServerToClientMsg(null));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

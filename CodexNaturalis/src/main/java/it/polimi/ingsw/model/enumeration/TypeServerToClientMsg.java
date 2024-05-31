@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model.enumeration;
 
-import it.polimi.ingsw.network.socket.ClientToServerMsg.GetCurrentStateMsg;
-
 public enum TypeServerToClientMsg {
     USER_ALREADY_TAKEN("UserAlreadyTaken"),
     AVAILABLE_COLORS("AvailableColors"),
@@ -35,8 +33,8 @@ public enum TypeServerToClientMsg {
     SET_OBJECTIVE_CARD("SetObjectiveCard"),
     WAIT_FOR_YOUR_TURN("WaitForYourTurn"),
     GET_CURRENT_STATE("GetCurrentState"),
-    CHECK_STATE("CheckState");
-
+    CHECK_STATE("CheckState"),
+    TOKEN_COLOR_SELECTED("TokenColorSelected");
 
     private String text;
 

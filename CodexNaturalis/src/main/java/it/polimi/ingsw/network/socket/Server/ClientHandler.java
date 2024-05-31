@@ -11,7 +11,6 @@ import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.rmi.RemoteException;
 
 public class ClientHandler implements GameListener {
     final SocketServer server;
@@ -32,7 +31,7 @@ public class ClientHandler implements GameListener {
         ServerToClientMsg response;
         try {
             while ((request = (ClientToServerMsg) input.readObject()) != null) {
-                response = new ServerToClientMsg(request.getType(), false);
+                response = new ServerToClientMsg(request.getType());
                 response.setResponse(request.functionToCall(controller, this));
                 output.writeObject(response);
                 output.flush();
@@ -44,30 +43,12 @@ public class ClientHandler implements GameListener {
         }
     }
 
-    public void sendMessage(ServerToClientMsg msgToBroadCast) throws IOException {
-        output.writeObject(msgToBroadCast);
+
+
+    @Override
+    public void update(ServerToClientMsg msg) throws IOException {
+        output.writeObject(msg);
         output.flush();
         output.reset();
-    }
-
-
-    @Override
-    public void onTokenColorSelected(String msg) throws RemoteException {
-
-    }
-
-    @Override
-    public void onGameJoined(String msg) throws RemoteException {
-
-    }
-
-    @Override
-    public void onGameCreated() throws RemoteException {
-
-    }
-
-    @Override
-    public void onChatMessageReceived() throws RemoteException {
-
     }
 }

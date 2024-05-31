@@ -1,15 +1,11 @@
 package it.polimi.ingsw.model.observer;
 
+import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
+
+import java.io.IOException;
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 
 public interface GameListener extends Remote {
 
-    void onTokenColorSelected(String msg) throws RemoteException;
-
-    void onGameJoined(String msg) throws RemoteException;
-
-    void onGameCreated() throws RemoteException;
-
-    void onChatMessageReceived() throws RemoteException;
+    void update(ServerToClientMsg msg) throws IOException;
 }

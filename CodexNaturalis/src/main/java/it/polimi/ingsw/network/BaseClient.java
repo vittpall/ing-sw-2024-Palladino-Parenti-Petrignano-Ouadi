@@ -5,17 +5,25 @@ import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
+import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 import it.polimi.ingsw.tui.*;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 abstract public class BaseClient implements VirtualView, GameListener {
     private Scanner scan;
     private ClientState currentState;
     private String username;
+    BlockingQueue<ServerToClientMsg> queue;
+
+    public BaseClient() {
+        queue = new LinkedBlockingQueue<>();
+    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -48,6 +56,31 @@ abstract public class BaseClient implements VirtualView, GameListener {
     public abstract PlayerState getCurrentPlayerState() throws IOException, InterruptedException;
 
     protected abstract String getServerCurrentState() throws IOException, InterruptedException;
+
+    protected abstract void onTokenColorSelected(String msg);
+
+    protected abstract void onGameJoined(String msg);
+
+    protected abstract void onGameCreated();
+
+    protected abstract void onChatMessageReceived();
+
+    protected void notificationHandler() throws InterruptedException {
+
+        while (true) {
+
+
+            ServerToClientMsg msg = queue.take();
+
+
+        }
+    }
+
+    @Override
+    public void update(ServerToClientMsg msg) {
+        queue.add(msg);
+
+    }
 
     protected void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
         boolean correctInput;
