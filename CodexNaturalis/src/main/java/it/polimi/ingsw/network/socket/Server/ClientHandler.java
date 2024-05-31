@@ -11,6 +11,7 @@ import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.rmi.RemoteException;
 
 public class ClientHandler implements GameListener {
     final SocketServer server;
@@ -43,12 +44,22 @@ public class ClientHandler implements GameListener {
         }
     }
 
-
-
-    @Override
-    public void update(ServerToClientMsg msg) throws IOException {
-        output.writeObject(msg);
+    public void sendMessage(ServerToClientMsg msgToBroadCast) throws IOException {
+        output.writeObject(msgToBroadCast);
         output.flush();
         output.reset();
     }
+    /**
+     * @param msg
+     * @throws RemoteException
+     */
+    @Override
+    public void update(ServerToClientMsg msg) throws RemoteException {
+        try {
+            sendMessage(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

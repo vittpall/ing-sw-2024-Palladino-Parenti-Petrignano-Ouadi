@@ -25,10 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 
 /**
  * This class represents the client side of a socket connection.
@@ -353,6 +350,7 @@ public class SocketClient extends BaseClient {
         }
     }
 
+
     @Override
     public void showState() {
         getClientCurrentState().display();
@@ -366,10 +364,12 @@ public class SocketClient extends BaseClient {
             while (true) {
                 ServerToClientMsg msg = (ServerToClientMsg) in.readObject();
                 TypeServerToClientMsg responseType = msg.getType();
-                responseQueues.computeIfAbsent(responseType, k -> new LinkedBlockingQueue<>()).put(msg);
                 if (responseType.equals(TypeServerToClientMsg.RECEIVED_MESSAGE)) {
-                    this.onChatMessageReceived();
+                    update(msg);
                 }
+                else
+                    responseQueues.computeIfAbsent(responseType, k -> new LinkedBlockingQueue<>()).put(msg);
+
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

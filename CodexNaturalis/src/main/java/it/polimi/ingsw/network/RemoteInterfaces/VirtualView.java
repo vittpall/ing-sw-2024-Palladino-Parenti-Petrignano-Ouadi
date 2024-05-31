@@ -97,4 +97,13 @@ public interface VirtualView extends Remote {
     void close() throws IOException, InterruptedException;
 
     PlayerState getCurrentPlayerState() throws IOException, InterruptedException;
+
+    void onTokenColorSelected(String msg) throws RemoteException;
+
+    void onGameJoined(String msg) throws RemoteException;
+
+    void onGameCreated() throws RemoteException;
+
+    void onChatMessageReceived() throws RemoteException;
+
 }

@@ -1,9 +1,11 @@
 package it.polimi.ingsw.network.socket.ServerToClientMsg;
 
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.io.Serializable;
+import java.rmi.RemoteException;
 
 
 public class ServerToClientMsg implements Serializable {
@@ -48,5 +50,6 @@ public class ServerToClientMsg implements Serializable {
         return this.idGame;
     }
 
-
+    public void functionToCall(VirtualView client) throws RemoteException {
+    }
 }

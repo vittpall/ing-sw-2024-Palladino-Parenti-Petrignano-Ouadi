@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model.observer;
 
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
+import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
+import it.polimi.ingsw.network.socket.ServerToClientMsg.TokenColorTaken;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -25,9 +28,11 @@ public class Observable {
         for (GameListener listener : listeners) {
             new Thread(() -> {
                 try {
-                    listener.update(new ServerToClientMsg(null));
-                } catch (RemoteException e) {
-                    e.printStackTrace();
+                    ReturnableObject<String> toShow = new ReturnableObject<>();
+                    toShow.setResponseReturnable(msg);
+                    ServerToClientMsg response = new TokenColorTaken(TypeServerToClientMsg.RECEIVED_MESSAGE);
+                    response.setResponse(toShow);
+                    listener.update(response);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

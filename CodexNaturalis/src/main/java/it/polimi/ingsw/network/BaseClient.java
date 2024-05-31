@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
+import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 import it.polimi.ingsw.tui.*;
 
 import java.io.IOException;
@@ -19,10 +20,17 @@ abstract public class BaseClient implements VirtualView, GameListener {
     private Scanner scan;
     private ClientState currentState;
     private String username;
-    BlockingQueue<ServerToClientMsg> queue;
+    protected BlockingQueue<ServerToClientMsg> notificationsQueue;
 
     public BaseClient() {
-        queue = new LinkedBlockingQueue<>();
+        notificationsQueue = new LinkedBlockingQueue<>();
+        new Thread(() ->{
+            try {
+                notificationsHandler();
+            } catch (InterruptedException | RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
     }
 
     public void setUsername(String username) {
@@ -57,29 +65,17 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     protected abstract String getServerCurrentState() throws IOException, InterruptedException;
 
-    protected abstract void onTokenColorSelected(String msg);
+    public abstract void onTokenColorSelected(String msg);
 
-    protected abstract void onGameJoined(String msg);
+    public abstract void onGameJoined(String msg);
 
-    protected abstract void onGameCreated();
+    public abstract void onGameCreated();
 
-    protected abstract void onChatMessageReceived();
-
-    protected void notificationHandler() throws InterruptedException {
-
-        while (true) {
-
-
-            ServerToClientMsg msg = queue.take();
-
-
-        }
-    }
+    public abstract void onChatMessageReceived();
 
     @Override
     public void update(ServerToClientMsg msg) {
-        queue.add(msg);
-
+        notificationsQueue.add(msg);
     }
 
     protected void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
@@ -250,6 +246,14 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 System.out.println("You have received a message");
             else
                 System.out.println("You have received a from " + msg.getSender());
+        }
+    }
+
+    @SuppressWarnings("InfiniteLoopStatement")
+    public void notificationsHandler() throws RemoteException, InterruptedException {
+        while (true) {
+            ServerToClientMsg msg = notificationsQueue.take();
+            msg.functionToCall(this);
         }
     }
 

@@ -15,6 +15,8 @@ import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
+import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
+import it.polimi.ingsw.tui.DrawCardState;
 import it.polimi.ingsw.tui.MainMenuState;
 import javafx.stage.Stage;
 
@@ -26,16 +28,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class RMIClient extends BaseClient {
     public final VirtualServer server;
     private int idGame;
     private int idClientIntoGame;
     private final boolean isGUIMode;
+    private final BlockingQueue<ServerToClientMsg> notificationsQueue;
 
     public RMIClient(VirtualServer server, String mode, Stage stage) throws RemoteException {
         UnicastRemoteObject.exportObject(this, 0);
         this.server = server;
+        this.notificationsQueue = new ArrayBlockingQueue<>(100);
         switch (mode) {
             case "GUI":
                 isGUIMode = true;
@@ -51,6 +57,14 @@ public class RMIClient extends BaseClient {
         }
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
+    public void loopNotifications() throws InterruptedException, RemoteException {
+        while(true)
+        {
+                ServerToClientMsg msg = notificationsQueue.take();
+                msg.functionToCall(this);
+        }
+    }
 
     public int getIdGame() {
         return idGame;
@@ -257,6 +271,14 @@ public class RMIClient extends BaseClient {
         return server.getPlayers(idGame);
     }
 
+
+    /**
+     * @param msg
+     */
+    @Override
+    public void update(ServerToClientMsg msg) {
+        notificationsQueue.add(msg);
+    }
 
     @Override
     synchronized public void onTokenColorSelected(String msg) {
