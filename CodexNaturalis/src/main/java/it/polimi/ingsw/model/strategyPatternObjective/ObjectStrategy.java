@@ -15,7 +15,7 @@ public class ObjectStrategy implements ObjectiveStrategy {
     /**
      * Constructor which assigns the Strategy that needs to be checked inside the class ObjectStrategy (the required object and the respective number of object
      *
-     * @param objectToCheck
+     * @param objectToCheck the map of objects to check
      */
 
     public ObjectStrategy(EnumMap<CornerObject, Integer> objectToCheck) {
@@ -28,7 +28,8 @@ public class ObjectStrategy implements ObjectiveStrategy {
      * on the PlayerDesk meet the requirements of the objective card.
      * in this case it will analyze the objective that requires a specific sequence of objects
      *
-     * @param desk
+     * @param desk the player's desk
+     * @return the number of times the objective is satisfied
      */
     public int isSatisfied(PlayerDesk desk) {
 
@@ -50,21 +51,26 @@ public class ObjectStrategy implements ObjectiveStrategy {
         return numberOfTimesVerifiedObjective;
     }
 
+
+    /**
+     * This method prints the object pattern objective.
+     *
+     * @param context the print context
+     */
     @Override
     public void print(PrintContext context) {
-        CardPrinter.Color backgroundColor = CardPrinter.Color.GREY; // Card background color
-
-        // Print the card with a gray background and objects listed with their counts
-        int y = 1; // Start printing from the second line to give a top margin
+        CardPrinter.Color backgroundColor = CardPrinter.Color.GREY;
+        context.printCenteredLine("", backgroundColor);
+        int y = 1;
         for (Map.Entry<CornerObject, Integer> entry : objectToCheck.entrySet()) {
-            if (y >= context.getCardHeight()) break; // Prevents writing outside the card lbounds
-            String lineContent = entry.getKey().toString() + ": " + entry.getValue(); // Prepare line content
+            if (y >= context.getCardHeight()) break;
+            String lineContent = entry.getKey().toString() + ": " + entry.getValue();
             y++;
             context.printCenteredLine(lineContent, backgroundColor);
         }
 
         // Fill the rest of the card with blank lines if needed
-        while (y < context.getCardHeight()) {
+        while (y < context.getCardHeight() - 1) {
             y++;
             context.printCenteredLine("", backgroundColor);
         }

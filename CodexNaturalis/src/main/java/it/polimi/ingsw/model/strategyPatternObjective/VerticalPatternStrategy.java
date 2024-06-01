@@ -56,7 +56,7 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
          */
         public static Offset fromCoordinates(int x, int y) {
             for (Offset offset : Offset.values()) {
-                if (offset.getY() == x && offset.getY() == y) {
+                if (offset.getX() == x && offset.getY() == y) {
                     return offset;
                 }
             }
@@ -88,23 +88,25 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
     public void print(PrintContext context) {
         int cardWidth = context.getCardWidth();
         int cardHeight = context.getCardHeight();
+
         CardPrinter.Color primaryColor = context.chooseColor(primarySource);
         CardPrinter.Color secondaryColor = context.chooseColor(secondarySource);
-
         CardPrinter.Color backgroundColor = CardPrinter.Color.GREY;
 
         // Calculate the central x position for the primary squares
         int centerOfCardX = cardWidth / 2;
         int centerOfCardY = cardHeight / 2;
-        int primaryX = centerOfCardX - 2;  // Adjusted to center primary squares a bit left
+        int primaryX = centerOfCardX - 2;
         int primaryY1 = centerOfCardY + 1;
+        primaryY1 += Math.signum(whichCorner.getY()) == 1 ? 1 : 0;
         int primaryY2 = primaryY1 - 1;
 
         // Calculate position for the secondary square using the offset
         int secondaryX = primaryX + whichCorner.getX() * 2;
         int secondaryY = primaryY1 - whichCorner.getY();
+        secondaryY += Math.signum(whichCorner.getY()) == 1 ? 1 : 0;
 
-        for (int y = 0; y < cardHeight; y++) {
+        for (int y = 1; y < cardHeight; y++) {
             StringBuilder line = new StringBuilder();
             for (int x = 0; x < cardWidth; x += 2) {
                 if ((x == primaryX) && (y == primaryY1 || y == primaryY2)) {
