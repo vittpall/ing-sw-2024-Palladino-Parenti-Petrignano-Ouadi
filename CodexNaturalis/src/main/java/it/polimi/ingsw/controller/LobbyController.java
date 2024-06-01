@@ -88,7 +88,7 @@ public class LobbyController {
         gameControllers.put(id, gameController);
 
         //to move the user to the another list, 'cause he is not the in the lobby anymore
-        lobbyListeners.notifyCreatedGame();
+  //      lobbyListeners.notifyCreatedGame();
         lobbyListeners.subscribeListener(playerListener);
 
 

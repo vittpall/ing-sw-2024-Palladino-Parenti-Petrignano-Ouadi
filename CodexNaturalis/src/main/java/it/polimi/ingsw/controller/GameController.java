@@ -79,7 +79,7 @@ public class GameController {
             content += "Waiting for " + (nPlayers - model.getPlayers().size()) + " players to join";
 
         addListenerList("WaitingForPlayersState");
-        listeners.get("WaitingForPlayersState").notifyJoinedGame(content);
+    //    listeners.get("WaitingForPlayersState").notifyJoinedGame(content);
         listeners.get("WaitingForPlayersState").subscribeListener(playerListener);
 
         return idPlayer;

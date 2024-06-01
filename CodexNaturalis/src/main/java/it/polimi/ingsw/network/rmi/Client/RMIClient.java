@@ -36,12 +36,11 @@ public class RMIClient extends BaseClient {
     private int idGame;
     private int idClientIntoGame;
     private final boolean isGUIMode;
-    private final BlockingQueue<ServerToClientMsg> notificationsQueue;
 
     public RMIClient(VirtualServer server, String mode, Stage stage) throws RemoteException {
+        super();
         UnicastRemoteObject.exportObject(this, 0);
         this.server = server;
-        this.notificationsQueue = new ArrayBlockingQueue<>(100);
         switch (mode) {
             case "GUI":
                 isGUIMode = true;
@@ -261,7 +260,6 @@ public class RMIClient extends BaseClient {
     public ArrayList<Player> getPlayers(int idGame) throws IOException {
         return server.getPlayers(idGame);
     }
-
 
     /**
      * @param msg

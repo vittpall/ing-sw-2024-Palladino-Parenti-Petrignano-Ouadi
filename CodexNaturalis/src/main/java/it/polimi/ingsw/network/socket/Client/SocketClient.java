@@ -49,6 +49,7 @@ public class SocketClient extends BaseClient {
      * @param mode The mode of the client, either "GUI" or "TUI".
      */
     public SocketClient(ObjectInputStream in, ObjectOutputStream out, String mode, Stage stage) {
+        super();
         this.in = in;
         this.out = out;
         switch (mode) {

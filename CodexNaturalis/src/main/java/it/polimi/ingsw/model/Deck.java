@@ -84,7 +84,7 @@ public class Deck {
     /**
      * @return the list of visible cards
      */
-    public List<GameCard> getVisibleCards() {
+    public ArrayList<GameCard> getVisibleCards() {
         return visibleCards;
     }
 }

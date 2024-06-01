@@ -32,6 +32,7 @@ public class Observable {
                     toShow.setResponseReturnable(msg);
                     ServerToClientMsg response = new TokenColorTaken(TypeServerToClientMsg.RECEIVED_MESSAGE);
                     response.setResponse(toShow);
+
                     listener.update(response);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
