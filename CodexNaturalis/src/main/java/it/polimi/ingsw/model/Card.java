@@ -68,6 +68,12 @@ public abstract class Card implements Serializable {
     }
 
 
+    /**
+     * This method is used to print the card.
+     *
+     * @param context  The context to print the card in.
+     * @param faceDown A boolean value to determine if the card should be printed face down.
+     */
     public abstract void print(PrintContext context, boolean faceDown);
 
 

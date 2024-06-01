@@ -16,7 +16,7 @@ import java.util.Arrays;
         @JsonSubTypes.Type(value = GoldCard.class, name = "gold"),
         @JsonSubTypes.Type(value = StarterCard.class, name = "starter")
 })
-abstract public class GameCard extends Card {
+public abstract class GameCard extends Card {
 
     private final ArrayList<Resource> frontSideResources;
     private final Resource backSideResource;
@@ -69,7 +69,6 @@ abstract public class GameCard extends Card {
     public Corner[] getCorners() {
         return Arrays.copyOf(corners, corners.length);
     }
-
 
 
     @Override

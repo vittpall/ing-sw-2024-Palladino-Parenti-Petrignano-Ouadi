@@ -4,74 +4,87 @@ import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * This class defines the deck, which could be made of gold or resource card. The UsableCard represent the Deck itself while the VisibleCard are the two cards set next to the deck.
  */
 public class Deck {
-    /**
-     * Final prevent from changing the reference to UsableCard or VisibleCard
-     */
-    private final ArrayList<GameCard> UsableCards;
-    private final ArrayList<GameCard> VisibleCards;
+
+    private final ArrayList<GameCard> usableCards;
+    private final ArrayList<GameCard> visibleCards;
 
     /**
      * Default constructor, it creates the deck randomly and takes two card from it and set them as visible ones.
+     *
+     * @param getUsable the list of usable cards
      */
-    public Deck(ArrayList<GameCard> GetUsable) {
-        UsableCards = new ArrayList<>();
-        VisibleCards = new ArrayList<>();
+    public Deck(List<GameCard> getUsable) {
+        usableCards = new ArrayList<>();
+        visibleCards = new ArrayList<>();
 
-        UsableCards.addAll(GetUsable);
-        Shuffle(UsableCards);
+        usableCards.addAll(getUsable);
+        shuffle(usableCards);
     }
 
+    /**
+     * Makes the top two cards of the deck visible.
+     */
     public void makeTopCardsVisible() {
-        VisibleCards.add(UsableCards.getLast());
-        UsableCards.removeLast();
-        VisibleCards.add(UsableCards.getLast());
-        UsableCards.removeLast();
+        visibleCards.add(usableCards.getLast());
+        usableCards.removeLast();
+        visibleCards.add(usableCards.getLast());
+        usableCards.removeLast();
     }
 
     /**
      * Shuffle Randomly the Deck created in the constructor
+     *
+     * @param deckToShuffle the deck to shuffle
      */
-    private void Shuffle(ArrayList<GameCard> DeckToShuffle) {
-        Collections.shuffle(DeckToShuffle);
+    private void shuffle(ArrayList<GameCard> deckToShuffle) {
+        Collections.shuffle(deckToShuffle);
     }
 
     /**
      * Returns one of the visible cards to the user and sets another one taking it from the UsableCard
      *
-     * @param card
+     * @param card the card to be returned
      * @return the VisibleCard chosen
+     * @throws CardNotFoundException if the card is not found
      */
     public GameCard drawVisibleCard(GameCard card) throws CardNotFoundException {
-        if (VisibleCards.indexOf(card) == -1)
+        if (!visibleCards.contains(card))
             throw new CardNotFoundException("Card not found");
 
-        VisibleCards.remove(card);
-        VisibleCards.add(UsableCards.removeLast());
+        visibleCards.remove(card);
+        visibleCards.add(usableCards.removeLast());
         return card;
     }
 
     /**
      * Returns to the user a card taken from the UsableCard
      *
-     * @return card
+     * @return the drawn card
      */
     public GameCard drawDeckCard() {
-        GameCard LastCard;
-        LastCard = UsableCards.getLast();
-        UsableCards.remove(LastCard);
-        return LastCard;
+        GameCard lastCard;
+        lastCard = usableCards.getLast();
+        usableCards.remove(lastCard);
+        return lastCard;
     }
 
-    public ArrayList<GameCard> getUsableCards() {
-        return UsableCards;
+    /**
+     * @return the list of usable cards
+     */
+    public List<GameCard> getUsableCards() {
+        return usableCards;
     }
 
-    public ArrayList<GameCard> getVisibleCards() {
-        return VisibleCards;
+    /**
+     * @return the list of visible cards
+     */
+    public List<GameCard> getVisibleCards() {
+        return visibleCards;
     }
 }

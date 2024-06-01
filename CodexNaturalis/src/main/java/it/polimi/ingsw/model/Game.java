@@ -10,7 +10,6 @@ import it.polimi.ingsw.util.GameCardLoader;
 import it.polimi.ingsw.util.ObjectiveCardLoader;
 
 import java.awt.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -23,7 +22,7 @@ import java.util.Arrays;
  * gameStarted is set as true as soon as nPlayer players have joined the game
  * starterCards and objectiveCards are lists of all the possible starter and objective cards that are not played or drawn yet
  */
-public class Game implements Serializable {
+public class Game {
     private final int nPlayer;
     private final ArrayList<Player> players;
     private ObjectiveCard[] sharedObjectiveCards;
@@ -61,16 +60,15 @@ public class Game implements Serializable {
      * it is called when gameStarted is set as true
      */
     public void setUpGame() {
-        //vengono creati i deck
         ArrayList<GameCard> usableGoldCard = new ArrayList<>();
         ArrayList<GameCard> usableResourceCard = new ArrayList<>();
-        //inizializzazione carte GameCard
+
         GameCardLoader gameCardLoader = new GameCardLoader();
         for (GameCard card : gameCardLoader.loadGameCards()) {
             if (card instanceof GoldCard) {
                 usableGoldCard.add(card);
-            } else if (card instanceof StarterCard) {
-                starterCards.add((StarterCard) card);
+            } else if (card instanceof StarterCard starterCard) {
+                starterCards.add(starterCard);
             } else if (card instanceof ResourceCard) {
                 usableResourceCard.add(card);
             }
@@ -107,7 +105,7 @@ public class Game implements Serializable {
     public ArrayList<TokenColor> getAvailableColors() {
         ArrayList<TokenColor> usedColors = new ArrayList<>();
         for (Player player : players) {
-            if(player.getTokenColor() != null)
+            if (player.getTokenColor() != null)
                 usedColors.add(player.getTokenColor());
         }
         ArrayList<TokenColor> availableColors = new ArrayList<>();
