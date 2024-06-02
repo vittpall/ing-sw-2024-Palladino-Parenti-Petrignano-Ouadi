@@ -55,8 +55,9 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
 
         int numberOfTimesVerifiedObjective = 0;
         HashMap<Point, GameCard> deskToUse = desk.getDesk();
-        Point starterCardLocation = new Point(0, 0);
-        deskToUse.remove(starterCardLocation);
+//        Point starterCardLocation = new Point(0, 0);
+        //the position 0,0 is used in most of the cases, but it won't be checked inside the game
+ //       deskToUse.remove(starterCardLocation);
 
         //iterate over desk until I found a position where the card's color is the primarySource
         for (Point point : desk.getDesk().keySet()) {
@@ -122,7 +123,7 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
             changeDiagonal = -1;
         }
 
-        if (!deskToUse.containsKey(startingPoint))
+        if (!deskToUse.containsKey(startingPoint) || !deskToUse.get(startingPoint).getBackSideResource().equals(primarySource))
             return false;
 
         //scan the diagonal until it finds a card that doesn't match the color of the research objective going up and left or right depending on the changeDiagonal
@@ -130,17 +131,24 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
                 deskToUse.get(new Point(startingPoint.x + i * changeDiagonal, startingPoint.y + i)).getBackSideResource().equals(primarySource)) {
             i++;
         }
+
+        //if i==0 it means that the first checked card does not correspond to the starting diagonal's card then it can return false.
+        if(i == 0)
+            return false;
+
         i--;
 
         Point firstPoint = new Point(startingPoint.x + i * changeDiagonal, startingPoint.y + i);
         Point secondPoint = new Point(firstPoint.x - changeDiagonal, firstPoint.y - 1);
         Point thirdPoint = new Point(secondPoint.x - changeDiagonal, secondPoint.y - 1);
 
+
         if (deskToUse.get(firstPoint).getBackSideResource() == primarySource &&
                 deskToUse.containsKey(secondPoint) && deskToUse.get(secondPoint).getBackSideResource() == primarySource &&
                 deskToUse.containsKey(thirdPoint) && deskToUse.get(thirdPoint).getBackSideResource() == primarySource) {
             isVerified = true;
         }
+
 
         deskToUse.remove(firstPoint);
         deskToUse.remove(secondPoint);

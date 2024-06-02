@@ -242,7 +242,8 @@ class DiagonalPatternStrategyTest {
         }
 
 
-        StarterCard card1 = new StarterCard(null, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+     //   StarterCard card1 = new StarterCard(null, imageFrontPath, imageBackPath, 0, pointType, null, corners);
+        ResourceCard card1 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
         ResourceCard card2 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
         ResourceCard card3 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
         ResourceCard card4 = new ResourceCard(Resource.INSECT_KINGDOM, imageFrontPath, imageBackPath, 0, pointType, null, corners);
