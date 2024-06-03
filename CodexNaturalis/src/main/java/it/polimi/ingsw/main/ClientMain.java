@@ -27,7 +27,7 @@ public class ClientMain extends Application {
     @Override
     public void start(Stage stage) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter server IP address (default is 127.0.0.1): ");
+        System.out.print("Enter server IP address (empty is 127.0.0.1): ");
         serverAddress = scanner.nextLine().trim();
         if (serverAddress.isEmpty()) {
             serverAddress = "127.0.0.1";

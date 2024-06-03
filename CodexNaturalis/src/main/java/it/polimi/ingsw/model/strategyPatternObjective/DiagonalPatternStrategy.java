@@ -55,9 +55,8 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
 
         int numberOfTimesVerifiedObjective = 0;
         HashMap<Point, GameCard> deskToUse = desk.getDesk();
-//        Point starterCardLocation = new Point(0, 0);
-        //the position 0,0 is used in most of the cases, but it won't be checked inside the game
- //       deskToUse.remove(starterCardLocation);
+        Point starterCardLocation = new Point(0, 0);
+        deskToUse.remove(starterCardLocation);
 
         //iterate over desk until I found a position where the card's color is the primarySource
         for (Point point : desk.getDesk().keySet()) {
