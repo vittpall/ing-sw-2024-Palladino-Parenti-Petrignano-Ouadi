@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.observer.GameListener;
+import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.ClientToServerMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
@@ -49,14 +50,17 @@ public class ClientHandler implements GameListener {
         output.flush();
         output.reset();
     }
+
     /**
-     * @param msg
-     * @throws RemoteException
+     * @param notification the notification to send to the client
+     * @throws RemoteException if the client is not reachable
      */
     @Override
-    public void update(ServerToClientMsg msg) throws RemoteException {
+    public void update(ServerNotification notification) throws RemoteException {
         try {
-            sendMessage(msg);
+            output.writeObject(notification);
+            output.flush();
+            output.reset();
         } catch (IOException e) {
             e.printStackTrace();
         }

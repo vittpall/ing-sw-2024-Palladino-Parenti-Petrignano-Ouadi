@@ -15,8 +15,6 @@ import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
-import it.polimi.ingsw.tui.DrawCardState;
 import it.polimi.ingsw.tui.MainMenuState;
 import javafx.stage.Stage;
 
@@ -28,14 +26,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
 public class RMIClient extends BaseClient {
     public final VirtualServer server;
     private int idGame;
     private int idClientIntoGame;
-    private final boolean isGUIMode;
+
 
     public RMIClient(VirtualServer server, String mode, Stage stage) throws RemoteException {
         super();
@@ -43,11 +39,11 @@ public class RMIClient extends BaseClient {
         this.server = server;
         switch (mode) {
             case "GUI":
-                isGUIMode = true;
+                setGUIMode(true);
                 setCurrentState(new MainMenuStateGUI(stage, this));
                 break;
             case "TUI":
-                isGUIMode = false;
+                setGUIMode(false);
                 setScan(new Scanner(System.in));
                 setCurrentState(new MainMenuState(this, getScan()));
                 break;
@@ -198,13 +194,13 @@ public class RMIClient extends BaseClient {
     @Override
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
-        if (!isGUIMode)
+        if (!isGUIMode())
             inputHandler();
         else
             showState();
     }
 
-    public boolean isGameStarted() throws IOException, InterruptedException {
+    public boolean isGameStarted() throws IOException {
         return server.isGameStarted(idGame);
     }
 
@@ -261,44 +257,6 @@ public class RMIClient extends BaseClient {
         return server.getPlayers(idGame);
     }
 
-    /**
-     * @param msg
-     */
-    @Override
-    public void update(ServerToClientMsg msg) {
-        notificationsQueue.add(msg);
-    }
-
-    @Override
-    synchronized public void onTokenColorSelected(String msg) {
-        if (!isGUIMode) {
-            System.out.println(msg);
-            getClientCurrentState().display();
-        } else {
-            getClientCurrentState().refresh(msg);
-        }
-    }
-
-    @Override
-    synchronized public void onGameJoined(String msg) {
-        if (!isGUIMode) {
-            System.out.println(msg);
-            getClientCurrentState().display();
-        }
-        else
-            getClientCurrentState().refresh(msg);
-
-    }
-
-    @Override
-    synchronized public void onGameCreated(String msg) {
-        if (!isGUIMode) {
-            System.out.println(msg);
-            getClientCurrentState().display();
-        }
-        else
-            getClientCurrentState().refresh(msg);
-    }
 
     @Override
     synchronized public void onChatMessageReceived() {

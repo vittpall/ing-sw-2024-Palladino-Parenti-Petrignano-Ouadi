@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.*;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
+import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.*;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 import it.polimi.ingsw.tui.MainMenuState;
@@ -25,7 +26,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * This class represents the client side of a socket connection.
@@ -35,7 +39,6 @@ public class SocketClient extends BaseClient {
 
     private final ObjectOutputStream out;
     private final ObjectInputStream in;
-    private String username;
     private final ConcurrentMap<TypeServerToClientMsg, BlockingQueue<ServerToClientMsg>> responseQueues = new ConcurrentHashMap<>();
     private int idGame;
     private int idClientIntoGame;
@@ -112,7 +115,7 @@ public class SocketClient extends BaseClient {
     @Override
     public void setObjectiveCard(int idCard) throws IOException, CardNotFoundException, InterruptedException {
         SetObjectiveCardMsg request = new SetObjectiveCardMsg(idGame, idClientIntoGame, idCard);
-        ServerToClientMsg response = sendRequest(request);
+        sendRequest(request);
     }
 
     @Override
@@ -143,16 +146,16 @@ public class SocketClient extends BaseClient {
     @Override
     @SuppressWarnings("unchecked")
     public ArrayList<Message> getMessages(String receiver) throws IOException, InterruptedException {
-        GetMessageMsg request = new GetMessageMsg(receiver, this.idGame, this.username);
+        GetMessageMsg request = new GetMessageMsg(receiver, this.idGame, getUsername());
         ServerToClientMsg response = sendRequest(request);
         return (ArrayList<Message>) response.getResponse().getResponseReturnable();
     }
 
     @Override
     public void sendMessage(String receiver, String message) throws IOException, InterruptedException {
-        Message msg = new Message(this.username, receiver, message, this.idGame);
+        Message msg = new Message(getUsername(), receiver, message, this.idGame);
         SendMessageMsg request = new SendMessageMsg(msg);
-        ServerToClientMsg response = sendRequest(request);
+        sendRequest(request);
     }
 
     @Override
@@ -173,7 +176,7 @@ public class SocketClient extends BaseClient {
 
     @Override
     public void close() throws IOException, InterruptedException {
-        ClosedConnectionMsg request = new ClosedConnectionMsg(username, idGame);
+        ClosedConnectionMsg request = new ClosedConnectionMsg(getUsername(), idGame);
         System.out.println("Closing connection!!!");
         ServerToClientMsg response = sendRequest(request);
         response.getResponse();
@@ -197,15 +200,15 @@ public class SocketClient extends BaseClient {
     @Override
     public void closeGame() throws IOException, InterruptedException {
         CloseGameMsg request = new CloseGameMsg(idGame);
-        ServerToClientMsg response = sendRequest(request);
+        sendRequest(request);
     }
 
 
     /**
-     * @param idGame
-     * @return
-     * @throws IOException
-     * @throws InterruptedException
+     * @param idGame the id of the game
+     * @return the number of players in the game
+     * @throws IOException          if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
      */
     @Override
     public int getnPlayer(int idGame) throws IOException, InterruptedException {
@@ -254,7 +257,7 @@ public class SocketClient extends BaseClient {
     @Override
     public void playStarterCard(boolean playedFacedDown) throws IOException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException, InterruptedException {
         PlayStarterCard request = new PlayStarterCard(idGame, idClientIntoGame, playedFacedDown);
-        ServerToClientMsg response = sendRequest(request);
+        sendRequest(request);
     }
 
     @Override
@@ -294,21 +297,21 @@ public class SocketClient extends BaseClient {
     @Override
     public void playCard(int chosenCard, boolean faceDown, Point chosenPosition) throws IOException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException, InterruptedException {
         PlayCardMsg request = new PlayCardMsg(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
-        ServerToClientMsg response = sendRequest(request);
+        sendRequest(request);
     }
 
 
     @Override
     public void drawCard(int input, int inVisible) throws IOException, CardNotFoundException, InterruptedException {
-        DrawCardMsg request = new DrawCardMsg(idGame, input, inVisible, this.username + " has drawn a card");
-        ServerToClientMsg response = sendRequest(request);
+        DrawCardMsg request = new DrawCardMsg(idGame, input, inVisible, getUsername() + " has drawn a card");
+        sendRequest(request);
     }
 
 
     @Override
     @SuppressWarnings("unchecked")
     public ArrayList<TokenColor> getAvailableColors() throws IOException, InterruptedException {
-        AvailableColorMsg request = new AvailableColorMsg(username, idGame);
+        AvailableColorMsg request = new AvailableColorMsg(getUsername(), idGame);
         ServerToClientMsg response = sendRequest(request);
         return (ArrayList<TokenColor>) response.getResponse().getResponseReturnable();
     }
@@ -316,7 +319,7 @@ public class SocketClient extends BaseClient {
     @Override
     public void setTokenColor(TokenColor tokenColor) throws IOException, InterruptedException {
         SelectTokenColorMsg request = new SelectTokenColorMsg(idGame, idClientIntoGame, tokenColor);
-        ServerToClientMsg response = sendRequest(request);
+        sendRequest(request);
 
     }
 
@@ -328,7 +331,7 @@ public class SocketClient extends BaseClient {
     }
 
     public int getPoints() throws IOException, InterruptedException {
-        GetPoints request = new GetPoints(username, idGame, idClientIntoGame);
+        GetPoints request = new GetPoints(getUsername(), idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
         return (int) response.getResponse().getResponseReturnable();
     }
@@ -363,14 +366,13 @@ public class SocketClient extends BaseClient {
     private void runVirtualServer() {
         try {
             while (true) {
-                ServerToClientMsg msg = (ServerToClientMsg) in.readObject();
-                TypeServerToClientMsg responseType = msg.getType();
-                if (responseType.equals(TypeServerToClientMsg.RECEIVED_MESSAGE)) {
-                    update(msg);
-                }
-                else
+                Object obj = in.readObject();
+                if (obj instanceof ServerNotification notification) {
+                    update(notification);
+                } else if (obj instanceof ServerToClientMsg msg) {
+                    TypeServerToClientMsg responseType = msg.getType();
                     responseQueues.computeIfAbsent(responseType, k -> new LinkedBlockingQueue<>()).put(msg);
-
+                }
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -405,26 +407,8 @@ public class SocketClient extends BaseClient {
 
 
     @Override
-    public void onTokenColorSelected(String msg) {
-
-
-    }
-
-    @Override
-    public void onGameJoined(String msg) {
-
-    }
-
-    @Override
-    public void onGameCreated(String msg) {
-
-    }
-
-    @Override
     public void onChatMessageReceived() {
 
     }
-
-
 
 }

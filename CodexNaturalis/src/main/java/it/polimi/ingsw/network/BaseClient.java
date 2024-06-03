@@ -5,8 +5,7 @@ import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
+import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.tui.*;
 
 import java.io.IOException;
@@ -20,17 +19,26 @@ abstract public class BaseClient implements VirtualView, GameListener {
     private Scanner scan;
     private ClientState currentState;
     private String username;
-    protected BlockingQueue<ServerToClientMsg> notificationsQueue;
+    protected BlockingQueue<ServerNotification> notificationsQueue;
+    private boolean isGUIMode;
 
     public BaseClient() {
         notificationsQueue = new LinkedBlockingQueue<>();
-        new Thread(() ->{
+        new Thread(() -> {
             try {
                 notificationsHandler();
             } catch (InterruptedException | RemoteException e) {
                 throw new RuntimeException(e);
             }
         }).start();
+    }
+
+    public void setGUIMode(boolean GUIMode) {
+        isGUIMode = GUIMode;
+    }
+
+    public boolean isGUIMode() {
+        return isGUIMode;
     }
 
     public void setUsername(String username) {
@@ -65,17 +73,38 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     protected abstract String getServerCurrentState() throws IOException, InterruptedException;
 
-    public abstract void onTokenColorSelected(String msg);
+    public synchronized void onTokenColorSelected(String msg) {
+        if (!isGUIMode) {
+            System.out.println(msg);
+            getClientCurrentState().display();
+        } else {
+            getClientCurrentState().refresh(msg);
+        }
+    }
 
-    public abstract void onGameJoined(String msg);
+    public synchronized void onGameJoined(String msg) {
+        if (!isGUIMode) {
+            System.out.println(msg);
+            getClientCurrentState().display();
+        } else
+            getClientCurrentState().refresh(msg);
 
-    public abstract void onGameCreated(String msg);
+    }
+
+    public synchronized void onGameCreated(String msg) {
+        if (!isGUIMode) {
+            System.out.println(msg);
+            getClientCurrentState().display();
+        } else
+            getClientCurrentState().refresh(msg);
+    }
+
 
     public abstract void onChatMessageReceived();
 
     @Override
-    public void update(ServerToClientMsg msg) {
-        notificationsQueue.add(msg);
+    public void update(ServerNotification notification) {
+        notificationsQueue.add(notification);
     }
 
     protected void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
@@ -126,7 +155,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     else
                         checkState = true;
                     if (checkState) {
-                        synchronized (this){
+                        synchronized (this) {
                             showState();
                         }
                         boolean correctInput2 = false;
@@ -254,8 +283,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
     @SuppressWarnings("InfiniteLoopStatement")
     public void notificationsHandler() throws RemoteException, InterruptedException {
         while (true) {
-            ServerToClientMsg msg = notificationsQueue.take();
-            msg.functionToCall(this);
+            ServerNotification msg = notificationsQueue.take();
+            msg.notifyClient(this);
         }
     }
 

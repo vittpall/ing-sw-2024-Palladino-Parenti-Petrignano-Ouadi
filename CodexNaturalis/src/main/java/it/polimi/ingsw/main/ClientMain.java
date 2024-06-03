@@ -18,6 +18,7 @@ import java.util.Scanner;
 public class ClientMain extends Application {
 
     private BaseClient client;
+    private String serverAddress;
 
     public static void main(String[] args) {
         launch(args); // Use launch to start JavaFX application and pass arguments
@@ -26,6 +27,11 @@ public class ClientMain extends Application {
     @Override
     public void start(Stage stage) {
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter server IP address (default is 127.0.0.1): ");
+        serverAddress = scanner.nextLine().trim();
+        if (serverAddress.isEmpty()) {
+            serverAddress = "127.0.0.1";
+        }
         String[] options = {
                 "TUI + SOCKET",
                 "TUI + RMI",
@@ -51,12 +57,11 @@ public class ClientMain extends Application {
             }
         } catch (Exception e) {
             System.out.println("Failed to initialize client: " + e.getMessage());
-            e.printStackTrace();
         }
     }
 
     private void setupSocketClient(String interfaceType, Stage stage) throws IOException, ClassNotFoundException, InterruptedException {
-        Socket serverSocket = new Socket("127.0.0.1", 2345);
+        Socket serverSocket = new Socket(serverAddress, 2345);
         ObjectOutputStream socketTx = new ObjectOutputStream(serverSocket.getOutputStream());
         ObjectInputStream socketRx = new ObjectInputStream(serverSocket.getInputStream());
         this.client = new SocketClient(socketRx, socketTx, interfaceType, stage);
@@ -64,7 +69,7 @@ public class ClientMain extends Application {
     }
 
     private void setupRMIClient(String interfaceType, Stage stage) throws Exception {
-        Registry registry = LocateRegistry.getRegistry("127.0.0.1", 1234);
+        Registry registry = LocateRegistry.getRegistry(serverAddress, 1234);
         VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
         this.client = new RMIClient(server, interfaceType, stage);
         client.run();

@@ -1,11 +1,11 @@
 package it.polimi.ingsw.model.observer;
 
-import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
-import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.*;
+import it.polimi.ingsw.network.notifications.GameCreatedNotification;
+import it.polimi.ingsw.network.notifications.GameJoinedNotification;
+import it.polimi.ingsw.network.notifications.ServerNotification;
+import it.polimi.ingsw.network.notifications.TokenColorTakenNotification;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.HashSet;
 
 public class Observable {
@@ -24,52 +24,24 @@ public class Observable {
     }
 
     public void notifyColorSelection(String msg) {
-        for (GameListener listener : listeners) {
-            new Thread(() -> {
-                try {
-                    ReturnableObject<String> toShow = new ReturnableObject<>();
-                    toShow.setResponseReturnable(msg);
-                    ServerToClientMsg response = new TokenColorTaken(TypeServerToClientMsg.RECEIVED_MESSAGE);
-                    response.setResponse(toShow);
-
-                    listener.update(response);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
-        }
+        notifyListeners(new TokenColorTakenNotification(msg));
     }
 
-    public void notifyJoinedGame(String msg) throws RemoteException {
-        for (GameListener listener : listeners) {
-            new Thread(() -> {
-                try {
-                    ReturnableObject<String> toShow = new ReturnableObject<>();
-                    toShow.setResponseReturnable(msg);
-                    ServerToClientMsg response = new GameJoined(TypeServerToClientMsg.RECEIVED_MESSAGE);
-                    response.setResponse(toShow);
-
-                    listener.update(response);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }).start();
-        }
+    public void notifyJoinedGame(String msg) {
+        notifyListeners(new GameJoinedNotification(msg));
     }
+
     public void notifyCreatedGame(String msg) {
+        notifyListeners(new GameCreatedNotification(msg));
+    }
+
+    private void notifyListeners(ServerNotification notification) {
         for (GameListener listener : listeners) {
             new Thread(() -> {
                 try {
-                    ReturnableObject<String> toShow = new ReturnableObject<>();
-                    toShow.setResponseReturnable(msg);
-                    ServerToClientMsg response = new GameCreated(TypeServerToClientMsg.RECEIVED_MESSAGE);
-                    response.setResponse(toShow);
-
-                    listener.update(response);
+                    listener.update(notification);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e);
                 }
             }).start();
         }

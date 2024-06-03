@@ -32,6 +32,8 @@ module PSP44 {
     exports it.polimi.ingsw.util;
     exports it.polimi.ingsw;
     exports it.polimi.ingsw.model.observer;
+    exports it.polimi.ingsw.network;
+    exports it.polimi.ingsw.network.notifications;
     opens it.polimi.ingsw.gui to javafx.fxml;
     opens it.polimi.ingsw.gui.Controller to javafx.fxml;
     opens it.polimi.ingsw.model to com.fasterxml.jackson.databind;
