@@ -28,7 +28,7 @@ public interface VirtualServer extends Remote {
 
     boolean checkUsername(String username, GameListener playerListener) throws RemoteException;
 
-    ArrayList<Integer> getNotStartedGames() throws RemoteException;
+    ArrayList<Integer> getNotStartedGames(GameListener lobbyListener) throws RemoteException;
 
     ArrayList<Player> getAllPlayers(int gameId) throws RemoteException;
 

@@ -16,7 +16,7 @@ public class GetNotStartedGamesMsg extends ClientToServerMsg {
     @Override
     public ReturnableObject<ArrayList<Integer>> functionToCall(LobbyController controller, GameListener playerListener) {
         ReturnableObject<ArrayList<Integer>> response = new ReturnableObject<>();
-        response.setResponseReturnable(controller.getVisibleGames());
+        response.setResponseReturnable(controller.getVisibleGames(playerListener));
         return response;
     }
 

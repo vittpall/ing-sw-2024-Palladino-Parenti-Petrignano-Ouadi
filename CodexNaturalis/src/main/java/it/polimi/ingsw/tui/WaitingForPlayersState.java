@@ -17,7 +17,7 @@ public class WaitingForPlayersState implements ClientState{
     @Override
     public void display() {
         try{
-            System.out.println("\n⚔️  _________________________________________________  ⚔️");
+            System.out.println("⚔️  _________________________________________________  ⚔️");
             if (client.getnPlayer(client.getIdGame()) > client.getPlayers(client.getIdGame()).size()){
                 System.out.println("|   Waiting for players to join the game...           |");
                 System.out.println("|   Current players:                                  |");
@@ -32,6 +32,12 @@ public class WaitingForPlayersState implements ClientState{
                 System.out.println("|   Please select 1 to start the game as soon as the  |");
                 System.out.println("|   right number of players have joined.              |");
             }else
+                System.out.println("|   Current players:                                  |");
+                int i=0;
+                for (Player player : client.getPlayers(client.getIdGame())) {
+                    System.out.println("|   Player "+i+" : "+player.getUsername()+"                                   |");
+                    i++;
+                }
                 System.out.println("|   Please select 1 to start the game.                |");
             System.out.println("⚔️  _______________________________________________  ⚔️\n");
         }catch(IOException | InterruptedException  e){

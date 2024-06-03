@@ -2,8 +2,7 @@ package it.polimi.ingsw.model.observer;
 
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
-import it.polimi.ingsw.network.socket.ServerToClientMsg.TokenColorTaken;
+import it.polimi.ingsw.network.socket.ServerToClientMsg.*;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -45,7 +44,12 @@ public class Observable {
         for (GameListener listener : listeners) {
             new Thread(() -> {
                 try {
-                    listener.update(new ServerToClientMsg(null));
+                    ReturnableObject<String> toShow = new ReturnableObject<>();
+                    toShow.setResponseReturnable(msg);
+                    ServerToClientMsg response = new GameJoined(TypeServerToClientMsg.RECEIVED_MESSAGE);
+                    response.setResponse(toShow);
+
+                    listener.update(response);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -54,12 +58,16 @@ public class Observable {
             }).start();
         }
     }
-
-    public void notifyCreatedGame() {
+    public void notifyCreatedGame(String msg) {
         for (GameListener listener : listeners) {
             new Thread(() -> {
                 try {
-                    listener.update(new ServerToClientMsg(null));
+                    ReturnableObject<String> toShow = new ReturnableObject<>();
+                    toShow.setResponseReturnable(msg);
+                    ServerToClientMsg response = new GameCreated(TypeServerToClientMsg.RECEIVED_MESSAGE);
+                    response.setResponse(toShow);
+
+                    listener.update(response);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

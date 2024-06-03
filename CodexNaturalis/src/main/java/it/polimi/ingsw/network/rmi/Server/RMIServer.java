@@ -57,8 +57,8 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public ArrayList<Integer> getNotStartedGames() throws RemoteException {
-        return lobbyController.getVisibleGames();
+    public ArrayList<Integer> getNotStartedGames(GameListener lobbyListener) throws RemoteException {
+        return lobbyController.getVisibleGames(lobbyListener);
     }
 
     @Override

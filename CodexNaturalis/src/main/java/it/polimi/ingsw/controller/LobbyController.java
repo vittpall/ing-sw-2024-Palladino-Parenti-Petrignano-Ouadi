@@ -37,11 +37,7 @@ public class LobbyController {
 
     public boolean checkUsername(String username, GameListener lobbyListener) {
         synchronized (this.usernames) {
-            boolean addedUsername = usernames.add(username);
-            if (addedUsername) {
-                lobbyListeners.subscribeListener(lobbyListener);
-            }
-            return addedUsername;
+            return usernames.add(username);
         }
 
     }
@@ -50,16 +46,16 @@ public class LobbyController {
         synchronized (this.usernames) {
             usernames.remove(username);
         }
-
     }
 
-    public ArrayList<Integer> getVisibleGames() {
+    public ArrayList<Integer> getVisibleGames(GameListener lobbyListener) {
         ArrayList<Integer> visibleGameControllers = new ArrayList<>();
         for (int id : gameControllers.keySet()) {
             if (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer()) {
                 visibleGameControllers.add(id);
             }
         }
+        lobbyListeners.subscribeListener(lobbyListener);
         return visibleGameControllers;
     }
 
@@ -72,6 +68,9 @@ public class LobbyController {
     }
 
     public int joinGame(int id, String username, GameListener playerListener) throws InterruptedException, IOException {
+        lobbyListeners.unSubscribeListener(playerListener);
+        String msg = "\nA player has joined the game " + id;
+        lobbyListeners.notifyJoinedGame(msg);
         return gameControllers.get(id).joinGame(username, playerListener);
     }
 
@@ -87,12 +86,11 @@ public class LobbyController {
         GameController gameController = new GameController(nPlayers);
         gameControllers.put(id, gameController);
 
-        //to move the user to the another list, 'cause he is not the in the lobby anymore
-  //      lobbyListeners.notifyCreatedGame();
-        lobbyListeners.subscribeListener(playerListener);
-
-
         int nPlayer = this.joinGame(id, username, playerListener);
+        lobbyListeners.unSubscribeListener(playerListener);
+        String msg = "The game " + id + " has been created.";
+        lobbyListeners.notifyCreatedGame(msg);
+
         if (nPlayer == 0) {
             return id;
         }

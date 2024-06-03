@@ -72,7 +72,7 @@ public class RMIClient extends BaseClient {
 
     @Override
     public ArrayList<Integer> getNotStartedGames() throws RemoteException {
-        return server.getNotStartedGames();
+        return server.getNotStartedGames(this);
     }
 
     @Override
@@ -281,17 +281,23 @@ public class RMIClient extends BaseClient {
 
     @Override
     synchronized public void onGameJoined(String msg) {
-        if (!isGUIMode)
+        if (!isGUIMode) {
             System.out.println(msg);
+            getClientCurrentState().display();
+        }
         else
             getClientCurrentState().refresh(msg);
 
     }
 
-
     @Override
-    synchronized public void onGameCreated() {
-        System.out.println("Game created");
+    synchronized public void onGameCreated(String msg) {
+        if (!isGUIMode) {
+            System.out.println(msg);
+            getClientCurrentState().display();
+        }
+        else
+            getClientCurrentState().refresh(msg);
     }
 
     @Override

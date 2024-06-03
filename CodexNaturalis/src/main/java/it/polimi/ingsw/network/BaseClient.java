@@ -69,7 +69,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     public abstract void onGameJoined(String msg);
 
-    public abstract void onGameCreated();
+    public abstract void onGameCreated(String msg);
 
     public abstract void onChatMessageReceived();
 
@@ -126,7 +126,9 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     else
                         checkState = true;
                     if (checkState) {
-                        showState();
+                        synchronized (this){
+                            showState();
+                        }
                         boolean correctInput2 = false;
                         while (!correctInput2) {
                             try {
@@ -199,7 +201,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
         return false;
     }
 
-    private void display() {
+    private synchronized void display() {
         System.out.println("⚔️  _________________________________  ⚔️");
         System.out.println("|                                       |");
         System.out.println("|   Please choose an action:            |");

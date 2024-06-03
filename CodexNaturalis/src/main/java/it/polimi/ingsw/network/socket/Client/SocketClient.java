@@ -416,7 +416,7 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
-    public void onGameCreated() {
+    public void onGameCreated(String msg) {
 
     }
 

@@ -72,14 +72,10 @@ public class GameController {
         }
 
         String content = "\n----------------------------------" +
-                "\nPlayer " + username + " joined the game\n";
-        if (model.getPlayers().size() == nPlayers)
-            content += "You can now start the game";
-        else
-            content += "Waiting for " + (nPlayers - model.getPlayers().size()) + " players to join";
+                "\nPlayer " + username + " joined the game";
 
         addListenerList("WaitingForPlayersState");
-    //    listeners.get("WaitingForPlayersState").notifyJoinedGame(content);
+        listeners.get("WaitingForPlayersState").notifyJoinedGame(content);
         listeners.get("WaitingForPlayersState").subscribeListener(playerListener);
 
         return idPlayer;
