@@ -5,7 +5,6 @@ import it.polimi.ingsw.gui.InizializeStarterCardStateGUI;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -60,7 +59,6 @@ public class ObjectiveCardSelectionController implements FXMLController {
             client.setObjectiveCard(cardIndex);
             client.setCurrentState(new InizializeStarterCardStateGUI(stage, client));
             client.showState();
-            messageLabel.setText("Card selected: " + playerObjectiveCards.get(cardIndex).getImageFrontPath());
         } catch (CardNotFoundException | IOException | InterruptedException ex) {
             messageLabel.setText("Error selecting card: " + ex.getMessage());
         }
