@@ -4,17 +4,17 @@
 
 .title-label {
     -fx-font-size: 20px;
-    -fx-font-family: 'Book Antiqua';
+    -fx-font-family: 'Book Antiqua Bold Italic';
 }
 
 .normal-label {
     -fx-font-size: 14px;
-    -fx-font-family: 'Book Antiqua';
+    -fx-font-family: 'Book Antiqua Bold Italic';
 }
 
 .primary-button {
     -fx-background-color: #a6f84b;
-    -fx-font-family: 'Book Antiqua';
+    -fx-font-family: 'Book Antiqua Bold Italic';
     -fx-min-width: 200;
     -fx-min-height: 40;
     -fx-font-size: 14px;
@@ -24,14 +24,14 @@
 }
 
 .primary-button:hover {
-    -fx-background-color: #005fa3;
+    -fx-background-color: #1a7955;
 }
 
 .selected-card {
-    -fx-border-color: #00d3ff;
+    -fx-border-color: #a2ecbb;
     -fx-border-width: 2px;
     -fx-border-style: solid;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 255, 0.8), 10, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgb(26, 121, 85), 10, 0, 0, 0);
 }
 
 .placeholder {
@@ -48,7 +48,7 @@
 }
 
 .scene-background {
-    -fx-background-color: #fff5b3;
+    -fx-background-color: #f8f1c9;
 }
 
 .corner-image {

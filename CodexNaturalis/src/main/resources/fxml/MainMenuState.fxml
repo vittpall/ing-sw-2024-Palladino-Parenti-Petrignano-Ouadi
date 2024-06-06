@@ -19,7 +19,7 @@
             </ImageView>
             <Label text="Before playing, choose a username">
                 <font>
-                    <Font name="Book Antiqua" size="15.0"/>
+                    <Font name="Book Antiqua Bold Italic" size="15.0"/>
                 </font>
             </Label>
             <TextField fx:id="usernameField" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="19.0"
