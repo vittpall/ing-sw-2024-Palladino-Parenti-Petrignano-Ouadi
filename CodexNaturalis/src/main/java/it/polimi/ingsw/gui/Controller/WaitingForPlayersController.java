@@ -53,15 +53,15 @@ public class WaitingForPlayersController implements FXMLController {
             if (client.getPlayers(client.getIdGame()).size() == 2) {
                 player2Entered.setText(msg);
                 player2Entered.setVisible(true);
-                waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame() - client.getPlayers(client.getIdGame()).size())) + " players to join the game...");
+                waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame()) - client.getPlayers(client.getIdGame()).size()) + " players to join the game...");
             } else if (client.getPlayers(client.getIdGame()).size() == 3) {
                 player3Entered.setText(msg);
                 player3Entered.setVisible(true);
-                waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame() - client.getPlayers(client.getIdGame()).size())) + " players to join the game...");
+                waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame()) - client.getPlayers(client.getIdGame()).size()) + " players to join the game...");
             } else if (client.getPlayers(client.getIdGame()).size() == 4) {
                 player4Entered.setText(msg);
                 player4Entered.setVisible(true);
-                waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame() - client.getPlayers(client.getIdGame()).size())) + " players to join the game...");
+                waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame()) - client.getPlayers(client.getIdGame()).size()) + " players to join the game...");
             }
             if (client.getnPlayer(client.getIdGame()) == client.getPlayers(client.getIdGame()).size()) {
                 waitingForNPlayersLabel.setText("You can start the game");
