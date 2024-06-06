@@ -13,6 +13,7 @@ import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.network.rmi.Client.RMIClient;
 
 import java.awt.*;
 import java.io.IOException;
@@ -96,4 +97,5 @@ public interface VirtualServer extends Remote {
 
     PlayerState getCurrentPlayerState(int idGame, int idClientIntoGame) throws RemoteException;
 
+    void sendHeartBeat(VirtualView rmiClient, long lastHeartBeat) throws RemoteException;
 }

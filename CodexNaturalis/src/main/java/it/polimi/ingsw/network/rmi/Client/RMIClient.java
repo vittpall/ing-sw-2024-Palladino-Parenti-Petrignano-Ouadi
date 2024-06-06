@@ -26,11 +26,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class RMIClient extends BaseClient {
     public final VirtualServer server;
     private int idGame;
     private int idClientIntoGame;
+    private ScheduledExecutorService executorService;
 
 
     public RMIClient(VirtualServer server, String mode, Stage stage) throws RemoteException {
@@ -194,6 +197,14 @@ public class RMIClient extends BaseClient {
     @Override
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
+        this.executorService = Executors.newScheduledThreadPool(1);
+        this.executorService.scheduleAtFixedRate(() -> {
+            try {
+                sendHeartBeat();
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
+        }, 0, 1000, java.util.concurrent.TimeUnit.MILLISECONDS);
         if (!isGUIMode())
             inputHandler();
         else
@@ -221,6 +232,14 @@ public class RMIClient extends BaseClient {
     }
 
 
+    /**
+     * @throws RemoteException
+     */
+    @Override
+    public void sendHeartBeat() throws RemoteException {
+        server.sendHeartBeat(this, System.currentTimeMillis());
+    }
+
     @Override
     public boolean checkState(RequestedActions requestedActions) throws RemoteException {
         return server.checkState(idGame, idClientIntoGame, requestedActions);
@@ -228,7 +247,9 @@ public class RMIClient extends BaseClient {
 
 
     public void close() throws RemoteException {
+        executorService.shutdown();
         server.removeUsername(getUsername());
+        System.out.println("Client closed");
         System.exit(0);
     }
 

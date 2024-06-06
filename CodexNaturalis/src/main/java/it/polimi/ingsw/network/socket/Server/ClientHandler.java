@@ -4,35 +4,46 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
+import it.polimi.ingsw.network.HeartBeat;
 import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.ClientToServerMsg;
+import it.polimi.ingsw.network.socket.ClientToServerMsg.HeartBeatMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class ClientHandler implements GameListener {
     final SocketServer server;
     final transient ObjectInputStream input;
     final LobbyController controller;
     final transient ObjectOutputStream output;
+    final HeartBeat heartBeat;
 
     public ClientHandler(SocketServer server, ObjectInputStream input, ObjectOutputStream output, LobbyController controller) {
         this.server = server;
         this.input = input;
         this.controller = controller;
         this.output = output;
+        this.heartBeat = new HeartBeat(this);
     }
-
 
     public void runVirtualView() throws IOException, ClassNotFoundException, InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
         ClientToServerMsg request;
         ServerToClientMsg response;
         try {
             while ((request = (ClientToServerMsg) input.readObject()) != null) {
+                if(request instanceof HeartBeatMsg)
+                {
+                    request.functionToCall(null, this);
+                    continue;
+                }
                 response = new ServerToClientMsg(request.getType());
                 response.setResponse(request.functionToCall(controller, this));
                 output.writeObject(response);
@@ -43,6 +54,18 @@ public class ClientHandler implements GameListener {
                  PlaceNotAvailableException | RequirementsNotMetException e) {
             e.printStackTrace();
         }
+    }
+
+    public void closeClient() throws IOException {
+            input.close();
+            output.close();
+            System.exit(0);
+    }
+
+
+    public void sendHeartBeat(long timestamp)
+    {
+        heartBeat.beatFromClient(timestamp);
     }
 
     public void sendMessage(ServerToClientMsg msgToBroadCast) throws IOException {

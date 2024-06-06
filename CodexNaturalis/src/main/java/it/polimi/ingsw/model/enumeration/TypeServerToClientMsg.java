@@ -34,7 +34,8 @@ public enum TypeServerToClientMsg {
     WAIT_FOR_YOUR_TURN("WaitForYourTurn"),
     GET_CURRENT_STATE("GetCurrentState"),
     CHECK_STATE("CheckState"),
-    TOKEN_COLOR_SELECTED("TokenColorSelected");
+    TOKEN_COLOR_SELECTED("TokenColorSelected"),
+    CLOSE_CONNECTION("CloseConnection");
 
     private String text;
 

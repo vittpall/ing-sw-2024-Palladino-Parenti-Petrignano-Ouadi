@@ -12,8 +12,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 
 abstract public class BaseClient implements VirtualView, GameListener {
     private Scanner scan;
@@ -64,6 +63,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
     public void setCurrentState(ClientState currentState) {
         this.currentState = currentState;
     }
+
+    public abstract void sendHeartBeat() throws IOException, InterruptedException;
 
     protected abstract boolean checkState(RequestedActions action) throws IOException, InterruptedException, ClassNotFoundException;
 

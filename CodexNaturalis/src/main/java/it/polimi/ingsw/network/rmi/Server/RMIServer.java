@@ -15,8 +15,10 @@ import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
+import it.polimi.ingsw.network.HeartBeat;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
+import it.polimi.ingsw.network.rmi.Client.RMIClient;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.awt.*;
@@ -28,8 +30,10 @@ import java.util.HashSet;
 import java.util.List;
 
 public class RMIServer implements VirtualServer {
-    final List<VirtualView> clients = new ArrayList<>();
-    final List<GameListener> gameListeners = new ArrayList<>();
+    final HashMap<VirtualView, HeartBeat> clients = new HashMap<>();
+ //   final List<VirtualView> clients = new ArrayList<>();
+  //  final List<HeartBeat> heartBeatsClients = new ArrayList<>();
+ //   final List<GameListener> gameListeners = new ArrayList<>();
 
     private final LobbyController lobbyController;
 
@@ -43,8 +47,12 @@ public class RMIServer implements VirtualServer {
  /*       System.err.println("new client connected");
         this.clients.add(client);*/
         System.err.println("New client connected");
-        clients.add(client);
-        gameListeners.add((GameListener) client);  // Make sure this casting is correct
+        clients.put(client, new HeartBeat(client));
+  //      gameListeners.add((GameListener) client);  // Make sure this casting is correct
+    }
+
+    public void sendHeartBeat(VirtualView client, long lastHeartBeat){
+        clients.get(client).beatFromClient(lastHeartBeat);
     }
 
     @Override
@@ -76,6 +84,7 @@ public class RMIServer implements VirtualServer {
         lobbyController.sendMessage(idGame, msg);
         //TODO alert all the clients that a new message has been sent
         //TODO implement an observer pattern
+        /*
         if (msg.getReceiver() == null) {
             for (VirtualView client : clients) {
                 if (client.getIdGame() == msg.getGameId())
@@ -87,7 +96,7 @@ public class RMIServer implements VirtualServer {
                 if (client.getIdGame() == msg.getGameId())
                     client.receiveMessage(msg);
         }
-
+*/
     }
 
 

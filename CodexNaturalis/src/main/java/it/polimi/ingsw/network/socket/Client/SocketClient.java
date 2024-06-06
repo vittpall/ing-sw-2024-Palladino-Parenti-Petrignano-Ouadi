@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.*;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
+import it.polimi.ingsw.network.HeartBeat;
 import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.*;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
@@ -26,10 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.*;
 
 /**
  * This class represents the client side of a socket connection.
@@ -43,6 +41,8 @@ public class SocketClient extends BaseClient {
     private int idGame;
     private int idClientIntoGame;
     private final boolean isGUIMode;
+    private ScheduledExecutorService executorService;
+
 
     /**
      * Constructor for the SocketClient class.
@@ -346,7 +346,14 @@ public class SocketClient extends BaseClient {
                 throw new RuntimeException(e);
             }
         }).start();
-
+        this.executorService = Executors.newScheduledThreadPool(1);
+        this.executorService.scheduleAtFixedRate(() -> {
+            try {
+                sendHeartBeat();
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }, 0, 1000, java.util.concurrent.TimeUnit.MILLISECONDS);
         if (isGUIMode) {
             showState();
         } else {
@@ -370,6 +377,14 @@ public class SocketClient extends BaseClient {
                 if (obj instanceof ServerNotification notification) {
                     update(notification);
                 } else if (obj instanceof ServerToClientMsg msg) {
+                    if(msg.getType() == TypeServerToClientMsg.CLOSE_CONNECTION)
+                    {
+                        System.out.println("Closing connection!!!");
+                        in.close();
+                        out.close();
+                        this.executorService.shutdown();
+                        System.exit(0);
+                    }
                     TypeServerToClientMsg responseType = msg.getType();
                     responseQueues.computeIfAbsent(responseType, k -> new LinkedBlockingQueue<>()).put(msg);
                 }
@@ -390,6 +405,17 @@ public class SocketClient extends BaseClient {
         GetCurrentPlayerState request = new GetCurrentPlayerState(idGame, idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
         return (PlayerState) response.getResponse().getResponseReturnable();
+    }
+
+    /**
+     * @throws RemoteException
+     */
+    @Override
+    public void sendHeartBeat() throws IOException, InterruptedException {
+        HeartBeatMsg request = new HeartBeatMsg(System.currentTimeMillis());
+        out.writeObject(request);
+        out.flush();
+        out.reset();
     }
 
     public boolean checkState(RequestedActions requestedActions) throws IOException, InterruptedException {
