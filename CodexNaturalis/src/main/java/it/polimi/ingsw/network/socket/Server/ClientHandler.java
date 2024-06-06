@@ -12,6 +12,7 @@ import it.polimi.ingsw.network.socket.ClientToServerMsg.ClientToServerMsg;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.HeartBeatMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -39,8 +40,7 @@ public class ClientHandler implements GameListener {
         ServerToClientMsg response;
         try {
             while ((request = (ClientToServerMsg) input.readObject()) != null) {
-                if(request instanceof HeartBeatMsg)
-                {
+                if (request instanceof HeartBeatMsg) {
                     request.functionToCall(null, this);
                     continue;
                 }
@@ -50,6 +50,8 @@ public class ClientHandler implements GameListener {
                 output.flush();
                 output.reset();
             }
+        } catch (EOFException e) {
+            System.out.println("Client disconnected");
         } catch (IOException | ClassNotFoundException | InterruptedException | CardNotFoundException |
                  PlaceNotAvailableException | RequirementsNotMetException e) {
             e.printStackTrace();
@@ -59,7 +61,8 @@ public class ClientHandler implements GameListener {
     public void closeClient() throws IOException {
             input.close();
             output.close();
-            System.exit(0);
+            System.out.println("Client disconnected");
+            Thread.currentThread().interrupt();
     }
 
 
