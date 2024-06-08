@@ -10,6 +10,7 @@ import java.io.IOException;
 public class CreateGameMsg extends ClientToServerMsg {
 
     private final int numberOfPlayers;
+    private int gameId;
 
     public CreateGameMsg(String username, int numberOfPlayers) {
         this.username = username;
@@ -20,6 +21,7 @@ public class CreateGameMsg extends ClientToServerMsg {
     public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, IOException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.createGame(this.username, this.numberOfPlayers, playerListener));
+        gameId = response.getResponseReturnable();
         return response;
     }
 
@@ -34,6 +36,6 @@ public class CreateGameMsg extends ClientToServerMsg {
      */
     @Override
     public int getIdGame() {
-        return -1;
+        return gameId;
     }
 }

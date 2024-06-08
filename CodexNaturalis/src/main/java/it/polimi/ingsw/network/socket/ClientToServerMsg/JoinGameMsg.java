@@ -9,20 +9,17 @@ import java.io.IOException;
 
 public class JoinGameMsg extends ClientToServerMsg {
 
-    private final int id;
     private int gameId;
 
     public JoinGameMsg(String username, int id) {
         this.username = username;
-        this.id = id;
-        gameId = 0;
+        gameId = id;
     }
 
     @Override
     public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, IOException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
-        response.setResponseReturnable(controller.joinGame(this.id, this.username, playerListener));
-        this.gameId = response.getResponseReturnable();
+        response.setResponseReturnable(controller.joinGame(this.gameId, this.username, playerListener));
         return response;
     }
 

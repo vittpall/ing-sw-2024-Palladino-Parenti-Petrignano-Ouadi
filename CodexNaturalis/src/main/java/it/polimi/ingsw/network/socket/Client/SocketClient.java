@@ -351,14 +351,16 @@ public class SocketClient extends BaseClient {
                 throw new RuntimeException(e);
             }
         }).start();
-        this.executorService = Executors.newScheduledThreadPool(1);
-        this.executorService.scheduleAtFixedRate(() -> {
+    //    this.executorService = Executors.newScheduledThreadPool(1);
+    /*    this.executorService.scheduleAtFixedRate(() -> {
             try {
                 sendHeartBeat();
             } catch (IOException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }, 0, 1000, java.util.concurrent.TimeUnit.MILLISECONDS);
+        */
+
         if (isGUIMode) {
             showState();
         } else {
@@ -417,7 +419,7 @@ public class SocketClient extends BaseClient {
      */
     @Override
     public void sendHeartBeat() throws IOException, InterruptedException {
-        HeartBeatMsg request = new HeartBeatMsg(System.currentTimeMillis());
+        HeartBeatMsg request = new HeartBeatMsg();
         out.writeObject(request);
         out.flush();
         out.reset();

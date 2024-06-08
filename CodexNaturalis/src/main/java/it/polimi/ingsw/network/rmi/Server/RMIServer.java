@@ -47,7 +47,7 @@ public class RMIServer implements VirtualServer {
  /*       System.err.println("new client connected");
         this.clients.add(client);*/
         System.err.println("New client connected");
-        clients.put(client, new HeartBeat(client));
+        clients.put(client, new HeartBeat(client, this));
   //      gameListeners.add((GameListener) client);  // Make sure this casting is correct
     }
 

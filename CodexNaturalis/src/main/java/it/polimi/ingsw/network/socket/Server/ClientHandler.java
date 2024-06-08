@@ -25,6 +25,7 @@ public class ClientHandler implements GameListener {
     final transient ObjectInputStream input;
     final LobbyController controller;
     final transient ObjectOutputStream output;
+    Integer gameId;
   //  final HeartBeat heartBeat;
 
     public ClientHandler(SocketServer server, ObjectInputStream input, ObjectOutputStream output, LobbyController controller) {
@@ -42,6 +43,9 @@ public class ClientHandler implements GameListener {
             while ((request = (ClientToServerMsg) input.readObject()) != null) {
                 response = new ServerToClientMsg(request.getType());
                 response.setResponse(request.functionToCall(controller, this));
+                if(request.getType() == TypeServerToClientMsg.JOIN_GAME || request.getType() == TypeServerToClientMsg.CREATED_GAME) {
+                    gameId = request.getIdGame();
+                }
                 output.writeObject(response);
                 output.flush();
                 output.reset();
@@ -49,7 +53,7 @@ public class ClientHandler implements GameListener {
         } catch (EOFException e) {
             //technically heartbeat is not useful anymore if everytime a client disconnect
             //This catch is taken when the client disconnects from the server
-            System.out.println("Client disconnected");
+            closeClient();
             //TODO add logic to remove the user
         } catch (IOException | ClassNotFoundException | InterruptedException | CardNotFoundException |
                  PlaceNotAvailableException | RequirementsNotMetException e) {
@@ -61,6 +65,8 @@ public class ClientHandler implements GameListener {
             input.close();
             output.close();
             System.out.println("Client disconnected");
+            if(gameId != null)
+                controller.closeGame(gameId);
             Thread.currentThread().interrupt();
     }
 

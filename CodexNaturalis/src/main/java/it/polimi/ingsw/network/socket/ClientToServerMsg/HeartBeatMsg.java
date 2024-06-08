@@ -13,10 +13,8 @@ import java.io.IOException;
 
 public class HeartBeatMsg extends ClientToServerMsg{
 
-    private long timestamp;
 
-    public HeartBeatMsg(long timestamp) {
-         this.timestamp = timestamp;
+    public HeartBeatMsg() {
     }
 
 

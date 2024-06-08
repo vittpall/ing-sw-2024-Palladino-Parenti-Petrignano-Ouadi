@@ -17,21 +17,15 @@ public class HeartBeat {
     private ClientHandler socketClient;
     private RMIServer rmiServer;
     private VirtualView rmiClient;
-    private final int timeout = 20000;
+    private final int timeout = 1000;
     private String rmiClientUsername;
-    private final Integer gameId;
+    private Integer gameId;
 
-    public HeartBeat(VirtualView rmiClient) throws RemoteException {
+    public HeartBeat(VirtualView rmiClient, RMIServer rmiServer) throws RemoteException {
         this.lastHeartBeat = System.currentTimeMillis();
         this.rmiClient = rmiClient;
+        this.rmiServer = rmiServer;
         gameId = rmiClient.getIdGame();
-        runLogic();
-    }
-
-    public HeartBeat(ClientHandler socketClient) {
-        this.lastHeartBeat = System.currentTimeMillis();
-        this.socketClient = socketClient;
-        gameId = 0;
         runLogic();
     }
 
@@ -40,14 +34,18 @@ public class HeartBeat {
         this.executorService.scheduleAtFixedRate(() -> {
             try {
                 rmiClient.ping();
+                //TODO change these ways to obtain the username and gameId
                 this.setUsernameClient();
+                this.setGameId();
                 System.out.println("Ping sent:"+rmiClientUsername);
             } catch (RemoteException e) {
                 try {
                     System.out.println(rmiClientUsername + " is being closed");
                     rmiServer.removeUsername(rmiClientUsername);
+                    System.out.println(gameId);
                     if(gameId != null)
                     {
+                        System.out.println("Game is being closed");
                         rmiServer.closeGame(gameId);
                     }
                 } catch (RemoteException remoteException) {
@@ -86,6 +84,11 @@ public class HeartBeat {
     public void setUsernameClient() throws RemoteException {
         //this method is used to set the username of the client
         this.rmiClientUsername = rmiClient.getUsername();
+    }
+
+    public void setGameId() throws RemoteException {
+        //this method is used to set the gameId of the client
+        this.gameId = this.rmiClient.getIdGame();
     }
 
     public void beatFromClient(long lastHeartBeat) {
