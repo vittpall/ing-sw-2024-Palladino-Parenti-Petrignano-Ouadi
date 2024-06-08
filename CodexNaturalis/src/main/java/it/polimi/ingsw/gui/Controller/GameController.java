@@ -10,10 +10,13 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.image.WritableImage;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -21,7 +24,6 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.List;
 import java.util.*;
 
@@ -34,7 +36,7 @@ public class GameController implements FXMLController {
     private BaseClient client;
     private Stage stage;
     private Integer selectedCardIndex = null;
-    private boolean playCardFaceDown;
+    private boolean playCardFaceDown = false;
     private GameBoard gameBoard;
 
     public void initialize() {
@@ -52,6 +54,8 @@ public class GameController implements FXMLController {
             loadVisibleCards();
             loadPlayerHand();
             updatePlayerHandInteraction();
+            if (isPlayerTurn())
+                showAvailablePositions();
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -91,10 +95,11 @@ public class GameController implements FXMLController {
 
     private void loadPlayerHand() throws IOException, InterruptedException {
         ArrayList<GameCard> playerHand = client.getPlayerHand();
+        playerHandBox.getChildren().clear();
         for (int i = 0; i < 3; i++) {
             if (i < playerHand.size()) {
                 GameCard card = playerHand.get(i);
-                CardView cardView = new CardView(card, !card.isPlayedFaceDown());
+                CardView cardView = new CardView(card, !playCardFaceDown);
                 playerHandBox.getChildren().add(cardView);
             }
         }
@@ -114,13 +119,25 @@ public class GameController implements FXMLController {
         availablePlaces.forEach(point -> {
             CardView placeholder = new CardView(true);
             placeholder.getStyleClass().add("placeholder");
-            placeholder.setOnMouseClicked(event -> {
-                try {
-                    handlePositionSelection(point);
-                } catch (PlaceNotAvailableException | RequirementsNotMetException | IOException | InterruptedException |
-                         CardNotFoundException e) {
-                    throw new RuntimeException(e);
+            placeholder.setOnDragOver(event -> {
+                if (event.getGestureSource() != placeholder && event.getDragboard().hasString()) {
+                    event.acceptTransferModes(TransferMode.MOVE);
                 }
+                event.consume();
+            });
+            placeholder.setOnDragDropped(event -> {
+                Dragboard db = event.getDragboard();
+                boolean success = false;
+                if (db.hasString()) {
+                    try {
+                        handlePositionSelection(point, Integer.parseInt(db.getString()));
+                    } catch (IOException | InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    success = true;
+                }
+                event.setDropCompleted(success);
+                event.consume();
             });
             gameBoard.addCardView(placeholder, point.x, point.y);
         });
@@ -133,57 +150,58 @@ public class GameController implements FXMLController {
         }
         selectedCardIndex = cardIndex;
         cardNode.getStyleClass().add("selected-card");
-        promptCardOrientation();
     }
 
 
-    private void promptCardOrientation() throws IOException, InterruptedException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Card Orientation");
-        alert.setHeaderText("Choose how you want to play the card:");
-        ButtonType buttonTypeOne = new ButtonType("Face Up");
-        ButtonType buttonTypeTwo = new ButtonType("Face Down");
-        alert.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        playCardFaceDown = result.isEmpty() || result.get() != buttonTypeOne;
-
-        showAvailablePositions();
+    private boolean isPlayerTurn() throws IOException, InterruptedException {
+        // Qui dovresti determinare se è il turno del giocatore.
+        // Questo potrebbe essere uno stato che ricevi dal server o da una logica interna.
+        return client.getCurrentPlayerState() == PlayerState.PLAY_CARD;
     }
 
     private void updatePlayerHandInteraction() throws IOException, InterruptedException {
-        PlayerState state = client.getCurrentPlayerState();
-        boolean canPlay = state == PlayerState.PLAY_CARD;
         int index = 0;
         for (Node cardNode : playerHandBox.getChildren()) {
-            cardNode.setDisable(!canPlay);
-            if (canPlay) {
-                final int currentIndex = index; // Local variable for lambda expression
-                cardNode.setOnMouseClicked(event -> {
-                    try {
-                        handleCardSelection(currentIndex, cardNode);
-                    } catch (IOException | InterruptedException e) {
-                        throw new RuntimeException(e);
+            cardNode.setDisable(!isPlayerTurn());
+            if (isPlayerTurn()) {
+                final int currentIndex = index;
+                cardNode.setOnDragDetected(event -> {
+
+                    WritableImage cardImage = cardNode.snapshot(new SnapshotParameters(), null);
+                    Dragboard db = cardNode.startDragAndDrop(TransferMode.MOVE);
+                    ClipboardContent content = new ClipboardContent();
+                    content.putString(Integer.toString(currentIndex)); // Pass the index as a string
+                    db.setDragView(cardImage);
+                    db.setContent(content);
+                    event.consume();
+                });
+
+                cardNode.setOnDragDone(event -> {
+                    if (event.getTransferMode() == TransferMode.MOVE) {
+                        try {
+                            handleCardSelection(currentIndex, cardNode);
+                        } catch (IOException | InterruptedException e) {
+                            e.printStackTrace(); // Gestisci l'eccezione come necessario
+                        }
                     }
+                    event.consume();
                 });
                 index++;
             }
         }
     }
 
-    private int getSelectedCardIndex() {
-        return selectedCardIndex != null ? selectedCardIndex : -1; // Returns -1 if no card is selected
-    }
 
-
-    private void handlePositionSelection(Point selectedPoint) throws PlaceNotAvailableException, RequirementsNotMetException, IOException, InterruptedException, CardNotFoundException {
-        int cardIndex = getSelectedCardIndex();
+    private void handlePositionSelection(Point selectedPoint, int cardIndex) throws IOException, InterruptedException {
         if (cardIndex == -1) {
             showError("No card selected");
             return;
         }
-        client.playCard(cardIndex, playCardFaceDown, selectedPoint);
-
+        try {
+            client.playCard(cardIndex, playCardFaceDown, selectedPoint);
+        } catch (RequirementsNotMetException | PlaceNotAvailableException | CardNotFoundException e) {
+            showError("Requirements not met");
+        }
     }
 
 
@@ -198,6 +216,12 @@ public class GameController implements FXMLController {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public void handleShowBackButton(ActionEvent actionEvent) throws IOException, InterruptedException {
+        playCardFaceDown = !playCardFaceDown;
+        loadPlayerHand();
+        updatePlayerHandInteraction();
     }
 }
 
