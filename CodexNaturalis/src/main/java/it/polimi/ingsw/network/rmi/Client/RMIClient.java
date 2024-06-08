@@ -197,14 +197,16 @@ public class RMIClient extends BaseClient {
     @Override
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
         this.server.connect(this);
-        this.executorService = Executors.newScheduledThreadPool(1);
-        this.executorService.scheduleAtFixedRate(() -> {
+   //     this.executorService = Executors.newScheduledThreadPool(1);
+   /*     this.executorService.scheduleAtFixedRate(() -> {
             try {
                 sendHeartBeat();
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
         }, 0, 1000, java.util.concurrent.TimeUnit.MILLISECONDS);
+        */
+
         if (!isGUIMode())
             inputHandler();
         else
@@ -276,6 +278,11 @@ public class RMIClient extends BaseClient {
     @Override
     public ArrayList<Player> getPlayers(int idGame) throws IOException {
         return server.getPlayers(idGame);
+    }
+
+    @Override
+    public void ping() throws RemoteException {
+        //This method does nothing but just to keep track if the client has been disconnected or not
     }
 
 

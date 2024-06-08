@@ -87,6 +87,7 @@ public interface VirtualView extends Remote {
 
     ArrayList<Player> getPlayers(int idGame) throws IOException, InterruptedException;
 
+    void ping() throws RemoteException;
 
     void run() throws IOException, InterruptedException, ClassNotFoundException;
 

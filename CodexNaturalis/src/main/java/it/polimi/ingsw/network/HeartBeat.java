@@ -17,14 +17,13 @@ public class HeartBeat {
     private ClientHandler socketClient;
     private RMIServer rmiServer;
     private VirtualView rmiClient;
-    private final int timeout = 2000;
+    private final int timeout = 20000;
     private String rmiClientUsername;
     private final Integer gameId;
 
     public HeartBeat(VirtualView rmiClient) throws RemoteException {
         this.lastHeartBeat = System.currentTimeMillis();
         this.rmiClient = rmiClient;
-        rmiClientUsername = rmiClient.getUsername();
         gameId = rmiClient.getIdGame();
         runLogic();
     }
@@ -39,7 +38,24 @@ public class HeartBeat {
     public void runLogic(){
         this.executorService = Executors.newScheduledThreadPool(1);
         this.executorService.scheduleAtFixedRate(() -> {
-            if (System.currentTimeMillis() - lastHeartBeat > 2000) {
+            try {
+                rmiClient.ping();
+                this.setUsernameClient();
+                System.out.println("Ping sent:"+rmiClientUsername);
+            } catch (RemoteException e) {
+                try {
+                    System.out.println(rmiClientUsername + " is being closed");
+                    rmiServer.removeUsername(rmiClientUsername);
+                    if(gameId != null)
+                    {
+                        rmiServer.closeGame(gameId);
+                    }
+                } catch (RemoteException remoteException) {
+                    throw new RuntimeException(remoteException);
+                }
+                executorService.shutdown();
+            }
+       /*     if (System.currentTimeMillis() - lastHeartBeat > 2000) {
                     if (socketClient != null) {
                         try {
                             socketClient.closeClient();
@@ -63,8 +79,13 @@ public class HeartBeat {
                     }
                     executorService.shutdown();
                     System.out.println("Client closed");
-            }
+            }*/
         }, 0, timeout, java.util.concurrent.TimeUnit.MILLISECONDS);
+    }
+
+    public void setUsernameClient() throws RemoteException {
+        //this method is used to set the username of the client
+        this.rmiClientUsername = rmiClient.getUsername();
     }
 
     public void beatFromClient(long lastHeartBeat) {

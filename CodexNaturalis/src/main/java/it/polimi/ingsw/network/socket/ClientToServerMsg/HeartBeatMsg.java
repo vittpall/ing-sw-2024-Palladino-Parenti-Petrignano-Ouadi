@@ -32,7 +32,7 @@ public class HeartBeatMsg extends ClientToServerMsg{
      */
     @Override
     public ReturnableObject functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException, IOException {
-        ((ClientHandler) playerListener).sendHeartBeat(timestamp);
+     //   ((ClientHandler) playerListener).sendHeartBeat(timestamp);
         return null;
     }
 

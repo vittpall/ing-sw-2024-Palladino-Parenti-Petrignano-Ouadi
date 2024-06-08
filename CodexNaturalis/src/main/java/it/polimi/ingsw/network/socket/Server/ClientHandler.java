@@ -25,14 +25,14 @@ public class ClientHandler implements GameListener {
     final transient ObjectInputStream input;
     final LobbyController controller;
     final transient ObjectOutputStream output;
-    final HeartBeat heartBeat;
+  //  final HeartBeat heartBeat;
 
     public ClientHandler(SocketServer server, ObjectInputStream input, ObjectOutputStream output, LobbyController controller) {
         this.server = server;
         this.input = input;
         this.controller = controller;
         this.output = output;
-        this.heartBeat = new HeartBeat(this);
+   //     this.heartBeat = new HeartBeat(this);
     }
 
     public void runVirtualView() throws IOException, ClassNotFoundException, InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
@@ -40,10 +40,6 @@ public class ClientHandler implements GameListener {
         ServerToClientMsg response;
         try {
             while ((request = (ClientToServerMsg) input.readObject()) != null) {
-                if (request instanceof HeartBeatMsg) {
-                    request.functionToCall(null, this);
-                    continue;
-                }
                 response = new ServerToClientMsg(request.getType());
                 response.setResponse(request.functionToCall(controller, this));
                 output.writeObject(response);
@@ -51,7 +47,10 @@ public class ClientHandler implements GameListener {
                 output.reset();
             }
         } catch (EOFException e) {
+            //technically heartbeat is not useful anymore if everytime a client disconnect
+            //This catch is taken when the client disconnects from the server
             System.out.println("Client disconnected");
+            //TODO add logic to remove the user
         } catch (IOException | ClassNotFoundException | InterruptedException | CardNotFoundException |
                  PlaceNotAvailableException | RequirementsNotMetException e) {
             e.printStackTrace();
@@ -65,11 +64,12 @@ public class ClientHandler implements GameListener {
             Thread.currentThread().interrupt();
     }
 
-
+/*
     public void sendHeartBeat(long timestamp)
     {
         heartBeat.beatFromClient(timestamp);
     }
+    */
 
     public void sendMessage(ServerToClientMsg msgToBroadCast) throws IOException {
         output.writeObject(msgToBroadCast);

@@ -231,6 +231,11 @@ public class SocketClient extends BaseClient {
         return (ArrayList<Player>) response.getResponse().getResponseReturnable();
     }
 
+    @Override
+    public void ping() throws RemoteException {
+
+    }
+
 
     @Override
     public String getUsernamePlayerThatStoppedTheGame() throws IOException, InterruptedException {

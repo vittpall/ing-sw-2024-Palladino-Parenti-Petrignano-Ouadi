@@ -58,6 +58,7 @@ public class RMIServer implements VirtualServer {
     @Override
     public boolean checkUsername(String username, GameListener playerListener) throws RemoteException {
         return lobbyController.checkUsername(username, playerListener);
+
     }
 
     public void removeUsername(String username) {
