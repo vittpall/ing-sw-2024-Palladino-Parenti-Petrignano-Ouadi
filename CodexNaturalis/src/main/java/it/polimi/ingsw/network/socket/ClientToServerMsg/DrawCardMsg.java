@@ -40,4 +40,9 @@ public class DrawCardMsg extends ClientToServerMsg {
         return this.idGame;
     }
 
+    @Override
+    public String getUsername() {
+        return "";
+    }
+
 }

@@ -49,4 +49,9 @@ public class HeartBeatMsg extends ClientToServerMsg{
     public int getIdGame() {
         return 0;
     }
+
+    @Override
+    public String getUsername() {
+        return "";
+    }
 }

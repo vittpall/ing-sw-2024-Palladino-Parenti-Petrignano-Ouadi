@@ -36,4 +36,9 @@ public class SendMessageMsg extends ClientToServerMsg {
         return this.msg.getGameId();
     }
 
+    @Override
+    public String getUsername() {
+        return "";
+    }
+
 }

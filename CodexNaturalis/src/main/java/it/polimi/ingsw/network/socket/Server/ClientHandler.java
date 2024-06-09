@@ -20,15 +20,14 @@ public class ClientHandler implements GameListener {
     final transient ObjectInputStream input;
     final LobbyController controller;
     final transient ObjectOutputStream output;
-    Integer gameId;
-    //  final HeartBeat heartBeat;
+    private String clientUsername;
+    private Integer gameId;
 
     public ClientHandler(SocketServer server, ObjectInputStream input, ObjectOutputStream output, LobbyController controller) {
         this.server = server;
         this.input = input;
         this.controller = controller;
         this.output = output;
-        //     this.heartBeat = new HeartBeat(this);
     }
 
     public void runVirtualView() throws IOException, ClassNotFoundException, InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
@@ -40,6 +39,9 @@ public class ClientHandler implements GameListener {
                 response.setResponse(request.functionToCall(controller, this));
                 if (request.getType() == TypeServerToClientMsg.JOIN_GAME || request.getType() == TypeServerToClientMsg.CREATED_GAME) {
                     gameId = request.getIdGame();
+                }
+                if(request.getType() == TypeServerToClientMsg.USER_ALREADY_TAKEN) {
+                    clientUsername = request.getUsername();
                 }
                 output.writeObject(response);
                 output.flush();
@@ -57,20 +59,14 @@ public class ClientHandler implements GameListener {
     }
 
     public void closeClient() throws IOException {
-        input.close();
-        output.close();
-        System.out.println("Client disconnected");
-        if (gameId != null)
-            controller.closeGame(gameId);
-        Thread.currentThread().interrupt();
+            input.close();
+            output.close();
+            System.out.println("Client disconnected(SocketClient)");
+            if (gameId != null)
+                controller.closeGame(gameId, clientUsername);
+            Thread.currentThread().interrupt();
     }
 
-/*
-    public void sendHeartBeat(long timestamp)
-    {
-        heartBeat.beatFromClient(timestamp);
-    }
-    */
 
     public void sendMessage(ServerToClientMsg msgToBroadCast) throws IOException {
         output.writeObject(msgToBroadCast);
@@ -91,6 +87,11 @@ public class ClientHandler implements GameListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String getUsername() {
+        return clientUsername;
     }
 
 }

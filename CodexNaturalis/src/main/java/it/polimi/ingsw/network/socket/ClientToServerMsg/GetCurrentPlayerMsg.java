@@ -33,4 +33,9 @@ public class GetCurrentPlayerMsg extends ClientToServerMsg {
     public int getIdGame() {
         return idGame;
     }
+
+    @Override
+    public String getUsername() {
+        return "";
+    }
 }

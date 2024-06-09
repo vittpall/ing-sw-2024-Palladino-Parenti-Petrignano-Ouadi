@@ -8,6 +8,8 @@ import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
+import java.io.IOException;
+
 public class CloseGameMsg extends ClientToServerMsg {
     int idGame;
 
@@ -24,10 +26,10 @@ public class CloseGameMsg extends ClientToServerMsg {
      * @throws RequirementsNotMetException
      */
     @Override
-    public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
+    public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException, IOException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
         response.setResponseReturnable(-1);
-        controller.closeGame(idGame);
+        controller.closeGame(idGame, null);
         return response;
     }
 
@@ -43,6 +45,11 @@ public class CloseGameMsg extends ClientToServerMsg {
     @Override
     public int getIdGame() {
         return this.idGame;
+    }
+
+    @Override
+    public String getUsername() {
+        return "";
     }
 
 

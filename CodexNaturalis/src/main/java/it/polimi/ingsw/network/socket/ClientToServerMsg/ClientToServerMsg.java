@@ -20,4 +20,6 @@ public abstract class ClientToServerMsg implements Serializable {
     public abstract TypeServerToClientMsg getType();
 
     public abstract int getIdGame();
+
+    public abstract String getUsername();
 }

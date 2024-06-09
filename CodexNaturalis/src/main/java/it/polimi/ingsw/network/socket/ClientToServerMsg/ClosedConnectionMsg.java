@@ -35,4 +35,9 @@ public class ClosedConnectionMsg extends ClientToServerMsg {
     public int getIdGame() {
         return this.idGame;
     }
+
+    @Override
+    public String getUsername() {
+        return "";
+    }
 }

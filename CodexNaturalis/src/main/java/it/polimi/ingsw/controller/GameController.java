@@ -93,6 +93,11 @@ public class GameController {
         model.setObjectiveCards(idClientIntoGame, idObjCard);
     }
 
+    public void closeGame(String userThatLeft) throws IOException {
+       String msg = "The game has been closed because"+ userThatLeft + " left the game";
+       for(String s: listeners.keySet())
+           listeners.get(s).notifyCloseGame(msg);
+    }
 
     public StarterCard getStarterCard(int idClientIntoGame) {
         return model.getPlayers().get(idClientIntoGame).getStarterCard();

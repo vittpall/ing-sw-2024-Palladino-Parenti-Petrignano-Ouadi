@@ -32,5 +32,7 @@ public class CheckUsernameMsg extends ClientToServerMsg {
         return -1;
     }
 
-
+    public String getUsername() {
+        return username;
+    }
 }
