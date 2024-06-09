@@ -1,54 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.*?>
-<AnchorPane styleClass="scene-dimensions" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.gui.Controller.WaitingForPlayersController">
+<?import javafx.scene.text.Font?>
+
+<AnchorPane styleClass="scene-dimensions" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.WaitingForPlayersController">
     <ImageView fitHeight="800.0" fitWidth="800.0" styleClass="scene-dimensions">
-        <Image url="@../Images/CN_copertina.jpg"/>
+        <Image url="@../Images/CN_copertina.jpg" />
     </ImageView>
     <StackPane styleClass="scene-dimensions">
         <VBox alignment="CENTER">
             <Label prefHeight="35.0" prefWidth="422.0" text="Waiting for players to join the game">
                 <font>
-                    <Font name="Book Antiqua Bold Italic" size="26.0"/>
-                </font>
-            </Label>
-            <Label fx:id="textWaitingPlayers" text="You will be notified when the new players have joined the game">
-                <font>
-                    <Font name="Book Antiqua" size="14.0"/>
+                    <Font name="Book Antiqua Bold Italic" size="25.0" />
                 </font>
             </Label>
             <Label fx:id="player2Entered" text="Player 2 has entered">
                 <font>
-                    <Font name="Book Antiqua" size="14.0"/>
+                    <Font name="Book Antiqua" size="14.0" />
                 </font>
             </Label>
             <Label fx:id="player3Entered" text="Player 3 has entered">
                 <font>
-                    <Font name="Book Antiqua" size="14.0"/>
+                    <Font name="Book Antiqua" size="14.0" />
                 </font>
             </Label>
             <Label fx:id="player4Entered" text="Player 4 has entered">
                 <font>
-                    <Font name="Book Antiqua" size="14.0"/>
+                    <Font name="Book Antiqua" size="14.0" />
                 </font>
             </Label>
             <Label fx:id="waitingForNPlayersLabel" text="Waiting for 2 players to join">
                 <font>
-                    <Font name="Book Antiqua" size="14.0"/>
+                    <Font name="Book Antiqua" size="14.0" />
                 </font>
             </Label>
-            <Button id="StartGameButton" mnemonicParsing="false" onAction="#handleStartGame" styleClass="primary-button"
-                    style="-fx-background-color: #a2ecbb;" text="Start game">
+            <Button id="StartGameButton" mnemonicParsing="false" onAction="#handleStartGame" style="-fx-background-color: #a2ecbb;" styleClass="primary-button" text="Start game">
                 <font>
-                    <Font name="Bold Italic" size="15.0"/>
+                    <Font name="Bold Italic" size="15.0" />
                 </font>
             </Button>
         </VBox>

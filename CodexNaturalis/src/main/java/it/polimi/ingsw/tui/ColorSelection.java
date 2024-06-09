@@ -43,7 +43,7 @@ public class ColorSelection implements ClientState {
     public void inputHandler(int input) throws IOException, InterruptedException {
         TokenColor selectedColor = getColorFromInput(input);
 
-        if (selectedColor != null) {
+        if (selectedColor != null && client.getAvailableColors().contains(selectedColor)) {
             client.setTokenColor(selectedColor);
             client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
         } else {
@@ -78,6 +78,14 @@ public class ColorSelection implements ClientState {
         return "ColorSelection";
     }
 
+    public void refresh(ArrayList<TokenColor> availableColors){
+        System.out.println("The available colors are now:");
+        for (TokenColor tokenColor : availableColors) {
+            String colorOutput = formatColorOutput(tokenColor);
+            System.out.println(colorOutput);
+        }
+        System.out.println("------------------------------------\n");
+    }
     /**
      *
      */

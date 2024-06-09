@@ -1,8 +1,10 @@
 package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
+import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.notifications.ServerNotification;
@@ -10,6 +12,8 @@ import it.polimi.ingsw.tui.*;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.*;
@@ -73,31 +77,32 @@ abstract public class BaseClient implements VirtualView, GameListener {
     public abstract PlayerState getCurrentPlayerState() throws IOException, InterruptedException;
 
     protected abstract String getServerCurrentState() throws IOException, InterruptedException;
-
-    public synchronized void onTokenColorSelected(String msg) {
+    public synchronized void onTokenColorSelected(String msg, ArrayList<TokenColor> availableColors) {
         if (!isGUIMode) {
             System.out.println(msg);
-            getClientCurrentState().display();
+            if(getClientCurrentState() instanceof ColorSelection)
+                ((ColorSelection) getClientCurrentState()).refresh(availableColors);
         } else {
             getClientCurrentState().refresh(msg);
         }
     }
 
-    public synchronized void onGameJoined(String msg) {
+    public synchronized void onGameJoined(String msg, ArrayList<Player> players, int nOfMissingPlayers) {
         if (!isGUIMode) {
-            System.out.println(msg);
-            getClientCurrentState().display();
+            //System.out.println(msg);
+            if(getClientCurrentState() instanceof WaitingForPlayersState)
+                ((WaitingForPlayersState) getClientCurrentState()).refresh(players, nOfMissingPlayers);
         } else
             getClientCurrentState().refresh(msg);
 
     }
-
-    public synchronized void onGameCreated(String msg) {
-        if (!isGUIMode) {
-            System.out.println(msg);
-            getClientCurrentState().display();
+    public void onGameJoinedAsOutsider(String message, HashMap<Integer, Integer[]> availableGames) {
+        if(!isGUIMode) {
+            System.out.println(message);
+            if(getClientCurrentState() instanceof JoinGameMenuState)
+                ((JoinGameMenuState) getClientCurrentState()).refresh(availableGames);
         } else
-            getClientCurrentState().refresh(msg);
+            getClientCurrentState().refresh(message);
     }
 
 

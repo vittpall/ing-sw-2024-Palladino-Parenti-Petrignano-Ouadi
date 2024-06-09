@@ -71,11 +71,10 @@ public class GameController {
             }
         }
 
-        String content = "\n----------------------------------" +
-                "\nPlayer " + username + " joined the game";
+        String content = "Player " + username + " has entered the game";
 
         addListenerList("WaitingForPlayersState");
-        listeners.get("WaitingForPlayersState").notifyJoinedGame(content);
+        listeners.get("WaitingForPlayersState").notifyJoinedGame(content, model.getPlayers(), nPlayers - model.getPlayers().size());
         listeners.get("WaitingForPlayersState").subscribeListener(playerListener);
 
         return idPlayer;
@@ -133,11 +132,12 @@ public class GameController {
 
     public synchronized void setTokenColor(int idClientIntoGame, TokenColor tokenColor, GameListener playerListener) throws IOException {
         model.setTokenColor(idClientIntoGame, tokenColor);
-        String message = "\n----------------------------------\n" +
+        String message = "\n------------------------------------\n" +
                 "Player " + model.getPlayers().get(idClientIntoGame).getUsername() +
                 " chose the color " + model.getPlayers().get(idClientIntoGame).getTokenColor();
+        ArrayList<TokenColor> avColors = model.getAvailableColors();
         listeners.get("ColorSelection").unSubscribeListener(playerListener);
-        listeners.get("ColorSelection").notifyColorSelection(message);
+        listeners.get("ColorSelection").notifyColorSelection(message, avColors);
     }
 
     public ArrayList<Player> getAllPlayers() {

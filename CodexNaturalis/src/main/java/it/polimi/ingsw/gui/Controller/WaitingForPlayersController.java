@@ -12,8 +12,6 @@ public class WaitingForPlayersController implements FXMLController {
     private BaseClient client;
     private Stage stage;
     @FXML
-    Label textWaitingPlayers;
-    @FXML
     Label player2Entered;
     @FXML
     Label player3Entered;
@@ -29,9 +27,9 @@ public class WaitingForPlayersController implements FXMLController {
         player4Entered.setVisible(false);
         try {
             if (!(client.getnPlayer(client.getIdGame()) > client.getPlayers(client.getIdGame()).size())) {
-                textWaitingPlayers.setText("You can start the game");
-            }
-            waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame()) - client.getPlayers(client.getIdGame()).size()) + " players to join the game...");
+                waitingForNPlayersLabel.setText("You can start the game");
+            }else
+                waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame()) - client.getPlayers(client.getIdGame()).size()) + " players to join the game...");
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }

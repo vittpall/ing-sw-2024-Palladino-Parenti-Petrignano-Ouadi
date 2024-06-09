@@ -100,6 +100,4 @@ public interface VirtualView extends Remote {
     void close() throws IOException, InterruptedException;
 
     PlayerState getCurrentPlayerState() throws IOException, InterruptedException;
-
-    void onTokenColorSelected(String msg) throws RemoteException;
 }
