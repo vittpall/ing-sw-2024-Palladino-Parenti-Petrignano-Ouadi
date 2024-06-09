@@ -90,7 +90,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     public synchronized void onGameJoined(String msg, ArrayList<Player> players, int nOfMissingPlayers) {
         if (!isGUIMode) {
-            //System.out.println(msg);
             if(getClientCurrentState() instanceof WaitingForPlayersState)
                 ((WaitingForPlayersState) getClientCurrentState()).refresh(players, nOfMissingPlayers);
         } else

@@ -33,12 +33,9 @@ public class Observable {
         notifyListeners(new GameJoinedNotification(msg, players, nOfMissingPlayers));
     }
     public void notifyJoinedGameToOutsider(String msg, HashMap<Integer, Integer[]> availableGames) {
-//        notifyListeners(new GameJoinedNotificationToOutsiders(msg, availableGames));
+        notifyListeners(new GameJoinedNotificationToOutsiders(msg, availableGames));
     }
 
-    /*public void notifyCreatedGame(String msg, HashMap<Integer, Integer[]> availableGames) {
-        notifyListeners(new GameCreatedNotification(msg, availableGames));
-    }*/
 
     public void notifyCloseGame(String msg) {notifyListeners(new CloseGameNotification(msg));
     }

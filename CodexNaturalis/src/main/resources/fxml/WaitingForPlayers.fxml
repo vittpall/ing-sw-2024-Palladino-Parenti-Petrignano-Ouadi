@@ -15,22 +15,27 @@
     </ImageView>
     <StackPane styleClass="scene-dimensions">
         <VBox alignment="CENTER">
-            <Label prefHeight="35.0" prefWidth="422.0" text="Waiting for players to join the game">
+            <Label alignment="CENTER" prefHeight="35.0" prefWidth="422.0" text="Waiting for players to join the game">
                 <font>
-                    <Font name="Book Antiqua Bold Italic" size="25.0" />
+                    <Font name="Book Antiqua Bold Italic" size="23.0" />
                 </font>
             </Label>
-            <Label fx:id="player2Entered" text="Player 2 has entered">
+         <Label fx:id="player1Info" text="Player 1 : ex1">
+            <font>
+               <Font name="Book Antiqua" size="14.0" />
+            </font>
+         </Label>
+            <Label fx:id="player2Info" text="Player 2 : ex2">
                 <font>
                     <Font name="Book Antiqua" size="14.0" />
                 </font>
             </Label>
-            <Label fx:id="player3Entered" text="Player 3 has entered">
+            <Label fx:id="player3Info" text="Player 3 : ex3">
                 <font>
                     <Font name="Book Antiqua" size="14.0" />
                 </font>
             </Label>
-            <Label fx:id="player4Entered" text="Player 4 has entered">
+            <Label fx:id="player4Info" text="Player 4 : ex4">
                 <font>
                     <Font name="Book Antiqua" size="14.0" />
                 </font>
