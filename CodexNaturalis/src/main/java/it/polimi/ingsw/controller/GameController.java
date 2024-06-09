@@ -94,7 +94,7 @@ public class GameController {
     }
 
     public void closeGame(String userThatLeft) throws IOException {
-       String msg = "The game has been closed because"+ userThatLeft + " left the game";
+       String msg = "The game has been closed because "+ userThatLeft + " finished the game";
        for(String s: listeners.keySet())
            listeners.get(s).notifyCloseGame(msg);
     }

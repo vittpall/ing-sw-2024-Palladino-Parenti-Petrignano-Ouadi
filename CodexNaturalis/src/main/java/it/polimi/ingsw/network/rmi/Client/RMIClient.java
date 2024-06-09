@@ -29,7 +29,7 @@ import java.util.Scanner;
 
 public class RMIClient extends BaseClient {
     public final VirtualServer server;
-    private int idGame;
+    private Integer idGame;
     private int idClientIntoGame;
 
 
@@ -227,8 +227,10 @@ public class RMIClient extends BaseClient {
     }
 
 
-    public void close() throws RemoteException {
-        server.removeUsername(getUsername());
+    public void close() throws IOException {
+        removeUsername();
+        if(idGame != null)
+            this.closeGame();
         System.out.println("Client closed");
         System.exit(0);
     }
@@ -244,7 +246,7 @@ public class RMIClient extends BaseClient {
 
     @Override
     public void closeGame() throws IOException {
-        server.closeGame(idGame, null);
+        server.closeGame(idGame, username);
     }
 
 

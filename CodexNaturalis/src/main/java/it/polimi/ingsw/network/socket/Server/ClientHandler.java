@@ -89,7 +89,6 @@ public class ClientHandler implements GameListener {
         }
     }
 
-    @Override
     public String getUsername() {
         return clientUsername;
     }

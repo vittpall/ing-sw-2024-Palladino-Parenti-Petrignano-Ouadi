@@ -82,7 +82,6 @@ public interface VirtualView extends Remote {
 
     void closeGame() throws IOException, InterruptedException;
 
-
     int getnPlayer(int idGame) throws IOException, InterruptedException;
 
     ArrayList<Player> getPlayers(int idGame) throws IOException, InterruptedException;
