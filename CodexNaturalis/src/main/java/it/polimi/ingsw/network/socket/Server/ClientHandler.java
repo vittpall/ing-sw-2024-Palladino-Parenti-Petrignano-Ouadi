@@ -79,14 +79,10 @@ public class ClientHandler implements GameListener {
      * @throws RemoteException if the client is not reachable
      */
     @Override
-    public void update(ServerNotification notification) throws RemoteException {
-        try {
+    public void update(ServerNotification notification) throws IOException {
             output.writeObject(notification);
             output.flush();
             output.reset();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public String getUsername() {
