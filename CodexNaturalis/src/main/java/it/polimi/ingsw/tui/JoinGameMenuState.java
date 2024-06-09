@@ -5,6 +5,7 @@ import it.polimi.ingsw.network.BaseClient;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class JoinGameMenuState implements ClientState {
@@ -65,6 +66,18 @@ public class JoinGameMenuState implements ClientState {
 
     public String toString() {
         return "JoinGameMenuState";
+    }
+    public void refresh(HashMap<Integer, Integer[]> availableGames) {
+        System.out.println("These are the games to enter option:");
+        if (availableGames == null || availableGames.isEmpty()) {
+            System.out.println("No games available.\n1.Create new game 🆕");
+        } else {
+            System.out.println("Choose a game to enter 🚪:");
+            for (int idGame : availableGames.keySet()) {
+                System.out.println(idGame + ". This game has " + availableGames.get(idGame)[0] + " players and needs " +
+                        availableGames.get(idGame)[1] + " players to start");
+            }
+        }
     }
 
     /**

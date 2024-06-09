@@ -68,9 +68,21 @@ public class LobbyController {
     }
 
     public int joinGame(int id, String username, GameListener playerListener) throws InterruptedException, IOException {
+        String msg;
+        msg = "\n--------------------------------------";
+        if(gameControllers.get(id).getPlayers().isEmpty())
+            msg += "\nThe game " + id + " has been created.";
+        else
+            msg += "\nA player has joined the game " + id;
+        HashMap<Integer, Integer[]> availableGames = new HashMap<>();
+        for (int idGame : gameControllers.keySet()) {
+            if (gameControllers.get(id).getPlayers().size()+1 < gameControllers.get(id).getnPlayer()) {
+                availableGames.put(idGame, new Integer[]{gameControllers.get(idGame).getnPlayer(),
+                        (gameControllers.get(idGame).getnPlayer()-gameControllers.get(idGame).getPlayers().size()-1)});
+            }
+        }
         lobbyListeners.unSubscribeListener(playerListener);
-        String msg = "\nA player has joined the game " + id;
-        lobbyListeners.notifyJoinedGame(msg);
+        lobbyListeners.notifyJoinedGameToOutsider(msg, availableGames);
         return gameControllers.get(id).joinGame(username, playerListener);
     }
 
@@ -85,12 +97,8 @@ public class LobbyController {
         }
         GameController gameController = new GameController(nPlayers);
         gameControllers.put(id, gameController);
-
         int nPlayer = this.joinGame(id, username, playerListener);
         lobbyListeners.unSubscribeListener(playerListener);
-        String msg = "The game " + id + " has been created.";
-        lobbyListeners.notifyCreatedGame(msg);
-
         if (nPlayer == 0) {
             return id;
         }

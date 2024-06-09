@@ -1,11 +1,12 @@
 package it.polimi.ingsw.model.observer;
 
-import it.polimi.ingsw.network.notifications.GameCreatedNotification;
-import it.polimi.ingsw.network.notifications.GameJoinedNotification;
-import it.polimi.ingsw.network.notifications.ServerNotification;
-import it.polimi.ingsw.network.notifications.TokenColorTakenNotification;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.network.notifications.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 public class Observable {
@@ -23,17 +24,20 @@ public class Observable {
         listeners.remove(listener);
     }
 
-    public void notifyColorSelection(String msg) {
-        notifyListeners(new TokenColorTakenNotification(msg));
+    public void notifyColorSelection(String msg, ArrayList<TokenColor> availableColors) {
+        notifyListeners(new TokenColorTakenNotification(msg, availableColors));
     }
 
-    public void notifyJoinedGame(String msg) {
-        notifyListeners(new GameJoinedNotification(msg));
+    public void notifyJoinedGame(String msg, ArrayList<Player> players, int nOfMissingPlayers) {
+        notifyListeners(new GameJoinedNotification(msg, players, nOfMissingPlayers));
+    }
+    public void notifyJoinedGameToOutsider(String msg, HashMap<Integer, Integer[]> availableGames) {
+        notifyListeners(new GameJoinedNotificationToOutsiders(msg, availableGames));
     }
 
-    public void notifyCreatedGame(String msg) {
-        notifyListeners(new GameCreatedNotification(msg));
-    }
+    /*public void notifyCreatedGame(String msg, HashMap<Integer, Integer[]> availableGames) {
+        notifyListeners(new GameCreatedNotification(msg, availableGames));
+    }*/
 
     private void notifyListeners(ServerNotification notification) {
         for (GameListener listener : listeners) {
