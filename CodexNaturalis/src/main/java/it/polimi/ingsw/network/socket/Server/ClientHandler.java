@@ -6,19 +6,14 @@ import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
-import it.polimi.ingsw.network.HeartBeat;
 import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.ClientToServerMsg;
-import it.polimi.ingsw.network.socket.ClientToServerMsg.HeartBeatMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.rmi.RemoteException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class ClientHandler implements GameListener {
     final SocketServer server;
@@ -26,14 +21,14 @@ public class ClientHandler implements GameListener {
     final LobbyController controller;
     final transient ObjectOutputStream output;
     Integer gameId;
-  //  final HeartBeat heartBeat;
+    //  final HeartBeat heartBeat;
 
     public ClientHandler(SocketServer server, ObjectInputStream input, ObjectOutputStream output, LobbyController controller) {
         this.server = server;
         this.input = input;
         this.controller = controller;
         this.output = output;
-   //     this.heartBeat = new HeartBeat(this);
+        //     this.heartBeat = new HeartBeat(this);
     }
 
     public void runVirtualView() throws IOException, ClassNotFoundException, InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
@@ -43,31 +38,31 @@ public class ClientHandler implements GameListener {
             while ((request = (ClientToServerMsg) input.readObject()) != null) {
                 response = new ServerToClientMsg(request.getType());
                 response.setResponse(request.functionToCall(controller, this));
-                if(request.getType() == TypeServerToClientMsg.JOIN_GAME || request.getType() == TypeServerToClientMsg.CREATED_GAME) {
+                if (request.getType() == TypeServerToClientMsg.JOIN_GAME || request.getType() == TypeServerToClientMsg.CREATED_GAME) {
                     gameId = request.getIdGame();
                 }
                 output.writeObject(response);
                 output.flush();
                 output.reset();
             }
-        } catch (EOFException e) {
+        } catch (IOException e) {
             //technically heartbeat is not useful anymore if everytime a client disconnect
             //This catch is taken when the client disconnects from the server
             closeClient();
             //TODO add logic to remove the user
-        } catch (IOException | ClassNotFoundException | InterruptedException | CardNotFoundException |
+        } catch (ClassNotFoundException | InterruptedException | CardNotFoundException |
                  PlaceNotAvailableException | RequirementsNotMetException e) {
             e.printStackTrace();
         }
     }
 
     public void closeClient() throws IOException {
-            input.close();
-            output.close();
-            System.out.println("Client disconnected");
-            if(gameId != null)
-                controller.closeGame(gameId);
-            Thread.currentThread().interrupt();
+        input.close();
+        output.close();
+        System.out.println("Client disconnected");
+        if (gameId != null)
+            controller.closeGame(gameId);
+        Thread.currentThread().interrupt();
     }
 
 /*
