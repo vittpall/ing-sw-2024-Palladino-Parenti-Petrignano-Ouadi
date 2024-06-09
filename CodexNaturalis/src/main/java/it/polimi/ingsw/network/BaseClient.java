@@ -2,6 +2,7 @@ package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.gui.MainMenuStateGUI;
+import it.polimi.ingsw.model.UsefulData;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
@@ -25,9 +26,11 @@ abstract public class BaseClient implements VirtualView, GameListener {
     protected String username;
     protected BlockingQueue<ServerNotification> notificationsQueue;
     private boolean isGUIMode;
+    protected UsefulData usefulData;
 
     public BaseClient() {
         notificationsQueue = new LinkedBlockingQueue<>();
+        usefulData = UsefulData.getInstance();
         new Thread(() -> {
             try {
                 notificationsHandler();
@@ -75,6 +78,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     public abstract void close() throws IOException, InterruptedException;
 
+    public abstract void returnToLobby() throws IOException, InterruptedException;
+
     public abstract PlayerState getCurrentPlayerState() throws IOException, InterruptedException;
 
     protected abstract String getServerCurrentState() throws IOException, InterruptedException;
@@ -107,7 +112,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     public synchronized void onGameClosed(String msg) {
         if (!isGUIMode) {
-            this.currentState = new LobbyMenuState(this, scan);
+            setCurrentState(new LobbyMenuState(this, scan));
             System.out.println(msg);
             getClientCurrentState().display();
         } else
@@ -130,7 +135,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
         boolean correctInput;
         String input = "";
         do {
-            showState();
+            if(!input.equals("exit"))
+                showState();
             correctInput = false;
             while (!correctInput) {
                 try {
@@ -276,7 +282,13 @@ abstract public class BaseClient implements VirtualView, GameListener {
         if ("exit".equals(input)) {
             try {
                 System.out.println("Exiting game...");
-                close();
+                if(usefulData.quitableStates.contains(currentState.toString()))
+                {
+                    System.out.println("Game quit successfully22");
+                    close();
+                }
+                else
+                    returnToLobby();
             } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }

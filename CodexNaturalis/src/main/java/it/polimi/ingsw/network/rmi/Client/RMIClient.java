@@ -228,12 +228,17 @@ public class RMIClient extends BaseClient {
 
 
     public void close() throws IOException {
+        returnToLobby();
+        System.exit(0);
+    }
+
+    public void returnToLobby() throws IOException {
         removeUsername();
         if(idGame != null)
             this.closeGame();
-        System.out.println("Client closed");
-        System.exit(0);
+        System.out.println("Game quit successfully");
     }
+
 
     public void removeUsername() throws RemoteException {
         server.removeUsername(getUsername());
@@ -257,7 +262,15 @@ public class RMIClient extends BaseClient {
 
     @Override
     public ArrayList<Player> getPlayers(int idGame) throws IOException {
-        return server.getPlayers(idGame);
+        ArrayList<Player> x = null;
+        try {
+            x = server.getPlayers(idGame);
+        } catch (NullPointerException e) {
+            System.out.println("Error while getting players"+ e.getMessage());
+            e.printStackTrace();
+        }
+        return x;
+ //       return server.getPlayers(idGame);
     }
 
     @Override

@@ -183,6 +183,11 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
+    public void returnToLobby() throws IOException, InterruptedException {
+
+    }
+
+    @Override
     public GameCard getLastFromUsableCards(int deck) throws RemoteException {
         return null;
     }
