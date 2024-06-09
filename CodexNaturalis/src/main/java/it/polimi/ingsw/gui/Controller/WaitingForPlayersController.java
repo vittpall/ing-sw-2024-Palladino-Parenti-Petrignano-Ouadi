@@ -66,8 +66,11 @@ public class WaitingForPlayersController implements FXMLController {
             }
             if (!(client.getnPlayer(client.getIdGame()) > size)) {
                 waitingForNPlayersLabel.setText("You can start the game");
-            } else
+                StartGameButton.setVisible(true);
+            } else {
+                StartGameButton.setVisible(false);
                 waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame()) - size) + " players to join the game...");
+            }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }

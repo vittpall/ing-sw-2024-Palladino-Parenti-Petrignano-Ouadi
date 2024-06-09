@@ -9,8 +9,8 @@ import java.util.HashMap;
 
 public class GameBoard extends Pane {
     private final HashMap<Point, CardView> cards = new HashMap<>();
-    private static final double HORIZONTAL_SPACING_FACTOR = 22;
-    private static final double VERTICAL_SPACING_FACTOR = 40;
+    private static final double HORIZONTAL_SPACING_FACTOR = CardView.CARD_WIDTH * 0.2214;
+    private static final double VERTICAL_SPACING_FACTOR = CardView.CARD_HEIGHT * 0.365;
 
     public void addCard(Card card, boolean showFront, int x, int y) {
         CardView cardView = new CardView(card, showFront);

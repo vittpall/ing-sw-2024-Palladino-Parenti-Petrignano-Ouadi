@@ -10,12 +10,13 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
-import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -33,6 +34,7 @@ public class GameController implements FXMLController {
     public HBox resourceDeck;
     public HBox goldenDeck;
     public VBox playerHandBox;
+    public ScrollPane gameBoardScrollPane;
     private BaseClient client;
     private Stage stage;
     private Integer selectedCardIndex = null;
@@ -42,9 +44,42 @@ public class GameController implements FXMLController {
     public void initialize() {
         gameBoard = new GameBoard();
         gameBoardContainer.getChildren().add(gameBoard);
-        gameBoard.setPrefSize(gameBoardContainer.getPrefWidth(), gameBoardContainer.getPrefHeight());
 
+        setupZoomControls();
     }
+
+
+    private void setupZoomControls() {
+        gameBoardScrollPane.requestFocus();
+
+        gameBoardScrollPane.setOnKeyPressed(event -> {
+            double zoomFactor = 1.1;
+            if (event.getCode() == KeyCode.PLUS || event.getCode() == KeyCode.EQUALS) {
+                scaleContent(gameBoard, zoomFactor);
+            } else if (event.getCode() == KeyCode.MINUS) {
+                scaleContent(gameBoard, 1 / zoomFactor);
+            }
+            event.consume();
+        });
+
+        gameBoardScrollPane.setOnZoom(event -> {
+            double zoomFactor = event.getZoomFactor();
+            scaleContent(gameBoard, zoomFactor);
+            event.consume();
+        });
+    }
+
+
+    private void scaleContent(Node node, double scaleFactor) {
+        double newScale = node.getScaleX() * scaleFactor;
+
+        if (newScale < 0.5) newScale = 0.5;
+        if (newScale > 3.0) newScale = 3.0;
+
+        node.setScaleX(newScale);
+        node.setScaleY(newScale);
+    }
+
 
     public void initializeGame() {
         try {
@@ -154,8 +189,6 @@ public class GameController implements FXMLController {
 
 
     private boolean isPlayerTurn() throws IOException, InterruptedException {
-        // Qui dovresti determinare se è il turno del giocatore.
-        // Questo potrebbe essere uno stato che ricevi dal server o da una logica interna.
         return client.getCurrentPlayerState() == PlayerState.PLAY_CARD;
     }
 
@@ -181,7 +214,7 @@ public class GameController implements FXMLController {
                         try {
                             handleCardSelection(currentIndex, cardNode);
                         } catch (IOException | InterruptedException e) {
-                            e.printStackTrace(); // Gestisci l'eccezione come necessario
+                            e.printStackTrace();
                         }
                     }
                     event.consume();
@@ -218,7 +251,7 @@ public class GameController implements FXMLController {
         this.stage = stage;
     }
 
-    public void handleShowBackButton(ActionEvent actionEvent) throws IOException, InterruptedException {
+    public void handleShowBackButton() throws IOException, InterruptedException {
         playCardFaceDown = !playCardFaceDown;
         loadPlayerHand();
         updatePlayerHandInteraction();
