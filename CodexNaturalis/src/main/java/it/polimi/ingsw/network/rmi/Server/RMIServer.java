@@ -18,7 +18,6 @@ import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.HeartBeat;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
-import it.polimi.ingsw.network.rmi.Client.RMIClient;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.awt.*;
@@ -27,37 +26,36 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 
 public class RMIServer implements VirtualServer {
     final HashMap<VirtualView, HeartBeat> clients = new HashMap<>();
- //   final List<VirtualView> clients = new ArrayList<>();
-  //  final List<HeartBeat> heartBeatsClients = new ArrayList<>();
- //   final List<GameListener> gameListeners = new ArrayList<>();
+
 
     private final LobbyController lobbyController;
 
     public RMIServer(LobbyController lobbyController) throws RemoteException {
-        super();  // Call the constructor of UnicastRemoteObject
+        super();
         this.lobbyController = lobbyController;
     }
 
     @Override
     public synchronized void connect(VirtualView client) throws RemoteException {
- /*       System.err.println("new client connected");
-        this.clients.add(client);*/
         System.err.println("New client connected");
         clients.put(client, new HeartBeat(client, this));
-  //      gameListeners.add((GameListener) client);  // Make sure this casting is correct
     }
 
-    public void sendHeartBeat(VirtualView client, long lastHeartBeat){
-        clients.get(client).beatFromClient(lastHeartBeat);
-    }
 
     @Override
     public boolean checkUsername(String username, GameListener playerListener) throws RemoteException {
-        return lobbyController.checkUsername(username, playerListener);
+        boolean usernameValid = lobbyController.checkUsername(username, playerListener);
+        if (usernameValid) {
+            VirtualView client = (VirtualView) playerListener;
+            HeartBeat hb = clients.get(client);
+            if (hb != null) {
+                hb.setUsername(username);
+            }
+        }
+        return usernameValid;
 
     }
 
@@ -102,13 +100,23 @@ public class RMIServer implements VirtualServer {
 
 
     @Override
-    public int joinGame(int id, String username, GameListener playerListener) throws IOException, InterruptedException {
-        return lobbyController.joinGame(id, username, playerListener);
+    public int joinGame(int gameId, String username, GameListener playerListener) throws IOException, InterruptedException {
+        int playerId = lobbyController.joinGame(gameId, username, playerListener);
+        HeartBeat hb = clients.get((VirtualView) playerListener);
+        if (hb != null) {
+            hb.setGameId(gameId);
+        }
+        return playerId;
     }
 
     @Override
     public int createGame(String username, int nPlayers, GameListener playerListener) throws IOException, InterruptedException {
-        return lobbyController.createGame(username, nPlayers, playerListener);
+        int createdGameId = lobbyController.createGame(username, nPlayers, playerListener);
+        HeartBeat hb = clients.get((VirtualView) playerListener);
+        if (hb != null) {
+            hb.setGameId(createdGameId);
+        }
+        return createdGameId;
     }
 
 
@@ -258,5 +266,14 @@ public class RMIServer implements VirtualServer {
     public boolean checkState(int idGame, int idClientIntoGame, RequestedActions requestedActions) throws RemoteException {
         return lobbyController.checkState(idGame, idClientIntoGame, requestedActions);
     }
+
+    public synchronized void removeClient(VirtualView client) {
+        if (clients.remove(client) != null) {
+            System.out.println("Client successfully removed.");
+        } else {
+            System.err.println("Client not found, cannot remove.");
+        }
+    }
+
 
 }

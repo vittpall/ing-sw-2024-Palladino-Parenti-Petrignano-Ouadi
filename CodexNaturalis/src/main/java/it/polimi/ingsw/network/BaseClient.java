@@ -64,7 +64,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
         this.currentState = currentState;
     }
 
-    public abstract void sendHeartBeat() throws IOException, InterruptedException;
 
     protected abstract boolean checkState(RequestedActions action) throws IOException, InterruptedException, ClassNotFoundException;
 

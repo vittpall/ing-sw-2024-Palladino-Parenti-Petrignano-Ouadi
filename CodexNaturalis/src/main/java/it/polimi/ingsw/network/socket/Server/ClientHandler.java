@@ -21,14 +21,12 @@ public class ClientHandler implements GameListener {
     final LobbyController controller;
     final transient ObjectOutputStream output;
     Integer gameId;
-    //  final HeartBeat heartBeat;
 
     public ClientHandler(SocketServer server, ObjectInputStream input, ObjectOutputStream output, LobbyController controller) {
         this.server = server;
         this.input = input;
         this.controller = controller;
         this.output = output;
-        //     this.heartBeat = new HeartBeat(this);
     }
 
     public void runVirtualView() throws IOException, ClassNotFoundException, InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
@@ -65,12 +63,6 @@ public class ClientHandler implements GameListener {
         Thread.currentThread().interrupt();
     }
 
-/*
-    public void sendHeartBeat(long timestamp)
-    {
-        heartBeat.beatFromClient(timestamp);
-    }
-    */
 
     public void sendMessage(ServerToClientMsg msgToBroadCast) throws IOException {
         output.writeObject(msgToBroadCast);

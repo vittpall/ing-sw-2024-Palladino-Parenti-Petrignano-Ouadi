@@ -11,7 +11,6 @@ import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.*;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.network.HeartBeat;
 import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.*;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
@@ -41,7 +40,6 @@ public class SocketClient extends BaseClient {
     private int idGame;
     private int idClientIntoGame;
     private final boolean isGUIMode;
-    private ScheduledExecutorService executorService;
 
 
     /**
@@ -351,15 +349,7 @@ public class SocketClient extends BaseClient {
                 throw new RuntimeException(e);
             }
         }).start();
-    //    this.executorService = Executors.newScheduledThreadPool(1);
-    /*    this.executorService.scheduleAtFixedRate(() -> {
-            try {
-                sendHeartBeat();
-            } catch (IOException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }, 0, 1000, java.util.concurrent.TimeUnit.MILLISECONDS);
-        */
+
 
         if (isGUIMode) {
             showState();
@@ -384,12 +374,10 @@ public class SocketClient extends BaseClient {
                 if (obj instanceof ServerNotification notification) {
                     update(notification);
                 } else if (obj instanceof ServerToClientMsg msg) {
-                    if(msg.getType() == TypeServerToClientMsg.CLOSE_CONNECTION)
-                    {
+                    if (msg.getType() == TypeServerToClientMsg.CLOSE_CONNECTION) {
                         System.out.println("Closing connection!!!");
                         in.close();
                         out.close();
-                        this.executorService.shutdown();
                         System.exit(0);
                     }
                     TypeServerToClientMsg responseType = msg.getType();
@@ -414,16 +402,6 @@ public class SocketClient extends BaseClient {
         return (PlayerState) response.getResponse().getResponseReturnable();
     }
 
-    /**
-     * @throws RemoteException
-     */
-    @Override
-    public void sendHeartBeat() throws IOException, InterruptedException {
-        HeartBeatMsg request = new HeartBeatMsg();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
-    }
 
     public boolean checkState(RequestedActions requestedActions) throws IOException, InterruptedException {
         CheckStateMsg request = new CheckStateMsg(idGame, idClientIntoGame, requestedActions);
