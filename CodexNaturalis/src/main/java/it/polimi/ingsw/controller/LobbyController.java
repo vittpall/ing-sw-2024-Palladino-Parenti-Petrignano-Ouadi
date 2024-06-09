@@ -192,8 +192,9 @@ public class LobbyController {
         return gameControllers.get(idGame).getWinner();
     }
 
-    public void closeGame(int idGame) {
+    public void closeGame(int idGame, String userThatLeft) throws IOException {
         //TODO:notificare i giocatori del gioco specifico che il gioco viene chiuso dato che un giocatore l'ha fatto
+        gameControllers.get(idGame).closeGame(userThatLeft);
         gameControllers.remove(idGame);
     }
 

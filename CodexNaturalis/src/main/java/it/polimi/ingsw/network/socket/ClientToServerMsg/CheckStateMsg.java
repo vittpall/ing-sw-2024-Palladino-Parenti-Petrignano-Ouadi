@@ -53,4 +53,9 @@ public class CheckStateMsg extends ClientToServerMsg{
     public int getIdGame() {
         return this.idGame;
     }
+
+    @Override
+    public String getUsername() {
+        return "";
+    }
 }

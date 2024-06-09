@@ -3,6 +3,7 @@ package it.polimi.ingsw.network;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.rmi.Server.RMIServer;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -50,9 +51,11 @@ public class HeartBeat {
             if (gameId != null) {
                 System.out.println("Game " + gameId + " is being closed");
                 try {
-                    rmiServer.closeGame(gameId);
+                    rmiServer.closeGame(gameId, rmiClientUsername);
                 } catch (RemoteException e) {
                     System.err.println("Error closing game: " + gameId);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
         }

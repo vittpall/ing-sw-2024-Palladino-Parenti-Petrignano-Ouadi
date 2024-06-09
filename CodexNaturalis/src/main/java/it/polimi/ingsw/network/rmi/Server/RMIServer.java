@@ -243,8 +243,8 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public void closeGame(int idGame) throws RemoteException {
-        lobbyController.closeGame(idGame);
+    public void closeGame(int idGame, String userThatLeft) throws IOException {
+        lobbyController.closeGame(idGame, userThatLeft);
     }
 
     @Override

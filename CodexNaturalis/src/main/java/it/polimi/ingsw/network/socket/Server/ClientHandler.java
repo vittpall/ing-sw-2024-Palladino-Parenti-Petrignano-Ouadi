@@ -20,7 +20,8 @@ public class ClientHandler implements GameListener {
     final transient ObjectInputStream input;
     final LobbyController controller;
     final transient ObjectOutputStream output;
-    Integer gameId;
+    private String clientUsername;
+    private Integer gameId;
 
     public ClientHandler(SocketServer server, ObjectInputStream input, ObjectOutputStream output, LobbyController controller) {
         this.server = server;
@@ -39,6 +40,9 @@ public class ClientHandler implements GameListener {
                 if (request.getType() == TypeServerToClientMsg.JOIN_GAME || request.getType() == TypeServerToClientMsg.CREATED_GAME) {
                     gameId = request.getIdGame();
                 }
+                if(request.getType() == TypeServerToClientMsg.USER_ALREADY_TAKEN) {
+                    clientUsername = request.getUsername();
+                }
                 output.writeObject(response);
                 output.flush();
                 output.reset();
@@ -55,12 +59,12 @@ public class ClientHandler implements GameListener {
     }
 
     public void closeClient() throws IOException {
-        input.close();
-        output.close();
-        System.out.println("Client disconnected");
-        if (gameId != null)
-            controller.closeGame(gameId);
-        Thread.currentThread().interrupt();
+            input.close();
+            output.close();
+            System.out.println("Client disconnected(SocketClient)");
+            if (gameId != null)
+                controller.closeGame(gameId, clientUsername);
+            Thread.currentThread().interrupt();
     }
 
 
@@ -83,6 +87,11 @@ public class ClientHandler implements GameListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String getUsername() {
+        return clientUsername;
     }
 
 }

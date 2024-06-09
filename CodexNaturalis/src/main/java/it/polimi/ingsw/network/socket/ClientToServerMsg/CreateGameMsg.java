@@ -38,4 +38,9 @@ public class CreateGameMsg extends ClientToServerMsg {
     public int getIdGame() {
         return gameId;
     }
+
+    @Override
+    public String getUsername() {
+        return "";
+    }
 }

@@ -31,4 +31,9 @@ public class GetCurrentGameStateMsg extends ClientToServerMsg{
     public int getIdGame() {
         return idGame;
     }
+
+    @Override
+    public String getUsername() {
+        return "";
+    }
 }

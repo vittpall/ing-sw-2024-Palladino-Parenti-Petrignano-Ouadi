@@ -82,7 +82,7 @@ public interface VirtualServer extends Remote {
 
     String getWinner(int idGame) throws RemoteException, InterruptedException;
 
-    void closeGame(int idGame) throws RemoteException;
+    void closeGame(int idGame, String userThatLeft) throws IOException;
 
     int getnPlayer(int idGame) throws RemoteException;
 

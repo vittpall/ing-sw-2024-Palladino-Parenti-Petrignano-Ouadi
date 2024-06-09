@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.observer;
 
+import it.polimi.ingsw.network.notifications.*;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.network.notifications.*;
@@ -32,12 +33,15 @@ public class Observable {
         notifyListeners(new GameJoinedNotification(msg, players, nOfMissingPlayers));
     }
     public void notifyJoinedGameToOutsider(String msg, HashMap<Integer, Integer[]> availableGames) {
-        notifyListeners(new GameJoinedNotificationToOutsiders(msg, availableGames));
+//        notifyListeners(new GameJoinedNotificationToOutsiders(msg, availableGames));
     }
 
     /*public void notifyCreatedGame(String msg, HashMap<Integer, Integer[]> availableGames) {
         notifyListeners(new GameCreatedNotification(msg, availableGames));
     }*/
+
+    public void notifyCloseGame(String msg) {notifyListeners(new CloseGameNotification(msg));
+    }
 
     private void notifyListeners(ServerNotification notification) {
         for (GameListener listener : listeners) {
@@ -45,11 +49,12 @@ public class Observable {
                 try {
                     listener.update(notification);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    System.out.println("This listener cannot be reached");
                 }
             }).start();
         }
     }
+
 
     //TODO define all the notify methods
 

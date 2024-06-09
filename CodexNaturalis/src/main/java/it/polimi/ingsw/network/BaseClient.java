@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.gui.MainMenuStateGUI;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
@@ -21,7 +22,7 @@ import java.util.concurrent.*;
 abstract public class BaseClient implements VirtualView, GameListener {
     private Scanner scan;
     private ClientState currentState;
-    private String username;
+    protected String username;
     protected BlockingQueue<ServerNotification> notificationsQueue;
     private boolean isGUIMode;
 
@@ -68,6 +69,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
         this.currentState = currentState;
     }
 
+ //   public abstract void sendHeartBeat() throws IOException, InterruptedException;
 
     protected abstract boolean checkState(RequestedActions action) throws IOException, InterruptedException, ClassNotFoundException;
 
@@ -102,6 +104,19 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 ((JoinGameMenuState) getClientCurrentState()).refresh(availableGames);
         } else
             getClientCurrentState().refresh(message);
+    }
+
+    public synchronized void onGameClosed(String msg) {
+        if (!isGUIMode) {
+            this.currentState = new LobbyMenuState(this, scan);
+            System.out.println(msg);
+            getClientCurrentState().display();
+        } else
+        {
+           // this.currentState = new MainMenuStateGUI(stage, this);
+            getClientCurrentState().refresh(msg);
+        }
+
     }
 
 

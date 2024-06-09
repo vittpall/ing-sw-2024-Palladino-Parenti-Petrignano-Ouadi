@@ -37,4 +37,9 @@ public class AvailableColorMsg extends ClientToServerMsg {
     public int getIdGame() {
         return this.idGame;
     }
+
+    @Override
+    public String getUsername() {
+        return "";
+    }
 }

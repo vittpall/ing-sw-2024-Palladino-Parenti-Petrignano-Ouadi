@@ -243,8 +243,8 @@ public class RMIClient extends BaseClient {
 
 
     @Override
-    public void closeGame() throws RemoteException {
-        server.closeGame(idGame);
+    public void closeGame() throws IOException {
+        server.closeGame(idGame, null);
     }
 
 
@@ -268,4 +268,5 @@ public class RMIClient extends BaseClient {
     synchronized public void onChatMessageReceived() {
         System.out.println("New message received");
     }
+
 }
