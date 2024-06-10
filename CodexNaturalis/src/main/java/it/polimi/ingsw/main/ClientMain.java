@@ -71,9 +71,9 @@ public class ClientMain extends Application {
         try (Socket serverSocket = new Socket(serverAddress, 2345)) {
             socketTx = new ObjectOutputStream(serverSocket.getOutputStream());
             socketRx = new ObjectInputStream(serverSocket.getInputStream());
+            this.client = new SocketClient(socketRx, socketTx, interfaceType, stage);
+            client.run();
         }
-        this.client = new SocketClient(socketRx, socketTx, interfaceType, stage);
-        client.run();
     }
 
     private void setupRMIClient(String interfaceType, Stage stage) throws Exception {
