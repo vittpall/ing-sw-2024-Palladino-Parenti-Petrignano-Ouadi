@@ -65,14 +65,11 @@ public class ClientMain extends Application {
     }
 
     private void setupSocketClient(String interfaceType, Stage stage) throws IOException, ClassNotFoundException, InterruptedException {
-        ObjectOutputStream socketTx;
-        ObjectInputStream socketRx;
-        try (Socket serverSocket = new Socket(serverAddress, 2345)) {
-            socketTx = new ObjectOutputStream(serverSocket.getOutputStream());
-            socketRx = new ObjectInputStream(serverSocket.getInputStream());
-            this.client = new SocketClient(socketRx, socketTx, interfaceType, stage);
-            client.run();
-        }
+        Socket serverSocket = new Socket(serverAddress, 2345);
+        ObjectOutputStream socketTx = new ObjectOutputStream(serverSocket.getOutputStream());
+        ObjectInputStream socketRx = new ObjectInputStream(serverSocket.getInputStream());
+        this.client = new SocketClient(socketRx, socketTx, interfaceType, stage);
+        client.run();
     }
 
     private void setupRMIClient(String interfaceType, Stage stage) throws Exception {
