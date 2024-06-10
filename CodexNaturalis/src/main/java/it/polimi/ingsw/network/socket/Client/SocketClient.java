@@ -174,17 +174,16 @@ public class SocketClient extends BaseClient {
 
     @Override
     public void close() throws IOException, InterruptedException {
-        ClosedConnectionMsg request = new ClosedConnectionMsg(getUsername(), idGame);
-        System.out.println("Closing connection!!!");
-        ServerToClientMsg response = sendRequest(request);
-        response.getResponse();
-
-        System.exit(0);
+        returnToLobby();
+  //      System.exit(0);
     }
 
     @Override
     public void returnToLobby() throws IOException, InterruptedException {
-
+        ClosedConnectionMsg request = new ClosedConnectionMsg(getUsername(), idGame);
+        System.out.println("Closing connection!!!");
+        ServerToClientMsg response = sendRequest(request);
+        response.getResponse();
     }
 
     @Override
@@ -390,6 +389,8 @@ public class SocketClient extends BaseClient {
                 }
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             System.out.println("Error: " + e.getMessage());
         }
     }

@@ -5,6 +5,8 @@ import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
+import java.io.IOException;
+
 public class ClosedConnectionMsg extends ClientToServerMsg {
 
     private final String username;
@@ -16,8 +18,9 @@ public class ClosedConnectionMsg extends ClientToServerMsg {
     }
 
     @Override
-    public ReturnableObject<String> functionToCall(LobbyController controller, GameListener playerListener) {
+    public ReturnableObject<String> functionToCall(LobbyController controller, GameListener playerListener) throws IOException {
         ReturnableObject<String> response = new ReturnableObject<>();
+        controller.closeGame(idGame, username);
         response.setResponseReturnable("connection closed");
         return response;
     }

@@ -31,11 +31,16 @@ public class ClientHandler implements GameListener {
         this.output = output;
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     public void runVirtualView() throws IOException, ClassNotFoundException, InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
         ClientToServerMsg request;
         ServerToClientMsg response;
         try {
-            while ((request = (ClientToServerMsg) input.readObject()) != null) {
+            while (true) {
+                synchronized (input)
+                {
+                    request = (ClientToServerMsg) input.readObject();
+                }
                 response = new ServerToClientMsg(request.getType());
                 response.setResponse(request.functionToCall(controller, this));
                 if (request.getType() == TypeServerToClientMsg.JOIN_GAME || request.getType() == TypeServerToClientMsg.CREATED_GAME) {
@@ -44,9 +49,7 @@ public class ClientHandler implements GameListener {
                 if (request.getType() == TypeServerToClientMsg.USER_ALREADY_TAKEN) {
                     clientUsername = request.getUsername();
                 }
-                output.writeObject(response);
-                output.flush();
-                output.reset();
+                sendMessage(response);
             }
         } catch (SocketException e) {
             closeClient();
@@ -70,9 +73,13 @@ public class ClientHandler implements GameListener {
 
 
     public void sendMessage(ServerToClientMsg msgToBroadCast) throws IOException {
-        output.writeObject(msgToBroadCast);
-        output.flush();
-        output.reset();
+        synchronized (output)
+        {
+            output.writeObject(msgToBroadCast);
+            output.flush();
+            output.reset();
+        }
+
     }
 
     /**
@@ -81,9 +88,12 @@ public class ClientHandler implements GameListener {
      */
     @Override
     public void update(ServerNotification notification) throws IOException {
-        output.writeObject(notification);
-        output.flush();
-        output.reset();
+        synchronized (output)
+        {
+            output.writeObject(notification);
+            output.flush();
+            output.reset();
+        }
     }
 
     public String getUsername() {
