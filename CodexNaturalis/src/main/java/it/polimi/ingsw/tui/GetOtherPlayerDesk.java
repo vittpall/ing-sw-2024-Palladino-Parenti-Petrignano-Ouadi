@@ -8,9 +8,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class GetOtherPlayerDesk implements ClientState{
+public class GetOtherPlayerDesk implements ClientStateTUI {
     BaseClient client;
     private final Scanner scanner;
+
     @Override
     public void promptForInput() {
     }
@@ -19,28 +20,29 @@ public class GetOtherPlayerDesk implements ClientState{
         this.client = client;
         this.scanner = scanner;
     }
+
     @Override
-    public void display(){
+    public void display() {
         System.out.println("\nSelect a Player: ");
         try {
             ArrayList<Player> allPlayers = client.getAllPlayers();
-            for (int i=0;i<allPlayers.size();i++) {
-                System.out.println((i+1)+". Player: " + allPlayers.get(i).getUsername());
+            for (int i = 0; i < allPlayers.size(); i++) {
+                System.out.println((i + 1) + ". Player: " + allPlayers.get(i).getUsername());
             }
         } catch (IOException | InterruptedException ex) {
             System.out.println(ex.getMessage());
         }
     }
+
     @Override
     public void inputHandler(int input) throws IOException, InterruptedException {
-        Player selectedPlayer = getPlayerFromInput(input-1);
-        if ( selectedPlayer != null) {
+        Player selectedPlayer = getPlayerFromInput(input - 1);
+        if (selectedPlayer != null) {
             CardPrinter printer = new CardPrinter();
-            PlayerDesk playerDesk= selectedPlayer.getPlayerDesk();
+            PlayerDesk playerDesk = selectedPlayer.getPlayerDesk();
             printer.printDesk(playerDesk.getDesk());
             client.setCurrentState(null);
-        }
-        else {
+        } else {
             System.out.println("Invalid input, please use a valid number:");
             promptForInput();
             inputHandler(scanner.nextInt());
@@ -48,15 +50,12 @@ public class GetOtherPlayerDesk implements ClientState{
     }
 
     private Player getPlayerFromInput(int input) {
-        try{
-            if(input<client.getAllPlayers().size())
-            {
+        try {
+            if (input < client.getAllPlayers().size()) {
                 return client.getAllPlayers().get(input);
-            }
-            else
+            } else
                 return null;
-        }
-        catch (IOException | InterruptedException ex) {
+        } catch (IOException | InterruptedException ex) {
             System.out.println(ex.getMessage());
         }
         return null;
@@ -66,11 +65,5 @@ public class GetOtherPlayerDesk implements ClientState{
         return "GetOtherPlayerDesk";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
 
-    }
 }

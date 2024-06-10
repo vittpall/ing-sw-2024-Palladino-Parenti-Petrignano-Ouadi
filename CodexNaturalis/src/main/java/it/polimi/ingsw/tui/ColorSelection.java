@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ColorSelection implements ClientState {
+public class ColorSelection implements ClientStateTUI {
     BaseClient client;
     private final Scanner scanner;
 
@@ -78,7 +78,7 @@ public class ColorSelection implements ClientState {
         return "ColorSelection";
     }
 
-    public void refresh(ArrayList<TokenColor> availableColors){
+    public void refresh(ArrayList<TokenColor> availableColors) {
         System.out.println("The available colors are now:");
         for (TokenColor tokenColor : availableColors) {
             String colorOutput = formatColorOutput(tokenColor);
@@ -86,11 +86,6 @@ public class ColorSelection implements ClientState {
         }
         System.out.println("------------------------------------\n");
     }
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
 
-    }
+
 }

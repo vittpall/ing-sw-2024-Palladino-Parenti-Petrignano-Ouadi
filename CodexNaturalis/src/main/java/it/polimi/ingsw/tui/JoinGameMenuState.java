@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class JoinGameMenuState implements ClientState {
+public class JoinGameMenuState implements ClientStateTUI {
     BaseClient client;
     Scanner scanner;
 
@@ -67,6 +67,7 @@ public class JoinGameMenuState implements ClientState {
     public String toString() {
         return "JoinGameMenuState";
     }
+
     public void refresh(HashMap<Integer, Integer[]> availableGames) {
         System.out.println("These are the games to enter option:");
         if (availableGames == null || availableGames.isEmpty()) {
@@ -80,13 +81,7 @@ public class JoinGameMenuState implements ClientState {
         }
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
 
-    }
 }
 
 

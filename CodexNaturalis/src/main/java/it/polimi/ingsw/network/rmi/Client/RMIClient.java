@@ -215,13 +215,6 @@ public class RMIClient extends BaseClient {
     }
 
     @Override
-    public void showState() {
-        getClientCurrentState().display();
-        getClientCurrentState().promptForInput();
-    }
-
-
-    @Override
     public boolean checkState(RequestedActions requestedActions) throws RemoteException {
         return server.checkState(idGame, idClientIntoGame, requestedActions);
     }
@@ -234,7 +227,7 @@ public class RMIClient extends BaseClient {
 
     public void returnToLobby() throws IOException {
         removeUsername();
-        if(idGame != null)
+        if (idGame != null)
             this.closeGame();
         System.out.println("Game quit successfully");
     }
@@ -266,11 +259,11 @@ public class RMIClient extends BaseClient {
         try {
             x = server.getPlayers(idGame);
         } catch (NullPointerException e) {
-            System.out.println("Error while getting players"+ e.getMessage());
+            System.out.println("Error while getting players" + e.getMessage());
             e.printStackTrace();
         }
         return x;
- //       return server.getPlayers(idGame);
+        //       return server.getPlayers(idGame);
     }
 
     @Override

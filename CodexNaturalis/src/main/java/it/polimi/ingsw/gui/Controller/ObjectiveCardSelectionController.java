@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gui.Controller;
 
 import it.polimi.ingsw.gui.CardView;
-import it.polimi.ingsw.gui.InizializeStarterCardStateGUI;
+import it.polimi.ingsw.gui.InitializeStarterCardStateGUI;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
@@ -57,7 +57,7 @@ public class ObjectiveCardSelectionController implements FXMLController {
     private void selectCard(int cardIndex) {
         try {
             client.setObjectiveCard(cardIndex);
-            client.setCurrentState(new InizializeStarterCardStateGUI(stage, client));
+            client.setCurrentState(new InitializeStarterCardStateGUI(stage, client));
             client.showState();
         } catch (CardNotFoundException | IOException | InterruptedException ex) {
             messageLabel.setText("Error selecting card: " + ex.getMessage());

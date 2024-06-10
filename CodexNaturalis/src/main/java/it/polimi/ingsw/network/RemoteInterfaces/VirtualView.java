@@ -92,7 +92,7 @@ public interface VirtualView extends Remote {
 
     String getUsername() throws RemoteException;
 
-    void showState() throws RemoteException;
+
 
     boolean isGameStarted() throws IOException, InterruptedException;
 

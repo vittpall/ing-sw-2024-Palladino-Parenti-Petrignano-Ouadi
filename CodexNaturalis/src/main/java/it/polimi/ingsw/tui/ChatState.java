@@ -1,11 +1,12 @@
 package it.polimi.ingsw.tui;
 
+import it.polimi.ingsw.core.ClientState;
 import it.polimi.ingsw.network.BaseClient;
 
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class ChatState implements ClientState {
+public class ChatState implements ClientStateTUI {
     private final BaseClient client;
     private final Scanner scanner;
     private ClientState returnState;
@@ -53,13 +54,8 @@ public class ChatState implements ClientState {
         System.out.println("3. Return to the game");
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
-
-    }
+    
+   
 
     private void sendGlobalMessage() {
         //client.server.sendMessage(client.getUsername(), null, scanner.nextLine());

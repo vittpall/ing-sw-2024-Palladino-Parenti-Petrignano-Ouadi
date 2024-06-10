@@ -1,21 +1,19 @@
 package it.polimi.ingsw.gui;
 
+import it.polimi.ingsw.core.ClientState;
 import it.polimi.ingsw.gui.Controller.InitializeStarterCardController;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.tui.ClientState;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class InizializeStarterCardStateGUI implements ClientState {
+public class InitializeStarterCardStateGUI implements ClientState {
 
 
     private final BaseClient client;
     private final Stage stage;
     private InitializeStarterCardController controller;
 
-    public InizializeStarterCardStateGUI(Stage stage, BaseClient client) {
+    public InitializeStarterCardStateGUI(Stage stage, BaseClient client) {
         this.client = client;
         this.stage = stage;
     }
@@ -27,25 +25,10 @@ public class InizializeStarterCardStateGUI implements ClientState {
     }
 
 
-    @Override
-    public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
-
+    public String toString() {
+        return "InitializeStarterCardStateGUI";
     }
 
-    @Override
-    public void promptForInput() {
-
-    }
-
-    public String toString()
-    {
-        return "InizializeStarterCardStateGUI";
-    }
-
-    /**
-     *
-     */
-    @Override
     public void refresh(String msg) {
 
     }

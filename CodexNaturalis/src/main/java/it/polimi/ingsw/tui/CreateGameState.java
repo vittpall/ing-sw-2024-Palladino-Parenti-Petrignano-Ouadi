@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class CreateGameState implements ClientState {
+public class CreateGameState implements ClientStateTUI {
 
     BaseClient client;
     private final Scanner scanner;
@@ -80,12 +80,5 @@ public class CreateGameState implements ClientState {
         return "CreateGameState";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
-
-    }
 
 }

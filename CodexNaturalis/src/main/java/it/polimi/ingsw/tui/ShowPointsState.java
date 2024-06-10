@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class ShowPointsState implements ClientState {
+public class ShowPointsState implements ClientStateTUI {
     BaseClient client;
     private final Scanner scanner;
 
@@ -50,13 +50,8 @@ public class ShowPointsState implements ClientState {
         return "ShowPointsState";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
-
-    }
+    
+   
     public void refresh(HashMap<String, Integer> playersPoints){
         System.out.println("|---- Provisional Ranking:----|");
         for (String username : playersPoints.keySet()) {

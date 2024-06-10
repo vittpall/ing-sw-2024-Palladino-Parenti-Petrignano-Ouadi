@@ -1,8 +1,8 @@
 package it.polimi.ingsw.gui;
 
+import it.polimi.ingsw.core.ClientState;
 import it.polimi.ingsw.gui.Controller.LobbyMenuController;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.tui.ClientState;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.stage.Stage;
 
@@ -23,26 +23,12 @@ public class LobbyMenuStateGUI implements ClientState {
         controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/LobbyMenuState.fxml");
     }
 
-    @Override
-    public void inputHandler(int input) {
-        // Implementazione vuota o gestione input specifici se necessario
-    }
 
-    @Override
-    public void promptForInput() {
-        // Mostra prompt all'utente se applicabile in un contesto GUI
-    }
-
-    public String toString()
-    {
+    public String toString() {
         return "LobbyMenuStateGUI";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
+        public void refresh(String msg) {
 
     }
 

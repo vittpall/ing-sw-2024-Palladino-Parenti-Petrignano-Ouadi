@@ -1,5 +1,10 @@
 package it.polimi.ingsw.network;
 
+import it.polimi.ingsw.core.ClientState;
+import it.polimi.ingsw.gui.ColorSelectionGUI;
+import it.polimi.ingsw.gui.JoinGameMenuStateGUI;
+import it.polimi.ingsw.gui.LobbyMenuStateGUI;
+import it.polimi.ingsw.gui.WaitingForPlayersGUI;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.UsefulData;
 import it.polimi.ingsw.model.chat.Message;
@@ -10,6 +15,7 @@ import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.tui.*;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -90,7 +96,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
             if (getClientCurrentState() instanceof ColorSelection)
                 ((ColorSelection) getClientCurrentState()).refresh(availableColors);
         } else {
-            getClientCurrentState().refresh(msg);
+            if (getClientCurrentState() instanceof ColorSelectionGUI)
+                ((ColorSelectionGUI) getClientCurrentState()).refresh(msg);
         }
     }
 
@@ -98,8 +105,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
         if (!isGUIMode) {
             if (getClientCurrentState() instanceof WaitingForPlayersState)
                 ((WaitingForPlayersState) getClientCurrentState()).refresh(players, nOfMissingPlayers);
-        } else
-            getClientCurrentState().refresh(msg);
+        } else if (getClientCurrentState() instanceof WaitingForPlayersGUI)
+            ((WaitingForPlayersGUI) getClientCurrentState()).refresh(msg);
 
     }
 
@@ -108,8 +115,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
             System.out.println(message);
             if (getClientCurrentState() instanceof JoinGameMenuState)
                 ((JoinGameMenuState) getClientCurrentState()).refresh(availableGames);
-        } else
-            getClientCurrentState().refresh(message);
+        } else if (getClientCurrentState() instanceof JoinGameMenuStateGUI)
+            ((JoinGameMenuStateGUI) getClientCurrentState()).refresh(message);
     }
 
     public synchronized void onChangeTurn(String msg, String currentPlayerUsername) {
@@ -119,8 +126,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 display();
             else if (currentPlayerUsername.equals(username))
                 System.out.println("You can go back to the main menu to play a card");
-        } else
-            getClientCurrentState().refresh(msg);
+        } /*else
+            getClientCurrentState().refresh(msg);*/
     }
 
     public synchronized void onPlayCard(String msg, HashMap<String, Integer> playersPoints) {
@@ -131,16 +138,16 @@ abstract public class BaseClient implements VirtualView, GameListener {
             } else if (getClientCurrentState() instanceof GetOtherPlayerDesk) {
                 System.out.println("You can see the updated desk by choosing the player's desk");
             }
-        } else
-            getClientCurrentState().refresh(msg);
+        } /*else
+            getClientCurrentState().refresh(msg);*/
     }
 
     public synchronized void onLastTurnSet(String msg) {
         if (!isGUIMode) {
             System.out.println(msg);
 
-        } else
-            getClientCurrentState().refresh(msg);
+        } /*else
+            getClientCurrentState().refresh(msg);*/
     }
 
     public synchronized void onEndGame(String msg) {
@@ -150,8 +157,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 display();
             else
                 System.out.println("You can go back to the main menu to see the winner");
-        } else
-            getClientCurrentState().refresh(msg);
+        } //else
+        //  getClientCurrentState().refresh(msg);
     }
 
     public synchronized void onGameClosed(String msg) {
@@ -160,8 +167,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
             System.out.println(msg);
             getClientCurrentState().display();
         } else {
-            // this.currentState = new MainMenuStateGUI(stage, this);
-            getClientCurrentState().refresh(msg);
+            setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
+            ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
         }
 
     }
@@ -193,7 +200,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
             if (handleCommonInput(input)) {
                 try {
-                    currentState.inputHandler(Integer.parseInt(input));
+                    handleTUIInput(Integer.parseInt(input));
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid input: Please enter a number.");
                 }
@@ -237,10 +244,9 @@ abstract public class BaseClient implements VirtualView, GameListener {
                             }
                         }
                         if (handleCommonInput(input)) {
-                            //alcuni stati hanno delle print all'interno dell'input handler
                             synchronized (this) {
                                 try {
-                                    currentState.inputHandler(Integer.parseInt(input));
+                                    handleTUIInput(Integer.parseInt(input));
                                 } catch (NumberFormatException e) {
                                     System.out.println("Invalid input: Please enter a number.");
                                 }
@@ -364,4 +370,15 @@ abstract public class BaseClient implements VirtualView, GameListener {
         }
     }
 
+    public void handleTUIInput(int input) throws IOException, ClassNotFoundException, InterruptedException {
+        if (currentState instanceof ClientStateTUI tuiState)
+            tuiState.inputHandler(input);
+    }
+
+    public void showState() {
+        if (getClientCurrentState() instanceof ClientStateTUI clientStateTUI) {
+            clientStateTUI.display();
+            clientStateTUI.promptForInput();
+        }
+    }
 }

@@ -7,7 +7,7 @@ import it.polimi.ingsw.network.BaseClient;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class DrawCardState implements ClientState {
+public class DrawCardState implements ClientStateTUI {
     BaseClient client;
     private final Scanner scanner;
 
@@ -34,7 +34,7 @@ public class DrawCardState implements ClientState {
             for (GameCard card : client.getVisibleCardsDeck(2)) {
                 printer.printCard(card, false);
             }
-        } catch ( IOException | InterruptedException ex) {
+        } catch (IOException | InterruptedException ex) {
             System.out.println("Error while getting cards");
         }
 
@@ -87,11 +87,5 @@ public class DrawCardState implements ClientState {
         return "DrawCardState";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
 
-    }
 }

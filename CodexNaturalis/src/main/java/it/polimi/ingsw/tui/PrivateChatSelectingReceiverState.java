@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class PrivateChatSelectingReceiverState implements ClientState {
+public class PrivateChatSelectingReceiverState implements ClientStateTUI {
     private BaseClient client;
     private final Scanner scanner;
     private int finalOption;
@@ -108,11 +108,6 @@ public class PrivateChatSelectingReceiverState implements ClientState {
         return "PrivateChatSelectingReceiverState";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
-
-    }
+    
+   
 }

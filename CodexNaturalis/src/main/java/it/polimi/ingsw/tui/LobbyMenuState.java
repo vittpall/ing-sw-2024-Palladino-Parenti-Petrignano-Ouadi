@@ -4,7 +4,7 @@ import it.polimi.ingsw.network.BaseClient;
 
 import java.util.Scanner;
 
-public class LobbyMenuState implements ClientState {
+public class LobbyMenuState implements ClientStateTUI {
 
 
     BaseClient client;
@@ -47,11 +47,6 @@ public class LobbyMenuState implements ClientState {
         return "LobbyMenuState";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
-
-    }
+    
+   
 }

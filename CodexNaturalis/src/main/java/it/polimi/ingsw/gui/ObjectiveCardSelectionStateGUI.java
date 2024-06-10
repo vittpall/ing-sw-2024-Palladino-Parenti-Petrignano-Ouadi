@@ -1,12 +1,10 @@
 package it.polimi.ingsw.gui;
 
+import it.polimi.ingsw.core.ClientState;
 import it.polimi.ingsw.gui.Controller.ObjectiveCardSelectionController;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.tui.ClientState;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class ObjectiveCardSelectionStateGUI implements ClientState {
     private final BaseClient client;
@@ -24,26 +22,16 @@ public class ObjectiveCardSelectionStateGUI implements ClientState {
         controller.loadCards();
     }
 
-    @Override
-    public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
+   
 
-    }
-
-    @Override
-    public void promptForInput() {
-
-    }
+    
 
     public String toString()
     {
         return "ObjectiveCardSelectionStateGUI";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
+        public void refresh(String msg) {
 
     }
 }

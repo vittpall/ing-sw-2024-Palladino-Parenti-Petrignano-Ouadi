@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
-public class GetWinnerState implements ClientState {
+public class GetWinnerState implements ClientStateTUI {
     BaseClient client;
     private final Scanner scanner;
 
@@ -62,11 +62,5 @@ public class GetWinnerState implements ClientState {
         return "GetWinnerState";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
 
-    }
 }

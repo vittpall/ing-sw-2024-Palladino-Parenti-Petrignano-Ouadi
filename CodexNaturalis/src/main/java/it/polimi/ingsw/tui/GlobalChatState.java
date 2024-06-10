@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class GlobalChatState implements ClientState{
+public class GlobalChatState implements ClientStateTUI {
 
     private final BaseClient client;
     private final Scanner scanner;
@@ -66,11 +66,6 @@ public class GlobalChatState implements ClientState{
         return "GlobalChatState";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
-
-    }
+    
+   
 }

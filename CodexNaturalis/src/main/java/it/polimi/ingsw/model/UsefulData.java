@@ -1,8 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.tui.ChatState;
-import it.polimi.ingsw.tui.ClientState;
-
 import java.util.ArrayList;
 
 /**

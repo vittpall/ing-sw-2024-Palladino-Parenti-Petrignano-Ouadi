@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class InitializeObjectiveCardState implements ClientState {
+public class InitializeObjectiveCardState implements ClientStateTUI {
     BaseClient client;
     private final Scanner scanner;
 
@@ -39,9 +39,7 @@ public class InitializeObjectiveCardState implements ClientState {
         } catch (RemoteException ex) {
             System.out.println("Error while getting the drawn objective cards");
             System.out.println(ex.getMessage());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
@@ -64,9 +62,7 @@ public class InitializeObjectiveCardState implements ClientState {
                     client.setCurrentState(new InitializeStarterCardState(client, scanner));
                 } catch (CardNotFoundException | RemoteException ex) {
                     System.out.println("Card not found. Please try again");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (InterruptedException e) {
+                } catch (IOException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
                 break;
@@ -79,11 +75,5 @@ public class InitializeObjectiveCardState implements ClientState {
         return "InitializeObjectiveCardState";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
 
-    }
 }

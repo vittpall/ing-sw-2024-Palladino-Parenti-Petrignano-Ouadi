@@ -6,7 +6,7 @@ import it.polimi.ingsw.network.BaseClient;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class ShowObjectiveCardsState implements ClientState{
+public class ShowObjectiveCardsState implements ClientStateTUI {
     BaseClient client;
     private final Scanner scanner;
 
@@ -46,11 +46,6 @@ public class ShowObjectiveCardsState implements ClientState{
         return "ShowObjectiveCardsState";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
-
-    }
+    
+   
 }

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.rmi.Remote;
 import java.util.Scanner;
 
-public class MainMenuState implements ClientState, Remote {
+public class MainMenuState implements ClientStateTUI, Remote {
 
     BaseClient client;
     private final Scanner scanner;
@@ -75,11 +75,6 @@ public class MainMenuState implements ClientState, Remote {
         return "MainMenuState";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
-
-    }
+    
+   
 }

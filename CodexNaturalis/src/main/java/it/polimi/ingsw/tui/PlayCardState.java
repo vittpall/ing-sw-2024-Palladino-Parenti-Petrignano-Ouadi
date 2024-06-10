@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 
-public class PlayCardState implements ClientState {
+public class PlayCardState implements ClientStateTUI {
     BaseClient client;
     private final Scanner scanner;
 
@@ -52,10 +52,10 @@ public class PlayCardState implements ClientState {
             boolean faceDown = chooseIfFaceDown();
             try {
                 client.playCard(input - 1, faceDown, pointChosen);
-                if(client.getCurrentPlayerState()!= PlayerState.ENDGAME){
+                if (client.getCurrentPlayerState() != PlayerState.ENDGAME) {
                     System.out.println("Card played successfully");
                     System.out.println("You should now draw a card");
-                }else{
+                } else {
                     System.out.println("Wait for everyone to finish");
                 }
                 client.setCurrentState(null);
@@ -70,8 +70,7 @@ public class PlayCardState implements ClientState {
             } catch (RequirementsNotMetException ex) {
                 System.out.println("Requirements not met. Please choose another card");
             }
-        }
-        else {
+        } else {
             System.out.println("Invalid input");
         }
     }
@@ -183,12 +182,5 @@ public class PlayCardState implements ClientState {
         return "PlayCardState";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
-
-    }
 
 }

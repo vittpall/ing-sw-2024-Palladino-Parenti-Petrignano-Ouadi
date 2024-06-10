@@ -13,7 +13,7 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class InitializeStarterCardState implements ClientState {
+public class InitializeStarterCardState implements ClientStateTUI {
     BaseClient client;
     private final Scanner scanner;
 
@@ -92,11 +92,5 @@ public class InitializeStarterCardState implements ClientState {
         return "InitializeStarterCardState";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
 
-    }
 }

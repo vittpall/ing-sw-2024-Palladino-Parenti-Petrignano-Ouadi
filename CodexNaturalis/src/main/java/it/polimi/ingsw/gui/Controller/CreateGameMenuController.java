@@ -1,18 +1,14 @@
 package it.polimi.ingsw.gui.Controller;
 
-import it.polimi.ingsw.gui.ColorSelectionGUI;
 import it.polimi.ingsw.gui.LobbyMenuStateGUI;
 import it.polimi.ingsw.gui.WaitingForPlayersGUI;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
-public class CreateGameMenuController  implements FXMLController {
+public class CreateGameMenuController implements FXMLController {
     private Stage stage;
     @FXML
     private ChoiceBox<Integer> playerChoiceBox;
@@ -41,13 +37,8 @@ public class CreateGameMenuController  implements FXMLController {
 
 
     public void handleBack() {
-        try {
-            client.setCurrentState(new LobbyMenuStateGUI(stage, client));
-            client.showState();
-            //TODO to remove the username from the game
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        client.setCurrentState(new LobbyMenuStateGUI(stage, client));
+        client.showState();
     }
 
 

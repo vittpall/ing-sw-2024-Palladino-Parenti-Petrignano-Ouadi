@@ -1,5 +1,6 @@
 package it.polimi.ingsw.tui;
 
+import it.polimi.ingsw.core.ClientState;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.BaseClient;
 
@@ -7,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class PrivateChatState implements ClientState{
+public class PrivateChatState implements ClientStateTUI {
     private BaseClient client;
     private final Scanner scanner;
     private String receiver;
@@ -70,11 +71,6 @@ public class PrivateChatState implements ClientState{
         return "PrivateChatState";
     }
 
-    /**
-     *
-     */
-    @Override
-    public void refresh(String msg) {
-
-    }
+    
+   
 }

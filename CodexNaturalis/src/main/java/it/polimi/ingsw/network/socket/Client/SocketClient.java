@@ -26,7 +26,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * This class represents the client side of a socket connection.
@@ -363,13 +366,6 @@ public class SocketClient extends BaseClient {
     }
 
 
-    @Override
-    public void showState() {
-        getClientCurrentState().display();
-        getClientCurrentState().promptForInput();
-    }
-
-
     @SuppressWarnings("InfiniteLoopStatement")
     private void runVirtualServer() {
         try {
@@ -389,8 +385,6 @@ public class SocketClient extends BaseClient {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
             System.out.println("Error: " + e.getMessage());
         }
     }

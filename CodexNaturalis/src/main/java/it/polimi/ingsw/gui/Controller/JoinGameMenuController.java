@@ -12,7 +12,6 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class JoinGameMenuController implements FXMLController {
@@ -80,22 +79,13 @@ public class JoinGameMenuController implements FXMLController {
     }
 
     public void handleCreateGame() {
-        try {
-            client.setCurrentState(new CreateGameStateGUI(stage, client));
-            client.showState();
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        }
+        client.setCurrentState(new CreateGameStateGUI(stage, client));
+        client.showState();
     }
 
     public void handleBack() {
-        try {
-            client.setCurrentState(new LobbyMenuStateGUI(stage, client));
-            client.showState();
-            //TODO to remove the username from the game
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        client.setCurrentState(new LobbyMenuStateGUI(stage, client));
+        client.showState();
     }
 
     public void setClient(BaseClient client) {
