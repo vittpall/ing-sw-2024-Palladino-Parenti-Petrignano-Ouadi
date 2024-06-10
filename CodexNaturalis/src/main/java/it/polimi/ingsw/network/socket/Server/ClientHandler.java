@@ -13,6 +13,7 @@ import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.SocketException;
 import java.rmi.RemoteException;
 
 public class ClientHandler implements GameListener {
@@ -40,31 +41,31 @@ public class ClientHandler implements GameListener {
                 if (request.getType() == TypeServerToClientMsg.JOIN_GAME || request.getType() == TypeServerToClientMsg.CREATED_GAME) {
                     gameId = request.getIdGame();
                 }
-                if(request.getType() == TypeServerToClientMsg.USER_ALREADY_TAKEN) {
+                if (request.getType() == TypeServerToClientMsg.USER_ALREADY_TAKEN) {
                     clientUsername = request.getUsername();
                 }
                 output.writeObject(response);
                 output.flush();
                 output.reset();
             }
-        } catch (IOException e) {
-            //technically heartbeat is not useful anymore if everytime a client disconnect
-            //This catch is taken when the client disconnects from the server
+        } catch (SocketException e) {
             closeClient();
-            //TODO add logic to remove the user
-        } catch (ClassNotFoundException | InterruptedException | CardNotFoundException |
+        } catch (IOException | ClassNotFoundException | InterruptedException | CardNotFoundException |
                  PlaceNotAvailableException | RequirementsNotMetException e) {
             e.printStackTrace();
         }
     }
 
     public void closeClient() throws IOException {
-            input.close();
-            output.close();
-            System.out.println("Client disconnected(SocketClient)");
+        input.close();
+        output.close();
+        System.out.println("Client disconnected(SocketClient)");
+        if (clientUsername != null) {
+            controller.removeUsername(clientUsername);
             if (gameId != null)
                 controller.closeGame(gameId, clientUsername);
-            Thread.currentThread().interrupt();
+        }
+        Thread.currentThread().interrupt();
     }
 
 
@@ -80,9 +81,9 @@ public class ClientHandler implements GameListener {
      */
     @Override
     public void update(ServerNotification notification) throws IOException {
-            output.writeObject(notification);
-            output.flush();
-            output.reset();
+        output.writeObject(notification);
+        output.flush();
+        output.reset();
     }
 
     public String getUsername() {

@@ -17,7 +17,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 abstract public class BaseClient implements VirtualView, GameListener {
     private Scanner scan;
@@ -71,7 +72,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
         this.currentState = currentState;
     }
 
- //   public abstract void sendHeartBeat() throws IOException, InterruptedException;
+    //   public abstract void sendHeartBeat() throws IOException, InterruptedException;
 
     protected abstract boolean checkState(RequestedActions action) throws IOException, InterruptedException, ClassNotFoundException;
 
@@ -82,10 +83,11 @@ abstract public class BaseClient implements VirtualView, GameListener {
     public abstract PlayerState getCurrentPlayerState() throws IOException, InterruptedException;
 
     protected abstract String getServerCurrentState() throws IOException, InterruptedException;
+
     public synchronized void onTokenColorSelected(String msg, ArrayList<TokenColor> availableColors) {
         if (!isGUIMode) {
             System.out.println(msg);
-            if(getClientCurrentState() instanceof ColorSelection)
+            if (getClientCurrentState() instanceof ColorSelection)
                 ((ColorSelection) getClientCurrentState()).refresh(availableColors);
         } else {
             getClientCurrentState().refresh(msg);
@@ -94,41 +96,45 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     public synchronized void onGameJoined(String msg, ArrayList<Player> players, int nOfMissingPlayers) {
         if (!isGUIMode) {
-            if(getClientCurrentState() instanceof WaitingForPlayersState)
+            if (getClientCurrentState() instanceof WaitingForPlayersState)
                 ((WaitingForPlayersState) getClientCurrentState()).refresh(players, nOfMissingPlayers);
         } else
             getClientCurrentState().refresh(msg);
 
     }
+
     public synchronized void onGameJoinedAsOutsider(String message, HashMap<Integer, Integer[]> availableGames) {
-        if(!isGUIMode) {
+        if (!isGUIMode) {
             System.out.println(message);
-            if(getClientCurrentState() instanceof JoinGameMenuState)
+            if (getClientCurrentState() instanceof JoinGameMenuState)
                 ((JoinGameMenuState) getClientCurrentState()).refresh(availableGames);
         } else
             getClientCurrentState().refresh(message);
     }
+
     public synchronized void onChangeTurn(String msg, String currentPlayerUsername) {
         if (!isGUIMode) {
             System.out.println(msg);
-            if(getClientCurrentState() == null)
+            if (getClientCurrentState() == null)
                 display();
-            else if(currentPlayerUsername.equals(username))
+            else if (currentPlayerUsername.equals(username))
                 System.out.println("You can go back to the main menu to play a card");
         } else
             getClientCurrentState().refresh(msg);
     }
+
     public synchronized void onPlayCard(String msg, HashMap<String, Integer> playersPoints) {
         if (!isGUIMode) {
             System.out.println(msg);
-            if(getClientCurrentState() instanceof ShowPointsState) {
+            if (getClientCurrentState() instanceof ShowPointsState) {
                 ((ShowPointsState) getClientCurrentState()).refresh(playersPoints);
-            }else if(getClientCurrentState() instanceof GetOtherPlayerDesk) {
+            } else if (getClientCurrentState() instanceof GetOtherPlayerDesk) {
                 System.out.println("You can see the updated desk by choosing the player's desk");
             }
         } else
             getClientCurrentState().refresh(msg);
     }
+
     public synchronized void onLastTurnSet(String msg) {
         if (!isGUIMode) {
             System.out.println(msg);
@@ -136,10 +142,11 @@ abstract public class BaseClient implements VirtualView, GameListener {
         } else
             getClientCurrentState().refresh(msg);
     }
-    public synchronized void onEndGame(String msg){
+
+    public synchronized void onEndGame(String msg) {
         if (!isGUIMode) {
             System.out.println(msg);
-            if(getClientCurrentState()==null)
+            if (getClientCurrentState() == null)
                 display();
             else
                 System.out.println("You can go back to the main menu to see the winner");
@@ -152,9 +159,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
             setCurrentState(new LobbyMenuState(this, scan));
             System.out.println(msg);
             getClientCurrentState().display();
-        } else
-        {
-           // this.currentState = new MainMenuStateGUI(stage, this);
+        } else {
+            // this.currentState = new MainMenuStateGUI(stage, this);
             getClientCurrentState().refresh(msg);
         }
 
@@ -172,7 +178,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
         boolean correctInput;
         String input = "";
         do {
-            if(!input.equals("exit"))
+            if (!input.equals("exit"))
                 showState();
             correctInput = false;
             while (!correctInput) {
@@ -232,7 +238,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                         }
                         if (handleCommonInput(input)) {
                             //alcuni stati hanno delle print all'interno dell'input handler
-                            synchronized(this){
+                            synchronized (this) {
                                 try {
                                     currentState.inputHandler(Integer.parseInt(input));
                                 } catch (NumberFormatException e) {
@@ -321,16 +327,15 @@ abstract public class BaseClient implements VirtualView, GameListener {
     private boolean handleCommonInput(String input) {
         if ("exit".equals(input)) {
             try {
-                System.out.println("Exiting game...");
-                if(usefulData.quitableStates.contains(currentState.toString()))
-                {
-                    System.out.println("Game quit successfully22");
+                if (usefulData.quitableStates.contains(currentState.toString())) {
+                    System.out.println("Game has been successfully quit.");
                     close();
-                }
-                else
+                } else {
+                    System.out.println("Ending the game and returning to the lobby...");
                     returnToLobby();
+                }
             } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
+                System.err.println("An error occurred while handling the input: " + e.getMessage());
             }
             return false;
         }
