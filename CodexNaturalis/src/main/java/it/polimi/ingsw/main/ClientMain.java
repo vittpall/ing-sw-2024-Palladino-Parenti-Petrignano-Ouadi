@@ -26,10 +26,14 @@ public class ClientMain extends Application {
 
     @Override
     public void start(Stage stage) {
+        String PATTERN = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter server IP address (empty is 127.0.0.1): ");
         serverAddress = scanner.nextLine().trim();
-        if (serverAddress.isEmpty()) {
+        if (!serverAddress.matches(PATTERN) && !serverAddress.isEmpty()) {
+            System.out.println("Invalid IP address");
+            System.exit(0);
+        } else if (serverAddress.isEmpty()) {
             serverAddress = "127.0.0.1";
         }
         String[] options = {
@@ -62,9 +66,12 @@ public class ClientMain extends Application {
     }
 
     private void setupSocketClient(String interfaceType, Stage stage) throws IOException, ClassNotFoundException, InterruptedException {
-        Socket serverSocket = new Socket(serverAddress, 2345);
-        ObjectOutputStream socketTx = new ObjectOutputStream(serverSocket.getOutputStream());
-        ObjectInputStream socketRx = new ObjectInputStream(serverSocket.getInputStream());
+        ObjectOutputStream socketTx;
+        ObjectInputStream socketRx;
+        try (Socket serverSocket = new Socket(serverAddress, 2345)) {
+            socketTx = new ObjectOutputStream(serverSocket.getOutputStream());
+            socketRx = new ObjectInputStream(serverSocket.getInputStream());
+        }
         this.client = new SocketClient(socketRx, socketTx, interfaceType, stage);
         client.run();
     }
