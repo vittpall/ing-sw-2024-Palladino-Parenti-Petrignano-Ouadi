@@ -59,7 +59,7 @@ public class ColorSelectionController implements FXMLController {
             try {
                 client.setTokenColor(selectedColor);
                 client.setCurrentState(new ObjectiveCardSelectionStateGUI(stage, client));
-                client.showState();
+                client.getClientCurrentState().display();
             } catch (RemoteException e) {
                 messageLabel.setText("Error selecting color: " + e.getMessage());
             } catch (IOException | InterruptedException e) {

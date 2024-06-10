@@ -7,7 +7,6 @@ import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -50,7 +49,7 @@ public class InitializeStarterCardController implements FXMLController {
         try {
             client.playStarterCard(faceDown);
             client.setCurrentState(new GameState(stage, client));
-            client.showState();
+            client.getClientCurrentState().display();
         } catch (PlaceNotAvailableException | CardNotFoundException | RequirementsNotMetException | IOException |
                  InterruptedException ex) {
             System.out.println("Error playing the card: " + ex.getMessage());

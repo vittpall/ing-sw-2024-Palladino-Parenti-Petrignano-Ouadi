@@ -80,7 +80,7 @@ public class WaitingForPlayersController implements FXMLController {
         try {
             if (client.isGameStarted()) {
                 client.setCurrentState(new ColorSelectionGUI(stage, client));
-                client.showState();
+                client.getClientCurrentState().display();
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

@@ -69,7 +69,7 @@ public class JoinGameMenuController implements FXMLController {
                 client.joinGame(selectedGame, client.getUsername());
                 messageLabel.setText("Joined game: " + selectedGame);
                 client.setCurrentState(new WaitingForPlayersGUI(stage, client));
-                client.showState();
+                client.getClientCurrentState().display();
             } catch (Exception e) {
                 messageLabel.setText("Error joining game: " + e.getMessage());
             }
@@ -80,12 +80,12 @@ public class JoinGameMenuController implements FXMLController {
 
     public void handleCreateGame() {
         client.setCurrentState(new CreateGameStateGUI(stage, client));
-        client.showState();
+        client.getClientCurrentState().display();
     }
 
     public void handleBack() {
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
-        client.showState();
+        client.getClientCurrentState().display();
     }
 
     public void setClient(BaseClient client) {

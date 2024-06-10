@@ -28,7 +28,7 @@ public class CreateGameMenuController implements FXMLController {
             feedbackLabel.setText("Creating game and waiting for the players...");
             client.createGame(client.getUsername(), nPlayers);
             client.setCurrentState(new WaitingForPlayersGUI(stage, client));
-            client.showState();
+            client.getClientCurrentState().display();
         } catch (Exception e) {
             feedbackLabel.setText("Error creating game. Please try again: " + e.getMessage());
             e.printStackTrace();
@@ -38,7 +38,7 @@ public class CreateGameMenuController implements FXMLController {
 
     public void handleBack() {
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
-        client.showState();
+        client.getClientCurrentState().display();
     }
 
 

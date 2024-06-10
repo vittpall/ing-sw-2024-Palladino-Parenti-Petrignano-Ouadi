@@ -29,7 +29,7 @@ public class MainMenuStateController implements FXMLController {
             client.setUsername(username);
             client.setCurrentState(new LobbyMenuStateGUI(stage, client));
             errorLabel.setText("");
-            client.showState();
+            client.getClientCurrentState().display();
         } else {
             errorLabel.setManaged(true);
             errorLabel.setText("Invalid username, please try again.");

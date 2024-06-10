@@ -61,7 +61,6 @@ public class ClientMain extends Application {
             }
         } catch (Exception e) {
             System.out.println("Failed to initialize client: " + e.getMessage());
-//TODO why does it give me a null reference?
         }
     }
 

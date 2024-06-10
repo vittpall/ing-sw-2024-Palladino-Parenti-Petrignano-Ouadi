@@ -197,7 +197,7 @@ public class RMIClient extends BaseClient {
         if (!isGUIMode())
             inputHandler();
         else
-            showState();
+            getClientCurrentState().display();
     }
 
     public boolean isGameStarted() throws IOException {

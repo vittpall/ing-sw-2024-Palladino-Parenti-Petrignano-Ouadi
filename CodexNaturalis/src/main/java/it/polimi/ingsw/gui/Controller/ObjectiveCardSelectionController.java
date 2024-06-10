@@ -58,7 +58,7 @@ public class ObjectiveCardSelectionController implements FXMLController {
         try {
             client.setObjectiveCard(cardIndex);
             client.setCurrentState(new InitializeStarterCardStateGUI(stage, client));
-            client.showState();
+            client.getClientCurrentState().display();
         } catch (CardNotFoundException | IOException | InterruptedException ex) {
             messageLabel.setText("Error selecting card: " + ex.getMessage());
         }

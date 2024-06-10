@@ -23,13 +23,13 @@ public class LobbyMenuController implements FXMLController {
     @FXML
     private void handleCreateGame() {
         client.setCurrentState(new CreateGameStateGUI(stage, client));
-        client.showState();
+        client.getClientCurrentState().display();
     }
 
     @FXML
     private void handleJoinGame() {
         client.setCurrentState(new JoinGameMenuStateGUI(stage, client));
-        client.showState();
+        client.getClientCurrentState().display();
     }
 
     private void showAlert(String content) {
