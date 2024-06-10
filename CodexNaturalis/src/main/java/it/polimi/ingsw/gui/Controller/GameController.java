@@ -14,10 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -46,11 +43,20 @@ public class GameController implements FXMLController {
         gameBoardContainer.getChildren().add(gameBoard);
 
         setupZoomControls();
+
+        //center scroll pane
+        double hValue = (gameBoard.getPrefWidth() - gameBoardScrollPane.getViewportBounds().getWidth()) / 2 / gameBoard.getPrefWidth();
+        double vValue = (gameBoard.getPrefHeight() - gameBoardScrollPane.getViewportBounds().getHeight()) / 2 / gameBoard.getPrefHeight();
+        gameBoardScrollPane.setHvalue(hValue);
+        gameBoardScrollPane.setVvalue(vValue);
     }
 
 
     private void setupZoomControls() {
-        gameBoardScrollPane.requestFocus();
+        gameBoardScrollPane.setOnMouseEntered(event -> {
+            gameBoardScrollPane.requestFocus();
+            event.consume();
+        });
 
         gameBoardScrollPane.setOnKeyPressed(event -> {
             double zoomFactor = 1.1;
@@ -62,10 +68,16 @@ public class GameController implements FXMLController {
             event.consume();
         });
 
-        gameBoardScrollPane.setOnZoom(event -> {
-            double zoomFactor = event.getZoomFactor();
-            scaleContent(gameBoard, zoomFactor);
-            event.consume();
+        gameBoardScrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
+            if (event.isControlDown()) {
+                double zoomFactor = 1.05;
+                if (event.getDeltaY() > 0) {
+                    scaleContent(gameBoard, zoomFactor);
+                } else {
+                    scaleContent(gameBoard, 1 / zoomFactor);
+                }
+                event.consume();  // Consuma l'evento per evitare lo scrolling del ScrollPane
+            }
         });
     }
 

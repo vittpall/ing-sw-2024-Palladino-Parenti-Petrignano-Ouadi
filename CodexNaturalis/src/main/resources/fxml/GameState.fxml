@@ -11,9 +11,10 @@
     <ImageView fitHeight="453.0" fitWidth="257.0" layoutX="7.0" layoutY="8.0">
         <Image url="@../Images/Board.jpg"/>
     </ImageView>
-    <ScrollPane fx:id="gameBoardScrollPane" layoutX="216.0" layoutY="461.0" prefHeight="550.0" prefWidth="900.0"
-                pannable="true">
-        <AnchorPane fx:id="gameBoardContainer"/>
+    <ScrollPane fx:id="gameBoardScrollPane" layoutX="216.0" layoutY="461.0" prefHeight="500.0" prefWidth="900.0"
+                style="-fx-focus-color: transparent;"
+                pannable="true" hbarPolicy="NEVER" vbarPolicy="NEVER">
+        <AnchorPane fx:id="gameBoardContainer" style="-fx-background-color: #dedccc;"/>
     </ScrollPane>
 
 
