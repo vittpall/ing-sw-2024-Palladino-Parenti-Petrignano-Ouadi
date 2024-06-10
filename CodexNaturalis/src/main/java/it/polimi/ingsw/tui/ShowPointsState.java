@@ -5,6 +5,7 @@ import it.polimi.ingsw.network.BaseClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class ShowPointsState implements ClientState {
@@ -55,5 +56,12 @@ public class ShowPointsState implements ClientState {
     @Override
     public void refresh(String msg) {
 
+    }
+    public void refresh(HashMap<String, Integer> playersPoints){
+        System.out.println("|---- Provisional Ranking:----|");
+        for (String username : playersPoints.keySet()) {
+            System.out.println("Player: " + username + " | Score: " + playersPoints.get(username));
+        }
+        System.out.println("--------------------------------");
     }
 }

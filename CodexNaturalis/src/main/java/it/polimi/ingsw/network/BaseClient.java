@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.gui.MainMenuStateGUI;
 import it.polimi.ingsw.model.UsefulData;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
@@ -101,13 +100,51 @@ abstract public class BaseClient implements VirtualView, GameListener {
             getClientCurrentState().refresh(msg);
 
     }
-    public void onGameJoinedAsOutsider(String message, HashMap<Integer, Integer[]> availableGames) {
+    public synchronized void onGameJoinedAsOutsider(String message, HashMap<Integer, Integer[]> availableGames) {
         if(!isGUIMode) {
             System.out.println(message);
             if(getClientCurrentState() instanceof JoinGameMenuState)
                 ((JoinGameMenuState) getClientCurrentState()).refresh(availableGames);
         } else
             getClientCurrentState().refresh(message);
+    }
+    public synchronized void onChangeTurn(String msg, String currentPlayerUsername) {
+        if (!isGUIMode) {
+            System.out.println(msg);
+            if(getClientCurrentState() == null)
+                display();
+            else if(currentPlayerUsername.equals(username))
+                System.out.println("You can go back to the main menu to play a card");
+        } else
+            getClientCurrentState().refresh(msg);
+    }
+    public synchronized void onPlayCard(String msg, HashMap<String, Integer> playersPoints) {
+        if (!isGUIMode) {
+            System.out.println(msg);
+            if(getClientCurrentState() instanceof ShowPointsState) {
+                ((ShowPointsState) getClientCurrentState()).refresh(playersPoints);
+            }else if(getClientCurrentState() instanceof GetOtherPlayerDesk) {
+                System.out.println("You can see the updated desk by choosing the player's desk");
+            }
+        } else
+            getClientCurrentState().refresh(msg);
+    }
+    public synchronized void onLastTurnSet(String msg) {
+        if (!isGUIMode) {
+            System.out.println(msg);
+
+        } else
+            getClientCurrentState().refresh(msg);
+    }
+    public synchronized void onEndGame(String msg){
+        if (!isGUIMode) {
+            System.out.println(msg);
+            if(getClientCurrentState()==null)
+                display();
+            else
+                System.out.println("You can go back to the main menu to see the winner");
+        } else
+            getClientCurrentState().refresh(msg);
     }
 
     public synchronized void onGameClosed(String msg) {
@@ -194,10 +231,13 @@ abstract public class BaseClient implements VirtualView, GameListener {
                             }
                         }
                         if (handleCommonInput(input)) {
-                            try {
-                                currentState.inputHandler(Integer.parseInt(input));
-                            } catch (NumberFormatException e) {
-                                System.out.println("Invalid input: Please enter a number.");
+                            //alcuni stati hanno delle print all'interno dell'input handler
+                            synchronized(this){
+                                try {
+                                    currentState.inputHandler(Integer.parseInt(input));
+                                } catch (NumberFormatException e) {
+                                    System.out.println("Invalid input: Please enter a number.");
+                                }
                             }
                         }
                     } else {
