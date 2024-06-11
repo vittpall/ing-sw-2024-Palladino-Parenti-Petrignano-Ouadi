@@ -126,7 +126,7 @@ public class GameController implements FXMLController {
         }
     }
 
-    private void loadUsableCards() throws IOException {
+    private void loadUsableCards() throws IOException, InterruptedException {
         Card usableCard1 = client.getLastFromUsableCards(1);
         Card usableCard2 = client.getLastFromUsableCards(2);
         CardView usableCardBackView1 = new CardView(usableCard1, false);

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -70,7 +69,7 @@ public class LobbyController {
     public int joinGame(int id, String username, GameListener playerListener) throws InterruptedException, IOException {
         String msg;
         msg = "\n--------------------------------------";
-        if(gameControllers.get(id).getPlayers().isEmpty())
+        if (gameControllers.get(id).getPlayers().isEmpty())
             msg += "\nThe game " + id + " has been created.";
         else
             msg += "\nA player has joined the game " + id;
@@ -79,7 +78,7 @@ public class LobbyController {
         for (int idGame : gameControllers.keySet()) {
             if (gameControllers.get(id).getPlayers().size() < gameControllers.get(id).getnPlayer()) {
                 availableGames.put(idGame, new Integer[]{gameControllers.get(idGame).getnPlayer(),
-                        (gameControllers.get(idGame).getnPlayer()-gameControllers.get(idGame).getPlayers().size())});
+                        (gameControllers.get(idGame).getnPlayer() - gameControllers.get(idGame).getPlayers().size())});
             }
         }
         lobbyListeners.unSubscribeListener(playerListener);
@@ -177,7 +176,7 @@ public class LobbyController {
         return gameControllers.get(idGame).getVisibleCardsDeck(deck);
     }
 
-    public Card getLastCardOfUsableCards(int idGame, int deck) {
+    public GameCard getLastCardOfUsableCards(int idGame, int deck) {
         return gameControllers.get(idGame).getLastCardOfUsableCards(deck);
     }
 

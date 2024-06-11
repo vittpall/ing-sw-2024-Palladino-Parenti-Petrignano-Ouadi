@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.rmi.Client;
 
-import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -26,7 +25,6 @@ import java.util.HashSet;
 
 public class RMIClient extends BaseClient {
     public final VirtualServer server;
-    private Integer idGame;
     private int idClientIntoGame;
 
 
@@ -37,9 +35,6 @@ public class RMIClient extends BaseClient {
 
     }
 
-    public int getIdGame() {
-        return idGame;
-    }
 
     public int getIdClientIntoGame() {
         return idClientIntoGame;
@@ -58,122 +53,121 @@ public class RMIClient extends BaseClient {
 
     @Override
     public ArrayList<Player> getAllPlayers() throws RemoteException {
-        return server.getAllPlayers(idGame);
+        return server.getAllPlayers(getIdGame());
     }
 
     @Override
     public void joinGame(int input, String username) throws IOException, InterruptedException {
         idClientIntoGame = server.joinGame(input, username, this);
-        idGame = input;
-
+        setIdGame(input);
     }
 
     @Override
     public ArrayList<ObjectiveCard> getPlayerObjectiveCards() throws RemoteException {
-        return server.getPlayerObjectiveCards(idGame, idClientIntoGame);
+        return server.getPlayerObjectiveCards(getIdGame(), idClientIntoGame);
     }
 
     @Override
     public void setObjectiveCard(int idCard) throws RemoteException, CardNotFoundException {
-        server.setObjectiveCard(idGame, idClientIntoGame, idCard);
+        server.setObjectiveCard(getIdGame(), idClientIntoGame, idCard);
     }
 
     @Override
     public void createGame(String username, int nPlayers) throws IOException, InterruptedException {
-        idGame = server.createGame(username, nPlayers, this);
+        setIdGame(server.createGame(username, nPlayers, this));
         idClientIntoGame = 0;
     }
 
     @Override
     public StarterCard getStarterCard() throws RemoteException {
-        return server.getStarterCard(idGame, idClientIntoGame);
+        return server.getStarterCard(getIdGame(), idClientIntoGame);
     }
 
     @Override
     public void playStarterCard(boolean playedFacedDown)
             throws RemoteException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
-        server.playStarterCard(idGame, idClientIntoGame, playedFacedDown, this);
+        server.playStarterCard(getIdGame(), idClientIntoGame, playedFacedDown, this);
     }
 
     @Override
     public ObjectiveCard getPlayerObjectiveCard() throws RemoteException {
-        return server.getPlayerObjectiveCard(idGame, idClientIntoGame);
+        return server.getPlayerObjectiveCard(getIdGame(), idClientIntoGame);
     }
 
     @Override
     public ArrayList<GameCard> getPlayerHand() throws RemoteException {
-        return server.getPlayerHand(idGame, idClientIntoGame);
+        return server.getPlayerHand(getIdGame(), idClientIntoGame);
     }
 
     @Override
     public ObjectiveCard[] getSharedObjectiveCards() throws RemoteException {
-        return server.getSharedObjectiveCards(idGame);
+        return server.getSharedObjectiveCards(getIdGame());
     }
 
     @Override
     public void playCard(int chosenCard, boolean faceDown, Point chosenPosition)
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
-        server.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
+        server.playCard(getIdGame(), idClientIntoGame, chosenCard, faceDown, chosenPosition);
     }
 
     @Override
     public ArrayList<GameCard> getVisibleCardsDeck(int deck) throws RemoteException {
-        return server.getVisibleCardsDeck(idGame, deck);
+        return server.getVisibleCardsDeck(getIdGame(), deck);
     }
 
     @Override
-    public Card getLastFromUsableCards(int deck) throws RemoteException {
-        return server.getLastCardOfUsableCards(idGame, deck);
+    public GameCard getLastFromUsableCards(int deck) throws RemoteException {
+        return server.getLastCardOfUsableCards(getIdGame(), deck);
     }
 
     @Override
     public String getUsernamePlayerThatStoppedTheGame() throws RemoteException {
-        return server.getUsernamePlayerThatStoppedTheGame(idGame);
+        return server.getUsernamePlayerThatStoppedTheGame(getIdGame());
     }
 
     public ArrayList<Message> getMessages(String receiver) throws RemoteException {
-        return server.getMessages(receiver, this.idGame, getUsername());
+        return server.getMessages(receiver, this.getIdGame(), getUsername());
     }
 
     public void sendMessage(String receiver, String message) throws RemoteException {
-        Message msg = new Message(getUsername(), receiver, message, this.idGame);
-        server.sendMessage(idGame, msg);
+        Message msg = new Message(getUsername(), receiver, message, getIdGame());
+        server.sendMessage(getIdGame(), msg);
     }
 
 
     @Override
     public void drawCard(int input, int inVisible) throws IOException, CardNotFoundException, InterruptedException {
-        server.drawCard(idGame, idClientIntoGame, input, inVisible);
+        server.drawCard(getIdGame(), idClientIntoGame, input, inVisible);
     }
 
 
     @Override
     public HashSet<Point> getAvailablePlaces() throws RemoteException {
-        return server.getAvailablePlaces(idGame, idClientIntoGame);
+        return server.getAvailablePlaces(getIdGame(), idClientIntoGame);
     }
 
     @Override
     public String getWinner() throws RemoteException, InterruptedException {
-        return server.getWinner(idGame);
+        return server.getWinner(getIdGame());
     }
 
     @Override
     public ArrayList<TokenColor> getAvailableColors() throws RemoteException {
-        return server.getAvailableColors(idGame, this);
+        return server.getAvailableColors(getIdGame(), this);
     }
 
     @Override
     public void setTokenColor(TokenColor tokenColor) throws IOException {
-        server.setTokenColor(idGame, idClientIntoGame, tokenColor, this);
+        server.setTokenColor(getIdGame(), idClientIntoGame, tokenColor, this);
     }
 
     public int getPoints() throws RemoteException {
-        return server.getPoints(idGame, idClientIntoGame);
+        return server.getPoints(getIdGame(), idClientIntoGame);
     }
 
     @Override
     public HashMap<Point, GameCard> getPlayerDesk() throws RemoteException {
-        return this.server.getPlayerDesk(idGame, idClientIntoGame);
+        return this.server.getPlayerDesk(getIdGame(), idClientIntoGame);
     }
 
     @Override
@@ -186,22 +180,22 @@ public class RMIClient extends BaseClient {
     }
 
     public boolean isGameStarted() throws IOException {
-        return server.isGameStarted(idGame);
+        return server.isGameStarted(getIdGame());
     }
 
     @Override
     public PlayerState getCurrentPlayerState() throws IOException, InterruptedException {
-        return server.getCurrentPlayerState(idGame, idClientIntoGame);
+        return server.getCurrentPlayerState(getIdGame(), idClientIntoGame);
     }
 
     @Override
     public String getServerCurrentState() throws RemoteException {
-        return server.getServerCurrentState(idGame, idClientIntoGame);
+        return server.getServerCurrentState(getIdGame(), idClientIntoGame);
     }
 
     @Override
     public boolean checkState(RequestedActions requestedActions) throws RemoteException {
-        return server.checkState(idGame, idClientIntoGame, requestedActions);
+        return server.checkState(getIdGame(), idClientIntoGame, requestedActions);
     }
 
 
@@ -212,7 +206,7 @@ public class RMIClient extends BaseClient {
 
     public void returnToLobby() throws IOException {
         removeUsername();
-        if (idGame != null)
+        if (getIdGame() != null)
             this.closeGame();
         System.out.println("Game quit successfully");
     }
@@ -222,14 +216,10 @@ public class RMIClient extends BaseClient {
         server.removeUsername(getUsername());
     }
 
-    public void setIdGame(int idGame) {
-        this.idGame = idGame;
-    }
-
 
     @Override
     public void closeGame() throws IOException {
-        server.closeGame(idGame, username);
+        server.closeGame(getIdGame(), username);
     }
 
 

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network.rmi.Server;
 
 import it.polimi.ingsw.controller.LobbyController;
-import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -183,7 +182,7 @@ public class RMIServer implements VirtualServer {
             content = "\nThe game is ending. Player " + lobbyController.getUsernamePlayerThatStoppedTheGame(idGame) +
                     " has reached 20 points or more\n " + content;
         }
-        ReturnableObject response = new ReturnableObject();
+        ReturnableObject<String> response = new ReturnableObject<>();
         response.setResponseReturnable(content);
         /*  this.broadcastWhatHappened(idGame, response);*/
     }
@@ -205,7 +204,7 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public Card getLastCardOfUsableCards(int idGame, int deck) throws RemoteException {
+    public GameCard getLastCardOfUsableCards(int idGame, int deck) throws RemoteException {
         return lobbyController.getLastCardOfUsableCards(idGame, deck);
     }
 

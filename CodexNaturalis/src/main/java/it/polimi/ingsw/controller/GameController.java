@@ -71,7 +71,7 @@ public class GameController {
             }
         }
 
-        String content = "Player "+(idPlayer+1)+" : " + username ;
+        String content = "Player " + (idPlayer + 1) + " : " + username;
 
         addListenerList("WaitingForPlayersState");
         listeners.get("WaitingForPlayersState").notifyJoinedGame(content, model.getPlayers(), nPlayers - model.getPlayers().size());
@@ -94,9 +94,9 @@ public class GameController {
     }
 
     public void closeGame(String userThatLeft) throws IOException {
-       String msg = "The game has been closed because "+ userThatLeft + " finished the game";
-       for(String s: listeners.keySet())
-           listeners.get(s).notifyCloseGame(msg);
+        String msg = "The game has been closed because " + userThatLeft + " finished the game";
+        for (String s : listeners.keySet())
+            listeners.get(s).notifyCloseGame(msg);
     }
 
     public StarterCard getStarterCard(int idClientIntoGame) {
@@ -160,7 +160,7 @@ public class GameController {
 
     public void sendMessage(Message msg) {
         model.getChats().addMessage(msg);
-        for(String s: listeners.keySet())
+        for (String s : listeners.keySet())
             listeners.get(s).notifyChat(msg);
     }
 
@@ -193,11 +193,11 @@ public class GameController {
                 gameState = GameState.ENDGAME;
                 listeners.get("GameRounds").notifyEndGame(content);
             }
-        }else{
+        } else {
             String message = "\n----------------------------------\n" +
                     "Player " + model.getPlayers().get(idClientIntoGame).getUsername() + " played a card";
             HashMap<String, Integer> playersPoints = new HashMap<>();
-            for(Player player : model.getPlayers()) {
+            for (Player player : model.getPlayers()) {
                 playersPoints.put(player.getUsername(), player.getPoints());
             }
             listeners.get("GameRounds").notifyPlayedCard(message, playersPoints, model.getPlayers().get(idClientIntoGame).getUsername());
@@ -226,7 +226,7 @@ public class GameController {
                 gameState = GameState.LAST_ROUND;
             else
                 gameState = GameState.FINISHING_ROUND_BEFORE_LAST;
-            String message ="\n----------------------------------\n" +
+            String message = "\n----------------------------------\n" +
                     "Player " + model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername() + " reached 20 points\n" +
                     "Now you're playing the last turn";
             listeners.get("GameRounds").notifyLastTurnSet(message);
@@ -238,7 +238,7 @@ public class GameController {
                 "Player " + model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername() + " drew a card";
         model.getCurrentPlayer().setPlayerState(PlayerState.WAITING);
         model.advanceToNextPlayer();
-        message+= "\nNow is " + model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername() + " turn.";
+        message += "\nNow is " + model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername() + " turn.";
         model.getCurrentPlayer().setPlayerState(PlayerState.PLAY_CARD);
         listeners.get("GameRounds").notifyChangeTurn(message, model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername());
     }
@@ -258,7 +258,7 @@ public class GameController {
         return model.getGoldDeck().getVisibleCards();
     }
 
-    public Card getLastCardOfUsableCards(int deck) {
+    public GameCard getLastCardOfUsableCards(int deck) {
         if (deck == 1)
             return model.getResourceDeck().getUsableCards().getLast();
         return model.getGoldDeck().getUsableCards().getLast();

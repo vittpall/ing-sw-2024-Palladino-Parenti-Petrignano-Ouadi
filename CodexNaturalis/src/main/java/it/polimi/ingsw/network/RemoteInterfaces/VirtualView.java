@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.RemoteInterfaces;
 
-import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -28,7 +27,7 @@ public interface VirtualView extends Remote {
 
     void createGame(String username, int nPlayers) throws IOException, InterruptedException;
 
-    int getIdGame() throws RemoteException;
+    Integer getIdGame() throws RemoteException;
 
     int getIdClientIntoGame() throws RemoteException;
 
@@ -73,7 +72,7 @@ public interface VirtualView extends Remote {
 
     ArrayList<GameCard> getVisibleCardsDeck(int deck) throws IOException, InterruptedException;
 
-    Card getLastFromUsableCards(int deck) throws RemoteException;
+    GameCard getLastFromUsableCards(int deck) throws IOException, InterruptedException;
 
     String getUsernamePlayerThatStoppedTheGame() throws IOException, InterruptedException;
 
@@ -91,7 +90,6 @@ public interface VirtualView extends Remote {
     void run() throws IOException, InterruptedException, ClassNotFoundException;
 
     String getUsername() throws RemoteException;
-
 
 
     boolean isGameStarted() throws IOException, InterruptedException;

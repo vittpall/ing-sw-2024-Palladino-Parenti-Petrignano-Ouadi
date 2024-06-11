@@ -27,6 +27,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
     private Scanner scan;
     private ClientState currentState;
     protected String username;
+    private Integer idGame;
     protected BlockingQueue<ServerNotification> notificationsQueue;
     private boolean isGUIMode;
     protected UsefulData usefulData;
@@ -54,6 +55,14 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 throw new RuntimeException(e);
             }
         }).start();
+    }
+
+    public Integer getIdGame() {
+        return idGame;
+    }
+
+    public void setIdGame(int idGame) {
+        this.idGame = idGame;
     }
 
     public void setGUIMode(boolean GUIMode) {
