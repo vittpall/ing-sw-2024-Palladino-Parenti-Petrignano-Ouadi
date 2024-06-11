@@ -30,12 +30,17 @@ public class ClientMain extends Application {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter server IP address (empty is 127.0.0.1): ");
         serverAddress = scanner.nextLine().trim();
-        if (!serverAddress.matches(PATTERN) && !serverAddress.isEmpty()) {
-            System.out.println("Invalid IP address");
-            System.exit(0);
-        } else if (serverAddress.isEmpty()) {
-            serverAddress = "127.0.0.1";
-        }
+        do {
+            if (serverAddress.isEmpty())
+                serverAddress = "127.0.0.1";
+            else
+            if (!serverAddress.matches(PATTERN))
+            {
+                System.out.println("Invalid IP address");
+                serverAddress = scanner.nextLine().trim();
+            }
+        }while (!serverAddress.matches(PATTERN) && !serverAddress.isEmpty());
+
         String[] options = {
                 "TUI + SOCKET",
                 "TUI + RMI",
