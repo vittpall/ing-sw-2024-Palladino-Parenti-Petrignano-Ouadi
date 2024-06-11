@@ -20,6 +20,7 @@ public enum TypeServerToClientMsg {
     GET_POINTS("GetPoints"),
     GET_SHARED_OBJECTIVE_CARDS("GetSharedObjectiveCards"),
     GET_STARTED_CARD("GetStartedCard"),
+    GET_LAST_FROM_USABLE_CARDS("GetLastFromUsableCards"),
     GET_USERNAME_PLAYER_THAT_STOPPED_THE_GAME("GetUsernamePlayerThatStoppedTheGame"),
     GET_VISIBLE_CARDS_DECK("GetVisibleCardsDeck"),
     GET_WINNER("GetWinner"),
@@ -37,7 +38,7 @@ public enum TypeServerToClientMsg {
     TOKEN_COLOR_SELECTED("TokenColorSelected"),
     CLOSE_CONNECTION("CloseConnection");
 
-    private String text;
+    private final String text;
 
     TypeServerToClientMsg(String text) {
         this.text = text;
