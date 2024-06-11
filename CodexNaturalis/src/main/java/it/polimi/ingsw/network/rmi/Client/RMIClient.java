@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.rmi.Client;
 
-import it.polimi.ingsw.gui.MainMenuStateGUI;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
@@ -15,7 +14,6 @@ import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
-import it.polimi.ingsw.tui.MainMenuState;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -25,7 +23,6 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Scanner;
 
 public class RMIClient extends BaseClient {
     public final VirtualServer server;
@@ -34,22 +31,10 @@ public class RMIClient extends BaseClient {
 
 
     public RMIClient(VirtualServer server, String mode, Stage stage) throws RemoteException {
-        super();
+        super(mode, stage);
         UnicastRemoteObject.exportObject(this, 0);
         this.server = server;
-        switch (mode) {
-            case "GUI":
-                setGUIMode(true);
-                setCurrentState(new MainMenuStateGUI(stage, this));
-                break;
-            case "TUI":
-                setGUIMode(false);
-                setScan(new Scanner(System.in));
-                setCurrentState(new MainMenuState(this, getScan()));
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported mode");
-        }
+
     }
 
     public int getIdGame() {
@@ -260,17 +245,14 @@ public class RMIClient extends BaseClient {
             x = server.getPlayers(idGame);
         } catch (NullPointerException e) {
             System.out.println("Error while getting players" + e.getMessage());
-            e.printStackTrace();
         }
         return x;
-        //       return server.getPlayers(idGame);
     }
 
     @Override
     public void ping() throws RemoteException {
         //This method does nothing but just to keep track if the client has been disconnected or not
     }
-
 
 
 }

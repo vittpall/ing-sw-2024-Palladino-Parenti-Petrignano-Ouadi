@@ -1,6 +1,5 @@
 package it.polimi.ingsw.network.socket.Client;
 
-import it.polimi.ingsw.gui.MainMenuStateGUI;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -14,7 +13,6 @@ import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.*;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
-import it.polimi.ingsw.tui.MainMenuState;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -25,7 +23,6 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -42,7 +39,6 @@ public class SocketClient extends BaseClient {
     private final ConcurrentMap<TypeServerToClientMsg, BlockingQueue<ServerToClientMsg>> responseQueues = new ConcurrentHashMap<>();
     private int idGame;
     private int idClientIntoGame;
-    private final boolean isGUIMode;
 
 
     /**
@@ -53,22 +49,9 @@ public class SocketClient extends BaseClient {
      * @param mode The mode of the client, either "GUI" or "TUI".
      */
     public SocketClient(ObjectInputStream in, ObjectOutputStream out, String mode, Stage stage) {
-        super();
+        super(mode, stage);
         this.in = in;
         this.out = out;
-        switch (mode) {
-            case "GUI":
-                isGUIMode = true;
-                setCurrentState(new MainMenuStateGUI(stage, this));
-                break;
-            case "TUI":
-                isGUIMode = false;
-                setScan(new Scanner(System.in));
-                setCurrentState(new MainMenuState(this, getScan()));
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported mode");
-        }
     }
 
     public void setIdGame(int idGame) {
@@ -178,15 +161,14 @@ public class SocketClient extends BaseClient {
     @Override
     public void close() throws IOException, InterruptedException {
         returnToLobby();
-  //      System.exit(0);
+        //      System.exit(0);
     }
 
     @Override
     public void returnToLobby() throws IOException, InterruptedException {
         ClosedConnectionMsg request = new ClosedConnectionMsg(getUsername(), idGame);
         System.out.println("Closing connection!!!");
-        ServerToClientMsg response = sendRequest(request);
-        response.getResponse();
+        sendRequest(request);
     }
 
     @Override
@@ -223,10 +205,10 @@ public class SocketClient extends BaseClient {
     }
 
     /**
-     * @param idGame
-     * @return
-     * @throws IOException
-     * @throws InterruptedException
+     * @param idGame the id of the game
+     * @return the players in the game
+     * @throws IOException          if an I/O error occurs
+     * @throws InterruptedException if the thread is interrupted
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -292,18 +274,6 @@ public class SocketClient extends BaseClient {
         return (ObjectiveCard[]) response.getResponse().getResponseReturnable();
     }
 
-    public boolean getIsLastRoundStarted(int idGame) throws IOException, InterruptedException {
-        IsLastRoundStartedMsg request = new IsLastRoundStartedMsg(idGame);
-        ServerToClientMsg response = sendRequest(request);
-        return (boolean) response.getResponse().getResponseReturnable();
-    }
-
-    public int getCurrentPlayer(int idGame) throws IOException, InterruptedException {
-        GetCurrentPlayerMsg request = new GetCurrentPlayerMsg(idGame);
-        ServerToClientMsg response = sendRequest(request);
-        return (int) response.getResponse().getResponseReturnable();
-    }
-
     @Override
     public void playCard(int chosenCard, boolean faceDown, Point chosenPosition) throws IOException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException, InterruptedException {
         PlayCardMsg request = new PlayCardMsg(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
@@ -358,7 +328,7 @@ public class SocketClient extends BaseClient {
         }).start();
 
 
-        if (isGUIMode) {
+        if (isGUIMode()) {
             getClientCurrentState().display();
         } else {
             inputHandler();
@@ -366,7 +336,6 @@ public class SocketClient extends BaseClient {
     }
 
 
-    @SuppressWarnings("InfiniteLoopStatement")
     private void runVirtualServer() {
         try {
             while (true) {

@@ -1,10 +1,7 @@
 package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.core.ClientState;
-import it.polimi.ingsw.gui.ColorSelectionGUI;
-import it.polimi.ingsw.gui.JoinGameMenuStateGUI;
-import it.polimi.ingsw.gui.LobbyMenuStateGUI;
-import it.polimi.ingsw.gui.WaitingForPlayersGUI;
+import it.polimi.ingsw.gui.*;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.UsefulData;
 import it.polimi.ingsw.model.chat.Message;
@@ -34,7 +31,20 @@ abstract public class BaseClient implements VirtualView, GameListener {
     private boolean isGUIMode;
     protected UsefulData usefulData;
 
-    public BaseClient() {
+    public BaseClient(String mode, Stage stage) {
+        switch (mode) {
+            case "GUI":
+                setGUIMode(true);
+                setCurrentState(new MainMenuStateGUI(stage, this));
+                break;
+            case "TUI":
+                setGUIMode(false);
+                setScan(new Scanner(System.in));
+                setCurrentState(new MainMenuState(this, getScan()));
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported mode");
+        }
         notificationsQueue = new LinkedBlockingQueue<>();
         usefulData = UsefulData.getInstance();
         new Thread(() -> {
@@ -136,7 +146,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
             if (getClientCurrentState() instanceof ShowPointsState) {
                 ((ShowPointsState) getClientCurrentState()).refresh(playersPoints);
             } else if (getClientCurrentState() instanceof GetOtherPlayerDesk) {
-                System.out.println("You can see the updated desk by choosing "+username+"'s desk");
+                System.out.println("You can see the updated desk by choosing " + username + "'s desk");
             }
         } /*else
             getClientCurrentState().refresh(msg);*/
@@ -174,21 +184,19 @@ abstract public class BaseClient implements VirtualView, GameListener {
     }
 
 
-    public synchronized void onChatMessageReceived(Message msg)
-    {
+    public synchronized void onChatMessageReceived(Message msg) {
         if (!isGUIMode) {
-                if (getClientCurrentState() instanceof GlobalChatState || getClientCurrentState() instanceof PrivateChatState || getClientCurrentState() instanceof ChatState) {
-                    if (msg.getSender().equals(username))
-                        System.out.println("You: " + msg.getContent());
-                    else
-                        System.out.println(msg.getSender() + ": " + msg.getContent());
-                } else {
-                    if (msg.getReceiver() == null)
-                        System.out.println("You have received a message from the global chat");
-                    else
-                        System.out.println("You have received a from " + msg.getSender());
-                }
-        } else {
+            if (getClientCurrentState() instanceof GlobalChatState || getClientCurrentState() instanceof PrivateChatState || getClientCurrentState() instanceof ChatState) {
+                if (msg.getSender().equals(username))
+                    System.out.println("You: " + msg.getContent());
+                else
+                    System.out.println(msg.getSender() + ": " + msg.getContent());
+            } else {
+                if (msg.getReceiver() == null)
+                    System.out.println("You have received a message from the global chat");
+                else
+                    System.out.println("You have received a from " + msg.getSender());
+            }
         }
     }
 
@@ -197,6 +205,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
         notificationsQueue.add(notification);
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     protected void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
         boolean correctInput;
         String input = "";
