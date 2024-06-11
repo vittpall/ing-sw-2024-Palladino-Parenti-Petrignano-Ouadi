@@ -74,7 +74,7 @@ public class JoinGameMenuState implements ClientStateTUI {
     }
 
     public void refresh(HashMap<Integer, Integer[]> availableGames) {
-        int positionGameAvailable = 0;
+        int positionGameAvailable = 1;
         System.out.println("These are the games to enter option:");
         if (availableGames == null || availableGames.isEmpty()) {
             System.out.println("No games available.\n1.Create new game 🆕");

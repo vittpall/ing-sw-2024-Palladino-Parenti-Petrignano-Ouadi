@@ -8,4 +8,6 @@ import java.rmi.Remote;
 public interface GameListener extends Remote {
 
     void update(ServerNotification notification) throws IOException;
+
+    String getUsername();
 }

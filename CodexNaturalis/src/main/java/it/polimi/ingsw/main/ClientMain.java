@@ -29,16 +29,14 @@ public class ClientMain extends Application {
         String PATTERN = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter server IP address (empty is 127.0.0.1): ");
-        serverAddress = scanner.nextLine().trim();
+
         do {
+            serverAddress = scanner.nextLine().trim();
             if (serverAddress.isEmpty())
                 serverAddress = "127.0.0.1";
             else
             if (!serverAddress.matches(PATTERN))
-            {
                 System.out.println("Invalid IP address");
-                serverAddress = scanner.nextLine().trim();
-            }
         }while (!serverAddress.matches(PATTERN) && !serverAddress.isEmpty());
 
         String[] options = {
