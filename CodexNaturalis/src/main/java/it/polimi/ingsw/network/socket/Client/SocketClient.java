@@ -359,7 +359,7 @@ public class SocketClient extends BaseClient {
 
 
         if (isGUIMode) {
-            showState();
+            getClientCurrentState().display();
         } else {
             inputHandler();
         }
