@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.observer;
 
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.notifications.*;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enumeration.TokenColor;
@@ -45,6 +46,11 @@ public class Observable {
 
     public void notifyLastTurnSet(String message){
         notifyListeners(new LastTurnSetNotification(message));
+    }
+
+    public void notifyChat(Message msg)
+    {
+        notifyListeners(new ChatNotification(msg));
     }
 
     public void notifyEndGame(String message){

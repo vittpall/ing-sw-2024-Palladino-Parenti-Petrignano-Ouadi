@@ -160,6 +160,8 @@ public class GameController {
 
     public void sendMessage(Message msg) {
         model.getChats().addMessage(msg);
+        for(String s: listeners.keySet())
+            listeners.get(s).notifyChat(msg);
     }
 
     public int getCurrentPlayer() {

@@ -272,9 +272,5 @@ public class RMIClient extends BaseClient {
     }
 
 
-    @Override
-    synchronized public void onChatMessageReceived() {
-        System.out.println("New message received");
-    }
 
 }

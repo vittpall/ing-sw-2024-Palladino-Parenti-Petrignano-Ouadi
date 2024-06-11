@@ -416,10 +416,4 @@ public class SocketClient extends BaseClient {
         return (boolean) response.getResponse().getResponseReturnable();
     }
 
-
-    @Override
-    public void onChatMessageReceived() {
-
-    }
-
 }

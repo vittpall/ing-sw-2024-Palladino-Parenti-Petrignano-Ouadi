@@ -81,8 +81,6 @@ public class RMIServer implements VirtualServer {
     @Override
     public void sendMessage(int idGame, Message msg) throws RemoteException {
         lobbyController.sendMessage(idGame, msg);
-        //TODO alert all the clients that a new message has been sent
-        //TODO implement an observer pattern
         /*
         if (msg.getReceiver() == null) {
             for (VirtualView client : clients) {
