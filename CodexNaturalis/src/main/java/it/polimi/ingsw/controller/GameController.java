@@ -103,7 +103,7 @@ public class GameController {
         return model.getPlayers().get(idClientIntoGame).getStarterCard();
     }
 
-    public synchronized void playStarterCard(int idClientIntoGame, boolean playedFacedDown)
+    public synchronized void playStarterCard(int idClientIntoGame, boolean playedFacedDown, GameListener playerListener)
             throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
         GameCard starterCard = model.getPlayers().get(idClientIntoGame).getStarterCard();
         model.getPlayers().get(idClientIntoGame).playCard(starterCard, playedFacedDown, new Point(0, 0));
@@ -113,6 +113,8 @@ public class GameController {
             model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.WAITING);
         if (model.getPlayers().stream().allMatch(player -> (!player.getPlayerState().equals(PlayerState.SETUP_GAME))))
             gameState = GameState.ROUNDS;
+        addListenerList("GameRounds");
+        listeners.get("GameRounds").subscribeListener(playerListener);
     }
 
     public ObjectiveCard getObjectiveCard(int idClientIntoGame) {
@@ -178,6 +180,7 @@ public class GameController {
             if (nPlayers != idClientIntoGame + 1) {
                 model.advanceToNextPlayer();
                 model.getPlayers().get(model.getCurrentPlayerIndex()).setPlayerState(PlayerState.PLAY_CARD);
+                listeners.get("GameRounds").notifyChangeTurn(content, model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername());
             } else {
                 content = """
 
@@ -186,14 +189,21 @@ public class GameController {
                         Now you can see the winner of the game""";
                 winner = model.endGame();
                 gameState = GameState.ENDGAME;
+                listeners.get("GameRounds").notifyEndGame(content);
             }
-          //  listeners.get("LastRound").notifyLastTurn(content);
+        }else{
+            String message = "\n----------------------------------\n" +
+                    "Player " + model.getPlayers().get(idClientIntoGame).getUsername() + " played a card";
+            HashMap<String, Integer> playersPoints = new HashMap<>();
+            for(Player player : model.getPlayers()) {
+                playersPoints.put(player.getUsername(), player.getPoints());
+            }
+            listeners.get("GameRounds").notifyPlayedCard(message, playersPoints, model.getPlayers().get(idClientIntoGame).getUsername());
         }
     }
 
 
     public synchronized void drawCard(int deckToChoose, int inVisible) throws CardNotFoundException {
-        //TODO: fare il check che sia il suo turno
         Deck chosenDeck;
         if (deckToChoose == 1)
             chosenDeck = model.getResourceDeck();
@@ -214,14 +224,21 @@ public class GameController {
                 gameState = GameState.LAST_ROUND;
             else
                 gameState = GameState.FINISHING_ROUND_BEFORE_LAST;
+            String message ="\n----------------------------------\n" +
+                    "Player " + model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername() + " reached 20 points\n" +
+                    "Now you're playing the last turn";
+            listeners.get("GameRounds").notifyLastTurnSet(message);
         }
         if (gameState == GameState.FINISHING_ROUND_BEFORE_LAST && model.getCurrentPlayerIndex() == nPlayers - 1) {
             gameState = GameState.LAST_ROUND;
         }
+        String message = "\n----------------------------------\n" +
+                "Player " + model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername() + " drew a card";
         model.getCurrentPlayer().setPlayerState(PlayerState.WAITING);
         model.advanceToNextPlayer();
+        message+= "\nNow is " + model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername() + " turn.";
         model.getCurrentPlayer().setPlayerState(PlayerState.PLAY_CARD);
-        //TODO: mandare messaggino ai client notificando che è cambiato il turno (vedi notifiche chat)
+        listeners.get("GameRounds").notifyChangeTurn(message, model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername());
     }
 
 

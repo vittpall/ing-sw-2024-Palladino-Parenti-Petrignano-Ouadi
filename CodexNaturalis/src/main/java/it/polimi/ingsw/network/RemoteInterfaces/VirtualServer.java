@@ -48,7 +48,7 @@ public interface VirtualServer extends Remote {
 
     StarterCard getStarterCard(int idGame, int idClientIntoGame) throws RemoteException;
 
-    void playStarterCard(int idGame, int idClientIntoGame, boolean playedFacedDown)
+    void playStarterCard(int idGame, int idClientIntoGame, boolean playedFacedDown, GameListener playerListener)
             throws RemoteException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException;
 
     ObjectiveCard getPlayerObjectiveCard(int idGame, int idClientIntoGame) throws RemoteException;

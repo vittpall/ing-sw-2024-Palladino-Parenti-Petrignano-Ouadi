@@ -130,13 +130,13 @@ abstract public class BaseClient implements VirtualView, GameListener {
             getClientCurrentState().refresh(msg);*/
     }
 
-    public synchronized void onPlayCard(String msg, HashMap<String, Integer> playersPoints) {
+    public synchronized void onPlayedCard(String msg, HashMap<String, Integer> playersPoints, String username) {
         if (!isGUIMode) {
             System.out.println(msg);
             if (getClientCurrentState() instanceof ShowPointsState) {
                 ((ShowPointsState) getClientCurrentState()).refresh(playersPoints);
             } else if (getClientCurrentState() instanceof GetOtherPlayerDesk) {
-                System.out.println("You can see the updated desk by choosing the player's desk");
+                System.out.println("You can see the updated desk by choosing "+username+"'s desk");
             }
         } /*else
             getClientCurrentState().refresh(msg);*/

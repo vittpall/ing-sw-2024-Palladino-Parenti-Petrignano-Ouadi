@@ -107,7 +107,7 @@ public class RMIClient extends BaseClient {
     @Override
     public void playStarterCard(boolean playedFacedDown)
             throws RemoteException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
-        server.playStarterCard(idGame, idClientIntoGame, playedFacedDown);
+        server.playStarterCard(idGame, idClientIntoGame, playedFacedDown, this);
     }
 
     @Override

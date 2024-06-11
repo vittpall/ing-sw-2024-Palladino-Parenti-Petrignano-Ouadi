@@ -3,10 +3,8 @@ package it.polimi.ingsw.model.observer;
 import it.polimi.ingsw.network.notifications.*;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enumeration.TokenColor;
-import it.polimi.ingsw.network.notifications.*;
 
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,8 +35,23 @@ public class Observable {
         notifyListeners(new GameJoinedNotificationToOutsiders(msg, availableGames));
     }
 
+    public void notifyChangeTurn(String message, String username){
+        notifyListeners(new ChangeTurnNotification(message, username));
+    }
 
-    public void notifyCloseGame(String msg) {notifyListeners(new CloseGameNotification(msg));
+    public void notifyPlayedCard(String message,HashMap<String, Integer> playersPoints, String username){
+        notifyListeners(new PlayedCardNotification(message,playersPoints, username));
+    }
+
+    public void notifyLastTurnSet(String message){
+        notifyListeners(new LastTurnSetNotification(message));
+    }
+
+    public void notifyEndGame(String message){
+        notifyListeners(new EndGameNotification(message));
+    }
+    public void notifyCloseGame(String msg) {
+        notifyListeners(new CloseGameNotification(msg));
     }
 
     private void notifyListeners(ServerNotification notification) {

@@ -119,9 +119,9 @@ public class LobbyController {
         return gameControllers.get(idGame).getPlayers().get(idClientIntoGame).getStarterCard();
     }
 
-    public void playStarterCard(int idGame, int idClientIntoGame, boolean playedFacedDown)
+    public void playStarterCard(int idGame, int idClientIntoGame, boolean playedFacedDown, GameListener playerListener)
             throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
-        gameControllers.get(idGame).playStarterCard(idClientIntoGame, playedFacedDown);
+        gameControllers.get(idGame).playStarterCard(idClientIntoGame, playedFacedDown, playerListener);
     }
 
     public ObjectiveCard getObjectiveCard(int idGame, int idClientIntoGame) {

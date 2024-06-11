@@ -23,7 +23,7 @@ public class PlayStarterCard extends ClientToServerMsg {
     @Override
     public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
-        controller.playStarterCard(idGame, idClientIntoGame, playedFacedDown);
+        controller.playStarterCard(idGame, idClientIntoGame, playedFacedDown, playerListener);
         response.setResponseReturnable(-1);
         return response;
     }
