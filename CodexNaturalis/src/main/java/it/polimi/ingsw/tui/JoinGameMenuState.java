@@ -11,10 +11,12 @@ import java.util.Scanner;
 public class JoinGameMenuState implements ClientStateTUI {
     BaseClient client;
     Scanner scanner;
+    HashMap<Integer, Integer> availableGamesToShow;
 
     public JoinGameMenuState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
+        availableGamesToShow = new HashMap<>();
     }
 
     @Override
@@ -24,6 +26,7 @@ public class JoinGameMenuState implements ClientStateTUI {
     @Override
     public void display() {
 
+        int positionGameAvailable = 1;
         System.out.println("\n---------- Join Game Menu ----------");
         System.out.println("These are the games to enter option:");
 
@@ -34,8 +37,10 @@ public class JoinGameMenuState implements ClientStateTUI {
             } else {
                 System.out.println("Choose a game to enter 🚪:");
                 for (int idGame : gameIds) {
-                    System.out.println(idGame + ". This game has " + client.getnPlayer(idGame) + " players and needs " +
+                    availableGamesToShow.put(positionGameAvailable, idGame);
+                    System.out.println(positionGameAvailable + ". This game has " + client.getnPlayer(idGame) + " players and needs " +
                             (client.getnPlayer(idGame) - client.getPlayers(idGame).size()) + " players to start");
+                    positionGameAvailable++;
                 }
             }
         } catch (RemoteException ex) {
@@ -53,11 +58,11 @@ public class JoinGameMenuState implements ClientStateTUI {
                 client.setCurrentState(new CreateGameState(client, scanner));
                 return;
             }
-            if (!(client.getNotStartedGames().contains(input))) {
+            if (!(client.getNotStartedGames().contains(availableGamesToShow.get(input)))) {
                 System.out.println("Invalid input");
                 return;
             }
-            client.joinGame(input, client.getUsername());
+            client.joinGame(availableGamesToShow.get(input), client.getUsername());
             client.setCurrentState(new WaitingForPlayersState(client, scanner));
         } catch (InterruptedException | IOException ex) {
             System.out.println("Error while joining the game");
@@ -69,12 +74,14 @@ public class JoinGameMenuState implements ClientStateTUI {
     }
 
     public void refresh(HashMap<Integer, Integer[]> availableGames) {
+        int positionGameAvailable = 0;
         System.out.println("These are the games to enter option:");
         if (availableGames == null || availableGames.isEmpty()) {
             System.out.println("No games available.\n1.Create new game 🆕");
         } else {
             System.out.println("Choose a game to enter 🚪:");
             for (int idGame : availableGames.keySet()) {
+                availableGamesToShow.put(positionGameAvailable, idGame);
                 System.out.println(idGame + ". This game has " + availableGames.get(idGame)[0] + " players and needs " +
                         availableGames.get(idGame)[1] + " players to start");
             }
