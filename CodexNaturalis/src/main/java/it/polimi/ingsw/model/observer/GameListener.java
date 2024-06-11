@@ -9,5 +9,5 @@ public interface GameListener extends Remote {
 
     void update(ServerNotification notification) throws IOException;
 
-    String getUsername();
+    String getUsername() throws IOException;
 }
