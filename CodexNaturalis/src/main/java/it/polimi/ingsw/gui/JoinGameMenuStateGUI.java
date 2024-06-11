@@ -4,6 +4,7 @@ import it.polimi.ingsw.core.ClientState;
 import it.polimi.ingsw.gui.Controller.JoinGameMenuController;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 public class JoinGameMenuStateGUI implements ClientState {
@@ -24,17 +25,12 @@ public class JoinGameMenuStateGUI implements ClientState {
         controller.updateGamesList();
     }
 
-    public void refresh(String msg)
-    {
-        controller.updateGamesList();
+    public void refresh(String msg) {
+        Platform.runLater(() -> controller.updateGamesList());
     }
 
-   
 
-    
-
-    public String toString()
-    {
+    public String toString() {
         return "JoinGameMenuStateGUI";
     }
 

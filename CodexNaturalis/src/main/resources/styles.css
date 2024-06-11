@@ -21,6 +21,7 @@
     -fx-prefHeight: 40;
     -fx-prefWidth: 200;
     -fx-text-fill: black;
+    -fx-background-radius: 5px;
 }
 
 .primary-button:hover {

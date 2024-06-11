@@ -22,7 +22,6 @@ public class JoinGameMenuController implements FXMLController {
     private Label messageLabel;
     @FXML
     private Button joinGameButton;
-    @FXML
 
     private BaseClient client;
     private Stage stage;
@@ -39,7 +38,10 @@ public class JoinGameMenuController implements FXMLController {
             if (gameIds.isEmpty()) {
                 messageLabel.setText("No games available. Create a new game.");
                 joinGameButton.setDisable(true);
+                joinGameButton.setVisible(false);
             } else {
+                joinGameButton.setVisible(true);
+                messageLabel.setText("");
                 gamesListView.getItems().setAll(gameIds);
                 gamesListView.setCellFactory(lv -> new ListCell<>() {
                     @Override
