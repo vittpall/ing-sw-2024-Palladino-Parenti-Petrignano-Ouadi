@@ -26,45 +26,46 @@ public class Observable {
     }
 
     public void notifyColorSelection(String msg, ArrayList<TokenColor> availableColors) {
-        notifyListeners(new TokenColorTakenNotification(msg, availableColors));
+        notifyListeners(new TokenColorTakenNotification(msg, availableColors), null);
     }
 
     public void notifyJoinedGame(String msg, ArrayList<Player> players, int nOfMissingPlayers) {
-        notifyListeners(new GameJoinedNotification(msg, players, nOfMissingPlayers));
+        notifyListeners(new GameJoinedNotification(msg, players, nOfMissingPlayers), null);
     }
     public void notifyJoinedGameToOutsider(String msg, HashMap<Integer, Integer[]> availableGames) {
-        notifyListeners(new GameJoinedNotificationToOutsiders(msg, availableGames));
+        notifyListeners(new GameJoinedNotificationToOutsiders(msg, availableGames), null);
     }
 
-    public void notifyChangeTurn(String message, String username){
-        notifyListeners(new ChangeTurnNotification(message, username));
+    public void notifyChangeTurn(String message, String username, String usernameSender){
+        notifyListeners(new ChangeTurnNotification(message, username), usernameSender);
     }
 
     public void notifyPlayedCard(String message,HashMap<String, Integer> playersPoints, String username){
-        notifyListeners(new PlayedCardNotification(message,playersPoints, username));
+        notifyListeners(new PlayedCardNotification(message,playersPoints, username), username);
     }
 
     public void notifyLastTurnSet(String message){
-        notifyListeners(new LastTurnSetNotification(message));
+        notifyListeners(new LastTurnSetNotification(message), null);
     }
 
     public void notifyChat(Message msg)
     {
-        notifyListeners(new ChatNotification(msg));
+        notifyListeners(new ChatNotification(msg), null);
     }
 
     public void notifyEndGame(String message){
-        notifyListeners(new EndGameNotification(message));
+        notifyListeners(new EndGameNotification(message), null);
     }
     public void notifyCloseGame(String msg) {
-        notifyListeners(new CloseGameNotification(msg));
+        notifyListeners(new CloseGameNotification(msg), null);
     }
 
-    private void notifyListeners(ServerNotification notification) {
+    private void notifyListeners(ServerNotification notification, String usernameSender) {
         for (GameListener listener : listeners) {
             new Thread(() -> {
                 try {
-                    listener.update(notification);
+                    if(usernameSender==null||!listener.getUsername().equals(usernameSender))
+                        listener.update(notification);
                 } catch (IOException e) {
                     System.out.println("This listener cannot be reached");
                 }

@@ -180,9 +180,10 @@ public class GameController {
                     "Now is " + model.getPlayers().get(getCurrentPlayer()).getUsername() + " turn.";
             model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.ENDGAME);
             if (nPlayers != idClientIntoGame + 1) {
+                String usernameSender = model.getPlayers().get(idClientIntoGame).getUsername();
                 model.advanceToNextPlayer();
                 model.getPlayers().get(model.getCurrentPlayerIndex()).setPlayerState(PlayerState.PLAY_CARD);
-                listeners.get("GameRounds").notifyChangeTurn(content, model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername());
+                listeners.get("GameRounds").notifyChangeTurn(content, model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername(), usernameSender);
             } else {
                 content = """
 
@@ -236,11 +237,12 @@ public class GameController {
         }
         String message = "\n----------------------------------\n" +
                 "Player " + model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername() + " drew a card";
+        String usernameSender = model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername();
         model.getCurrentPlayer().setPlayerState(PlayerState.WAITING);
         model.advanceToNextPlayer();
         message += "\nNow is " + model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername() + " turn.";
         model.getCurrentPlayer().setPlayerState(PlayerState.PLAY_CARD);
-        listeners.get("GameRounds").notifyChangeTurn(message, model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername());
+        listeners.get("GameRounds").notifyChangeTurn(message, model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername(), usernameSender);
     }
 
 

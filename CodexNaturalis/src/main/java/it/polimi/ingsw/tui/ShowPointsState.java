@@ -58,5 +58,6 @@ public class ShowPointsState implements ClientStateTUI {
             System.out.println("Player: " + username + " | Score: " + playersPoints.get(username));
         }
         System.out.println("--------------------------------");
+        System.out.println("1. Return to main menu");
     }
 }

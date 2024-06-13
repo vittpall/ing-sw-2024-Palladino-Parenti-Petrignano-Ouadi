@@ -141,8 +141,10 @@ abstract public class BaseClient implements VirtualView, GameListener {
     public synchronized void onChangeTurn(String msg, String currentPlayerUsername) {
         if (!isGUIMode) {
             System.out.println(msg);
-            if (getClientCurrentState() == null)
+            if (getClientCurrentState() == null) {
                 display();
+                System.out.println("Type your command or 'exit' to quit:");
+            }
             else if (currentPlayerUsername.equals(username))
                 System.out.println("You can go back to the main menu to play a card");
         } /*else
@@ -172,8 +174,10 @@ abstract public class BaseClient implements VirtualView, GameListener {
     public synchronized void onEndGame(String msg) {
         if (!isGUIMode) {
             System.out.println(msg);
-            if (getClientCurrentState() == null)
+            if (getClientCurrentState() == null) {
                 display();
+                System.out.println("Type your command or 'exit' to quit:");
+            }
             else
                 System.out.println("You can go back to the main menu to see the winner");
         } //else
