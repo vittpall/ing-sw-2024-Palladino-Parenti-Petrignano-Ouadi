@@ -51,9 +51,11 @@ public class ClientHandler implements GameListener {
                 }
                 sendMessage(response);
             }
-        } catch (SocketException e) {
+        } catch (IOException e)
+        {
             closeClient();
-        } catch (IOException | ClassNotFoundException | InterruptedException | CardNotFoundException |
+        }
+        catch (ClassNotFoundException | InterruptedException | CardNotFoundException |
                  PlaceNotAvailableException | RequirementsNotMetException e) {
             e.printStackTrace();
         }

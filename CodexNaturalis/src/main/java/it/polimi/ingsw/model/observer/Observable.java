@@ -56,6 +56,7 @@ public class Observable {
     public void notifyEndGame(String message){
         notifyListeners(new EndGameNotification(message), null);
     }
+
     public void notifyCloseGame(String msg) {
         notifyListeners(new CloseGameNotification(msg), null);
     }
@@ -73,7 +74,5 @@ public class Observable {
         }
     }
 
-
-    //TODO define all the notify methods
 
 }

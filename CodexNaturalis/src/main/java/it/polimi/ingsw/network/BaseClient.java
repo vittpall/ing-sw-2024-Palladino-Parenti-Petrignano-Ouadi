@@ -31,6 +31,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
     protected BlockingQueue<ServerNotification> notificationsQueue;
     private boolean isGUIMode;
     protected UsefulData usefulData;
+    private boolean returnToTheFirstLoop;
 
     public BaseClient(String mode, Stage stage) {
         switch (mode) {
@@ -184,11 +185,19 @@ abstract public class BaseClient implements VirtualView, GameListener {
         //  getClientCurrentState().refresh(msg);
     }
 
-    public synchronized void onGameClosed(String msg) {
+    public synchronized void onGameClosed(String msg){
         if (!isGUIMode) {
             setCurrentState(new LobbyMenuState(this, scan));
-            System.out.println(msg);
             getClientCurrentState().display();
+            returnToTheFirstLoop = true;
+            /*
+            try {
+                inputHandler();
+            } catch (IOException | ClassNotFoundException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            */
+
         } else {
             setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
             ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
@@ -220,8 +229,10 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     @SuppressWarnings("InfiniteLoopStatement")
     protected void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
+
         boolean correctInput;
         String input = "";
+        firstLoop:
         do {
             if (!input.equals("exit"))
                 showState();
@@ -250,6 +261,10 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 correctInput = false;
                 while (!correctInput) {
                     try {
+                        if(returnToTheFirstLoop){
+                            returnToTheFirstLoop = false;
+                            inputHandler();
+                        }
                         System.out.print("Type your command or 'exit' to quit: ");
                         input = scan.nextLine().trim().toLowerCase();
                         correctInput = true;
@@ -274,6 +289,10 @@ abstract public class BaseClient implements VirtualView, GameListener {
                         boolean correctInput2 = false;
                         while (!correctInput2) {
                             try {
+                                if(returnToTheFirstLoop){
+                                    returnToTheFirstLoop = false;
+                                    inputHandler();
+                                }
                                 System.out.print("Type your command or 'exit' to quit: ");
                                 input = scan.nextLine().trim().toLowerCase();
                                 correctInput2 = true;
@@ -404,7 +423,13 @@ abstract public class BaseClient implements VirtualView, GameListener {
     public void notificationsHandler() throws RemoteException, InterruptedException {
         while (true) {
             ServerNotification msg = notificationsQueue.take();
-            msg.notifyClient(this);
+            try {
+                msg.notifyClient(this);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

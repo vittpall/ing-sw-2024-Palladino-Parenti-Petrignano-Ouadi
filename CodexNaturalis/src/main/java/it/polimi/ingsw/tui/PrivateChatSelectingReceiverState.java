@@ -101,7 +101,7 @@ public class PrivateChatSelectingReceiverState implements ClientStateTUI {
 
     @Override
     public void promptForInput() {
-        System.out.println(this.finalOption+1 +".Exit chat");
+        System.out.println(this.finalOption+1 +")Exit chat");
     }
 
     public String toString() {

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.core.ClientState;
+import it.polimi.ingsw.model.chat.Chat;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.BaseClient;
 
@@ -20,7 +21,7 @@ public class PrivateChatState implements ClientStateTUI {
         this.scanner = scanner;
         this.receiver = receiver;
         this.lastMessageReceived = 0;
-        this.returnState = returnState;
+        this.returnState = new ChatState(client, scanner);
     }
 
     @Override
@@ -55,9 +56,9 @@ public class PrivateChatState implements ClientStateTUI {
     }
 
     public void inputHandler(String input) throws IOException, ClassNotFoundException, InterruptedException {
-        while(!input.equals("exit")){
+        while(!input.equals("Exit")){
             client.sendMessage(receiver, input);
-            input = scanner.nextLine();
+            input = scanner.nextLine().trim();
         }
         client.setCurrentState(this.returnState);
     }
