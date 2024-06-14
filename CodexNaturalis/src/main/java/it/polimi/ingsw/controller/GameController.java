@@ -83,11 +83,15 @@ public class GameController {
             listeners.put(state, new Observable());
     }
 
-    public ArrayList<ObjectiveCard> getObjectiveCards(int idPlayer) {
+    public ArrayList<ObjectiveCard> getObjectiveCards(int idPlayer, GameListener playerListener) {
+        //TODO added to give the possibility to quit during the starter and objective card selection
+        addListenerList("GameStarted");
+        listeners.get("GameStarted").subscribeListener(playerListener);
         return model.getPlayers().get(idPlayer).getDrawnObjectiveCards();
+
     }
 
-    public void setObjectiveCard(int idClientIntoGame, int idObjCard) throws CardNotFoundException {
+    public void setObjectiveCard(int idClientIntoGame, int idObjCard, GameListener playerListener) throws CardNotFoundException {
         model.setObjectiveCards(idClientIntoGame, idObjCard);
     }
 
@@ -97,7 +101,7 @@ public class GameController {
             listeners.get(s).notifyCloseGame(msg);
     }
 
-    public StarterCard getStarterCard(int idClientIntoGame) {
+    public StarterCard getStarterCard(int idClientIntoGame, GameListener playerListener) {
         return model.getPlayers().get(idClientIntoGame).getStarterCard();
     }
 

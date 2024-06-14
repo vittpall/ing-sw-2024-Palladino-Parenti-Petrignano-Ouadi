@@ -192,14 +192,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
             setCurrentState(new LobbyMenuState(this, scan));
             getClientCurrentState().display();
             returnToTheFirstLoop = true;
-            /*
-            try {
-                inputHandler();
-            } catch (IOException | ClassNotFoundException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-            */
-
         } else {
             setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
             ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
@@ -264,6 +256,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 while (!correctInput) {
                     try {
                         if(returnToTheFirstLoop){
+                            System.out.println("Returning to the first loop");
                             returnToTheFirstLoop = false;
                             inputHandler();
                         }
@@ -292,6 +285,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                         while (!correctInput2) {
                             try {
                                 if(returnToTheFirstLoop){
+                                    System.out.println("Returning to the first loop");
                                     returnToTheFirstLoop = false;
                                     inputHandler();
                                 }

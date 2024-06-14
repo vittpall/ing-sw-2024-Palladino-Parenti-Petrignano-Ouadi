@@ -64,12 +64,12 @@ public class RMIClient extends BaseClient {
 
     @Override
     public ArrayList<ObjectiveCard> getPlayerObjectiveCards() throws RemoteException {
-        return server.getPlayerObjectiveCards(getIdGame(), idClientIntoGame);
+        return server.getPlayerObjectiveCards(getIdGame(), idClientIntoGame, this);
     }
 
     @Override
     public void setObjectiveCard(int idCard) throws RemoteException, CardNotFoundException {
-        server.setObjectiveCard(getIdGame(), idClientIntoGame, idCard);
+        server.setObjectiveCard(getIdGame(), idClientIntoGame, idCard, this);
     }
 
     @Override

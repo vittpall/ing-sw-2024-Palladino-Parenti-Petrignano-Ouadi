@@ -41,9 +41,9 @@ public interface VirtualServer extends Remote {
 
     void removeUsername(String username) throws RemoteException;
 
-    ArrayList<ObjectiveCard> getPlayerObjectiveCards(int idGame, int idPlayer) throws RemoteException;
+    ArrayList<ObjectiveCard> getPlayerObjectiveCards(int idGame, int idPlayer, GameListener playerListener) throws RemoteException;
 
-    void setObjectiveCard(int idGame, int idClientIntoGame, int idObjCard) throws RemoteException, CardNotFoundException;
+    void setObjectiveCard(int idGame, int idClientIntoGame, int idObjCard, GameListener gameListener) throws RemoteException, CardNotFoundException;
 
     StarterCard getStarterCard(int idGame, int idClientIntoGame) throws RemoteException;
 

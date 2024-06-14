@@ -105,13 +105,13 @@ public class LobbyController {
         return -1;
     }
 
-    public ArrayList<ObjectiveCard> getObjectiveCards(int idGame, int idPlayer) {
-        return gameControllers.get(idGame).getObjectiveCards(idPlayer);
+    public ArrayList<ObjectiveCard> getObjectiveCards(int idGame, int idPlayer, GameListener playerListener) {
+        return gameControllers.get(idGame).getObjectiveCards(idPlayer, playerListener);
     }
 
-    public void setObjectiveCard(int idGame, int idClientIntoGame, int idObjCard) throws CardNotFoundException {
+    public void setObjectiveCard(int idGame, int idClientIntoGame, int idObjCard, GameListener playerListener) throws CardNotFoundException {
         //model.getGame(idGame).getPlayers().get(idClientIntoGame).setObjectiveCard(objCard);
-        gameControllers.get(idGame).setObjectiveCard(idClientIntoGame, idObjCard);
+        gameControllers.get(idGame).setObjectiveCard(idClientIntoGame, idObjCard, playerListener);
     }
 
     public StarterCard getStarterCard(int idGame, int idClientIntoGame) {

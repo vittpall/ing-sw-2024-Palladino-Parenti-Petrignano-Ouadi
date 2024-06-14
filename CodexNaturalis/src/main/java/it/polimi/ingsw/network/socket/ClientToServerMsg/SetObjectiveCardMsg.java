@@ -20,7 +20,7 @@ public class SetObjectiveCardMsg extends ClientToServerMsg {
     @Override
     public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
-        controller.setObjectiveCard(idGame, idPlayer, idObjectiveCard);
+        controller.setObjectiveCard(idGame, idPlayer, idObjectiveCard, playerListener);
         response.setResponseReturnable(-1);
         return response;
     }

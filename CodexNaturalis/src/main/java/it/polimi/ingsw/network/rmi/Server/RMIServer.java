@@ -4,6 +4,7 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
@@ -128,13 +129,13 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public ArrayList<ObjectiveCard> getPlayerObjectiveCards(int idGame, int idPlayer) throws RemoteException {
-        return lobbyController.getObjectiveCards(idGame, idPlayer);
+    public ArrayList<ObjectiveCard> getPlayerObjectiveCards(int idGame, int idPlayer, GameListener playerListener) throws RemoteException {
+        return lobbyController.getObjectiveCards(idGame, idPlayer, playerListener);
     }
 
     @Override
-    public void setObjectiveCard(int idGame, int idClientIntoGame, int idObjCard) throws RemoteException, CardNotFoundException {
-        lobbyController.setObjectiveCard(idGame, idClientIntoGame, idObjCard);
+    public void setObjectiveCard(int idGame, int idClientIntoGame, int idObjCard, GameListener playerListener) throws RemoteException, CardNotFoundException {
+        lobbyController.setObjectiveCard(idGame, idClientIntoGame, idObjCard, playerListener);
     }
 
     @Override
