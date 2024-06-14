@@ -14,6 +14,7 @@ import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.tui.*;
 import javafx.stage.Stage;
 
+import javax.swing.plaf.TableHeaderUI;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -31,7 +32,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
     protected BlockingQueue<ServerNotification> notificationsQueue;
     private boolean isGUIMode;
     protected UsefulData usefulData;
-    private boolean returnToTheFirstLoop;
+    private volatile boolean waitingForCloseGameNotification;
+    String input;
 
     public BaseClient(String mode, Stage stage) {
         switch (mode) {
@@ -47,13 +49,18 @@ abstract public class BaseClient implements VirtualView, GameListener {
             default:
                 throw new IllegalArgumentException("Unsupported mode");
         }
+        input = "";
+        waitingForCloseGameNotification = false;
         notificationsQueue = new LinkedBlockingQueue<>();
         usefulData = UsefulData.getInstance();
         new Thread(() -> {
             try {
                 notificationsHandler();
             } catch (InterruptedException | RemoteException e) {
-                throw new RuntimeException(e);
+                //throw new RuntimeException(e);
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+
             }
         }).start();
     }
@@ -188,14 +195,10 @@ abstract public class BaseClient implements VirtualView, GameListener {
     public synchronized void onGameClosed(String msg){
         //to avoid trying close game already closed
         idGame = null;
-        if (!isGUIMode) {
-            setCurrentState(new LobbyMenuState(this, scan));
-            getClientCurrentState().display();
-            returnToTheFirstLoop = true;
-        } else {
-            setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
-            ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
-        }
+        waitingForCloseGameNotification = true;
+  /*      setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
+        ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);*/
+
 
     }
 
@@ -225,8 +228,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
     protected void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
 
         boolean correctInput;
-        String input = "";
-        firstLoop:
         do {
             if (!input.equals("exit"))
                 showState();
@@ -236,7 +237,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     System.out.print("Type your command or 'exit' to quit: ");
                     input = scan.nextLine().trim().toLowerCase();
                     correctInput = true;
-                } catch (InputMismatchException e) {
+                }
+                catch (InputMismatchException e) {
                     System.out.println("\nInvalid input: Reinsert the value: ");
                 }
             }
@@ -246,30 +248,44 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     handleTUIInput(Integer.parseInt(input));
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid input: Please enter a number.");
+                } catch (Exception e) {
+                    System.out.println("The game is closing wait...");
                 }
+            }
+            if(waitingForCloseGameNotification)
+            {
+                waitingForCloseGameNotification = false;
+                if(!isGUIMode)
+                    setCurrentState(new LobbyMenuState(this, scan));
+                else
+                {
+                    setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
+              //      ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
+                }
+                input = "";
+                inputHandler();
             }
         } while (currentState != null);
         while (true) {
             if (currentState == null) {
-                display();
+                try {
+                    display();
+                } catch (Exception e) {
+                    break;
+                }
                 correctInput = false;
                 while (!correctInput) {
                     try {
-                        if(returnToTheFirstLoop){
-                            System.out.println("Returning to the first loop");
-                            returnToTheFirstLoop = false;
-                            inputHandler();
-                        }
                         System.out.print("Type your command or 'exit' to quit: ");
                         input = scan.nextLine().trim().toLowerCase();
                         correctInput = true;
-                    } catch (InputMismatchException e) {
+                    }
+                    catch (InputMismatchException e) {
                         System.out.println("\nInvalid input: Reinsert the value: ");
                     }
                 }
             } else
                 input = "no display";
-
             if (handleCommonInput(input)) {
                 try {
                     boolean checkState;
@@ -282,13 +298,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
                             showState();
                         }
                         boolean correctInput2 = false;
-                        while (!correctInput2) {
+                            while (!correctInput2) {
                             try {
-                                if(returnToTheFirstLoop){
-                                    System.out.println("Returning to the first loop");
-                                    returnToTheFirstLoop = false;
-                                    inputHandler();
-                                }
                                 System.out.print("Type your command or 'exit' to quit: ");
                                 input = scan.nextLine().trim().toLowerCase();
                                 correctInput2 = true;
@@ -301,16 +312,53 @@ abstract public class BaseClient implements VirtualView, GameListener {
                                 try {
                                     handleTUIInput(Integer.parseInt(input));
                                 } catch (NumberFormatException e) {
+                                    //TODO to catch the exception in case the player finishes his move while the game is being closed.
                                     System.out.println("Invalid input: Please enter a number.");
+                                } catch (Exception e) {
+                                    System.out.println("The game is closing wait...");
                                 }
                             }
                         }
                     } else {
-                        System.out.println("The input was not valid. You can " + getServerCurrentState());
+                            System.out.println("The input was not valid. You can " + getServerCurrentState());
                     }
+
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid input: Please enter a number.");
+                } catch (Exception e) {
+                    //There's to many runtime exceptions to catch so i GOTTA CATCH 'EM ALL
+                    System.out.println("The game is closing wait... Click a button to continue.");
                 }
+                if(waitingForCloseGameNotification)
+                {
+                    waitingForCloseGameNotification = false;
+                    if(!isGUIMode)
+                        setCurrentState(new LobbyMenuState(this, scan));
+                    else
+                    {
+                        setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
+                        //      ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
+                    }
+                    input = "";
+                    inputHandler();
+                }
+            }
+            else {
+                //to avoid doing the else branch before the close notification has arrived
+                System.out.println("The game is closing, please wait...");
+                while (!waitingForCloseGameNotification) {
+                    Thread.onSpinWait();
+                }
+                if(!isGUIMode)
+                    setCurrentState(new LobbyMenuState(this, scan));
+                else
+                {
+                    setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
+                    //      ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
+                }
+                input = "";
+                waitingForCloseGameNotification = false;
+                inputHandler();
             }
         }
     }
@@ -360,6 +408,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
         return false;
     }
 
+
     private synchronized void display() {
         System.out.println("⚔️  _________________________________  ⚔️");
         System.out.println("|                                       |");
@@ -386,7 +435,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
     private boolean handleCommonInput(String input) {
         if ("exit".equals(input)) {
             try {
-                if (usefulData.quitableStates.contains(currentState.toString())) {
+                if (getClientCurrentState() != null && usefulData.quitableStates.contains(currentState.toString())) {
                     System.out.println("Game has been successfully quit.");
                     close();
                 } else {

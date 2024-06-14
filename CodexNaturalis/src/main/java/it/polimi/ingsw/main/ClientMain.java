@@ -63,6 +63,7 @@ public class ClientMain extends Application {
                 setupRMIClient(useTUI ? "TUI" : "GUI", stage);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Failed to initialize client: " + e.getMessage());
         }
     }

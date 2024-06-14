@@ -208,7 +208,6 @@ public class RMIClient extends BaseClient {
         removeUsername();
         if (getIdGame() != null)
             this.closeGame();
-        System.out.println("Game quit successfully");
     }
 
 
