@@ -186,6 +186,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
     }
 
     public synchronized void onGameClosed(String msg){
+        //to avoid trying close game already closed
+        idGame = null;
         if (!isGUIMode) {
             setCurrentState(new LobbyMenuState(this, scan));
             getClientCurrentState().display();

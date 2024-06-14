@@ -65,6 +65,7 @@ public class Observable {
         for (GameListener listener : listeners) {
             new Thread(() -> {
                 try {
+                    //usernameSender is equal to null just in CloseGameNotification to notify also the sender
                     if(usernameSender==null||!listener.getUsername().equals(usernameSender))
                         listener.update(notification);
                 } catch (IOException e) {

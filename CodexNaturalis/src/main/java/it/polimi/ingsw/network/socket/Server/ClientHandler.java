@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
+import it.polimi.ingsw.network.notifications.CloseGameNotification;
 import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.network.socket.ClientToServerMsg.ClientToServerMsg;
 import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
@@ -90,6 +91,9 @@ public class ClientHandler implements GameListener {
      */
     @Override
     public void update(ServerNotification notification) throws IOException {
+        //i need to remove the gameId to avoid the server the close a game that is already closed
+        if(notification instanceof CloseGameNotification)
+            gameId = null;
         synchronized (output)
         {
             output.writeObject(notification);
