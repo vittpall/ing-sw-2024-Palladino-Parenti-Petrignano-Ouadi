@@ -29,8 +29,8 @@ public class Observable {
         notifyListeners(new TokenColorTakenNotification(msg, availableColors), null);
     }
 
-    public void notifyJoinedGame(String msg, ArrayList<Player> players, int nOfMissingPlayers) {
-        notifyListeners(new GameJoinedNotification(msg, players, nOfMissingPlayers), null);
+    public void notifyJoinedGame(ArrayList<Player> players, int nOfMissingPlayers) {
+        notifyListeners(new GameJoinedNotification(players, nOfMissingPlayers), null);
     }
     public void notifyJoinedGameToOutsider(String msg, HashMap<Integer, Integer[]> availableGames) {
         notifyListeners(new GameJoinedNotificationToOutsiders(msg, availableGames), null);

@@ -71,10 +71,8 @@ public class GameController {
             }
         }
 
-        String content = "Player " + (idPlayer + 1) + " : " + username;
-
         addListenerList("WaitingForPlayersState");
-        listeners.get("WaitingForPlayersState").notifyJoinedGame(content, model.getPlayers(), nPlayers - model.getPlayers().size());
+        listeners.get("WaitingForPlayersState").notifyJoinedGame(model.getPlayers(), nPlayers - model.getPlayers().size());
         listeners.get("WaitingForPlayersState").subscribeListener(playerListener);
 
         return idPlayer;

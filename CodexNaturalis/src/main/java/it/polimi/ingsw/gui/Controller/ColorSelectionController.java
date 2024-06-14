@@ -30,9 +30,8 @@ public class ColorSelectionController implements FXMLController {
         selectColorButton.setDisable(true);
     }
 
-    public void updateColorList() {
-        try {
-            ArrayList<TokenColor> colorList = client.getAvailableColors();
+    public void updateColorList(ArrayList<TokenColor> colorList) {
+
             colorContainer.getChildren().clear();
             for (TokenColor color : colorList) {
                 ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + color.getImageName()))));
@@ -47,10 +46,6 @@ public class ColorSelectionController implements FXMLController {
 
                 colorContainer.getChildren().add(imageView);
             }
-
-        } catch (IOException | InterruptedException e) {
-            messageLabel.setText("Error updating color list: " + e.getMessage());
-        }
     }
 
     @FXML
@@ -70,7 +65,9 @@ public class ColorSelectionController implements FXMLController {
         }
     }
 
-
+    public void handleException(Exception e) {
+        messageLabel.setText("Error reaching the server: " + e.getMessage());
+    }
     public void setClient(BaseClient client) {
         this.client = client;
     }

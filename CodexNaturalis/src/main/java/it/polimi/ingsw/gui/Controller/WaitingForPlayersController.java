@@ -33,12 +33,6 @@ public class WaitingForPlayersController implements FXMLController {
             ArrayList<Player> players = client.getPlayers(client.getIdGame());
             int size = players.size();
             switch (size) {
-                case 0:
-                    player1Info.setVisible(false);
-                    player2Info.setVisible(false);
-                    player3Info.setVisible(false);
-                    player4Info.setVisible(false);
-                    break;
                 case 1:
                     player1Info.setText("Player 1 : " + players.getFirst().getUsername());
                     player2Info.setVisible(false);
@@ -62,6 +56,8 @@ public class WaitingForPlayersController implements FXMLController {
                     player2Info.setText("Player 2 : " + players.get(1).getUsername());
                     player3Info.setText("Player 3 : " + players.get(2).getUsername());
                     player4Info.setText("Player 4 : " + players.get(3).getUsername());
+                    break;
+                default:
                     break;
             }
             if (!(client.getnPlayer(client.getIdGame()) > size)) {
@@ -87,40 +83,33 @@ public class WaitingForPlayersController implements FXMLController {
         }
     }
 
-    public void handleServerNotification(String msg) {
-        try {
-            int currentPlayers = client.getPlayers(client.getIdGame()).size();
-            int totalNeededPlayers = client.getnPlayer(client.getIdGame());
-
-            switch (currentPlayers) {
+    public void handleServerNotification(ArrayList<Player> players, int nOfMissingPlayers) {
+            switch (players.size()) {
                 case 2:
-                    player2Info.setText(msg);
+                    player2Info.setText("Player 2 : " + players.get(1).getUsername());
                     player2Info.setVisible(true);
                     break;
                 case 3:
-                    player3Info.setText(msg);
+                    player2Info.setText("Player 3 : " + players.get(2).getUsername());
                     player3Info.setVisible(true);
                     break;
                 case 4:
-                    player4Info.setText(msg);
+                    player2Info.setText("Player 4 : " + players.get(3).getUsername());
                     player4Info.setVisible(true);
                     break;
                 default:
                     break;
             }
 
-            waitingForNPlayersLabel.setText("Waiting for " + (totalNeededPlayers - currentPlayers) + " players to join the game...");
+            waitingForNPlayersLabel.setText("Waiting for " + nOfMissingPlayers + " players to join the game...");
 
-            if (currentPlayers == totalNeededPlayers) {
+            if (nOfMissingPlayers==0) {
                 waitingForNPlayersLabel.setText("You can start the game");
                 StartGameButton.setVisible(true);
             } else {
                 StartGameButton.setVisible(false);
             }
 
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

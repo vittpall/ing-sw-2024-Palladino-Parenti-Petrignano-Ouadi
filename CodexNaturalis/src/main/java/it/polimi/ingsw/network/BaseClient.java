@@ -117,16 +117,16 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 ((ColorSelection) getClientCurrentState()).refresh(availableColors);
         } else {
             if (getClientCurrentState() instanceof ColorSelectionGUI)
-                ((ColorSelectionGUI) getClientCurrentState()).refresh(msg);
+                ((ColorSelectionGUI) getClientCurrentState()).refresh(availableColors);
         }
     }
 
-    public synchronized void onGameJoined(String msg, ArrayList<Player> players, int nOfMissingPlayers) {
+    public synchronized void onGameJoined(ArrayList<Player> players, int nOfMissingPlayers) {
         if (!isGUIMode) {
             if (getClientCurrentState() instanceof WaitingForPlayersState)
                 ((WaitingForPlayersState) getClientCurrentState()).refresh(players, nOfMissingPlayers);
         } else if (getClientCurrentState() instanceof WaitingForPlayersGUI)
-            ((WaitingForPlayersGUI) getClientCurrentState()).refresh(msg);
+            ((WaitingForPlayersGUI) getClientCurrentState()).refresh(players, nOfMissingPlayers);
 
     }
 
@@ -136,7 +136,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
             if (getClientCurrentState() instanceof JoinGameMenuState)
                 ((JoinGameMenuState) getClientCurrentState()).refresh(availableGames);
         } else if (getClientCurrentState() instanceof JoinGameMenuStateGUI)
-            ((JoinGameMenuStateGUI) getClientCurrentState()).refresh(message);
+            ((JoinGameMenuStateGUI) getClientCurrentState()).refresh(availableGames);
     }
 
     public synchronized void onChangeTurn(String msg, String currentPlayerUsername) {
@@ -208,7 +208,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
     }
 
 
-    public synchronized void onChatMessageReceived(Message msg) {
+    public void onChatMessageReceived(Message msg) {
         if (!isGUIMode) {
             if (getClientCurrentState() instanceof GlobalChatState || getClientCurrentState() instanceof PrivateChatState || getClientCurrentState() instanceof ChatState) {
                 if (msg.getSender().equals(username))

@@ -7,6 +7,9 @@ import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.util.HashMap;
+
 public class JoinGameMenuStateGUI implements ClientState {
 
 
@@ -22,11 +25,19 @@ public class JoinGameMenuStateGUI implements ClientState {
     @Override
     public void display() {
         controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/JoinGameMenuState.fxml");
-        controller.updateGamesList();
+        try {
+            HashMap<Integer, Integer[]> availableGames = new HashMap<>();
+            for (int idGame : client.getNotStartedGames()) {
+                availableGames.put(idGame, new Integer[]{client.getnPlayer(idGame), (client.getnPlayer(idGame) - client.getPlayers(idGame).size())});
+            }
+            controller.updateGamesList(availableGames);
+        } catch (IOException | InterruptedException e) {
+            controller.handleException(e);
+        }
     }
 
-    public void refresh(String msg) {
-        Platform.runLater(() -> controller.updateGamesList());
+    public void refresh(HashMap<Integer, Integer[]> availableGames) {
+        Platform.runLater(() -> controller.updateGamesList(availableGames));
     }
 
 

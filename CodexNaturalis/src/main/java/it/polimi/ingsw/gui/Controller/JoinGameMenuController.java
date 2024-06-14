@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class JoinGameMenuController implements FXMLController {
     public Button createGameButton;
@@ -31,17 +32,17 @@ public class JoinGameMenuController implements FXMLController {
     private void initialize() {
         gamesListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> joinGameButton.setDisable(newSelection == null));
     }
-
-    public void updateGamesList() {
-        try {
-            ArrayList<Integer> gameIds = client.getNotStartedGames();
-            if (gameIds.isEmpty()) {
+    //alla posizione 0 c'è il numero totale di giocatori, alla posizione 1 c'è il numero di giocatori mancanti
+    public void updateGamesList(HashMap<Integer, Integer[]> availableGames) {
+            ArrayList<Integer> gameIds = new ArrayList<>(availableGames.keySet());
+            if (availableGames.isEmpty()) {
                 messageLabel.setText("No games available. Create a new game.");
                 joinGameButton.setDisable(true);
                 joinGameButton.setVisible(false);
+                gamesListView.getItems().setAll(gameIds);
             } else {
                 joinGameButton.setVisible(true);
-                messageLabel.setText("");
+                messageLabel.setText("Join a game");
                 gamesListView.getItems().setAll(gameIds);
                 gamesListView.setCellFactory(lv -> new ListCell<>() {
                     @Override
@@ -51,7 +52,7 @@ public class JoinGameMenuController implements FXMLController {
                             setText(null);
                         } else {
                             try {
-                                setText(gameId + " - Needs " + (client.getnPlayer(gameId) - client.getPlayers(gameId).size()) + " more players");
+                                setText(gameId + " - Has " + availableGames.get(gameId)[0] + " players and needs " + availableGames.get(gameId)[1] + " more players");
                             } catch (Exception e) {
                                 setText("Error loading game data");
                             }
@@ -59,9 +60,6 @@ public class JoinGameMenuController implements FXMLController {
                     }
                 });
             }
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void handleJoinGame() {
@@ -88,6 +86,12 @@ public class JoinGameMenuController implements FXMLController {
     public void handleBack() {
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
         client.getClientCurrentState().display();
+    }
+
+    public void handleException(Exception e) {
+        messageLabel.setText("Error reaching the server: " + e.getMessage());
+        joinGameButton.setDisable(false);
+        joinGameButton.setVisible(false);
     }
 
     public void setClient(BaseClient client) {
