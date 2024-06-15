@@ -178,6 +178,9 @@ public class GameController implements FXMLController {
                 if (db.hasString()) {
                     try {
                         handlePositionSelection(point, Integer.parseInt(db.getString()));
+                        loadDeskCards();
+                        loadPlayerHand();
+                        updatePlayerDrawInteraction();
                     } catch (IOException | InterruptedException e) {
                         throw new RuntimeException(e);
                     }
@@ -203,7 +206,57 @@ public class GameController implements FXMLController {
     private boolean isPlayerTurn() throws IOException, InterruptedException {
         return client.getCurrentPlayerState() == PlayerState.PLAY_CARD;
     }
-
+    private boolean isPlayerStateDraw() throws IOException, InterruptedException {
+        return client.getCurrentPlayerState() == PlayerState.DRAW;
+    }
+    private void updatePlayerDrawInteraction() throws IOException, InterruptedException{
+        int index=3;
+        for(Node cardNode : resourceDeck.getChildren()){
+            cardNode.setDisable(!isPlayerStateDraw());
+            if(isPlayerStateDraw()){
+                final int finalIndex = index;
+                cardNode.setOnMouseClicked(event -> {
+                    try {
+                        client.drawCard(1, finalIndex);
+                        resourceDeck.getChildren().clear();
+                        goldenDeck.getChildren().clear();
+                        loadUsableCards();
+                        loadVisibleCards();
+                        loadPlayerHand();
+                    } catch (IOException | InterruptedException | CardNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+            if(index==3)
+                index=1;
+            else
+                index++;
+        }
+        index =3;
+        for(Node cardNode : goldenDeck.getChildren()){
+            cardNode.setDisable(!isPlayerStateDraw());
+            if(isPlayerStateDraw()){
+                final int finalIndex = index;
+                cardNode.setOnMouseClicked(event -> {
+                    try {
+                        client.drawCard(2, finalIndex);
+                        resourceDeck.getChildren().clear();
+                        goldenDeck.getChildren().clear();
+                        loadUsableCards();
+                        loadVisibleCards();
+                        loadPlayerHand();
+                    } catch (IOException | InterruptedException | CardNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+            if(index==3)
+                index=1;
+            else
+                index++;
+        }
+    }
     private void updatePlayerHandInteraction() throws IOException, InterruptedException {
         int index = 0;
         for (Node cardNode : playerHandBox.getChildren()) {
@@ -220,7 +273,6 @@ public class GameController implements FXMLController {
                     db.setContent(content);
                     event.consume();
                 });
-
                 cardNode.setOnDragDone(event -> {
                     if (event.getTransferMode() == TransferMode.MOVE) {
                         try {

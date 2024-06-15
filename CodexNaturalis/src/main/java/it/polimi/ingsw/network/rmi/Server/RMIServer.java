@@ -174,7 +174,7 @@ public class RMIServer implements VirtualServer {
     @Override
     public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws IOException, CardNotFoundException, InterruptedException {
         lobbyController.drawCard(idGame, deckToChoose, inVisible);
-        String content;
+        /*String content;
         content = "\n----------------------------------\n" +
                 "Player " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getUsername() + " drew a card\n" +
                 "Now is " + lobbyController.getPlayers(idGame).get(lobbyController.getCurrentPlayer(idGame)).getUsername() + " turn.";
@@ -185,7 +185,7 @@ public class RMIServer implements VirtualServer {
         }
         ReturnableObject<String> response = new ReturnableObject<>();
         response.setResponseReturnable(content);
-        /*  this.broadcastWhatHappened(idGame, response);*/
+          this.broadcastWhatHappened(idGame, response);*/
     }
 
 
