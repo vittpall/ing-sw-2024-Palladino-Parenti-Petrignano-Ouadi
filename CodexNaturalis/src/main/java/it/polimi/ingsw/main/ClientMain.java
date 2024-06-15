@@ -100,7 +100,7 @@ public class ClientMain extends Application {
     @Override
     public void stop() throws IOException, InterruptedException {
         if (client != null)
-            client.close();
+                client.close();
     }
 
 

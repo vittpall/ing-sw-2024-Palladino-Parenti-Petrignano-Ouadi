@@ -150,8 +150,12 @@ public class SocketClient extends BaseClient {
 
     @Override
     public void close() throws IOException, InterruptedException {
-        returnToLobby();
-        //      System.exit(0);
+        try {
+            returnToLobby();
+        } catch (NullPointerException e) {
+            System.out.println("Thanks for playing");
+        }
+        System.exit(0);
     }
 
     @Override

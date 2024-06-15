@@ -350,7 +350,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid input: Please enter a number.");
                 } catch (Exception e) {
-                    //There's to many runtime exceptions to catch so i GOTTA CATCH 'EM ALL
+                    //There's too many runtime exceptions to catch so i GOTTA CATCH 'EM ALL
                     System.out.println("The game is closing wait... Click a button to continue.");
                 }
                 if(waitingForCloseGameNotification)
