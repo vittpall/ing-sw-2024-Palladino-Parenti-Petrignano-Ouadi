@@ -316,5 +316,20 @@ public class GameController implements FXMLController {
         loadPlayerHand();
         updatePlayerHandInteraction();
     }
+
+    public void setMyTurn(boolean myTurn) {
+        try{
+            resourceDeck.getChildren().clear();
+            goldenDeck.getChildren().clear();
+            loadUsableCards();
+            loadVisibleCards();
+            if (myTurn) {
+                updatePlayerHandInteraction();
+                showAvailablePositions();
+            }
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 

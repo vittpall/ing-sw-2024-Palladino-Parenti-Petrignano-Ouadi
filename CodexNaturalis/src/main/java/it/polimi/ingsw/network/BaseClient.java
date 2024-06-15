@@ -5,6 +5,7 @@ import it.polimi.ingsw.gui.*;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.UsefulData;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.GameState;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
@@ -155,8 +156,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
             }
             else if (currentPlayerUsername.equals(username))
                 System.out.println("You can go back to the main menu to play a card");
-        } /*else
-            getClientCurrentState().refresh(msg);*/
+        } else if(getClientCurrentState() instanceof GameStateGUI)
+            ((GameStateGUI) getClientCurrentState()).changeTurnNotified(currentPlayerUsername);
     }
 
     public synchronized void onPlayedCard(String msg, HashMap<String, Integer> playersPoints, String username) {
@@ -167,8 +168,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
             } else if (getClientCurrentState() instanceof GetOtherPlayerDesk) {
                 System.out.println("You can see the updated desk by choosing " + username + "'s desk");
             }
-        } /*else
-            getClientCurrentState().refresh(msg);*/
+        } else if(getClientCurrentState() instanceof GameStateGUI)
+            ((GameStateGUI) getClientCurrentState()).cardPlayedRefresh(username);
     }
 
     public synchronized void onLastTurnSet(String msg) {

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gui.Controller;
 
 import it.polimi.ingsw.gui.CardView;
-import it.polimi.ingsw.gui.GameState;
+import it.polimi.ingsw.gui.GameStateGUI;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
@@ -48,7 +48,7 @@ public class InitializeStarterCardController implements FXMLController {
     private void playStarterCard(boolean faceDown) {
         try {
             client.playStarterCard(faceDown);
-            client.setCurrentState(new GameState(stage, client));
+            client.setCurrentState(new GameStateGUI(stage, client));
             client.getClientCurrentState().display();
         } catch (PlaceNotAvailableException | CardNotFoundException | RequirementsNotMetException | IOException |
                  InterruptedException ex) {
