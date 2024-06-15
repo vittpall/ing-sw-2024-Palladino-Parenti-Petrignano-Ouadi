@@ -43,6 +43,7 @@ public class JoinGameMenuController implements FXMLController {
             } else {
                 joinGameButton.setVisible(true);
                 messageLabel.setText("Join a game");
+                messageLabel.setText("Select A Game");
                 gamesListView.getItems().setAll(gameIds);
                 gamesListView.setCellFactory(lv -> new ListCell<>() {
                     @Override

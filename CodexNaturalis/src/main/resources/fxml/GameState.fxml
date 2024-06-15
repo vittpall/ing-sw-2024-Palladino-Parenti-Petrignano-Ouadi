@@ -4,25 +4,26 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
-<AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css"
-            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.gui.Controller.GameController">
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.GameController">
     <ImageView fitHeight="453.0" fitWidth="257.0" layoutX="7.0" layoutY="8.0">
-        <Image url="@../Images/Board.jpg"/>
+        <Image url="@../Images/Board.jpg" />
     </ImageView>
-    <ScrollPane fx:id="gameBoardScrollPane" layoutX="216.0" layoutY="461.0" prefHeight="500.0" prefWidth="900.0"
-                style="-fx-focus-color: transparent;"
-                pannable="true" hbarPolicy="NEVER" vbarPolicy="NEVER">
-        <AnchorPane fx:id="gameBoardContainer" style="-fx-background-color: #dedccc;"/>
+    <ScrollPane fx:id="gameBoardScrollPane" hbarPolicy="NEVER" layoutX="216.0" layoutY="461.0" pannable="true" prefHeight="500.0" prefWidth="900.0" style="-fx-focus-color: transparent;" vbarPolicy="NEVER">
+        <AnchorPane fx:id="gameBoardContainer" style="-fx-background-color: #dedccc;" />
     </ScrollPane>
-
-
-    <HBox fx:id="objectiveCardsContainer" layoutX="300.0" layoutY="24.0" spacing="10"/>
-    <HBox fx:id="resourceDeck" layoutX="300.0" layoutY="152.0" spacing="10"/>
-    <HBox fx:id="goldenDeck" layoutX="300.0" layoutY="280.0" spacing="10"/>
+    <HBox fx:id="resourceDeck" layoutX="300.0" layoutY="152.0" spacing="10">
+      <children>
+      
+      
+          <HBox fx:id="objectiveCardsContainer" spacing="10" />
+      </children></HBox>
+    <HBox fx:id="goldenDeck" layoutX="300.0" layoutY="280.0" spacing="10" />
     <VBox layoutX="25.0" layoutY="455.0" spacing="5">
-        <Button text="Show Back" onAction="#handleShowBackButton"/>
-        <VBox fx:id="playerHandBox" spacing="10"/>
+        <Button onAction="#handleShowBackButton" text="Show Back" />
+        <VBox fx:id="playerHandBox" spacing="10" />
     </VBox>
 </AnchorPane>

@@ -1,54 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Point3D?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css"
-            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.gui.Controller.JoinGameMenuController">
-    <VBox layoutX="10.0" layoutY="8.0" spacing="10" style="-fx-background-color: #f8f1c9;" AnchorPane.leftAnchor="10.0"
-          AnchorPane.rightAnchor="10.0">
-        <Label fx:id="messageLabel" prefHeight="45.0" prefWidth="548.0" style="-fx-text-fill: black;">
-            <font>
-                <Font name="Book Antiqua Bold Italic" size="36.0"/>
-            </font>
-        </Label>
 
-        <ListView fx:id="gamesListView" prefHeight="200.0" prefWidth="560.0" style="-fx-background-color: #f8f1c9;"/>
-        <Button fx:id="joinGameButton" disable="true" onAction="#handleJoinGame" style="-fx-background-color: #6bf8f3;"
-                text="Join Selected Game">
+<AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.JoinGameMenuController">
+    <VBox layoutX="11.0" layoutY="182.0" prefHeight="347.0" prefWidth="780.0" spacing="10" style="-fx-background-color: #f8f1c9;" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="9.0">
+
+        <ListView fx:id="gamesListView" prefHeight="239.0" prefWidth="780.0" style="-fx-background-color: #f8f1c9;" />
+        <Button fx:id="joinGameButton" disable="true" onAction="#handleJoinGame" style="-fx-background-color: #6bf8f3;" text="Join Selected Game">
             <font>
-                <Font name="Book Antiqua Bold Italic" size="12.0"/>
+                <Font name="Book Antiqua Bold Italic" size="12.0" />
             </font>
         </Button>
-        <Button fx:id="createGameButton" onAction="#handleCreateGame" style="-fx-background-color: #a2ecbb;"
-                text="Create New Game">
+        <Button fx:id="createGameButton" onAction="#handleCreateGame" style="-fx-background-color: #a2ecbb;" text="Create New Game">
             <font>
-                <Font name="Book Antiqua Bold Italic" size="12.0"/>
+                <Font name="Book Antiqua Bold Italic" size="12.0" />
             </font>
         </Button>
     </VBox>
-    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="600.0" layoutY="704.0" pickOnBounds="true"
-               preserveRatio="true" rotate="180.0">
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="600.0" layoutY="704.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.bottomAnchor="0.5829544067382812" AnchorPane.rightAnchor="0.0">
         <rotationAxis>
-            <Point3D y="90.0" z="1.0"/>
+            <Point3D y="90.0" z="1.0" />
         </rotationAxis>
-        <Image url="@../Images/CN_Decoration1.jpg"/>
+        <Image url="@../Images/CN_Decoration1.jpg" />
     </ImageView>
-    <Button alignment="TOP_CENTER" layoutX="10.0" layoutY="732.0" minHeight="33.0" minWidth="113.0"
-            onAction="#handleBack" prefHeight="33.0" prefWidth="113.0" style="-fx-background-color: #a6f84b;"
-            styleClass="primary-button" text="Back" textFill="WHITE">
+    <Button alignment="TOP_CENTER" layoutX="10.0" layoutY="732.0" minHeight="33.0" minWidth="113.0" onAction="#handleBack" prefHeight="33.0" prefWidth="113.0" style="-fx-background-color: #a6f84b;" styleClass="primary-button" text="Back" textFill="WHITE" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="10.0">
         <font>
-            <Font name="Book Antiqua Bold Italic" size="12.0"/>
+            <Font name="Book Antiqua Bold Italic" size="12.0" />
         </font>
     </Button>
-    <ImageView fitHeight="39.0" fitWidth="565.0" layoutX="118.0" layoutY="782.0" pickOnBounds="true"
-               preserveRatio="true">
-        <Image url="@../Images/CN_Decoration3.png"/>
+    <ImageView fitHeight="39.0" fitWidth="565.0" layoutX="118.0" layoutY="782.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="9.825697898864746" AnchorPane.rightAnchor="117.0">
+        <Image url="@../Images/CN_Decoration3.png" />
     </ImageView>
+   <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" rotate="-180.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <image>
+         <Image url="@../Images/CN_decoration9.png" />
+      </image>
+   </ImageView>
+   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="604.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <image>
+         <Image url="@../Images/CN_decoration9.png" />
+      </image>
+      <rotationAxis>
+         <Point3D x="90.0" z="1.0" />
+      </rotationAxis>
+   </ImageView>
+     <Label fx:id="messageLabel" layoutX="132.0" layoutY="53.0" prefHeight="45.0" prefWidth="549.0" style="-fx-text-fill: black;" text="Select A Game" textAlignment="JUSTIFY">
+         <font>
+             <Font name="Book Antiqua Bold Italic" size="36.0" />
+         </font>
+     </Label>
 
 </AnchorPane>
