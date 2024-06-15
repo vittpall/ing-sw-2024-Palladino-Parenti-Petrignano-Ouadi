@@ -34,7 +34,6 @@ public class GameController implements FXMLController {
     public ScrollPane gameBoardScrollPane;
     private BaseClient client;
     private Stage stage;
-    private Integer selectedCardIndex = null;
     private boolean playCardFaceDown = false;
     private GameBoard gameBoard;
 
@@ -166,54 +165,53 @@ public class GameController implements FXMLController {
         availablePlaces.forEach(point -> {
             CardView placeholder = new CardView(true);
             placeholder.getStyleClass().add("placeholder");
-            placeholder.setOnDragOver(event -> {
-                if (event.getGestureSource() != placeholder && event.getDragboard().hasString()) {
-                    event.acceptTransferModes(TransferMode.MOVE);
-                }
-                event.consume();
-            });
-            placeholder.setOnDragDropped(event -> {
-                Dragboard db = event.getDragboard();
-                boolean success = false;
-                if (db.hasString()) {
-                    try {
-                        handlePositionSelection(point, Integer.parseInt(db.getString()));
-                        loadDeskCards();
-                        loadPlayerHand();
-                        updatePlayerDrawInteraction();
-                    } catch (IOException | InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    success = true;
-                }
-                event.setDropCompleted(success);
-                event.consume();
-            });
+            setPlaceholderEvents(placeholder, point);
             gameBoard.addCardView(placeholder, point.x, point.y);
         });
     }
 
-
-    private void handleCardSelection(int cardIndex, Node cardNode) throws IOException, InterruptedException {
-        if (selectedCardIndex != null) {
-            playerHandBox.getChildren().get(selectedCardIndex).getStyleClass().remove("selected-card");
-        }
-        selectedCardIndex = cardIndex;
-        cardNode.getStyleClass().add("selected-card");
+    private void setPlaceholderEvents(CardView placeholder, Point point) {
+        placeholder.setOnDragOver(event -> {
+            if (event.getGestureSource() != placeholder && event.getDragboard().hasString()) {
+                event.acceptTransferModes(TransferMode.MOVE);
+            }
+            event.consume();
+        });
+        placeholder.setOnDragDropped(event -> {
+            Dragboard db = event.getDragboard();
+            boolean success = false;
+            if (db.hasString()) {
+                try {
+                    handlePositionSelection(point, Integer.parseInt(db.getString()));
+                    clearPlaceholders();
+                    updatePlayerHandInteraction();
+                    loadDeskCards();
+                    loadPlayerHand();
+                    updatePlayerDrawInteraction();
+                } catch (IOException | InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                success = true;
+            }
+            event.setDropCompleted(success);
+            event.consume();
+        });
     }
 
 
     private boolean isPlayerTurn() throws IOException, InterruptedException {
         return client.getCurrentPlayerState() == PlayerState.PLAY_CARD;
     }
+
     private boolean isPlayerStateDraw() throws IOException, InterruptedException {
         return client.getCurrentPlayerState() == PlayerState.DRAW;
     }
-    private void updatePlayerDrawInteraction() throws IOException, InterruptedException{
-        int index=3;
-        for(Node cardNode : resourceDeck.getChildren()){
+
+    private void updatePlayerDrawInteraction() throws IOException, InterruptedException {
+        int index = 3;
+        for (Node cardNode : resourceDeck.getChildren()) {
             cardNode.setDisable(!isPlayerStateDraw());
-            if(isPlayerStateDraw()){
+            if (isPlayerStateDraw()) {
                 final int finalIndex = index;
                 cardNode.setOnMouseClicked(event -> {
                     try {
@@ -228,15 +226,15 @@ public class GameController implements FXMLController {
                     }
                 });
             }
-            if(index==3)
-                index=1;
+            if (index == 3)
+                index = 1;
             else
                 index++;
         }
-        index =3;
-        for(Node cardNode : goldenDeck.getChildren()){
+        index = 3;
+        for (Node cardNode : goldenDeck.getChildren()) {
             cardNode.setDisable(!isPlayerStateDraw());
-            if(isPlayerStateDraw()){
+            if (isPlayerStateDraw()) {
                 final int finalIndex = index;
                 cardNode.setOnMouseClicked(event -> {
                     try {
@@ -251,12 +249,13 @@ public class GameController implements FXMLController {
                     }
                 });
             }
-            if(index==3)
-                index=1;
+            if (index == 3)
+                index = 1;
             else
                 index++;
         }
     }
+
     private void updatePlayerHandInteraction() throws IOException, InterruptedException {
         int index = 0;
         for (Node cardNode : playerHandBox.getChildren()) {
@@ -273,16 +272,6 @@ public class GameController implements FXMLController {
                     db.setContent(content);
                     event.consume();
                 });
-                cardNode.setOnDragDone(event -> {
-                    if (event.getTransferMode() == TransferMode.MOVE) {
-                        try {
-                            handleCardSelection(currentIndex, cardNode);
-                        } catch (IOException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    event.consume();
-                });
                 index++;
             }
         }
@@ -296,11 +285,18 @@ public class GameController implements FXMLController {
         }
         try {
             client.playCard(cardIndex, playCardFaceDown, selectedPoint);
+            CardView cardView = (CardView) playerHandBox.getChildren().remove(cardIndex);
+            gameBoard.addCardView(cardView, selectedPoint.x, selectedPoint.y);
+
         } catch (RequirementsNotMetException | PlaceNotAvailableException | CardNotFoundException e) {
             showError("Requirements not met");
         }
     }
 
+
+    private void clearPlaceholders() {
+        gameBoard.getChildren().removeIf(node -> node instanceof CardView && ((CardView) node).isPlaceholder());
+    }
 
     private void showError(String message) {
         // Display error messages to the user

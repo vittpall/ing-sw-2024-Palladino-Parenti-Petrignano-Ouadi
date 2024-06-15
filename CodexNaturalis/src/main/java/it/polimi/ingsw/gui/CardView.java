@@ -12,6 +12,7 @@ public class CardView extends Pane {
     private ImageView backImageView;
     public static final double CARD_WIDTH = 166;
     public static final double CARD_HEIGHT = 111;
+    private boolean isPlaceholder;
 
     public CardView(Card card, boolean showFront) {
         super();
@@ -20,6 +21,7 @@ public class CardView extends Pane {
 
     public CardView(boolean isPlaceholder) {
         super();
+        this.isPlaceholder = isPlaceholder;
         if (isPlaceholder) {
             setupPlaceholder();
         }
@@ -28,6 +30,11 @@ public class CardView extends Pane {
     private void initializeView(Card card, boolean showFront) {
         loadImage(card);
         setCardVisibility(showFront);
+    }
+
+
+    public boolean isPlaceholder() {
+        return isPlaceholder;
     }
 
     private void loadImage(Card card) {
