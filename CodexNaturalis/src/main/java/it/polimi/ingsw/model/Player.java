@@ -10,7 +10,6 @@ import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * this class defines the player
@@ -31,7 +30,8 @@ public class Player implements Serializable {
     private TokenColor color;
     private StarterCard starterCard;
     private final PlayerDesk playerDesk;
-    private PlayerState playerState;;
+    private PlayerState playerState;
+
 
     public void setPlayerState(PlayerState playerState) {
         this.playerState = playerState;
@@ -68,7 +68,8 @@ public class Player implements Serializable {
      * constructor
      * it sets points to 0 and assigned the player's token and username. it creates the objectiveCard, starterCard,
      * playerHand, playerDesk and drawnObjectiveCards and sets them as null
-     * @param username
+     *
+     * @param username is the player's username
      */
     public Player(String username) {
         this.username = username;
@@ -79,11 +80,12 @@ public class Player implements Serializable {
         this.playerDesk = new PlayerDesk();
         this.drawnObjectiveCards = new ArrayList<>();
     }
+
     /**
      * put into the playerHand two resourceCard and one goldCard randomly chosen from the decks
      *
-     * @param resourceDeck
-     * @param goldDeck
+     * @param resourceDeck the deck of resourceCard
+     * @param goldDeck     the deck of goldCard
      */
     public void setPlayerHand(Deck resourceDeck, Deck goldDeck) {
         for (int i = 0; i < 2; i++) {
@@ -95,7 +97,7 @@ public class Player implements Serializable {
     /**
      * set starterCard as the parameter passed
      *
-     * @param starter
+     * @param starter is the StarterCard that the player has chosen
      */
     public void setStarterCard(StarterCard starter) {
         this.starterCard = starter;
@@ -113,7 +115,7 @@ public class Player implements Serializable {
     /**
      * sets objectiveCard as the parameter and set drawnObjectiveCards as null
      *
-     * @param chosenObjectiveCard
+     * @param chosenObjectiveCard is the index of the chosenObjectiveCard in the drawnObjectiveCards
      * @throws CardNotFoundException if the chosenObjectiveCard is not in the drawnObjectiveCards
      */
     public void setObjectiveCard(int chosenObjectiveCard) throws CardNotFoundException {
@@ -184,7 +186,7 @@ public class Player implements Serializable {
     /**
      * draws a card from the chosenDeck and puts it into the playerHand
      *
-     * @param chosenDeck
+     * @param chosenDeck is the deck from which the player draws the card
      */
     public void draw(Deck chosenDeck) {
         GameCard card;
@@ -195,8 +197,8 @@ public class Player implements Serializable {
     /**
      * moves the chosenCard from the chosenDeck to the playerHand
      *
-     * @param chosenDeck
-     * @param chosenCard
+     * @param chosenDeck is the deck from which the player draws the card
+     * @param chosenCard is the card that the player wants to draw
      */
     public void drawVisible(Deck chosenDeck, GameCard chosenCard) throws CardNotFoundException {
         GameCard card;
@@ -217,14 +219,15 @@ public class Player implements Serializable {
      */
     public void playCard(GameCard card, boolean faceDown, Point point)
             throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
-        if (card instanceof GoldCard goldCard) {
+        if (card instanceof GoldCard goldCard && !faceDown) {
             playerDesk.checkRequirements(goldCard.getRequirements());
         }
-        boolean checkRemove = true;
         if (!(card instanceof StarterCard)) {
-            checkRemove = this.playerHand.remove(card);
+            boolean cardRemoved = playerHand.remove(card);
+            if (!cardRemoved) {
+                throw new CardNotFoundException("Card not found in hand.");
+            }
         }
-        if (!checkRemove) throw new CardNotFoundException("card not found");
         card.setPlayedFaceDown(faceDown);
         int pointsToAdd = playerDesk.addCard(card, point);
         this.setPoints(pointsToAdd);
@@ -233,7 +236,7 @@ public class Player implements Serializable {
     /**
      * adds the pointsToAdd to points
      *
-     * @param pointsToAdd
+     * @param pointsToAdd is the number of points to add
      */
     private void setPoints(int pointsToAdd) {
         points += pointsToAdd;
