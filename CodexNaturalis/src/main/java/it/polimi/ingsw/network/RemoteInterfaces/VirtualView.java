@@ -33,8 +33,6 @@ public interface VirtualView extends Remote {
 
     ArrayList<Player> getAllPlayers() throws IOException, InterruptedException;
 
-    void receiveMessage(Message msg) throws RemoteException;
-
     boolean checkUsername(String username) throws IOException, ClassNotFoundException, InterruptedException;
 
     void joinGame(int input, String username) throws IOException, InterruptedException;

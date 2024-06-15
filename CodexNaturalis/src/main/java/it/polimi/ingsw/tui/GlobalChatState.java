@@ -51,11 +51,12 @@ public class GlobalChatState implements ClientStateTUI {
     }
 
     public void inputHandler(String input) throws IOException, ClassNotFoundException, InterruptedException {
-        while(!input.equals("exit")){
+        while(!input.equals("exit chat")){
             client.sendMessage(null, input);
             input = scanner.nextLine();
         }
         client.setCurrentState(returnState);
+        client.getClientCurrentState().display();
     }
 
     @Override

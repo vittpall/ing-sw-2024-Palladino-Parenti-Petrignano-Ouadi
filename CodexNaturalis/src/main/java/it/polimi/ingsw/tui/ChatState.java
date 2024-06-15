@@ -21,12 +21,6 @@ public class ChatState implements ClientStateTUI {
         this.scanner = scanner;
     }
 
-    public ChatState(BaseClient client, Scanner scanner, ClientState returnState) {
-        this.client = client;
-        this.scanner = scanner;
-        this.returnState = returnState;
-    }
-
     @Override
     public void inputHandler(int input) throws RemoteException {
         switch (input) {
@@ -54,14 +48,4 @@ public class ChatState implements ClientStateTUI {
         System.out.println("3. Return to the game");
     }
 
-    
-   
-
-    private void sendGlobalMessage() {
-        //client.server.sendMessage(client.getUsername(), null, scanner.nextLine());
-    }
-
-    private void returnToGame() {
-        //client.setCurrentState(new GamePlayState(client, scanner));
-    }
 }

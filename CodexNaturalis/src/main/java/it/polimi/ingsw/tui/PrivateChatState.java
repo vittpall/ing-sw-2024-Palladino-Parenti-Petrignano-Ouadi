@@ -56,11 +56,11 @@ public class PrivateChatState implements ClientStateTUI {
     }
 
     public void inputHandler(String input) throws IOException, ClassNotFoundException, InterruptedException {
-        while(!input.equals("Exit")){
+        while(!input.equals("exit chat")){
             client.sendMessage(receiver, input);
             input = scanner.nextLine().trim();
         }
-        client.setCurrentState(this.returnState);
+        client.setCurrentState(null);
     }
 
     @Override

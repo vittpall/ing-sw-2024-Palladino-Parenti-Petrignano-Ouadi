@@ -295,7 +295,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
                         checkState = true;
                     if (checkState) {
                         synchronized (this) {
-                            showState();
+                            if(!waitingForCloseGameNotification)
+                                showState();
                         }
                         boolean correctInput2 = false;
                             while (!correctInput2) {
@@ -318,6 +319,28 @@ abstract public class BaseClient implements VirtualView, GameListener {
                                     System.out.println("The game is closing wait...");
                                 }
                             }
+                        }
+                        else
+                        {
+                            if(input.equals("exit"))
+                            {
+                                System.out.println("The game is closing, please wait...");
+                                while (!waitingForCloseGameNotification) {
+                                    Thread.onSpinWait();
+                                }
+                                if(!isGUIMode)
+                                    setCurrentState(new LobbyMenuState(this, scan));
+                                else
+                                {
+                                    setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
+                                    //      ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
+                                }
+                                input = "";
+                                waitingForCloseGameNotification = false;
+                                inputHandler();
+                            }
+                            else
+                                System.out.println("The input was not valid. You can " + getServerCurrentState());
                         }
                     } else {
                             System.out.println("The input was not valid. You can " + getServerCurrentState());
@@ -345,20 +368,26 @@ abstract public class BaseClient implements VirtualView, GameListener {
             }
             else {
                 //to avoid doing the else branch before the close notification has arrived
-                System.out.println("The game is closing, please wait...");
-                while (!waitingForCloseGameNotification) {
-                    Thread.onSpinWait();
-                }
-                if(!isGUIMode)
-                    setCurrentState(new LobbyMenuState(this, scan));
-                else
+                if(input.equals("exit"))
                 {
-                    setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
-                    //      ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
+                    System.out.println("The game is closing, please wait...");
+                    while (!waitingForCloseGameNotification) {
+                        Thread.onSpinWait();
+                    }
+                    if(!isGUIMode)
+                        setCurrentState(new LobbyMenuState(this, scan));
+                    else
+                    {
+                        setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
+                        //      ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
+                    }
+                    input = "";
+                    waitingForCloseGameNotification = false;
+                    inputHandler();
                 }
-                input = "";
-                waitingForCloseGameNotification = false;
-                inputHandler();
+                else
+                    System.out.println("The input was not valid. You can " + getServerCurrentState());
+
             }
         }
     }
@@ -449,7 +478,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
         }
         return true;
     }
-
+/*
     public void receiveMessage(Message msg) throws RemoteException {
         if (currentState instanceof GlobalChatState || currentState instanceof PrivateChatState) {
             if (msg.getSender().equals(username))
@@ -462,7 +491,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
             else
                 System.out.println("You have received a from " + msg.getSender());
         }
-    }
+    }*/
 
     @SuppressWarnings("InfiniteLoopStatement")
     public void notificationsHandler() throws RemoteException, InterruptedException {
