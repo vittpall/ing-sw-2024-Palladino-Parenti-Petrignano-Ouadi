@@ -42,30 +42,32 @@
             </ChoiceBox>
             <Button onAction="#handleCreateGame" style="-fx-background-color: #a2ecbb;" styleClass="primary-button" text="Create Game">
             </Button>
-
-        </VBox>
+   
+           </VBox>
 
     </StackPane>
-    <Button onAction="#handleBack" styleClass="primary-button" text="Back" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="10.0" />
-    <ImageView fitWidth="607.0" preserveRatio="true" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="112.0">
-        <Image url="@../Images/CN_Decoration3.png" />
-    </ImageView>
-    <ImageView fitHeight="150.0" fitWidth="200.0" preserveRatio="true" rotate="180.0" scaleY="-1" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0">
-
-              <Image url="@../Images/CN_Decoration1.jpg" />
-    </ImageView>
-   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" preserveRatio="true" rotate="180.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <Button onAction="#handleBack" styleClass="primary-button" text="Back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="10.0" />
+   <ImageView fitHeight="200.0" fitWidth="252.0" layoutX="59.0" layoutY="50.0" preserveRatio="true" rotate="180.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
       <image>
-         <Image url="@../Images/CN_Decoration1.jpg" />
+         <Image url="@../Images/CN_decoration9.png" />
+      </image>
+   </ImageView>
+   <ImageView fitHeight="200.0" fitWidth="252.0" layoutX="69.0" layoutY="60.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <image>
+         <Image url="@../Images/CN_decoration9.png" />
+      </image>
+   </ImageView>
+   <ImageView fitHeight="200.0" fitWidth="252.0" layoutX="79.0" layoutY="70.0" preserveRatio="true" rotate="180.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <image>
+         <Image url="@../Images/CN_decoration9.png" />
       </image>
       <rotationAxis>
          <Point3D x="90.0" z="1.0" />
       </rotationAxis>
    </ImageView>
-   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="20.0" layoutY="20.0" preserveRatio="true" rotate="180.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <image>
-         <Image url="@../Images/CN_Decoration1.jpg" />
-      </image>
-   </ImageView>
+   <Button layoutX="668.0" layoutY="745.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #a2ecbb;" text="EXIT" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="11.0">
+      <font>
+         <Font name="Book Antiqua Bold Italic" size="14.0" />
+      </font></Button>
 
 </AnchorPane>

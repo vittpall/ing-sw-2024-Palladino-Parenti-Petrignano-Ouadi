@@ -1,57 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.*?>
-<AnchorPane styleClass="scene-dimensions" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="it.polimi.ingsw.gui.Controller.WaitingForPlayersController">
-    <ImageView fitHeight="800.0" fitWidth="800.0" styleClass="scene-dimensions">
-        <Image url="@../Images/CN_copertina.jpg"/>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane styleClass="scene-dimensions" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.WaitingForPlayersController">
+    <ImageView fitHeight="800.0" fitWidth="800.0" styleClass="scene-dimensions" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Image url="@../Images/CN_copertina.jpg" />
     </ImageView>
-    <StackPane styleClass="scene-dimensions">
+    <StackPane styleClass="scene-dimensions" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <VBox alignment="CENTER">
-            <Label alignment="CENTER" prefHeight="35.0" prefWidth="422.0" text="Waiting for players to join the game">
-                <font>
-                    <Font name="Book Antiqua Bold Italic" size="23.0"/>
-                </font>
+            <Label styleClass="normal-label" alignment="CENTER" prefHeight="35.0" prefWidth="422.0" text="Waiting for players to join the game">
             </Label>
-            <Label fx:id="player1Info" text="Player 1 : ex1">
-                <font>
-                    <Font name="Book Antiqua" size="14.0"/>
-                </font>
+            <Label fx:id="player1Info" styleClass="normal-label" text="Player 1 : ex1">
             </Label>
-            <Label fx:id="player2Info" text="Player 2 : ex2">
-                <font>
-                    <Font name="Book Antiqua" size="14.0"/>
-                </font>
+            <Label fx:id="player2Info" styleClass="normal-label" text="Player 2 : ex2">
             </Label>
-            <Label fx:id="player3Info" text="Player 3 : ex3">
-                <font>
-                    <Font name="Book Antiqua" size="14.0"/>
-                </font>
+            <Label fx:id="player3Info" styleClass="normal-label" text="Player 3 : ex3">
             </Label>
-            <Label fx:id="player4Info" text="Player 4 : ex4">
-                <font>
-                    <Font name="Book Antiqua" size="14.0"/>
-                </font>
+            <Label fx:id="player4Info" styleClass="normal-label" text="Player 4 : ex4">
             </Label>
-            <Label fx:id="waitingForNPlayersLabel" text="Waiting for 2 players to join">
-                <font>
-                    <Font name="Book Antiqua" size="14.0"/>
-                </font>
+            <Label fx:id="waitingForNPlayersLabel" styleClass="normal-label" text="Waiting for 2 players to join">
             </Label>
-            <Button fx:id="StartGameButton" onAction="#handleStartGame" style="-fx-background-color: #a2ecbb;"
-                    styleClass="primary-button" text="Start game" visible="false">
+            <Button fx:id="StartGameButton" onAction="#handleStartGame" style="-fx-background-color: #a2ecbb;" styleClass="primary-button" text="Start game" visible="false">
                 <font>
-                    <Font name="Bold Italic" size="15.0"/>
+                    <Font name="Bold Italic" size="15.0" />
                 </font>
             </Button>
 
         </VBox>
     </StackPane>
+   <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="78.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
+   </Button>
 </AnchorPane>

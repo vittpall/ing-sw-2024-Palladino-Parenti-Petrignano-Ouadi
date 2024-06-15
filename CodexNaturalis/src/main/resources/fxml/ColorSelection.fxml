@@ -40,4 +40,9 @@
          <Image url="@../Images/CN_decoration10.png" />
       </image>
    </ImageView>
+   <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="78.0" style="-fx-background-color: #a2ecbb;" text="EXIT">
+      <font>
+         <Font name="Book Antiqua Bold Italic" size="14.0" />
+      </font>
+   </Button>
 </VBox>

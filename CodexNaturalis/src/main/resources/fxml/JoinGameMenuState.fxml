@@ -31,7 +31,7 @@
         </rotationAxis>
         <Image url="@../Images/CN_Decoration1.jpg" />
     </ImageView>
-    <Button alignment="TOP_CENTER" layoutX="10.0" layoutY="732.0" minHeight="33.0" minWidth="113.0" onAction="#handleBack" prefHeight="33.0" prefWidth="113.0" style="-fx-background-color: #a6f84b;" styleClass="primary-button" text="Back" textFill="WHITE" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="10.0">
+    <Button alignment="TOP_CENTER" layoutX="10.0" layoutY="683.0" minHeight="33.0" minWidth="127.0" onAction="#handleBack" prefHeight="40.0" prefWidth="127.0" style="-fx-background-color: #a6f84b;" styleClass="primary-button" text="Back" textFill="WHITE" AnchorPane.bottomAnchor="77.0" AnchorPane.leftAnchor="10.0">
         <font>
             <Font name="Book Antiqua Bold Italic" size="12.0" />
         </font>
@@ -52,10 +52,15 @@
          <Point3D x="90.0" z="1.0" />
       </rotationAxis>
    </ImageView>
-     <Label fx:id="messageLabel" layoutX="132.0" layoutY="53.0" prefHeight="45.0" prefWidth="549.0" style="-fx-text-fill: black;" text="Select A Game" textAlignment="JUSTIFY">
+     <Label fx:id="messageLabel" layoutX="279.0" layoutY="53.0" prefHeight="45.0" prefWidth="243.0" style="-fx-text-fill: black;" text="Select A Game" textAlignment="JUSTIFY">
          <font>
              <Font name="Book Antiqua Bold Italic" size="36.0" />
          </font>
      </Label>
+   <Button layoutX="8.0" layoutY="734.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #a2ecbb;" text="EXIT">
+      <font>
+         <Font name="Book Antiqua Bold Italic" size="14.0" />
+      </font>
+   </Button>
 
 </AnchorPane>
