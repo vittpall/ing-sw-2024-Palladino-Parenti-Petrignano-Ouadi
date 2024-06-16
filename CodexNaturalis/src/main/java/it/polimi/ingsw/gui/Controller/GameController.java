@@ -7,11 +7,14 @@ import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
@@ -32,11 +35,16 @@ public class GameController implements FXMLController {
     public HBox goldenDeck;
     public VBox playerHandBox;
     public ScrollPane gameBoardScrollPane;
+    public Button Player3;
+    public Button Player2;
+    public Button Player1;
+    public Button Player0;
     private BaseClient client;
     private Stage stage;
     private boolean playCardFaceDown = false;
     private GameBoard gameBoard;
-
+    private boolean isYourDeskShowing = true;
+    private String playerDeskShown;
     public void initialize() {
         gameBoard = new GameBoard();
         gameBoardContainer.getChildren().add(gameBoard);
@@ -94,6 +102,25 @@ public class GameController implements FXMLController {
 
     public void initializeGame() {
         try {
+            String username = client.getUsername();
+            ArrayList<Player> players = client.getPlayers(client.getIdGame());
+            Player0.setText(username.equals(players.getFirst().getUsername()) ? "Your desk" : players.getFirst().getUsername() + " desk");
+            Player1.setText(username.equals(players.get(1).getUsername()) ? "Your desk" : players.get(1).getUsername() + " desk");
+
+            switch(client.getnPlayer(client.getIdGame())) {
+                case 2:
+                    Player2.setVisible(false);
+                    Player3.setVisible(false);
+                    break;
+                case 3:
+                    Player2.setText(username.equals(players.get(2).getUsername()) ? "Your desk" : players.get(2).getUsername() + " desk");
+                    Player3.setVisible(false);
+                    break;
+                case 4:
+                    Player2.setText(username.equals(players.get(2).getUsername()) ? "Your desk" : players.get(2).getUsername() + " desk");
+                    Player3.setText(username.equals(players.get(3).getUsername()) ? "Your desk" : players.get(3).getUsername() + " desk");
+                    break;
+            }
             loadDeskCards();
             loadObjectiveCards();
             loadUsableCards();
@@ -108,6 +135,8 @@ public class GameController implements FXMLController {
     }
 
     private void loadDeskCards() throws IOException, InterruptedException {
+        playerDeskShown= client.getUsername();
+        gameBoard.getChildren().clear();
         HashMap<Point, GameCard> deskCards = client.getPlayerDesk();
         for (Map.Entry<Point, GameCard> entry : deskCards.entrySet()) {
             Point p = entry.getKey();
@@ -317,6 +346,87 @@ public class GameController implements FXMLController {
         updatePlayerHandInteraction();
     }
 
+    public void handleShowPlayer0Desk() {
+        try{
+            if(!playerDeskShown.equals(client.getPlayers(client.getIdGame()).getFirst().getUsername())) {
+                if (client.getPlayers(client.getIdGame()).getFirst().getUsername().equals(client.getUsername())) {
+                    isYourDeskShowing = true;
+                    loadDeskCards();
+                    if (isPlayerTurn())
+                        showAvailablePositions();
+                }else {
+                    isYourDeskShowing=false;
+                    loadPlayerDesk(0);
+                }
+            }
+        } catch (IOException |InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void handleShowPlayer1Desk() {
+        try{
+            if(!playerDeskShown.equals(client.getPlayers(client.getIdGame()).get(1).getUsername())) {
+                if (client.getUsername().equals(client.getPlayers(client.getIdGame()).get(1).getUsername())) {
+                    isYourDeskShowing = true;
+                    loadDeskCards();
+                    if (isPlayerTurn())
+                        showAvailablePositions();
+                }else {
+                    isYourDeskShowing=false;
+                    loadPlayerDesk(1);
+                }
+            }
+
+        } catch (IOException |InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void handleShowPlayer2Desk() {
+        try{
+            if(!playerDeskShown.equals(client.getPlayers(client.getIdGame()).get(2).getUsername())){
+                if (client.getUsername().equals(client.getPlayers(client.getIdGame()).get(2).getUsername())) {
+                    isYourDeskShowing = true;
+                    loadDeskCards();
+                    if (isPlayerTurn())
+                        showAvailablePositions();
+                }else {
+                    isYourDeskShowing=false;
+                    loadPlayerDesk(2);
+                }
+            }
+        } catch (IOException |InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void handleShowPlayer3Desk() {
+        try {
+            if(!playerDeskShown.equals(client.getPlayers(client.getIdGame()).get(3).getUsername())){
+                if (client.getUsername().equals(client.getPlayers(client.getIdGame()).get(3).getUsername())) {
+                    isYourDeskShowing = true;
+                    loadDeskCards();
+                    if (isPlayerTurn())
+                        showAvailablePositions();
+                } else {
+                    isYourDeskShowing = false;
+                    loadPlayerDesk(3);
+                }
+            }
+        }catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadPlayerDesk(int i) throws IOException, InterruptedException {
+        playerDeskShown=client.getPlayers(client.getIdGame()).get(i).getUsername();
+        gameBoard.getChildren().clear();
+            HashMap<Point, GameCard> deskCards = client.getPlayers(client.getIdGame()).get(i).getPlayerDesk().getDesk();
+            for (Map.Entry<Point, GameCard> entry : deskCards.entrySet()) {
+                Point p = entry.getKey();
+                GameCard card = entry.getValue();
+                gameBoard.addCard(card, !card.isPlayedFaceDown(), p.x, p.y);
+            }
+    }
+
     public void setMyTurn(boolean myTurn) {
         try {
             resourceDeck.getChildren().clear();
@@ -324,8 +434,29 @@ public class GameController implements FXMLController {
             loadUsableCards();
             loadVisibleCards();
             if (myTurn) {
+                if(!isYourDeskShowing)
+                    loadDeskCards();
                 updatePlayerHandInteraction();
                 showAvailablePositions();
+            }
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void cardPlayedNotification(String username) {
+        //TODO modificare i punti sulla board dell'utente username
+        int indexPlayer=0;
+        try {
+            ArrayList<Player> players = client.getPlayers(client.getIdGame());
+            for(int i=0; i<players.size(); i++) {
+                if(players.get(i).getUsername().equals(username)) {
+                    indexPlayer=i;
+                    break;
+                }
+            }
+            if(playerDeskShown.equals(username)) {
+                loadPlayerDesk(indexPlayer);
             }
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
