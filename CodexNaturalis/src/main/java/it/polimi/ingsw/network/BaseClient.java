@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import javax.swing.plaf.TableHeaderUI;
 import java.io.IOException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -264,13 +265,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
             if(waitingForCloseGameNotification)
             {
                 waitingForCloseGameNotification = false;
-                if(!isGUIMode)
-                    setCurrentState(new LobbyMenuState(this, scan));
-                else
-                {
-              //      setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
-              //      ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
-                }
+                setCurrentState(new LobbyMenuState(this, scan));
                 input = "";
                 inputHandler();
             }
@@ -334,16 +329,10 @@ abstract public class BaseClient implements VirtualView, GameListener {
                             if(input.equals("exit"))
                             {
                                 System.out.println("The game is closing, please wait...");
-                                while (!waitingForCloseGameNotification) {
+                                while (!waitingForCloseGameNotification)
                                     Thread.onSpinWait();
-                                }
-                                if(!isGUIMode)
-                                    setCurrentState(new LobbyMenuState(this, scan));
-                                else
-                                {
-                                  //  setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
-                                    //      ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
-                                }
+
+                                setCurrentState(new LobbyMenuState(this, scan));
                                 input = "";
                                 waitingForCloseGameNotification = false;
                                 inputHandler();
@@ -516,9 +505,14 @@ abstract public class BaseClient implements VirtualView, GameListener {
         }
     }
 
-    public void handleTUIInput(int input) throws IOException, ClassNotFoundException, InterruptedException {
-        if (currentState instanceof ClientStateTUI tuiState)
-            tuiState.inputHandler(input);
+    public void handleTUIInput(int input) throws ClassNotFoundException, InterruptedException, IOException {
+        try {
+            if (currentState instanceof ClientStateTUI tuiState)
+                tuiState.inputHandler(input);
+        } catch (RemoteException e) {
+            System.out.println("The server has crashed, thanks for playing");
+            System.exit(0);
+        }
     }
 
     public void showState() {

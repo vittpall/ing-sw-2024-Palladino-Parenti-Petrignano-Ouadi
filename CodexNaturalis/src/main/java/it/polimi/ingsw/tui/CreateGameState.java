@@ -30,7 +30,7 @@ public class CreateGameState implements ClientStateTUI {
     }
 
     @Override
-    public void inputHandler(int input) throws RemoteException {
+    public void inputHandler(int input) throws RemoteException, InterruptedException {
 
         if (input == 1) {
             createGame();
@@ -40,7 +40,7 @@ public class CreateGameState implements ClientStateTUI {
         }
     }
 
-    private void createGame() throws RemoteException {
+    private void createGame() throws RemoteException, InterruptedException {
         System.out.println("Enter the number of players (2-4):");
 
         int nPlayers = 0;
@@ -70,7 +70,7 @@ public class CreateGameState implements ClientStateTUI {
             client.createGame(client.getUsername(), nPlayers);
             client.setCurrentState(new WaitingForPlayersState(client, scanner));
         } catch (InterruptedException | RemoteException e) {
-            System.out.println("Error creating game. Please try again.");
+            throw new RemoteException();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

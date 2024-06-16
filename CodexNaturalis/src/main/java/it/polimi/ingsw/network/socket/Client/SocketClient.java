@@ -68,11 +68,16 @@ public class SocketClient extends BaseClient {
     }
 
 
-    private ServerToClientMsg sendRequest(ClientToServerMsg request) throws InterruptedException, IOException {
+    private ServerToClientMsg sendRequest(ClientToServerMsg request) throws InterruptedException{
         TypeServerToClientMsg expectedResponse = request.getType();
-        out.writeObject(request);
-        out.flush();
-        out.reset();
+        try {
+            out.writeObject(request);
+            out.flush();
+            out.reset();
+        } catch (IOException e) {
+            System.out.println("\nThe server has crashed, thanks for playing");
+            System.exit(0);
+        }
         //wait for the response
         BlockingQueue<ServerToClientMsg> queue = responseQueues.computeIfAbsent(expectedResponse, k -> new LinkedBlockingQueue<>());
         return queue.take();  // This will block until the expected type of response is received
@@ -161,7 +166,6 @@ public class SocketClient extends BaseClient {
     @Override
     public void returnToLobby() throws IOException, InterruptedException {
         ClosedConnectionMsg request = new ClosedConnectionMsg(getUsername(), getIdGame());
-        System.out.println("Closing connection!!!");
         sendRequest(request);
     }
 
@@ -315,14 +319,7 @@ public class SocketClient extends BaseClient {
     @Override
     public void run() throws IOException, ClassNotFoundException, InterruptedException {
 
-        new Thread(() -> {
-            try {
-                runVirtualServer();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }).start();
-
+        new Thread(this::runVirtualServer).start();
 
         if (isGUIMode()) {
             getClientCurrentState().display();
@@ -339,17 +336,21 @@ public class SocketClient extends BaseClient {
                 if (obj instanceof ServerNotification notification) {
                     update(notification);
                 } else if (obj instanceof ServerToClientMsg msg) {
-                    if (msg.getType() == TypeServerToClientMsg.CLOSE_CONNECTION) {
+ /*                   if (msg.getType() == TypeServerToClientMsg.CLOSE_CONNECTION) {
                         System.out.println("Closing connection!!!");
                         in.close();
                         out.close();
                         System.exit(0);
-                    }
+                    }*/
                     TypeServerToClientMsg responseType = msg.getType();
                     responseQueues.computeIfAbsent(responseType, k -> new LinkedBlockingQueue<>()).put(msg);
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("\nThe server has crashed, thanks for playing");
+            System.exit(0);
+        }
+        catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
