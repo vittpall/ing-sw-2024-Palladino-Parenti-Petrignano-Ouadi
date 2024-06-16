@@ -46,6 +46,7 @@
           <ScrollPane fx:id="gameBoardScrollPane" hbarPolicy="NEVER" pannable="true" prefHeight="450.0" prefWidth="900.0" style="-fx-focus-color: transparent;" vbarPolicy="NEVER">
               <AnchorPane fx:id="gameBoardContainer" style="-fx-background-color: #dedccc;" />
           </ScrollPane>
+         <Label fx:id="lastTurnLabel" styleClass="normal-label" text="THE LAST TURN HAS BEGUN" />
          <Label fx:id="infoGame" styleClass="normal-label" text="what is happening" />
          <Label styleClass="normal-label" text="RESOURCE CARD DESK">
    </Label>

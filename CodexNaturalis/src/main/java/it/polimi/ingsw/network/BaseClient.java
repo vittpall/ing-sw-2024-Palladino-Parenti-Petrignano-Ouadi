@@ -176,12 +176,13 @@ abstract public class BaseClient implements VirtualView, GameListener {
             ((GameStateGUI) getClientCurrentState()).cardPlayedRefresh(username);
     }
 
-    public synchronized void onLastTurnSet(String msg) {
+    public synchronized void onLastTurnSet(String username) {
         if (!isGUIMode) {
-            System.out.println(msg);
-
-        } /*else
-            getClientCurrentState().refresh(msg);*/
+            System.out.println("\n----------------------------------\n" +
+                    "Player " + username + " reached 20 points\n" +
+                    "The last turn has begun\n");
+        }else if(getClientCurrentState() instanceof GameStateGUI)
+            ((GameStateGUI) getClientCurrentState()).lastTurnSetNotification(username);
     }
 
     public synchronized void onEndGame(String msg) {

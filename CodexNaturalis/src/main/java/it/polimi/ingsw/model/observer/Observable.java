@@ -44,8 +44,8 @@ public class Observable {
         notifyListeners(new PlayedCardNotification(message,playersPoints, username), username);
     }
 
-    public void notifyLastTurnSet(String message){
-        notifyListeners(new LastTurnSetNotification(message), null);
+    public void notifyLastTurnSet(String username){
+        notifyListeners(new LastTurnSetNotification(username), null);
     }
 
     public void notifyChat(Message msg)

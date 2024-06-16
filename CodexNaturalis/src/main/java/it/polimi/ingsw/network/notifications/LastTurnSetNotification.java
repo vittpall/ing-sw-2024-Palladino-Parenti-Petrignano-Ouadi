@@ -3,12 +3,12 @@ package it.polimi.ingsw.network.notifications;
 import it.polimi.ingsw.network.BaseClient;
 
 public class LastTurnSetNotification implements ServerNotification{
-    String message;
-    public LastTurnSetNotification(String message) {
-        this.message = message;
+    String username;
+    public LastTurnSetNotification(String username) {
+        this.username = username;
     }
     @Override
     public void notifyClient(BaseClient client) {
-        client.onLastTurnSet(message);
+        client.onLastTurnSet(username);
     }
 }

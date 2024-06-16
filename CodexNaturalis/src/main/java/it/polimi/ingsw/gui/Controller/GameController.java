@@ -41,6 +41,7 @@ public class GameController implements FXMLController {
     public Button Player1;
     public Button Player0;
     public Label infoGame;
+    public Label lastTurnLabel;
     private BaseClient client;
     private Stage stage;
     private boolean playCardFaceDown = false;
@@ -104,6 +105,7 @@ public class GameController implements FXMLController {
 
     public void initializeGame() {
         try {
+            lastTurnLabel.setVisible(false);
             String username = client.getUsername();
             ArrayList<Player> players = client.getPlayers(client.getIdGame());
             Player0.setText(username.equals(players.getFirst().getUsername()) ? "Your desk" : players.getFirst().getUsername() + " desk");
@@ -471,6 +473,12 @@ public class GameController implements FXMLController {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void lastTurnSetNotification(String username) {
+        lastTurnLabel.setText(username + " has reached 20 points. The last turn has begun!");
+        lastTurnLabel.setVisible(true);
+        //TODO cambiarlo in un pop up
     }
 }
 

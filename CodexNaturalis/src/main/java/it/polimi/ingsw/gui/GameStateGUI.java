@@ -40,9 +40,11 @@ public class GameStateGUI implements ClientState {
 
     public void cardPlayedRefresh(String username) {
         Platform.runLater(() -> controller.cardPlayedNotification(username));
-        //TODO modificare il desk dell'utente con nome username e i suoi punti sulla board
     }
     public void changeTurnNotified(String usernameCurrentPlayer) {
         Platform.runLater(() -> controller.setMyTurn(usernameCurrentPlayer));
+    }
+    public void lastTurnSetNotification(String username){
+        Platform.runLater(() -> controller.lastTurnSetNotification(username));
     }
 }

@@ -229,10 +229,8 @@ public class GameController {
                 gameState = GameState.LAST_ROUND;
             else
                 gameState = GameState.FINISHING_ROUND_BEFORE_LAST;
-            String message = "\n----------------------------------\n" +
-                    "Player " + model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername() + " reached 20 points\n" +
-                    "Now you're playing the last turn";
-            listeners.get("GameRounds").notifyLastTurnSet(message);
+            String username =  model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername();
+            listeners.get("GameRounds").notifyLastTurnSet(username);
         }
         if (gameState == GameState.FINISHING_ROUND_BEFORE_LAST && model.getCurrentPlayerIndex() == nPlayers - 1) {
             gameState = GameState.LAST_ROUND;
