@@ -28,7 +28,8 @@ public class LobbyMenuStateGUI implements ClientState {
         return "LobbyMenuStateGUI";
     }
 
-        public void refresh(String msg) {
+    public void refresh(String msg) {
+
 
     }
 

@@ -13,6 +13,7 @@ import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.tui.*;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import javax.swing.plaf.TableHeaderUI;
@@ -35,8 +36,10 @@ abstract public class BaseClient implements VirtualView, GameListener {
     protected UsefulData usefulData;
     private volatile boolean waitingForCloseGameNotification;
     String input;
+    private Stage stageUI;
 
     public BaseClient(String mode, Stage stage) {
+        this.stageUI = stage;
         switch (mode) {
             case "GUI":
                 setGUIMode(true);
@@ -197,9 +200,14 @@ abstract public class BaseClient implements VirtualView, GameListener {
         //to avoid trying close game already closed
         idGame = null;
         waitingForCloseGameNotification = true;
-  /*      setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
-        ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);*/
-
+        if(isGUIMode)
+        {
+            Platform.runLater(() -> {
+                setCurrentState(new LobbyMenuStateGUI(this.stageUI, this));
+                getClientCurrentState().display();
+                ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
+            });
+        }
 
     }
 
@@ -260,7 +268,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     setCurrentState(new LobbyMenuState(this, scan));
                 else
                 {
-                    setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
+              //      setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
               //      ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
                 }
                 input = "";
@@ -333,7 +341,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                                     setCurrentState(new LobbyMenuState(this, scan));
                                 else
                                 {
-                                    setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
+                                  //  setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
                                     //      ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
                                 }
                                 input = "";
@@ -360,7 +368,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                         setCurrentState(new LobbyMenuState(this, scan));
                     else
                     {
-                        setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
+                  //      setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
                         //      ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
                     }
                     input = "";

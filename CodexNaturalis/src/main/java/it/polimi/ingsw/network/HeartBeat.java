@@ -46,7 +46,7 @@ public class HeartBeat {
 
     private void handleDisconnection() {
         if (rmiClientUsername != null) {
-            System.out.println(rmiClientUsername + " is being closed");
+            System.out.println(rmiClientUsername + " is being closed(RMIClient)");
             rmiServer.removeUsername(rmiClientUsername);
             if (gameId != null) {
                 System.out.println("Game " + gameId + " is being closed");

@@ -60,7 +60,7 @@ public class ClientMain extends Application {
             if (useSocket) {
                 setupSocketClient(useTUI ? "TUI" : "GUI", stage);
             } else {
-                setupRMIClient(useTUI ? "TUI" : "GUI", stage);
+                 setupRMIClient(useTUI ? "TUI" : "GUI", stage);
             }
         } catch (Exception e) {
             e.printStackTrace();
