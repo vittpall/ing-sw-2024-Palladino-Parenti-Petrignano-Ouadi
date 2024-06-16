@@ -43,6 +43,6 @@ public class GameStateGUI implements ClientState {
         //TODO modificare il desk dell'utente con nome username e i suoi punti sulla board
     }
     public void changeTurnNotified(String usernameCurrentPlayer) {
-        Platform.runLater(() -> controller.setMyTurn(client.getUsername().equals(usernameCurrentPlayer)));
+        Platform.runLater(() -> controller.setMyTurn(usernameCurrentPlayer));
     }
 }

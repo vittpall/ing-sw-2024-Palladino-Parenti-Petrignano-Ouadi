@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
@@ -30,7 +31,7 @@ import java.util.*;
 
 public class GameController implements FXMLController {
     public AnchorPane gameBoardContainer;
-    public HBox objectiveCardsContainer;
+    public VBox objectiveCardsContainer;
     public HBox resourceDeck;
     public HBox goldenDeck;
     public VBox playerHandBox;
@@ -39,6 +40,7 @@ public class GameController implements FXMLController {
     public Button Player2;
     public Button Player1;
     public Button Player0;
+    public Label infoGame;
     private BaseClient client;
     private Stage stage;
     private boolean playCardFaceDown = false;
@@ -127,8 +129,11 @@ public class GameController implements FXMLController {
             loadVisibleCards();
             loadPlayerHand();
             updatePlayerHandInteraction();
-            if (isPlayerTurn())
+            if (isPlayerTurn()) {
+                infoGame.setText("It's your turn: you should play a card");
                 showAvailablePositions();
+            }else
+                infoGame.setText(client.getPlayers(client.getIdGame()).getFirst().getUsername()+" is playing");
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -216,6 +221,7 @@ public class GameController implements FXMLController {
                     updatePlayerHandInteraction();
                     loadDeskCards();
                     updatePlayerDrawInteraction();
+                    infoGame.setText("It's your turn: you should draw a card");
                 } catch (IOException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -249,6 +255,7 @@ public class GameController implements FXMLController {
                         loadUsableCards();
                         loadVisibleCards();
                         loadPlayerHand();
+                        infoGame.setText(client.getPlayers(client.getIdGame()).get((client.getIdClientIntoGame()+1)%client.getnPlayer(client.getIdGame())).getUsername()+" is playing");
                     } catch (IOException | InterruptedException | CardNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -272,6 +279,7 @@ public class GameController implements FXMLController {
                         loadUsableCards();
                         loadVisibleCards();
                         loadPlayerHand();
+                        infoGame.setText(client.getPlayers(client.getIdGame()).get((client.getIdClientIntoGame()+1)%client.getnPlayer(client.getIdGame())).getUsername()+" is playing");
                     } catch (IOException | InterruptedException | CardNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -427,18 +435,20 @@ public class GameController implements FXMLController {
             }
     }
 
-    public void setMyTurn(boolean myTurn) {
+    public void setMyTurn(String usernameCurrentPlayer) {
         try {
             resourceDeck.getChildren().clear();
             goldenDeck.getChildren().clear();
             loadUsableCards();
             loadVisibleCards();
-            if (myTurn) {
+            if (client.getUsername().equals(usernameCurrentPlayer)){
+                infoGame.setText("It's your turn: you should play a card");
                 if(!isYourDeskShowing)
                     loadDeskCards();
                 updatePlayerHandInteraction();
                 showAvailablePositions();
-            }
+            }else
+                infoGame.setText(usernameCurrentPlayer+" is playing");
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
