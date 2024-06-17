@@ -19,6 +19,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -40,7 +41,11 @@ public class GameController implements FXMLController {
     public Button Player1;
     public Button Player0;
     public Label infoGame;
-    public Label lastTurnLabel;
+    public Label titlePopUp;
+    public Button closePopUpButton;
+    public Label messagePopUp;
+    public BorderPane popUp;
+    public Button showBackButton;
     private BaseClient client;
     private Stage stage;
     private boolean playCardFaceDown = false;
@@ -105,7 +110,7 @@ public class GameController implements FXMLController {
 
     public void initializeGame() {
         try {
-            lastTurnLabel.setVisible(false);
+            popUp.setVisible(false);
             String username = client.getUsername();
             ArrayList<Player> players = client.getPlayers(client.getIdGame());
             Player0.setText(username.equals(players.getFirst().getUsername()) ? "Your desk" : players.getFirst().getUsername() + " desk");
@@ -327,7 +332,11 @@ public class GameController implements FXMLController {
             updatePlayerDrawInteraction();
             infoGame.setText("It's your turn: you should draw a card");
         } catch (RequirementsNotMetException | PlaceNotAvailableException | CardNotFoundException e) {
-            showError("Requirements not met");
+            infoGame.setText("It's your turn: you should play another card");
+            clearPlaceholders();
+            showError("Requirements not met. You should play another card");
+            updatePlayerHandInteraction();
+            showAvailablePositions();
         }
     }
 
@@ -337,7 +346,9 @@ public class GameController implements FXMLController {
     }
 
     private void showError(String message) {
-        // Display error messages to the user
+        titlePopUp.setText("Error");
+        messagePopUp.setText(message);
+        popUp.setVisible(true);
     }
 
 
@@ -351,6 +362,7 @@ public class GameController implements FXMLController {
 
     public void handleShowBackButton() throws IOException, InterruptedException {
         playCardFaceDown = !playCardFaceDown;
+        showBackButton.setText(playCardFaceDown ? "Show Front" : "Show Back");
         loadPlayerHand();
         updatePlayerHandInteraction();
     }
@@ -478,9 +490,13 @@ public class GameController implements FXMLController {
     }
 
     public void lastTurnSetNotification(String username) {
-        lastTurnLabel.setText(username + " has reached 20 points. The last turn has begun!");
-        lastTurnLabel.setVisible(true);
-        //TODO cambiarlo in un pop up
+        messagePopUp.setText(username + " has reached 20 points.\n The last turn has begun!");
+        titlePopUp.setText("Last Turn!");
+        popUp.setVisible(true);
+    }
+
+    public void closePopUp() {
+        popUp.setVisible(false);
     }
 }
 
