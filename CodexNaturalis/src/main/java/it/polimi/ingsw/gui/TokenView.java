@@ -5,10 +5,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class TokenView extends ImageView {
-    public static final double BLACK_TOKEN_X = 0.62;
-    public static final double BLACK_TOKEN_Y = 0.38;
-    public static final double OTHER_TOKEN_X = 0.23;
-    public static final double OTHER_TOKEN_Y = 0.38;
+    public static final double BLACK_TOKEN_X = 0.70;
+    public static final double BLACK_TOKEN_Y = 0.47;
+    public static final double OTHER_TOKEN_X = 0.30;
+    public static final double OTHER_TOKEN_Y = 0.47;
 
     private final double offsetX;
     private final double offsetY;
