@@ -4,7 +4,6 @@ package it.polimi.ingsw.network.socket.Server;
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -42,7 +41,7 @@ public class SocketServer implements Remote {
             new Thread(() -> {
                 try {
                     handler.runVirtualView();
-                } catch (IOException | InterruptedException | ClassNotFoundException | RequirementsNotMetException |
+                } catch (IOException | InterruptedException | ClassNotFoundException |
                          PlaceNotAvailableException | CardNotFoundException e) {
                     throw new RuntimeException(e);
                 }

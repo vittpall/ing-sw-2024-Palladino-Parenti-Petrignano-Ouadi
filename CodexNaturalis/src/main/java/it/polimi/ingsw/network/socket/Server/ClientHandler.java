@@ -3,7 +3,6 @@ package it.polimi.ingsw.network.socket.Server;
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.notifications.CloseGameNotification;
@@ -14,7 +13,6 @@ import it.polimi.ingsw.network.socket.ServerToClientMsg.ServerToClientMsg;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.SocketException;
 import java.rmi.RemoteException;
 
 public class ClientHandler implements GameListener {
@@ -33,13 +31,12 @@ public class ClientHandler implements GameListener {
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
-    public void runVirtualView() throws IOException, ClassNotFoundException, InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
+    public void runVirtualView() throws IOException, ClassNotFoundException, InterruptedException, CardNotFoundException, PlaceNotAvailableException {
         ClientToServerMsg request;
         ServerToClientMsg response;
         try {
             while (true) {
-                synchronized (input)
-                {
+                synchronized (input) {
                     request = (ClientToServerMsg) input.readObject();
                 }
                 response = new ServerToClientMsg(request.getType());
@@ -52,12 +49,10 @@ public class ClientHandler implements GameListener {
                 }
                 sendMessage(response);
             }
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             closeClient();
-        }
-        catch (ClassNotFoundException | InterruptedException | CardNotFoundException |
-                 PlaceNotAvailableException | RequirementsNotMetException e) {
+        } catch (ClassNotFoundException | InterruptedException | CardNotFoundException |
+                 PlaceNotAvailableException e) {
             e.printStackTrace();
         }
     }
@@ -76,8 +71,7 @@ public class ClientHandler implements GameListener {
 
 
     public void sendMessage(ServerToClientMsg msgToBroadCast) throws IOException {
-        synchronized (output)
-        {
+        synchronized (output) {
             output.writeObject(msgToBroadCast);
             output.flush();
             output.reset();
@@ -92,10 +86,9 @@ public class ClientHandler implements GameListener {
     @Override
     public void update(ServerNotification notification) throws IOException {
         //i need to remove the gameId to avoid the server the close a game that is already closed
-        if(notification instanceof CloseGameNotification)
+        if (notification instanceof CloseGameNotification)
             gameId = null;
-        synchronized (output)
-        {
+        synchronized (output) {
             output.writeObject(notification);
             output.flush();
             output.reset();

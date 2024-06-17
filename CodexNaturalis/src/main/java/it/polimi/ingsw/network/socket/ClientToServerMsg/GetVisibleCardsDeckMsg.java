@@ -30,7 +30,7 @@ public class GetVisibleCardsDeckMsg extends ClientToServerMsg {
      * @throws RequirementsNotMetException
      */
     @Override
-    public ReturnableObject<ArrayList<GameCard>> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
+    public ReturnableObject<ArrayList<GameCard>> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException {
         ReturnableObject<ArrayList<GameCard>> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.getVisibleCardsDeck(idGame, deck));
         return response;

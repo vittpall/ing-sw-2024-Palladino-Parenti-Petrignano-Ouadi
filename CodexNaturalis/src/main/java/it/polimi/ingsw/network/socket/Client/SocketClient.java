@@ -68,7 +68,7 @@ public class SocketClient extends BaseClient {
     }
 
 
-    private ServerToClientMsg sendRequest(ClientToServerMsg request) throws InterruptedException{
+    private ServerToClientMsg sendRequest(ClientToServerMsg request) throws InterruptedException {
         TypeServerToClientMsg expectedResponse = request.getType();
         try {
             out.writeObject(request);
@@ -249,7 +249,12 @@ public class SocketClient extends BaseClient {
     @Override
     public void playStarterCard(boolean playedFacedDown) throws IOException, CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException, InterruptedException {
         PlayStarterCard request = new PlayStarterCard(getIdGame(), idClientIntoGame, playedFacedDown);
-        sendRequest(request);
+        ServerToClientMsg response = sendRequest(request);
+        if (!response.getResponse().isSuccess()) {
+            if (response.getResponse().getErrorCode() == ErrorCodes.REQIORMENTS_NOT_MET) {
+                throw new RequirementsNotMetException(response.getResponse().getErrorMessage());
+            }
+        }
     }
 
     @Override
@@ -277,7 +282,12 @@ public class SocketClient extends BaseClient {
     @Override
     public void playCard(int chosenCard, boolean faceDown, Point chosenPosition) throws IOException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException, InterruptedException {
         PlayCardMsg request = new PlayCardMsg(getIdGame(), idClientIntoGame, chosenCard, faceDown, chosenPosition);
-        sendRequest(request);
+        ServerToClientMsg response = sendRequest(request);
+        if (!response.getResponse().isSuccess()) {
+            if (response.getResponse().getErrorCode() == ErrorCodes.REQIORMENTS_NOT_MET) {
+                throw new RequirementsNotMetException(response.getResponse().getErrorMessage());
+            }
+        }
     }
 
 
@@ -349,8 +359,7 @@ public class SocketClient extends BaseClient {
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("\nThe server has crashed, thanks for playing");
             System.exit(0);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
     }

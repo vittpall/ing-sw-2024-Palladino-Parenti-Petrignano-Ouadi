@@ -3,7 +3,6 @@ package it.polimi.ingsw.network.socket.ClientToServerMsg;
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
@@ -20,7 +19,7 @@ public class GetCurrentPlayerState extends ClientToServerMsg {
     }
 
     @Override
-    public ReturnableObject<PlayerState> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
+    public ReturnableObject<PlayerState> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException {
         ReturnableObject<PlayerState> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.getCurrentPlayerState(idGame, idClientIntoGame));
         return response;

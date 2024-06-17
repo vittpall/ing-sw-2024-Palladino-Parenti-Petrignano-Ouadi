@@ -25,7 +25,7 @@ public class GetNPlayer extends ClientToServerMsg {
      * @throws RequirementsNotMetException
      */
     @Override
-    public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
+    public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.getnPlayer(idGame));
         return response;

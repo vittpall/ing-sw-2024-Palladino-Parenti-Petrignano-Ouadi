@@ -27,7 +27,7 @@ public class GetCurrentStateMsg extends ClientToServerMsg {
      * @throws RequirementsNotMetException
      */
     @Override
-    public ReturnableObject<String> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
+    public ReturnableObject<String> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException {
         ReturnableObject<String> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.getCurrentState(idGame, idClientIntoGame));
         return response;

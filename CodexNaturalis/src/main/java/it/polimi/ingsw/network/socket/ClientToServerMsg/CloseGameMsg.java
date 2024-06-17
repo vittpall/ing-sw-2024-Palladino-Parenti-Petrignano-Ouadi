@@ -26,7 +26,7 @@ public class CloseGameMsg extends ClientToServerMsg {
      * @throws RequirementsNotMetException
      */
     @Override
-    public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException, IOException {
+    public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, IOException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
         response.setResponseReturnable(-1);
         controller.closeGame(idGame, null);

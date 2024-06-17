@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
-public class CheckStateMsg extends ClientToServerMsg{
+public class CheckStateMsg extends ClientToServerMsg {
 
 
     private final int idGame;
@@ -21,6 +21,7 @@ public class CheckStateMsg extends ClientToServerMsg{
         this.idClientIntoGame = idClientIntoGame;
         this.requestedActions = requestedActions;
     }
+
     /**
      * @param controller
      * @return
@@ -30,7 +31,7 @@ public class CheckStateMsg extends ClientToServerMsg{
      * @throws RequirementsNotMetException
      */
     @Override
-    public ReturnableObject<Boolean> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException {
+    public ReturnableObject<Boolean> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException {
         ReturnableObject<Boolean> response = new ReturnableObject<>();
         response.setResponseReturnable(controller.checkState(idGame, idClientIntoGame, requestedActions));
         return response;
@@ -43,7 +44,6 @@ public class CheckStateMsg extends ClientToServerMsg{
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.CHECK_STATE;
     }
-
 
 
     /**

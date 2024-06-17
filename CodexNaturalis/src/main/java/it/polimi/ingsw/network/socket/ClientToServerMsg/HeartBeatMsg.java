@@ -7,11 +7,10 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
-import it.polimi.ingsw.network.socket.Server.ClientHandler;
 
 import java.io.IOException;
 
-public class HeartBeatMsg extends ClientToServerMsg{
+public class HeartBeatMsg extends ClientToServerMsg {
 
 
     public HeartBeatMsg() {
@@ -29,8 +28,8 @@ public class HeartBeatMsg extends ClientToServerMsg{
      * @throws IOException
      */
     @Override
-    public ReturnableObject functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, RequirementsNotMetException, IOException {
-     //   ((ClientHandler) playerListener).sendHeartBeat(timestamp);
+    public ReturnableObject functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, CardNotFoundException, PlaceNotAvailableException, IOException {
+        //   ((ClientHandler) playerListener).sendHeartBeat(timestamp);
         return null;
     }
 
