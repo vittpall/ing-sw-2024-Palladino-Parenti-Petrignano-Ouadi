@@ -5,10 +5,15 @@ import it.polimi.ingsw.gui.JoinGameMenuStateGUI;
 import it.polimi.ingsw.network.BaseClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class LobbyMenuController implements FXMLController {
 
+    public BorderPane popup;
+    public Label popupLabel;
     private BaseClient client;
     private Stage stage;
 
@@ -18,6 +23,10 @@ public class LobbyMenuController implements FXMLController {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    public void initializeLobbyMenu() {
+        popup.setVisible(false);
     }
 
     @FXML
@@ -38,5 +47,14 @@ public class LobbyMenuController implements FXMLController {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    public void handleClosePopUp() {
+        popup.setVisible(false);
+    }
+
+    public void showGameClosedPopup(String msg) {
+        popupLabel.setText(msg);
+        popup.setVisible(true);
     }
 }

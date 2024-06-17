@@ -4,6 +4,7 @@ import it.polimi.ingsw.core.ClientState;
 import it.polimi.ingsw.gui.Controller.LobbyMenuController;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 public class LobbyMenuStateGUI implements ClientState {
@@ -21,6 +22,7 @@ public class LobbyMenuStateGUI implements ClientState {
     @Override
     public void display() {
         controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/LobbyMenuState.fxml");
+        controller.initializeLobbyMenu();
     }
 
 
@@ -28,8 +30,10 @@ public class LobbyMenuStateGUI implements ClientState {
         return "LobbyMenuStateGUI";
     }
 
-    public void refresh(String msg) {
-
+    public void gameClosedNotification(String msg) {
+        Platform.runLater(() -> {
+            controller.showGameClosedPopup(msg);
+        });
 
     }
 

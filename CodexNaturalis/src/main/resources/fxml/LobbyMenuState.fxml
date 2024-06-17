@@ -4,9 +4,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.LobbyMenuController">
     <StackPane styleClass="scene-dimensions,scene-background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -35,4 +36,17 @@
     </ImageView>
    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="128.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="40.0">
    </Button>
+   <BorderPane fx:id="popup" layoutX="600.0" layoutY="271.0" prefHeight="229.0" prefWidth="200.0" styleClass="popup">
+      <top>
+         <HBox prefHeight="43.0" prefWidth="498.0" BorderPane.alignment="CENTER">
+            <children>
+               <Label alignment="CENTER" prefHeight="38.0" prefWidth="374.0" styleClass="normal-label" text="INFO" />
+               <Button mnemonicParsing="false" onMouseClicked="#handleClosePopUp" prefHeight="40.0" prefWidth="128.0" style="-fx-background-color: #a2ecbb;" text="X" />
+            </children>
+         </HBox>
+      </top>
+      <center>
+         <Label fx:id="popupLabel" alignment="CENTER" styleClass="normal-label" text="The game has been closed because Player finished the game " BorderPane.alignment="CENTER" />
+      </center>
+   </BorderPane>
 </AnchorPane>

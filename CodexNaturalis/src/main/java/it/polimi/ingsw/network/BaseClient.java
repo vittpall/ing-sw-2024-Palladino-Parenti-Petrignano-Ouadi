@@ -207,7 +207,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
             Platform.runLater(() -> {
                 setCurrentState(new LobbyMenuStateGUI(this.stageUI, this));
                 getClientCurrentState().display();
-                ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
+                ((LobbyMenuStateGUI) getClientCurrentState()).gameClosedNotification(msg);
             });
         }
 
