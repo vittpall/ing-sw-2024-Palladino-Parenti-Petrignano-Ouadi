@@ -90,8 +90,20 @@ abstract public class BaseClient implements VirtualView, GameListener {
         }
     }
 
+    private static Throwable getInitialCause(Throwable thrownException) {
+        Throwable thrownExceptionReserched;
+        while((thrownExceptionReserched = thrownException.getCause()) != null)
+        {
+            thrownException = thrownExceptionReserched;
+        }
+        return thrownException;
+    }
+
+    @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
     private static void showExceptionError(Throwable thrownException) {
-        if(thrownException instanceof RuntimeException)
+        Throwable throwableToDispatch = getInitialCause(thrownException);
+
+        if(throwableToDispatch instanceof RemoteException)
         {
             System.out.println("The server has crashed, thanks for playing");
             System.exit(0);

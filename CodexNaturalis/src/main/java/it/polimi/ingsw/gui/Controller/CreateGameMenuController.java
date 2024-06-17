@@ -8,6 +8,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 
 public class CreateGameMenuController implements FXMLController {
@@ -33,10 +34,8 @@ public class CreateGameMenuController implements FXMLController {
             client.getClientCurrentState().display();
         } catch (RemoteException e) {
             throw new RemoteException();
-        }
-        catch (Exception e) {
-            feedbackLabel.setText("Error creating game. Please try again: " + e.getMessage());
-            e.printStackTrace();
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error in creating game");
         }
     }
 
