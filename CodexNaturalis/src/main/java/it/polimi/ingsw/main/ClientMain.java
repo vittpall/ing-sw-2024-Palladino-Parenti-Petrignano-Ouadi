@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.rmi.NotBoundException;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Scanner;
@@ -62,9 +65,10 @@ public class ClientMain extends Application {
             } else {
                  setupRMIClient(useTUI ? "TUI" : "GUI", stage);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Failed to initialize client: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Failed to initialize Socket client: " + e.getMessage());
+        } catch (ClassNotFoundException | InterruptedException | NotBoundException e) {
+            System.out.println("Failed to initialize RMI client: " + e.getMessage());
         }
     }
 
@@ -76,7 +80,7 @@ public class ClientMain extends Application {
         client.run();
     }
 
-    private void setupRMIClient(String interfaceType, Stage stage) throws Exception {
+    private void setupRMIClient(String interfaceType, Stage stage) throws IOException, NotBoundException, InterruptedException, ClassNotFoundException {
         Registry registry = LocateRegistry.getRegistry(serverAddress, 1234);
         VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
         this.client = new RMIClient(server, interfaceType, stage);
