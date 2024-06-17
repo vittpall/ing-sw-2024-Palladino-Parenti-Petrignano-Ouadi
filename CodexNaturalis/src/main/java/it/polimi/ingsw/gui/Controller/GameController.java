@@ -16,6 +16,7 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
@@ -36,16 +37,13 @@ public class GameController implements FXMLController {
     public HBox goldenDeck;
     public VBox playerHandBox;
     public ScrollPane gameBoardScrollPane;
-    public Button Player3;
-    public Button Player2;
-    public Button Player1;
-    public Button Player0;
     public Label infoGame;
     public Label titlePopUp;
     public Button closePopUpButton;
     public Label messagePopUp;
     public BorderPane popUp;
     public Button showBackButton;
+    public TabPane playerDeskTabPane;
     private BaseClient client;
     private Stage stage;
     private boolean playCardFaceDown = false;
@@ -64,6 +62,11 @@ public class GameController implements FXMLController {
         double vValue = (gameBoard.getPrefHeight() - gameBoardScrollPane.getViewportBounds().getHeight()) / 2 / gameBoard.getPrefHeight();
         gameBoardScrollPane.setHvalue(hValue);
         gameBoardScrollPane.setVvalue(vValue);
+
+        playerDeskTabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
+            int selectedIndex = playerDeskTabPane.getSelectionModel().getSelectedIndex();
+            handleShowPlayerDesk(selectedIndex);
+        });
     }
 
 
@@ -113,23 +116,22 @@ public class GameController implements FXMLController {
             popUp.setVisible(false);
             String username = client.getUsername();
             ArrayList<Player> players = client.getPlayers(client.getIdGame());
-            Player0.setText(username.equals(players.getFirst().getUsername()) ? "Your desk" : players.getFirst().getUsername() + " desk");
-            Player1.setText(username.equals(players.get(1).getUsername()) ? "Your desk" : players.get(1).getUsername() + " desk");
 
-            switch (client.getnPlayer(client.getIdGame())) {
-                case 2:
-                    Player2.setVisible(false);
-                    Player3.setVisible(false);
-                    break;
-                case 3:
-                    Player2.setText(username.equals(players.get(2).getUsername()) ? "Your desk" : players.get(2).getUsername() + " desk");
-                    Player3.setVisible(false);
-                    break;
-                case 4:
-                    Player2.setText(username.equals(players.get(2).getUsername()) ? "Your desk" : players.get(2).getUsername() + " desk");
-                    Player3.setText(username.equals(players.get(3).getUsername()) ? "Your desk" : players.get(3).getUsername() + " desk");
-                    break;
+            for (int i = 0; i < playerDeskTabPane.getTabs().size(); i++) {
+                Tab tab = playerDeskTabPane.getTabs().get(i);
+                if (i < players.size()) {
+                    tab.setDisable(false);
+                    if (players.get(i).getUsername().equals(username)) {
+                        tab.setText("Your Desk");
+                        playerDeskTabPane.getSelectionModel().select(i);
+                    } else {
+                        tab.setText(players.get(i).getUsername() + "'s Desk");
+                    }
+                } else {
+                    tab.setDisable(true);
+                }
             }
+
             loadDeskCards();
             loadObjectiveCards();
             loadUsableCards();
@@ -148,6 +150,7 @@ public class GameController implements FXMLController {
 
     private void loadDeskCards() throws IOException, InterruptedException {
         playerDeskShown = client.getUsername();
+        playerDeskTabPane.getSelectionModel().select(client.getIdClientIntoGame());
         gameBoard.getChildren().clear();
         HashMap<Point, GameCard> deskCards = client.getPlayerDesk();
         for (Map.Entry<Point, GameCard> entry : deskCards.entrySet()) {
@@ -374,75 +377,21 @@ public class GameController implements FXMLController {
         updatePlayerHandInteraction();
     }
 
-    public void handleShowPlayer0Desk() {
+    public void handleShowPlayerDesk(int playerIndex) {
         try {
-            if (!playerDeskShown.equals(client.getPlayers(client.getIdGame()).getFirst().getUsername())) {
-                if (client.getPlayers(client.getIdGame()).getFirst().getUsername().equals(client.getUsername())) {
+            if (!playerDeskShown.equals(client.getPlayers(client.getIdGame()).get(playerIndex).getUsername())) {
+                if (client.getUsername().equals(client.getPlayers(client.getIdGame()).get(playerIndex).getUsername())) {
                     isYourDeskShowing = true;
                     loadDeskCards();
                     if (isPlayerTurn())
                         showAvailablePositions();
                 } else {
                     isYourDeskShowing = false;
-                    loadPlayerDesk(0);
+                    loadPlayerDesk(playerIndex);
                 }
             }
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void handleShowPlayer1Desk() {
-        try {
-            if (!playerDeskShown.equals(client.getPlayers(client.getIdGame()).get(1).getUsername())) {
-                if (client.getUsername().equals(client.getPlayers(client.getIdGame()).get(1).getUsername())) {
-                    isYourDeskShowing = true;
-                    loadDeskCards();
-                    if (isPlayerTurn())
-                        showAvailablePositions();
-                } else {
-                    isYourDeskShowing = false;
-                    loadPlayerDesk(1);
-                }
-            }
-
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void handleShowPlayer2Desk() {
-        try {
-            if (!playerDeskShown.equals(client.getPlayers(client.getIdGame()).get(2).getUsername())) {
-                if (client.getUsername().equals(client.getPlayers(client.getIdGame()).get(2).getUsername())) {
-                    isYourDeskShowing = true;
-                    loadDeskCards();
-                    if (isPlayerTurn())
-                        showAvailablePositions();
-                } else {
-                    isYourDeskShowing = false;
-                    loadPlayerDesk(2);
-                }
-            }
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void handleShowPlayer3Desk() {
-        try {
-            if (!playerDeskShown.equals(client.getPlayers(client.getIdGame()).get(3).getUsername())) {
-                if (client.getUsername().equals(client.getPlayers(client.getIdGame()).get(3).getUsername())) {
-                    isYourDeskShowing = true;
-                    loadDeskCards();
-                    if (isPlayerTurn())
-                        showAvailablePositions();
-                } else {
-                    isYourDeskShowing = false;
-                    loadPlayerDesk(3);
-                }
-            }
-        } catch (IOException | InterruptedException e) {
+            //TODO Implementare un sistema di gestione degli errori
             throw new RuntimeException(e);
         }
     }
@@ -456,6 +405,7 @@ public class GameController implements FXMLController {
             GameCard card = entry.getValue();
             gameBoard.addCard(card, !card.isPlayedFaceDown(), p.x, p.y);
         }
+        playerDeskTabPane.getSelectionModel().select(i);
     }
 
     public void setMyTurn(String usernameCurrentPlayer) {
