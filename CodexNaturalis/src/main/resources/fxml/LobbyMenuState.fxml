@@ -33,9 +33,6 @@
     <!-- Bottom-Right Corner -->
     <ImageView scaleX="-1" styleClass="corner-image" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0">
     </ImageView>
-   <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="128.0" style="-fx-background-color: #a2ecbb;" text="EXIT" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
-      <font>
-         <Font name="Book Antiqua Bold Italic" size="14.0" />
-      </font>
+   <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="128.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="40.0">
    </Button>
 </AnchorPane>

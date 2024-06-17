@@ -20,15 +20,9 @@
                     <Insets top="-100.0" /> <!-- Negative margin to move the image a bit higher than center -->
                 </VBox.margin>
             </ImageView>
-            <Label fx:id="errorLabel" prefHeight="40.0" prefWidth="223.0" textFill="#f80300">
-                <font>
-                    <Font size="14.0" />
-                </font>
+            <Label fx:id="errorLabel" styleClass="normal-label" prefHeight="40.0" prefWidth="223.0" textFill="#f80300">
             </Label>
-            <Label text="Before playing, choose a username">
-                <font>
-                    <Font name="Book Antiqua Bold Italic" size="15.0" />
-                </font>
+            <Label styleClass="normal-label" text="Before playing, choose a username">
             </Label>
             <TextField fx:id="usernameField" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="19.0" prefWidth="200.0" promptText="Enter your username here" />
 

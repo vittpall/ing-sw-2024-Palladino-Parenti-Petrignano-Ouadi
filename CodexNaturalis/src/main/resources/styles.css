@@ -3,12 +3,17 @@
 }
 
 .title-label {
-    -fx-font-size: 20px;
+    -fx-font-size: 24px;
     -fx-font-family: 'Book Antiqua Bold Italic';
 }
 
 .normal-label {
     -fx-font-size: 14px;
+    -fx-font-family: 'Book Antiqua Bold Italic';
+}
+
+.little-label {
+    -fx-font-size: 12px;
     -fx-font-family: 'Book Antiqua Bold Italic';
 }
 

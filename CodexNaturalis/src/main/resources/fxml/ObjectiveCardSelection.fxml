@@ -13,35 +13,25 @@
     <ImageView fitHeight="201.0" fitWidth="1012.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../Images/CN_decoration10.png" />
     </ImageView>
-    <HBox alignment="CENTER" prefHeight="186.0" prefWidth="1012.0" spacing="50" style="-fx-background-color: #f8f1c9;">
+   <Label styleClass="title-label" text="CHOOSE YOURE OBJECTIVE CARD">
+   </Label>
+    <HBox alignment="CENTER" prefHeight="169.0" prefWidth="1012.0" spacing="50" style="-fx-background-color: #f8f1c9;">
         <padding>
             <Insets bottom="20" left="20" right="20" top="20" />
         </padding>
-        <VBox fx:id="card1Container" alignment="CENTER" prefHeight="127.0" prefWidth="111.0" spacing="10">
-            <Button onAction="#handleSelectCard1" style="-fx-background-color: #a2ecbb;" text="Choose This Card">
-                <font>
-                    <Font name="Book Antiqua Bold Italic" size="12.0" />
-                </font>
-            <VBox.margin>
-               <Insets />
-            </VBox.margin>
+        <VBox fx:id="card1Container" alignment="CENTER" spacing="10">
+            <Button onAction="#handleSelectCard1" style="-fx-background-color: #a2ecbb;" styleClass="little-label" text="Choose This Card">
             </Button>
         </VBox>
-        <VBox fx:id="card2Container" alignment="CENTER" spacing="10.0">
-            <Button onAction="#handleSelectCard2" style="-fx-background-color: #a6f84b;" text="Choose This Card">
-                <font>
-                    <Font name="Book Antiqua Bold Italic" size="12.0" />
-                </font>
+        <VBox fx:id="card2Container" alignment="CENTER" spacing="10">
+            <Button onAction="#handleSelectCard2" style="-fx-background-color: #a6f84b;" styleClass="little-label" text="Choose This Card">
             </Button>
         </VBox>
     </HBox>
+    <Label fx:id="messageLabel" />
     <ImageView fitHeight="201.0" fitWidth="1012.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
         <Image url="@../Images/CN_decoration10.png" />
     </ImageView>
-    <Label fx:id="messageLabel" />
-   <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="78.0" style="-fx-background-color: #a2ecbb;" text="EXIT">
-      <font>
-         <Font name="Book Antiqua Bold Italic" size="14.0" />
-      </font>
+   <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="78.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT">
    </Button>
 </VBox>

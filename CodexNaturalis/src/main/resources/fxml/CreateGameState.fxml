@@ -65,9 +65,7 @@
          <Point3D x="90.0" z="1.0" />
       </rotationAxis>
    </ImageView>
-   <Button layoutX="668.0" layoutY="745.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #a2ecbb;" text="EXIT" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="11.0">
-      <font>
-         <Font name="Book Antiqua Bold Italic" size="14.0" />
-      </font></Button>
+   <Button layoutX="668.0" layoutY="745.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="11.0">
+   </Button>
 
 </AnchorPane>

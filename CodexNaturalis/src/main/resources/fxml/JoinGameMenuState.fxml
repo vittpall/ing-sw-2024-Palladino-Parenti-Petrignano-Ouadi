@@ -14,15 +14,9 @@
     <VBox layoutX="11.0" layoutY="182.0" prefHeight="347.0" prefWidth="780.0" spacing="10" style="-fx-background-color: #f8f1c9;" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="9.0">
 
         <ListView fx:id="gamesListView" prefHeight="239.0" prefWidth="780.0" style="-fx-background-color: #f8f1c9;" />
-        <Button fx:id="joinGameButton" disable="true" onAction="#handleJoinGame" style="-fx-background-color: #6bf8f3;" text="Join Selected Game">
-            <font>
-                <Font name="Book Antiqua Bold Italic" size="12.0" />
-            </font>
+        <Button fx:id="joinGameButton" disable="true" onAction="#handleJoinGame" style="-fx-background-color: #6bf8f3;" styleClass="little-label" text="Join Selected Game">
         </Button>
-        <Button fx:id="createGameButton" onAction="#handleCreateGame" style="-fx-background-color: #a2ecbb;" text="Create New Game">
-            <font>
-                <Font name="Book Antiqua Bold Italic" size="12.0" />
-            </font>
+        <Button fx:id="createGameButton" onAction="#handleCreateGame" style="-fx-background-color: #a2ecbb;" styleClass="little-label" text="Create New Game">
         </Button>
     </VBox>
     <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="600.0" layoutY="704.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.bottomAnchor="0.5829544067382812" AnchorPane.rightAnchor="0.0">
@@ -57,10 +51,7 @@
              <Font name="Book Antiqua Bold Italic" size="36.0" />
          </font>
      </Label>
-   <Button layoutX="8.0" layoutY="734.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #a2ecbb;" text="EXIT">
-      <font>
-         <Font name="Book Antiqua Bold Italic" size="14.0" />
-      </font>
+   <Button layoutX="8.0" layoutY="734.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT">
    </Button>
 
 </AnchorPane>
