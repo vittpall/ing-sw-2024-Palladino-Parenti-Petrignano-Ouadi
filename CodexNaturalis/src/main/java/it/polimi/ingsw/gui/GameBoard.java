@@ -43,4 +43,21 @@ public class GameBoard extends Pane {
         this.getChildren().add(cardView);
     }
 
+    public void addTokenToCard(int x, int y, String imagePath, boolean isBlackToken) {
+        CardView cardView = cards.get(new Point(x, y));
+        if (cardView != null) {
+            double percentX = isBlackToken ? TokenView.BLACK_TOKEN_X : TokenView.OTHER_TOKEN_X;
+            double percentY = isBlackToken ? TokenView.BLACK_TOKEN_Y : TokenView.OTHER_TOKEN_Y;
+
+            TokenView token = new TokenView(imagePath, percentX, percentY);
+            // Calcola la posizione del token basata sulle percentuali e sulla dimensione della carta
+            double tokenX = cardView.getLayoutX() + token.getOffsetX() * CardView.CARD_WIDTH - token.getFitWidth() / 2;
+            double tokenY = cardView.getLayoutY() + token.getOffsetY() * CardView.CARD_HEIGHT - token.getFitHeight() / 2;
+
+            token.relocate(tokenX, tokenY);
+            this.getChildren().add(token);
+        }
+    }
+
+
 }

@@ -120,7 +120,7 @@ public class GameController {
         String message = "\n----------------------------------\n" +
                 "Player " + model.getPlayers().get(idClientIntoGame).getUsername() + " played the starter card";
         HashMap<String, Integer> playersPoints = new HashMap<>();
-        for(Player player : model.getPlayers()) {
+        for (Player player : model.getPlayers()) {
             playersPoints.put(player.getUsername(), player.getPoints());
         }
         listeners.get("GameRounds").notifyPlayedCard(message, playersPoints, model.getPlayers().get(idClientIntoGame).getUsername());
@@ -146,7 +146,7 @@ public class GameController {
         return model.getAvailableColors();
     }
 
-    public synchronized void setTokenColor(int idClientIntoGame, TokenColor tokenColor, GameListener playerListener) throws IOException {
+    public synchronized TokenColor setTokenColor(int idClientIntoGame, TokenColor tokenColor, GameListener playerListener) throws IOException {
         model.setTokenColor(idClientIntoGame, tokenColor);
         String message = "\n------------------------------------\n" +
                 "Player " + model.getPlayers().get(idClientIntoGame).getUsername() +
@@ -154,6 +154,7 @@ public class GameController {
         ArrayList<TokenColor> avColors = model.getAvailableColors();
         listeners.get("ColorSelection").unSubscribeListener(playerListener);
         listeners.get("ColorSelection").notifyColorSelection(message, avColors);
+        return tokenColor;
     }
 
     public ArrayList<Player> getAllPlayers() {
@@ -236,7 +237,7 @@ public class GameController {
                 gameState = GameState.LAST_ROUND;
             else
                 gameState = GameState.FINISHING_ROUND_BEFORE_LAST;
-            String username =  model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername();
+            String username = model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername();
             listeners.get("GameRounds").notifyLastTurnSet(username);
         }
         if (gameState == GameState.FINISHING_ROUND_BEFORE_LAST && model.getCurrentPlayerIndex() == nPlayers - 1) {

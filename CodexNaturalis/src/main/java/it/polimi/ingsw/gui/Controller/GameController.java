@@ -154,6 +154,13 @@ public class GameController implements FXMLController {
             Point p = entry.getKey();
             GameCard card = entry.getValue();
             gameBoard.addCard(card, !card.isPlayedFaceDown(), p.x, p.y);
+            if (p.x == 0 && p.y == 0) {
+                if (client.getIdClientIntoGame() == 0)
+                    gameBoard.addTokenToCard(0, 0, Objects.requireNonNull(getClass().getResource("/Images/CODEX_pion_noir.png")).toExternalForm(), true);
+
+                gameBoard.addTokenToCard(0, 0, Objects.requireNonNull(getClass().getResource("/Images/" + client.getTokenColor().getImageName())).toExternalForm(), false);
+            }
+
         }
     }
 

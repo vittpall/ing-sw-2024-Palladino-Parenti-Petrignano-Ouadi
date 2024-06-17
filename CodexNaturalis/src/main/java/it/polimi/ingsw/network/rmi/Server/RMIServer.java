@@ -4,7 +4,6 @@ import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
@@ -18,7 +17,6 @@ import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.HeartBeat;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
-import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.awt.*;
 import java.io.IOException;
@@ -227,8 +225,8 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public void setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor, GameListener playerListener) throws IOException {
-        lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor, playerListener);
+    public TokenColor setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor, GameListener playerListener) throws IOException {
+        return lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor, playerListener);
     }
 
     public int getPoints(int idGame, int idClientIntoGame) throws RemoteException {

@@ -309,7 +309,8 @@ public class SocketClient extends BaseClient {
     @Override
     public void setTokenColor(TokenColor tokenColor) throws IOException, InterruptedException {
         SelectTokenColorMsg request = new SelectTokenColorMsg(getIdGame(), idClientIntoGame, tokenColor);
-        sendRequest(request);
+        ServerToClientMsg response = sendRequest(request);
+        setUserTokenColor((TokenColor) response.getResponse().getResponseReturnable());
 
     }
 

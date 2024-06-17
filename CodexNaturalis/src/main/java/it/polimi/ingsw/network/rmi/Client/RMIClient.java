@@ -158,7 +158,9 @@ public class RMIClient extends BaseClient {
 
     @Override
     public void setTokenColor(TokenColor tokenColor) throws IOException {
-        server.setTokenColor(getIdGame(), idClientIntoGame, tokenColor, this);
+        TokenColor token = server.setTokenColor(getIdGame(), idClientIntoGame, tokenColor, this);
+        setUserTokenColor(token);
+
     }
 
     public int getPoints() throws RemoteException {
