@@ -219,11 +219,6 @@ public class GameController implements FXMLController {
             if (db.hasString()) {
                 try {
                     handlePositionSelection(point, Integer.parseInt(db.getString()));
-                    loadPlayerHand();
-                    updatePlayerHandInteraction();
-                    loadDeskCards();
-                    updatePlayerDrawInteraction();
-                    infoGame.setText("It's your turn: you should draw a card");
                 } catch (IOException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -326,11 +321,13 @@ public class GameController implements FXMLController {
             CardView cardView = (CardView) playerHandBox.getChildren().remove(cardIndex);
             gameBoard.addCardView(cardView, selectedPoint.x, selectedPoint.y);
             clearPlaceholders();
-
+            loadPlayerHand();
+            updatePlayerHandInteraction();
+            loadDeskCards();
+            updatePlayerDrawInteraction();
+            infoGame.setText("It's your turn: you should draw a card");
         } catch (RequirementsNotMetException | PlaceNotAvailableException | CardNotFoundException e) {
             showError("Requirements not met");
-            showAvailablePositions();
-
         }
     }
 
