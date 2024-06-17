@@ -56,6 +56,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
         waitingForCloseGameNotification = false;
         notificationsQueue = new LinkedBlockingQueue<>();
         usefulData = UsefulData.getInstance();
+        Thread.setDefaultUncaughtExceptionHandler(BaseClient::handleException);
+
         new Thread(() -> {
             try {
                 notificationsHandler();
@@ -75,6 +77,27 @@ abstract public class BaseClient implements VirtualView, GameListener {
     public TokenColor getTokenColor() {
         return userTokenColor;
     }
+
+    private static void handleException(Thread thread, Throwable thrownException) {
+        if(Platform.isFxApplicationThread())
+        {
+            showExceptionError(thrownException);
+        }
+        else
+        {
+            System.out.println("An error occurred: " + thrownException.getMessage());
+            thrownException.printStackTrace();
+        }
+    }
+
+    private static void showExceptionError(Throwable thrownException) {
+        if(thrownException instanceof RuntimeException)
+        {
+            System.out.println("The server has crashed, thanks for playing");
+            System.exit(0);
+        }
+    }
+
 
     public Integer getIdGame() {
         return idGame;

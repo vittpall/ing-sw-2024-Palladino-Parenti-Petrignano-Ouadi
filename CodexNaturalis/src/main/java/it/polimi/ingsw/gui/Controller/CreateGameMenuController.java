@@ -20,7 +20,7 @@ public class CreateGameMenuController implements FXMLController {
 
 
     @FXML
-    private void handleCreateGame() {
+    private void handleCreateGame() throws RemoteException {
         Integer nPlayers = playerChoiceBox.getValue();
         if (nPlayers == null) {
             feedbackLabel.setText("Please select the number of players.");
@@ -32,8 +32,7 @@ public class CreateGameMenuController implements FXMLController {
             client.setCurrentState(new WaitingForPlayersGUI(stage, client));
             client.getClientCurrentState().display();
         } catch (RemoteException e) {
-            System.out.println("The server has crashed, thanks for playing");
-            System.exit(0);
+            throw new RemoteException();
         }
         catch (Exception e) {
             feedbackLabel.setText("Error creating game. Please try again: " + e.getMessage());

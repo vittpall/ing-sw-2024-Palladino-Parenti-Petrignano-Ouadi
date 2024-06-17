@@ -64,7 +64,7 @@ public class JoinGameMenuController implements FXMLController {
             }
     }
 
-    public void handleJoinGame() {
+    public void handleJoinGame() throws RemoteException {
         Integer selectedGame = gamesListView.getSelectionModel().getSelectedItem();
         if (selectedGame != null) {
             try {
@@ -72,7 +72,10 @@ public class JoinGameMenuController implements FXMLController {
                 messageLabel.setText("Joined game: " + selectedGame);
                 client.setCurrentState(new WaitingForPlayersGUI(stage, client));
                 client.getClientCurrentState().display();
-            } catch (Exception e) {
+            } catch (RemoteException e) {
+                throw new RemoteException();
+            }
+            catch (Exception e) {
                 messageLabel.setText("Error joining game: " + e.getMessage());
             }
         } else {

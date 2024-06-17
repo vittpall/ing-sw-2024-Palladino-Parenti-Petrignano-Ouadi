@@ -37,20 +37,23 @@ public class InitializeStarterCardController implements FXMLController {
         }
     }
 
-    public void handlePlayFront() {
+    public void handlePlayFront() throws RemoteException {
         playStarterCard(false);
     }
 
-    public void handlePlayBack() {
+    public void handlePlayBack() throws RemoteException {
         playStarterCard(true);
     }
 
-    private void playStarterCard(boolean faceDown) {
+    private void playStarterCard(boolean faceDown) throws RemoteException {
         try {
             client.playStarterCard(faceDown);
             client.setCurrentState(new GameStateGUI(stage, client));
             client.getClientCurrentState().display();
-        } catch (PlaceNotAvailableException | CardNotFoundException | RequirementsNotMetException | IOException |
+        } catch (RemoteException e) {
+            throw new RemoteException();
+        }
+        catch (PlaceNotAvailableException | CardNotFoundException | RequirementsNotMetException | IOException |
                  InterruptedException ex) {
             System.out.println("Error playing the card: " + ex.getMessage());
         }

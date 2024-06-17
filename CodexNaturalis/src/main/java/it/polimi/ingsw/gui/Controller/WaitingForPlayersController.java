@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class WaitingForPlayersController implements FXMLController {
@@ -27,7 +29,7 @@ public class WaitingForPlayersController implements FXMLController {
     Label waitingForNPlayersLabel;
 
 
-    public void initializeWaitingForPlayers() {
+    public void initializeWaitingForPlayers() throws RemoteException {
 
         try {
             ArrayList<Player> players = client.getPlayers(client.getIdGame());
@@ -67,7 +69,11 @@ public class WaitingForPlayersController implements FXMLController {
                 StartGameButton.setVisible(false);
                 waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame()) - size) + " players to join the game...");
             }
-        } catch (IOException | InterruptedException e) {
+        } catch (RemoteException e)
+        {
+            throw new RemoteException();
+        }
+        catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }

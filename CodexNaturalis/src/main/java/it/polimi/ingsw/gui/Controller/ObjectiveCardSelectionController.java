@@ -23,7 +23,7 @@ public class ObjectiveCardSelectionController implements FXMLController {
     private ArrayList<ObjectiveCard> playerObjectiveCards;
 
 
-    public void loadCards() {
+    public void loadCards() throws RemoteException {
         try {
             playerObjectiveCards = client.getPlayerObjectiveCards();
             if (playerObjectiveCards.size() >= 2) {
@@ -36,30 +36,33 @@ public class ObjectiveCardSelectionController implements FXMLController {
                 messageLabel.setText("Not enough cards loaded.");
             }
         } catch (RemoteException ex) {
-            messageLabel.setText("Error while getting the drawn objective cards: " + ex.getMessage());
+            throw new RemoteException();
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void handleSelectCard1() {
+    public void handleSelectCard1() throws RemoteException {
         if (!playerObjectiveCards.isEmpty()) {
             selectCard(0);
         }
     }
 
-    public void handleSelectCard2() {
+    public void handleSelectCard2() throws RemoteException {
         if (playerObjectiveCards.size() > 1) {
             selectCard(1);
         }
     }
 
-    private void selectCard(int cardIndex) {
+    private void selectCard(int cardIndex) throws RemoteException {
         try {
             client.setObjectiveCard(cardIndex);
             client.setCurrentState(new InitializeStarterCardStateGUI(stage, client));
             client.getClientCurrentState().display();
-        } catch (CardNotFoundException | IOException | InterruptedException ex) {
+        } catch (RemoteException e) {
+            throw new RemoteException();
+        }
+        catch (CardNotFoundException | IOException | InterruptedException ex) {
             messageLabel.setText("Error selecting card: " + ex.getMessage());
         }
     }

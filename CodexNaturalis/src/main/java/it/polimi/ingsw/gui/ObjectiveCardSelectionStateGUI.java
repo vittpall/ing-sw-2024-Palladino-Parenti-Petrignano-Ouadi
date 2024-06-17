@@ -6,6 +6,8 @@ import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
+
 public class ObjectiveCardSelectionStateGUI implements ClientState {
     private final BaseClient client;
     private final Stage stage;
@@ -17,7 +19,7 @@ public class ObjectiveCardSelectionStateGUI implements ClientState {
     }
 
     @Override
-    public void display() {
+    public void display() throws RemoteException {
         controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/ObjectiveCardSelection.fxml");
         controller.loadCards();
     }

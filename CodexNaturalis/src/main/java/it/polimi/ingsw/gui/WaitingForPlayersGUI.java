@@ -8,6 +8,7 @@ import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 
 public class WaitingForPlayersGUI implements ClientState {
@@ -21,14 +22,10 @@ public class WaitingForPlayersGUI implements ClientState {
     }
 
     @Override
-    public void display() {
+    public void display() throws RemoteException {
         controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/WaitingForPlayers.fxml");
         controller.initializeWaitingForPlayers();
     }
-
-   
-
-    
 
     public String toString() {
         return "WaitingForPlayersGUI";
