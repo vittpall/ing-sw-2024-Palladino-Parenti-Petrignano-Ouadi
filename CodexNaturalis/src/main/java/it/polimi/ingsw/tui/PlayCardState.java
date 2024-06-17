@@ -26,7 +26,7 @@ public class PlayCardState implements ClientStateTUI {
     }
 
     @Override
-    public void display() {
+    public void display() throws RemoteException {
         System.out.println("|--------Play card state---------|");
         CardPrinter printer = new CardPrinter();
         try {
@@ -35,8 +35,7 @@ public class PlayCardState implements ClientStateTUI {
             showPlayerDesk(printer);
             showPlayerHand(printer);
         } catch (RemoteException ex) {
-            System.out.println("Error while getting the drawn objective cards");
-            System.out.println(ex.getMessage());
+            throw new RemoteException();
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (InterruptedException e) {

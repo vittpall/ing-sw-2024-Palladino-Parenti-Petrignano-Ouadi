@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public class ShowObjectiveCardsState implements ClientStateTUI {
@@ -15,7 +16,7 @@ public class ShowObjectiveCardsState implements ClientStateTUI {
         this.scanner = scanner;
     }
     @Override
-    public void display() {
+    public void display() throws RemoteException {
         System.out.println("|-------- Show objective cards ---------|");
         try{
             CardPrinter printer = new CardPrinter();
@@ -24,7 +25,11 @@ public class ShowObjectiveCardsState implements ClientStateTUI {
                 printer.printCard(card, false);
             System.out.println("|------- Your objective card is: -------|");
             printer.printCard(client.getPlayerObjectiveCard(), false);
-        }catch(IOException | InterruptedException e){
+        } catch (RemoteException ex)
+        {
+            throw new RemoteException();
+        }
+        catch(IOException | InterruptedException e){
             System.out.println("Error while getting the objective cards");
             System.out.println(e.getMessage());
         }

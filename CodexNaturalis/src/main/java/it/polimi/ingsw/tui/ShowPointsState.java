@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.BaseClient;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -17,7 +18,7 @@ public class ShowPointsState implements ClientStateTUI {
         this.scanner = scanner;
     }
     @Override
-    public void display() {
+    public void display() throws RemoteException {
         System.out.println("|-------- Show Points --------|");
 
         try{
@@ -28,7 +29,11 @@ public class ShowPointsState implements ClientStateTUI {
                 System.out.println("Player: " + player.getUsername() + " | Score: " + playerScore);
             }
             System.out.println("--------------------------------");
-        }catch (IOException | InterruptedException e){
+        } catch (RemoteException ex)
+        {
+            throw new RemoteException();
+        }
+        catch (IOException | InterruptedException e){
             System.out.println("Error while getting the points");
             System.out.println(e.getMessage());
         }

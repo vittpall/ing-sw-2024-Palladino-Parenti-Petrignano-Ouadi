@@ -27,7 +27,7 @@ public class InitializeStarterCardState implements ClientStateTUI {
     }
 
     @Override
-    public void display() {
+    public void display() throws RemoteException {
         CardPrinter printer = new CardPrinter();
         System.out.println("\n---------- Initialize starter card ----------");
         try {
@@ -53,8 +53,7 @@ public class InitializeStarterCardState implements ClientStateTUI {
             System.out.println("|   2. Play faced down 🎮            |");
             printer.printCard(playerStarterCard, true);
         } catch (RemoteException ex) {
-            System.out.println("Error while getting the drawn objective cards");
-            System.out.println(ex.getMessage());
+            throw new RemoteException();
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

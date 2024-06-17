@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
+
 public class LobbyMenuController implements FXMLController {
 
     public BorderPane popup;
@@ -30,13 +32,13 @@ public class LobbyMenuController implements FXMLController {
     }
 
     @FXML
-    private void handleCreateGame() {
+    private void handleCreateGame() throws RemoteException {
         client.setCurrentState(new CreateGameStateGUI(stage, client));
         client.getClientCurrentState().display();
     }
 
     @FXML
-    private void handleJoinGame() {
+    private void handleJoinGame() throws RemoteException {
         client.setCurrentState(new JoinGameMenuStateGUI(stage, client));
         client.getClientCurrentState().display();
     }

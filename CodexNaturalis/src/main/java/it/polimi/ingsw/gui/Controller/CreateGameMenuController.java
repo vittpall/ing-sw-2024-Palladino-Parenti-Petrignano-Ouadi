@@ -8,6 +8,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import java.rmi.RemoteException;
+
 public class CreateGameMenuController implements FXMLController {
     private Stage stage;
     @FXML
@@ -29,14 +31,18 @@ public class CreateGameMenuController implements FXMLController {
             client.createGame(client.getUsername(), nPlayers);
             client.setCurrentState(new WaitingForPlayersGUI(stage, client));
             client.getClientCurrentState().display();
-        } catch (Exception e) {
+        } catch (RemoteException e) {
+            System.out.println("The server has crashed, thanks for playing");
+            System.exit(0);
+        }
+        catch (Exception e) {
             feedbackLabel.setText("Error creating game. Please try again: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
 
-    public void handleBack() {
+    public void handleBack() throws RemoteException {
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
         client.getClientCurrentState().display();
     }

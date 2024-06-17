@@ -205,9 +205,13 @@ abstract public class BaseClient implements VirtualView, GameListener {
         if(isGUIMode)
         {
             Platform.runLater(() -> {
-                setCurrentState(new LobbyMenuStateGUI(this.stageUI, this));
-                getClientCurrentState().display();
-                ((LobbyMenuStateGUI) getClientCurrentState()).gameClosedNotification(msg);
+                try {
+                    setCurrentState(new LobbyMenuStateGUI(this.stageUI, this));
+                    getClientCurrentState().display();
+                    ((LobbyMenuStateGUI) getClientCurrentState()).gameClosedNotification(msg);
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             });
         }
 
@@ -517,9 +521,14 @@ abstract public class BaseClient implements VirtualView, GameListener {
     }
 
     public void showState() {
-        if (getClientCurrentState() instanceof ClientStateTUI clientStateTUI) {
-            clientStateTUI.display();
-            clientStateTUI.promptForInput();
+        try {
+            if (getClientCurrentState() instanceof ClientStateTUI clientStateTUI) {
+                clientStateTUI.display();
+                clientStateTUI.promptForInput();
+            }
+        } catch (RemoteException e) {
+            System.out.println("The server has crashed, thanks for playing");
+
         }
     }
 }

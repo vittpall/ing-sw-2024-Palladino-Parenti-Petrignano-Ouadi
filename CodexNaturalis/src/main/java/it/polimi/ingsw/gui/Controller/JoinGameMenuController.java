@@ -12,6 +12,7 @@ import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -79,12 +80,12 @@ public class JoinGameMenuController implements FXMLController {
         }
     }
 
-    public void handleCreateGame() {
+    public void handleCreateGame() throws RemoteException {
         client.setCurrentState(new CreateGameStateGUI(stage, client));
         client.getClientCurrentState().display();
     }
 
-    public void handleBack() {
+    public void handleBack() throws RemoteException {
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
         client.getClientCurrentState().display();
     }

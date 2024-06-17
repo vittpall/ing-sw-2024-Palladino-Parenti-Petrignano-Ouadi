@@ -17,7 +17,7 @@ public class GetWinnerState implements ClientStateTUI {
     }
 
     @Override
-    public void display() {
+    public void display() throws RemoteException {
         System.out.println("\n---------- Game ended----------");
         try {
             String winnerUsername = client.getWinner();
@@ -25,7 +25,7 @@ public class GetWinnerState implements ClientStateTUI {
             System.out.println("These are the points of every player :");
             client.getAllPlayers().stream().map(player -> "Player " + player.getUsername() + " has " + player.getPoints() + " points").forEach(System.out::println);
         } catch (RemoteException | InterruptedException e) {
-            System.out.println("Error while getting the winner");
+            throw new RemoteException();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -41,7 +41,7 @@ public class GetWinnerState implements ClientStateTUI {
                 try {
                     client.close();
                 } catch (RemoteException e) {
-                    e.printStackTrace();
+                    throw new RemoteException();
                 }
             default:
                 System.out.println("Invalid input");

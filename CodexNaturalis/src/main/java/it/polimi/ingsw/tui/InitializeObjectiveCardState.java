@@ -24,7 +24,7 @@ public class InitializeObjectiveCardState implements ClientStateTUI {
     }
 
     @Override
-    public void display() {
+    public void display() throws RemoteException {
         int nObjectiveCard = 1;
         CardPrinter printer = new CardPrinter();
         System.out.println("\n---------- Game Setup ----------");
@@ -37,8 +37,7 @@ public class InitializeObjectiveCardState implements ClientStateTUI {
                 nObjectiveCard++;
             }
         } catch (RemoteException ex) {
-            System.out.println("Error while getting the drawn objective cards");
-            System.out.println(ex.getMessage());
+            throw new RemoteException();
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.network.BaseClient;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public class DrawCardState implements ClientStateTUI {
@@ -17,7 +18,7 @@ public class DrawCardState implements ClientStateTUI {
     }
 
     @Override
-    public void display() {
+    public void display() throws RemoteException {
         CardPrinter printer = new CardPrinter();
         System.out.println("|-------Draw card state--------|");
         //mostrare i deck e mostrare le carte da poter scegliere
@@ -34,7 +35,11 @@ public class DrawCardState implements ClientStateTUI {
             for (GameCard card : client.getVisibleCardsDeck(2)) {
                 printer.printCard(card, false);
             }
-        } catch (IOException | InterruptedException ex) {
+        } catch (RemoteException e)
+        {
+            throw new RemoteException();
+        }
+        catch (IOException | InterruptedException ex) {
             System.out.println("Error while getting cards");
         }
 

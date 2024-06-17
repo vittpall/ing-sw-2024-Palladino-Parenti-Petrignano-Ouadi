@@ -64,7 +64,11 @@ public class JoinGameMenuState implements ClientStateTUI {
             }
             client.joinGame(availableGamesToShow.get(input), client.getUsername());
             client.setCurrentState(new WaitingForPlayersState(client, scanner));
-        } catch (InterruptedException | IOException ex) {
+        } catch(RemoteException ex)
+        {
+            throw new RemoteException();
+        }
+        catch (InterruptedException | IOException ex) {
             System.out.println("Error while joining the game");
         }
     }
