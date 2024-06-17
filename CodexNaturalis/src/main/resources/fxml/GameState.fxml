@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.GameController">
-    <ImageView fitHeight="596.0" fitWidth="358.0" layoutX="1156.0" layoutY="14.0">
+    <ImageView fitHeight="533.0" fitWidth="320.0" layoutX="1156.0" layoutY="14.0">
         <Image url="@../Images/Board.jpg" />
     </ImageView>
     <VBox alignment="TOP_CENTER" layoutX="37.0" layoutY="14.0">
@@ -55,7 +55,7 @@
           <HBox fx:id="goldenDeck" spacing="10" />
       </children>
    </VBox>
-   <BorderPane fx:id="popUp" layoutX="489.0" layoutY="577.0" prefHeight="200.0" prefWidth="502.0" styleClass="popup" AnchorPane.topAnchor="577.0">
+   <BorderPane fx:id="popUp" layoutX="641.0" layoutY="250.0" prefHeight="200.0" prefWidth="502.0" styleClass="popup" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="300.0">
       <top>
          <HBox prefHeight="32.0" prefWidth="500.0" BorderPane.alignment="CENTER">
             <children>

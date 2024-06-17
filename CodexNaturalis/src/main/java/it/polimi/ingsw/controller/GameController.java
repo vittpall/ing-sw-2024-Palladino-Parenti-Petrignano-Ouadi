@@ -117,6 +117,13 @@ public class GameController {
             gameState = GameState.ROUNDS;
         addListenerList("GameRounds");
         listeners.get("GameRounds").subscribeListener(playerListener);
+        String message = "\n----------------------------------\n" +
+                "Player " + model.getPlayers().get(idClientIntoGame).getUsername() + " played the starter card";
+        HashMap<String, Integer> playersPoints = new HashMap<>();
+        for(Player player : model.getPlayers()) {
+            playersPoints.put(player.getUsername(), player.getPoints());
+        }
+        listeners.get("GameRounds").notifyPlayedCard(message, playersPoints, model.getPlayers().get(idClientIntoGame).getUsername());
     }
 
     public ObjectiveCard getObjectiveCard(int idClientIntoGame) {
