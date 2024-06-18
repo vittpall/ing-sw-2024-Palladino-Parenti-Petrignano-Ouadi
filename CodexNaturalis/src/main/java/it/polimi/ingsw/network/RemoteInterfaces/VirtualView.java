@@ -94,5 +94,7 @@ public interface VirtualView extends Remote {
 
     void close() throws RemoteException;
 
+    void closeGameWhenEnded() throws IOException, InterruptedException;
+
     PlayerState getCurrentPlayerState() throws IOException, InterruptedException;
 }

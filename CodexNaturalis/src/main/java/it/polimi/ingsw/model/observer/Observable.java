@@ -58,8 +58,8 @@ public class Observable {
         notifyListeners(new ChatNotification(msg), null);
     }
 
-    public void notifyEndGame(String message){
-        notifyListeners(new EndGameNotification(message), null);
+    public void notifyEndGame(String winner, HashMap<String, Integer> scores) {
+        notifyListeners(new EndGameNotification(winner, scores), null);
     }
 
     public void notifyCloseGame(String msg) {

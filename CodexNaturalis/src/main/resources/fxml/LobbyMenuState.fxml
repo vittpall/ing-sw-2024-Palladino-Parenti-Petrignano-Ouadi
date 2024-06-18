@@ -38,15 +38,15 @@
    </Button>
    <BorderPane fx:id="popup" layoutX="600.0" layoutY="271.0" prefHeight="229.0" prefWidth="200.0" styleClass="popup">
       <top>
-         <HBox prefHeight="43.0" prefWidth="498.0" BorderPane.alignment="CENTER">
+         <HBox prefHeight="43.0" prefWidth="498.0" style="-fx-background-color: #2E8B57;" BorderPane.alignment="CENTER">
             <children>
-               <Label alignment="CENTER" prefHeight="38.0" prefWidth="374.0" styleClass="normal-label" text="INFO" />
-               <Button mnemonicParsing="false" onMouseClicked="#handleClosePopUp" prefHeight="40.0" prefWidth="128.0" style="-fx-background-color: #a2ecbb;" text="X" />
+               <Label alignment="CENTER" prefHeight="38.0" prefWidth="374.0" styleClass="normal-label" text="INFO" textFill="#a2ecbb" />
+               <Button mnemonicParsing="false" onMouseClicked="#handleClosePopUp" prefHeight="40.0" prefWidth="128.0" style="-fx-background-color: #2E8B57;" text="X" textFill="#a2ecbb" />
             </children>
          </HBox>
       </top>
       <center>
-         <Label fx:id="popupLabel" alignment="CENTER" styleClass="normal-label" text="The game has been closed because Player finished the game " BorderPane.alignment="CENTER" />
+         <Label fx:id="popupLabel" alignment="CENTER" styleClass="normal-label" text="The game has been closed because Player finished the game " textFill="SEAGREEN" BorderPane.alignment="CENTER" />
       </center>
    </BorderPane>
 </AnchorPane>

@@ -227,18 +227,17 @@ abstract public class BaseClient implements VirtualView, GameListener {
             ((GameStateGUI) getClientCurrentState()).lastTurnSetNotification(username);
     }
 
-    public synchronized void onEndGame(String msg) {
+    public synchronized void onEndGame(String winner, HashMap<String, Integer> scores) {
         if (!isGUIMode) {
-            System.out.println(msg);
-            if (getClientCurrentState() == null) {
-                display();
-                System.out.println("Type your command or 'exit' to quit:");
-            } else
-                System.out.println("You can go back to the main menu to see the winner");
-        } //else
-        //  getClientCurrentState().refresh(msg);
+           //TODO implement in tui mode
+        } else if(getClientCurrentState() instanceof GameStateGUI)
+            ((GameStateGUI) getClientCurrentState()).endGameNotification( winner, scores);
+        try{
+            closeGameWhenEnded();
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
-
     public synchronized void onGameClosed(String msg) {
         //to avoid trying close game already closed
         idGame = null;

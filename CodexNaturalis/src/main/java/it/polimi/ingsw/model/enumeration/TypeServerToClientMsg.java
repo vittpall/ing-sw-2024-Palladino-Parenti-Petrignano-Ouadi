@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.enumeration;
 
 public enum TypeServerToClientMsg {
+    CLOSE_GAME_WHEN_ENDED("CloseGameWhenEnded"),
     USER_ALREADY_TAKEN("UserAlreadyTaken"),
     AVAILABLE_COLORS("AvailableColors"),
     CONNECTION_CLOSED("ConnectionClosed"),

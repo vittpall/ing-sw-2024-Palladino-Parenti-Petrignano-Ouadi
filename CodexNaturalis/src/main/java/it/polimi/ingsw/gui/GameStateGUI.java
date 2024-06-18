@@ -7,6 +7,8 @@ import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+
 public class GameStateGUI implements ClientState {
 
     private final BaseClient client;
@@ -25,26 +27,28 @@ public class GameStateGUI implements ClientState {
         controller.initializeGame();
     }
 
-   
 
-    
-
-    public String toString()
-    {
+    public String toString() {
         return "GameState";
     }
 
-        public void refresh(String msg) {
+    public void refresh(String msg) {
 
     }
 
     public void cardPlayedRefresh(String username) {
         Platform.runLater(() -> controller.cardPlayedNotification(username));
     }
+
     public void changeTurnNotified(String usernameCurrentPlayer) {
         Platform.runLater(() -> controller.setMyTurn(usernameCurrentPlayer));
     }
-    public void lastTurnSetNotification(String username){
+
+    public void lastTurnSetNotification(String username) {
         Platform.runLater(() -> controller.lastTurnSetNotification(username));
+    }
+
+    public void endGameNotification(String winner, HashMap<String, Integer> scores) {
+        Platform.runLater(() -> controller.endGameNotification(winner, scores));
     }
 }

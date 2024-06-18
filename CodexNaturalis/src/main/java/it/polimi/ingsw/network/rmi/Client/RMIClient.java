@@ -210,6 +210,11 @@ public class RMIClient extends BaseClient {
         System.exit(0);
     }
 
+    @Override
+    public void closeGameWhenEnded() throws IOException {
+        server.closeGameWhenEnded(getIdGame());
+    }
+
     public void returnToLobby() throws IOException {
         removeUsername();
         if (getIdGame() != null)

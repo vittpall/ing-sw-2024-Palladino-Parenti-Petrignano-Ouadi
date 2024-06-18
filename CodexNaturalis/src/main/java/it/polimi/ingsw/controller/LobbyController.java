@@ -223,4 +223,7 @@ public class LobbyController {
     }
 
 
+    public void closeGameWhenEnded(Integer idGame) {
+        gameControllers.remove(idGame);
+    }
 }

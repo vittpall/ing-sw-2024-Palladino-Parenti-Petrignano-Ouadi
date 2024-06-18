@@ -198,14 +198,12 @@ public class GameController {
                 model.getPlayers().get(model.getCurrentPlayerIndex()).setPlayerState(PlayerState.PLAY_CARD);
                 listeners.get("GameRounds").notifyChangeTurn(content, model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername(), usernameSender);
             } else {
-                content = """
-
-                        ----------------------------------
-                        Every player finished his last turn
-                        Now you can see the winner of the game""";
-                winner = model.endGame();
                 gameState = GameState.ENDGAME;
-                listeners.get("GameRounds").notifyEndGame(content);
+                HashMap<String, Integer> playersPoints = new HashMap<>();
+                for (Player player : model.getPlayers()) {
+                    playersPoints.put(player.getUsername(), player.getPoints());
+                }
+                listeners.get("GameRounds").notifyEndGame(model.endGame(), playersPoints);
             }
         } else {
             String message = "\n----------------------------------\n" +

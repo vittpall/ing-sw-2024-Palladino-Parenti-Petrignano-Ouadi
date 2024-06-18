@@ -2,6 +2,8 @@ package it.polimi.ingsw.gui.Controller;
 
 import it.polimi.ingsw.gui.CardView;
 import it.polimi.ingsw.gui.GameBoard;
+import it.polimi.ingsw.gui.GetWinnerStateGUI;
+import it.polimi.ingsw.gui.ObjectiveCardSelectionStateGUI;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
@@ -27,6 +29,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.*;
 
@@ -52,6 +55,7 @@ public class GameController implements FXMLController {
     private String playerDeskShown;
 
     public void initialize() {
+        popUp.setVisible(false);
         gameBoard = new GameBoard();
         gameBoardContainer.getChildren().add(gameBoard);
 
@@ -113,7 +117,6 @@ public class GameController implements FXMLController {
 
     public void initializeGame() {
         try {
-            popUp.setVisible(false);
             String username = client.getUsername();
             ArrayList<Player> players = client.getPlayers(client.getIdGame());
 
@@ -128,7 +131,7 @@ public class GameController implements FXMLController {
                         tab.setText(players.get(i).getUsername() + "'s Desk");
                     }
                 } else {
-                    tab.setDisable(true);
+                    playerDeskTabPane.getTabs().remove(tab);
                 }
             }
 
@@ -454,6 +457,11 @@ public class GameController implements FXMLController {
 
     public void closePopUp() {
         popUp.setVisible(false);
+    }
+
+    public void endGameNotification(String winner, HashMap<String, Integer> scores) {
+        client.setCurrentState(new GetWinnerStateGUI(stage, client));
+        ((GetWinnerStateGUI)client.getClientCurrentState()).initializeWinner(winner, scores);
     }
 }
 

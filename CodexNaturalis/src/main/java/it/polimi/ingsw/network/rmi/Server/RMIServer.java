@@ -127,6 +127,11 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
+    public void closeGameWhenEnded(Integer idGame) throws RemoteException {
+        lobbyController.closeGameWhenEnded(idGame);
+    }
+
+    @Override
     public ArrayList<ObjectiveCard> getPlayerObjectiveCards(int idGame, int idPlayer, GameListener playerListener) throws RemoteException {
         return lobbyController.getObjectiveCards(idGame, idPlayer, playerListener);
     }
