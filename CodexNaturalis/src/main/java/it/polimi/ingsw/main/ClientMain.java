@@ -85,7 +85,10 @@ public class ClientMain extends Application {
             this.client = new RMIClient(server, interfaceType, stage);
             client.run();
         } catch (NotBoundException | IOException e) {
-            System.err.println("Failed to initialize RMI client: " + e.getMessage());
+            e.printStackTrace();
+            System.err.println("Something went wrong, restart the game...");
+       //     Thread.sleep(3000);
+            System.exit(0);
         }
     }
 
@@ -104,7 +107,7 @@ public class ClientMain extends Application {
     }
 
     @Override
-    public void stop() throws IOException, InterruptedException {
+    public void stop(){
         if (client != null)
                 client.close();
     }

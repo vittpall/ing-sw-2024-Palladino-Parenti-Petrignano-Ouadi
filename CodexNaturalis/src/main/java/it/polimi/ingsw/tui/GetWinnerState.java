@@ -38,11 +38,7 @@ public class GetWinnerState implements ClientStateTUI {
                 client.closeGame();
                 break;
             case 2:
-                try {
-                    client.close();
-                } catch (RemoteException e) {
-                    throw new RemoteException();
-                }
+                client.close();
             default:
                 System.out.println("Invalid input");
                 break;

@@ -92,7 +92,7 @@ public interface VirtualView extends Remote {
 
     boolean isGameStarted() throws IOException, InterruptedException;
 
-    void close() throws IOException, InterruptedException;
+    void close() throws RemoteException;
 
     PlayerState getCurrentPlayerState() throws IOException, InterruptedException;
 }

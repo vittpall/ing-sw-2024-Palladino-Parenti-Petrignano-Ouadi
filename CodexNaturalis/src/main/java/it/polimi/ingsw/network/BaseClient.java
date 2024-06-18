@@ -157,7 +157,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     protected abstract boolean checkState(RequestedActions action) throws IOException, InterruptedException, ClassNotFoundException;
 
-    public abstract void close() throws IOException, InterruptedException;
+    public abstract void close();
 
     public abstract void returnToLobby() throws IOException, InterruptedException;
 

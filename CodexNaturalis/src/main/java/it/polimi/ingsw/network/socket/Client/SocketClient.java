@@ -154,17 +154,17 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
-    public void close() throws IOException, InterruptedException {
+    public void close(){
         try {
             returnToLobby();
-        } catch (NullPointerException e) {
-            System.out.println("Thanks for playing");
+        } catch (NullPointerException | InterruptedException e) {
+            System.out.println("Something went wrong, restart the game...");
         }
         System.exit(0);
     }
 
     @Override
-    public void returnToLobby() throws IOException, InterruptedException {
+    public void returnToLobby() throws InterruptedException {
         ClosedConnectionMsg request = new ClosedConnectionMsg(getUsername(), getIdGame());
         sendRequest(request);
     }
