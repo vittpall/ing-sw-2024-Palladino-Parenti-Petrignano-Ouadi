@@ -173,7 +173,7 @@ public class RMIClient extends BaseClient {
     }
 
     @Override
-    public void run() throws IOException, ClassNotFoundException, InterruptedException {
+    public void run() throws IOException{
         this.server.connect(this);
         if (!isGUIMode())
             inputHandler();
@@ -201,8 +201,12 @@ public class RMIClient extends BaseClient {
     }
 
 
-    public void close() throws IOException {
-        returnToLobby();
+    public void close() {
+        try {
+            returnToLobby();
+        } catch (IOException e) {
+            System.out.println("The server is already closed, no need to remove the username");
+        }
         System.exit(0);
     }
 

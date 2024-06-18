@@ -328,7 +328,7 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
-    public void run() throws IOException, ClassNotFoundException, InterruptedException {
+    public void run() throws IOException{
 
         new Thread(this::runVirtualServer).start();
 

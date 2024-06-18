@@ -59,32 +59,34 @@ public class ClientMain extends Application {
         boolean useSocket = (choice == 1 || choice == 3);
         boolean useTUI = (choice == 1 || choice == 2);
 
-        try {
-            if (useSocket) {
-                setupSocketClient(useTUI ? "TUI" : "GUI", stage);
-            } else {
-                 setupRMIClient(useTUI ? "TUI" : "GUI", stage);
-            }
-        } catch (IOException e) {
-            System.out.println("Failed to initialize Socket client: " + e.getMessage());
-        } catch (ClassNotFoundException | InterruptedException | NotBoundException e) {
-            System.out.println("Failed to initialize RMI client: " + e.getMessage());
+        if (useSocket) {
+            setupSocketClient(useTUI ? "TUI" : "GUI", stage);
+        } else {
+            setupRMIClient(useTUI ? "TUI" : "GUI", stage);
         }
     }
 
-    private void setupSocketClient(String interfaceType, Stage stage) throws IOException, ClassNotFoundException, InterruptedException {
-        Socket serverSocket = new Socket(serverAddress, 2345);
-        ObjectOutputStream socketTx = new ObjectOutputStream(serverSocket.getOutputStream());
-        ObjectInputStream socketRx = new ObjectInputStream(serverSocket.getInputStream());
-        this.client = new SocketClient(socketRx, socketTx, interfaceType, stage);
-        client.run();
+    private void setupSocketClient(String interfaceType, Stage stage) {
+        try {
+            Socket serverSocket = new Socket(serverAddress, 2345);
+            ObjectOutputStream socketTx = new ObjectOutputStream(serverSocket.getOutputStream());
+            ObjectInputStream socketRx = new ObjectInputStream(serverSocket.getInputStream());
+            this.client = new SocketClient(socketRx, socketTx, interfaceType, stage);
+            client.run();
+        } catch (IOException e ) {
+            System.err.println("Failed to initialize Socket client: " + e.getMessage());
+        }
     }
 
-    private void setupRMIClient(String interfaceType, Stage stage) throws IOException, NotBoundException, InterruptedException, ClassNotFoundException {
-        Registry registry = LocateRegistry.getRegistry(serverAddress, 1234);
-        VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
-        this.client = new RMIClient(server, interfaceType, stage);
-        client.run();
+    private void setupRMIClient(String interfaceType, Stage stage){
+        try {
+            Registry registry = LocateRegistry.getRegistry(serverAddress, 1234);
+            VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
+            this.client = new RMIClient(server, interfaceType, stage);
+            client.run();
+        } catch (NotBoundException | IOException e) {
+            System.err.println("Failed to initialize RMI client: " + e.getMessage());
+        }
     }
 
     private static int getValidChoice(Scanner scanner, int max) {

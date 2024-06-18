@@ -85,7 +85,7 @@ public interface VirtualView extends Remote {
 
     void ping() throws RemoteException;
 
-    void run() throws IOException, InterruptedException, ClassNotFoundException;
+    void run() throws IOException;
 
     String getUsername() throws RemoteException;
 

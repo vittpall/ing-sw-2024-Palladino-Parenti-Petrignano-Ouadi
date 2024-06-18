@@ -108,6 +108,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
             System.out.println("The server has crashed, thanks for playing");
             System.exit(0);
         }
+
+
     }
 
 
@@ -277,7 +279,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
         notificationsQueue.add(notification);
     }
 
-    protected void inputHandler() throws IOException, ClassNotFoundException, InterruptedException {
+    protected void inputHandler(){
 
         boolean correctInput;
         do {
@@ -387,12 +389,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 }
                 if (waitingForCloseGameNotification) {
                     waitingForCloseGameNotification = false;
-                    if (!isGUIMode)
-                        setCurrentState(new LobbyMenuState(this, scan));
-                    else {
-                        //      setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
-                        //      ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
-                    }
                     input = "";
                     inputHandler();
                 }
@@ -403,17 +399,16 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     while (!waitingForCloseGameNotification) {
                         Thread.onSpinWait();
                     }
-                    if (!isGUIMode)
-                        setCurrentState(new LobbyMenuState(this, scan));
-                    else {
-                        setCurrentState(new LobbyMenuStateGUI(new Stage(), this));
-                        //      ((LobbyMenuStateGUI) getClientCurrentState()).refresh(msg);
-                    }
                     input = "";
                     waitingForCloseGameNotification = false;
                     inputHandler();
                 } else
-                    System.out.println("The input was not valid. You can " + getServerCurrentState());
+                    try {
+                        System.out.println("The input was not valid. You can " + getServerCurrentState());
+                    } catch (IOException | InterruptedException e) {
+                        System.out.println("Server unreachable");
+                        e.printStackTrace();
+                    }
 
             }
         }
