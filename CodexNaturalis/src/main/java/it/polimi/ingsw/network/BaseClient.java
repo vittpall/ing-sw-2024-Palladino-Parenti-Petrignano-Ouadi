@@ -29,6 +29,9 @@ abstract public class BaseClient implements VirtualView, GameListener {
     private ClientState currentState;
     protected String username;
     private Integer idGame;
+    private String winner;
+    private boolean showWinnerTui;
+    private HashMap<String, Integer> scores;
     protected BlockingQueue<ServerNotification> notificationsQueue;
     private boolean isGUIMode;
     protected UsefulData usefulData;
@@ -229,7 +232,13 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     public synchronized void onEndGame(String winner, HashMap<String, Integer> scores) {
         if (!isGUIMode) {
-           //TODO implement in tui mode
+            showWinnerTui=true;
+            this.winner=winner;
+            this.scores=scores;
+            if(getClientCurrentState() == null)
+               display();
+            else
+                System.out.println("The game has ended. Go back to the main menu to see the winner ");
         } else if(getClientCurrentState() instanceof GameStateGUI)
             ((GameStateGUI) getClientCurrentState()).endGameNotification( winner, scores);
         try{
@@ -237,6 +246,12 @@ abstract public class BaseClient implements VirtualView, GameListener {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+    public String getWinnerForTui(){
+        return winner;
+    }
+    public HashMap<String, Integer> getScoresForTui(){
+        return new HashMap<>(scores);
     }
     public synchronized void onGameClosed(String msg) {
         //to avoid trying close game already closed
@@ -279,7 +294,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
     }
 
     protected void inputHandler(){
-
+        showWinnerTui=false;
         boolean correctInput;
         do {
             if (!input.equals("exit"))
@@ -444,7 +459,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     if (checkState) currentState = new ChatState(this, scan);
                     return checkState;
                 case 7:
-                    checkState = checkState(RequestedActions.SHOW_WINNER);
+                    checkState = showWinnerTui;
                     if (checkState) currentState = new GetWinnerState(this, scan);
                     return checkState;
                 default:
@@ -464,16 +479,17 @@ abstract public class BaseClient implements VirtualView, GameListener {
         System.out.println("|                                       |");
         System.out.println("|   Please choose an action:            |");
         try {
-            if (getCurrentPlayerState().equals(PlayerState.PLAY_CARD))
-                System.out.println("|   1. Play a card🎮                    |");
-            else if (getCurrentPlayerState().equals(PlayerState.DRAW))
-                System.out.println("|   2. Draw a card🎴                    |");
-            System.out.println("|   3. Show your desk or others' desks  |");
-            System.out.println("|   4. Show the shared objective cards  |");
-            System.out.println("|      and your objective card          |");
-            System.out.println("|   5. Show players' points             |");
-            System.out.println("|   6. Chat 💬                          |");
-            if (getCurrentPlayerState().equals(PlayerState.ENDGAME))
+            if(!showWinnerTui){
+                if (getCurrentPlayerState().equals(PlayerState.PLAY_CARD))
+                    System.out.println("|   1. Play a card🎮                    |");
+                else if (getCurrentPlayerState().equals(PlayerState.DRAW))
+                    System.out.println("|   2. Draw a card🎴                    |");
+                System.out.println("|   3. Show your desk or others' desks  |");
+                System.out.println("|   4. Show the shared objective cards  |");
+                System.out.println("|      and your objective card          |");
+                System.out.println("|   5. Show players' points             |");
+                System.out.println("|   6. Chat 💬                          |");
+            }else
                 System.out.println("|   7. Show winner                      |");
             System.out.println("|_______________________________________|\n");
         } catch (IOException | InterruptedException e) {
@@ -499,20 +515,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
         }
         return true;
     }
-/*
-    public void receiveMessage(Message msg) throws RemoteException {
-        if (currentState instanceof GlobalChatState || currentState instanceof PrivateChatState) {
-            if (msg.getSender().equals(username))
-                System.out.println("You: " + msg.getContent());
-            else
-                System.out.println(msg.getSender() + ": " + msg.getContent());
-        } else {
-            if (msg.getReceiver() == null)
-                System.out.println("You have received a message");
-            else
-                System.out.println("You have received a from " + msg.getSender());
-        }
-    }*/
+
 
     @SuppressWarnings("InfiniteLoopStatement")
     public void notificationsHandler() throws RemoteException, InterruptedException {

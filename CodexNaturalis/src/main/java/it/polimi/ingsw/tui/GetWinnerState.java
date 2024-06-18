@@ -19,20 +19,14 @@ public class GetWinnerState implements ClientStateTUI {
     @Override
     public void display() throws RemoteException {
         System.out.println("\n---------- Game ended----------");
-        try {
-            String winnerUsername = client.getWinner();
-            System.out.println("The winner is: " + winnerUsername);
-            System.out.println("These are the points of every player :");
-            client.getAllPlayers().stream().map(player -> "Player " + player.getUsername() + " has " + player.getPoints() + " points").forEach(System.out::println);
-        } catch (RemoteException | InterruptedException e) {
-            throw new RemoteException();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.println("The winner is: " + client.getWinnerForTui());
+        System.out.println("These are the points of every player :");
+        client.getScoresForTui().forEach((k, v) -> System.out.println("Player " + k + " has " + v + " points"));
     }
 
     @Override
     public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
+        //TODO gestire la chiusura del gioco
         switch (input) {
             case 1:
                 client.closeGame();
@@ -50,7 +44,6 @@ public class GetWinnerState implements ClientStateTUI {
         System.out.println("Choose an option:");
         System.out.println("1. Start a new game");
         System.out.println("2. Exit");
-        System.out.println("3. Chat");
 
     }
 
