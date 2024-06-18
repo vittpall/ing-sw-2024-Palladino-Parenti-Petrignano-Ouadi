@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.chat;
 
+import it.polimi.ingsw.model.enumeration.TokenColor;
+
 import java.io.Serializable;
 
 /**
@@ -12,6 +14,7 @@ public class Message implements Serializable {
     private String receiver;
     private String content;
     private int gameId;
+    private TokenColor senderColor;
 
     /**
      * Default constructor
@@ -19,11 +22,16 @@ public class Message implements Serializable {
      * @param receiver
      * @param content
      */
-    public Message(String sender, String receiver, String content, int gameId) {
+    public Message(String sender, String receiver, String content, int gameId, TokenColor senderColor) {
         this.sender = sender;
         this.receiver = receiver;
         this.content = content;
         this.gameId = gameId;
+        this.senderColor = senderColor;
+    }
+
+    public TokenColor getSenderColor() {
+        return senderColor;
     }
 
     public String getSender() {

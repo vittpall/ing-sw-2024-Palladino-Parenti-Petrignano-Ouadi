@@ -71,24 +71,28 @@ public class GameController {
             }
         }
 
-        addListenerList("WaitingForPlayersState");
-        listeners.get("WaitingForPlayersState").notifyJoinedGame(model.getPlayers(), nPlayers - model.getPlayers().size());
-        listeners.get("WaitingForPlayersState").subscribeListener(playerListener);
+        addListenerList("WaitingForPlayersState", playerListener);
+        listeners.get("WaitingForPlayersState").notifyJoinedGame(model.getPlayers(), nPlayers - model.getPlayers().size(), playerListener.getUsername());
 
         return idPlayer;
     }
 
-    private void addListenerList(String state) {
+    private void addListenerList(String state, GameListener listener) {
         if (!listeners.containsKey(state))
             listeners.put(state, new Observable());
+        listeners.get(state).subscribeListener(listener);
+    }
+
+    private void removeListenerList(String state, GameListener listener)
+    {
+        if(listeners.containsKey(state))
+            listeners.get(state).unSubscribeListener(listener);
     }
 
     public ArrayList<ObjectiveCard> getObjectiveCards(int idPlayer, GameListener playerListener) {
         //TODO added to give the possibility to quit during the starter and objective card selection
-        addListenerList("GameStarted");
-        listeners.get("GameStarted").subscribeListener(playerListener);
+        addListenerList("GameStarted", playerListener);
         return model.getPlayers().get(idPlayer).getDrawnObjectiveCards();
-
     }
 
     public void setObjectiveCard(int idClientIntoGame, int idObjCard, GameListener playerListener) throws CardNotFoundException {
@@ -115,8 +119,8 @@ public class GameController {
             model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.WAITING);
         if (model.getPlayers().stream().allMatch(player -> (!player.getPlayerState().equals(PlayerState.SETUP_GAME))))
             gameState = GameState.ROUNDS;
-        addListenerList("GameRounds");
-        listeners.get("GameRounds").subscribeListener(playerListener);
+        removeListenerList("GameStarted", playerListener);
+        addListenerList("GameRounds", playerListener);
         String message = "\n----------------------------------\n" +
                 "Player " + model.getPlayers().get(idClientIntoGame).getUsername() + " played the starter card";
         HashMap<String, Integer> playersPoints = new HashMap<>();
@@ -139,9 +143,8 @@ public class GameController {
     }
 
     public synchronized ArrayList<TokenColor> getAvailableColors(GameListener playerListener) {
-        listeners.get("WaitingForPlayersState").unSubscribeListener(playerListener);
-        addListenerList("ColorSelection");
-        listeners.get("ColorSelection").subscribeListener(playerListener);
+        removeListenerList("WaitingForPlayersState", playerListener);
+        addListenerList("ColorSelection", playerListener);
 
         return model.getAvailableColors();
     }
@@ -152,7 +155,7 @@ public class GameController {
                 "Player " + model.getPlayers().get(idClientIntoGame).getUsername() +
                 " chose the color " + model.getPlayers().get(idClientIntoGame).getTokenColor();
         ArrayList<TokenColor> avColors = model.getAvailableColors();
-        listeners.get("ColorSelection").unSubscribeListener(playerListener);
+        removeListenerList("ColorSelection", playerListener);
         listeners.get("ColorSelection").notifyColorSelection(message, avColors);
         return tokenColor;
     }

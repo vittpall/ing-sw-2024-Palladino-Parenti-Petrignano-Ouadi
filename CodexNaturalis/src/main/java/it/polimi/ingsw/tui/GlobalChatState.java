@@ -1,5 +1,6 @@
 package it.polimi.ingsw.tui;
 
+import it.polimi.ingsw.model.UsefulData;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.BaseClient;
 
@@ -31,11 +32,11 @@ public class GlobalChatState implements ClientStateTUI {
             }
             else
             {
-                for(int i = 0;i < globalChat.size(); i++){
-                    if(globalChat.get(i).getSender().equals(client.getUsername()))
-                        System.out.println("You: " + globalChat.get(i).getContent());
+                for(Message message : globalChat){
+                    if(message.getSender().equals(client.getUsername()))
+                        System.out.println(message.getSenderColor().getColorValueANSII() + "You: " + UsefulData.RESET + message.getContent());
                     else
-                        System.out.println(globalChat.get(i).getSender() + ": " + globalChat.get(i).getContent());
+                        System.out.println(message.getSenderColor().getColorValueANSII() + message.getSender() + UsefulData.RESET + ": " + message.getContent());
                 }
             }
 

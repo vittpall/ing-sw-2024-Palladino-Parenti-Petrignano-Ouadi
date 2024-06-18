@@ -1,6 +1,7 @@
 package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.core.ClientState;
+import it.polimi.ingsw.model.UsefulData;
 import it.polimi.ingsw.model.chat.Chat;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.BaseClient;
@@ -38,9 +39,9 @@ public class PrivateChatState implements ClientStateTUI {
                 //show all the messages till the last one that has been received
 
                 if (message.getSender().equals(client.getUsername()))
-                    System.out.println("You: " + message.getContent());
+                    System.out.println(message.getSenderColor().getColorValueANSII() + "You: " + UsefulData.RESET + message.getContent());
                 else
-                    System.out.println(message.getSender() + ": " + message.getContent());
+                    System.out.println(message.getSenderColor().getColorValueANSII() + message.getSender() + UsefulData.RESET + ": " + message.getContent());
             }
         }
 

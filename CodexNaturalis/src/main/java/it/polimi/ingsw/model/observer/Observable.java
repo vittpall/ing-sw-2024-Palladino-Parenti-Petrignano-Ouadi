@@ -21,6 +21,11 @@ public class Observable {
         listeners.add(listener);
     }
 
+    public HashSet<GameListener> getListeners()
+    {
+        return new HashSet<>(listeners);
+    }
+
     public void unSubscribeListener(GameListener listener) {
         listeners.remove(listener);
     }
@@ -29,8 +34,8 @@ public class Observable {
         notifyListeners(new TokenColorTakenNotification(msg, availableColors), null);
     }
 
-    public void notifyJoinedGame(ArrayList<Player> players, int nOfMissingPlayers) {
-        notifyListeners(new GameJoinedNotification(players, nOfMissingPlayers), null);
+    public void notifyJoinedGame(ArrayList<Player> players, int nOfMissingPlayers, String usernameSender) {
+        notifyListeners(new GameJoinedNotification(players, nOfMissingPlayers), usernameSender);
     }
     public void notifyJoinedGameToOutsider(String msg, HashMap<Integer, Integer[]> availableGames) {
         notifyListeners(new GameJoinedNotificationToOutsiders(msg, availableGames), null);
@@ -66,7 +71,7 @@ public class Observable {
             new Thread(() -> {
                 try {
                     //usernameSender is equal to null just in CloseGameNotification to notify also the sender
-                    if(usernameSender==null||!listener.getUsername().equals(usernameSender))
+                    if(usernameSender==null||!(listener.getUsername()).equals(usernameSender))
                         listener.update(notification);
                 } catch (IOException e) {
                     System.out.println("This listener cannot be reached");

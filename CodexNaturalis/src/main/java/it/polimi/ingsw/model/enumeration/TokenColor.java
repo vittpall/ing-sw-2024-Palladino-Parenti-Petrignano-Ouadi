@@ -9,13 +9,14 @@ import java.io.Serializable;
  */
 public enum TokenColor implements Serializable {
 
-    RED("Red", "CODEX_pion_rouge.png"),
-    BLUE("Blue", "CODEX_pion_bleu.png"),
-    YELLOW("Yellow", "CODEX_pion_jaune.png"),
-    GREEN("Green", "CODEX_pion_vert.png");
+    RED("Red", "CODEX_pion_rouge.png", "\033[0;31m"),
+    BLUE("Blue", "CODEX_pion_bleu.png", "\033[0;34m"),
+    YELLOW("Yellow", "CODEX_pion_jaune.png", "\033[0;33m"),
+    GREEN("Green", "CODEX_pion_vert.png", "\033[0;32m"),;
 
     private final String value;
     private final String imageName;
+    private final String colorValueANSII;
 
     /**
      * constructor
@@ -23,9 +24,10 @@ public enum TokenColor implements Serializable {
      * @param value     represents the name of the TokenColor
      * @param imageName represents the image file name of the TokenColor
      */
-    TokenColor(String value, String imageName) {
+    TokenColor(String value, String imageName, String colorValueANSII) {
         this.value = value;
         this.imageName = imageName;
+        this.colorValueANSII = colorValueANSII;
     }
 
     /**
@@ -45,5 +47,9 @@ public enum TokenColor implements Serializable {
     @Override
     public String toString() {
         return value;
+    }
+
+    public String getColorValueANSII() {
+        return colorValueANSII;
     }
 }

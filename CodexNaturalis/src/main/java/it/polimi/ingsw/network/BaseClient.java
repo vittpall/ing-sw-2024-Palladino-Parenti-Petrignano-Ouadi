@@ -33,7 +33,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
     private boolean isGUIMode;
     protected UsefulData usefulData;
     private volatile boolean waitingForCloseGameNotification;
-    private TokenColor userTokenColor;
+    protected TokenColor userTokenColor;
     String input;
     private final Stage stageUI;
 
@@ -262,14 +262,14 @@ abstract public class BaseClient implements VirtualView, GameListener {
         if (!isGUIMode) {
             if (getClientCurrentState() instanceof GlobalChatState || getClientCurrentState() instanceof PrivateChatState || getClientCurrentState() instanceof ChatState) {
                 if (msg.getSender().equals(username))
-                    System.out.println("You: " + msg.getContent());
+                    System.out.println(msg.getSenderColor().getColorValueANSII() + "You: " + UsefulData.RESET + msg.getContent());
                 else
-                    System.out.println(msg.getSender() + ": " + msg.getContent());
+                    System.out.println(msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET + ": " + msg.getContent());
             } else {
                 if (msg.getReceiver() == null)
                     System.out.println("You have received a message from the global chat");
                 else
-                    System.out.println("You have received a from " + msg.getSender());
+                    System.out.println("You have received a from " + msg.getSenderColor().getColorValueANSII() +  msg.getSender() + UsefulData.RESET);
             }
         }
     }

@@ -130,7 +130,7 @@ public class RMIClient extends BaseClient {
     }
 
     public void sendMessage(String receiver, String message) throws RemoteException {
-        Message msg = new Message(getUsername(), receiver, message, getIdGame());
+        Message msg = new Message(getUsername(), receiver, message, getIdGame(), userTokenColor);
         server.sendMessage(getIdGame(), msg);
     }
 

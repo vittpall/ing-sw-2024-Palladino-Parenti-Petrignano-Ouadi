@@ -132,7 +132,7 @@ public class SocketClient extends BaseClient {
 
     @Override
     public void sendMessage(String receiver, String message) throws IOException, InterruptedException {
-        Message msg = new Message(getUsername(), receiver, message, getIdGame());
+        Message msg = new Message(getUsername(), receiver, message, getIdGame(), userTokenColor);
         SendMessageMsg request = new SendMessageMsg(msg);
         sendRequest(request);
     }

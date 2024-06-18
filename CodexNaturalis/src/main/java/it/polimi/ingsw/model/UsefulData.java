@@ -9,6 +9,7 @@ public class UsefulData {
     public final int MAX_PLAYERS = 4;
     public final int MIN_PLAYERS = 2;
     public final int MAX_CARDS = 3;
+    public static final String RESET = "\033[0m";
     //...
     public ArrayList<String> quitableStates = new ArrayList<>();
     private static UsefulData instance = null;
