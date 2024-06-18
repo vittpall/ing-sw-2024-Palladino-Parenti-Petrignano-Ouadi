@@ -18,25 +18,33 @@
     <ImageView fitHeight="533.0" fitWidth="320.0" layoutX="1156.0" layoutY="14.0">
         <Image url="@../Images/Board.jpg" />
     </ImageView>
-    <VBox alignment="TOP_CENTER" layoutX="37.0" layoutY="14.0">
+    <VBox alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0">
         <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
         </padding>
-        <Label alignment="CENTER" prefHeight="30.0" prefWidth="129.0" styleClass="normal-label" text="OBJECTIVE CARDS">
-            <VBox.margin>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-            </VBox.margin>
-        </Label>
-        <VBox fx:id="objectiveCardsContainer" spacing="5" />
-        <Label alignment="CENTER" styleClass="normal-label" text="YOUR AVAILABLE CARDS">
-            <VBox.margin>
-                <Insets bottom="5.0" top="5.0" />
-            </VBox.margin>
-        </Label>
-        <Button fx:id="showBackButton" onAction="#handleShowBackButton" style="-fx-background-color: #a2ecbb;" text="Show Back" />
-        <VBox fx:id="playerHandBox" spacing="10" />
+      <VBox alignment="CENTER" styleClass="border">
+         <children>
+              <Label alignment="CENTER" prefHeight="30.0" prefWidth="129.0" styleClass="normal-label" text="OBJECTIVE CARDS">
+                  <VBox.margin>
+                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  </VBox.margin>
+              </Label>
+              <VBox fx:id="objectiveCardsContainer" spacing="5" />
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" styleClass="border" translateY="10.0">
+         <children>
+              <Label alignment="CENTER" styleClass="normal-label" text="YOUR AVAILABLE CARDS">
+                  <VBox.margin>
+                      <Insets bottom="5.0" top="5.0" />
+                  </VBox.margin>
+              </Label>
+              <Button fx:id="showBackButton" onAction="#handleShowBackButton" style="-fx-background-color: #a2ecbb;" text="Show Back" />
+              <VBox fx:id="playerHandBox" spacing="10" />
+         </children>
+      </VBox>
     </VBox>
-    <VBox layoutX="222.0" layoutY="14.0">
+    <VBox layoutX="222.0" layoutY="14.0" spacing="20.0">
         <TabPane fx:id="playerDeskTabPane" prefWidth="845.0">
             <Tab text="Player1 desk" />
             <Tab text="Player2 desk" />
@@ -46,13 +54,22 @@
         <ScrollPane fx:id="gameBoardScrollPane" hbarPolicy="NEVER" pannable="true" prefHeight="450.0" prefWidth="900.0" style="-fx-focus-color: transparent;" vbarPolicy="NEVER">
             <AnchorPane fx:id="gameBoardContainer" style="-fx-background-color: #dedccc;" />
         </ScrollPane>
+
         <Label fx:id="infoGame" styleClass="normal-label" text="what is happening" />
-        <Label styleClass="normal-label" text="RESOURCE CARD DESK">
+      <HBox alignment="CENTER" styleClass="border">
+         <children>
+              <Label styleClass="normal-label" text="RESOURCE CARD DESK">
         </Label>
-        <HBox fx:id="resourceDeck" spacing="10" />
-        <Label styleClass="normal-label" text="GOLDEN CARD DESK">
+              <HBox fx:id="resourceDeck" spacing="10" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" styleClass="border">
+         <children>
+              <Label styleClass="normal-label" text="GOLDEN CARD DESK">
         </Label>
-        <HBox fx:id="goldenDeck" spacing="10" />
+              <HBox fx:id="goldenDeck" spacing="10" />
+         </children>
+      </HBox>
     </VBox>
     <BorderPane fx:id="popUp" layoutX="641.0" layoutY="250.0" prefHeight="198.0" prefWidth="468.0" styleClass="popup" AnchorPane.bottomAnchor="302.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="300.0">
         <top>

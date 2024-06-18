@@ -7,7 +7,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" spacing="10" styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.ObjectiveCardSelectionController">
     <ImageView fitHeight="201.0" fitWidth="1012.0" pickOnBounds="true" preserveRatio="true">
@@ -20,11 +19,11 @@
             <Insets bottom="20" left="20" right="20" top="20" />
         </padding>
         <VBox fx:id="card1Container" alignment="CENTER" spacing="10">
-            <Button onAction="#handleSelectCard1" style="-fx-background-color: #a2ecbb;" styleClass="little-label" text="Choose This Card">
+            <Button onAction="#handleSelectCard1" style="-fx-background-color: #a2ecbb;" styleClass="little-label" text="Choose This Card" translateY="10.0">
             </Button>
         </VBox>
         <VBox fx:id="card2Container" alignment="CENTER" spacing="10">
-            <Button onAction="#handleSelectCard2" style="-fx-background-color: #a6f84b;" styleClass="little-label" text="Choose This Card">
+            <Button onAction="#handleSelectCard2" style="-fx-background-color: #a6f84b;" styleClass="little-label" text="Choose This Card" translateY="10.0">
             </Button>
         </VBox>
     </HBox>
