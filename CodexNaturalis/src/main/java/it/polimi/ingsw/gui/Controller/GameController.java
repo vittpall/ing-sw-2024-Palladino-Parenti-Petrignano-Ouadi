@@ -526,7 +526,7 @@ public class GameController implements FXMLController {
     }
 
     public void initialiseSingleChatTab(String username, ArrayList<Message> alreadyExistingMessages) throws IOException, InterruptedException {
-        Tab newTab = new Tab(username);
+        ChatTab newTab = new ChatTab(username);
 
         TextArea textArea = new TextArea();
         textArea.setPrefHeight(150.0);
@@ -561,13 +561,13 @@ public class GameController implements FXMLController {
                 }
             }
         });
-/*
+
         newTab.setOnSelectionChanged(event -> {
             if (newTab.isSelected()) {
                 newTab.resetUnreadMessages();
             }
         });
-*/
+
         VBox vbox = new VBox(textArea, messageField, sendButton);
         vbox.setSpacing(5.0);
         vbox.setPadding(new javafx.geometry.Insets(5.0));
@@ -601,7 +601,7 @@ public class GameController implements FXMLController {
                 textArea.appendText(whoSendTheMessage + ": " + message.getContent() + "\n");
                 if(!tab.isSelected())
                 {
-               //     ((ChatTab)tab).incrementUnreadMessages();
+                    ((ChatTab)tab).incrementUnreadMessages();
                 }
                 break;
             }
@@ -612,7 +612,7 @@ public class GameController implements FXMLController {
                 textArea.appendText(whoSendTheMessage + ": " + message.getContent() + "\n");
                 if(!tab.isSelected())
                 {
-               //     ((ChatTab)tab).incrementUnreadMessages();
+                    ((ChatTab)tab).incrementUnreadMessages();
                 }
                 break;
             }

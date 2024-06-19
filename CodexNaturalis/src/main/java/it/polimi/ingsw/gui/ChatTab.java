@@ -12,17 +12,18 @@ public class ChatTab extends Tab {
     public ChatTab(String title) {
         super(title);
         this.unreadMessages = 0;
+        System.out.println("ChatTab created");
 
         counterMessages = new Label();
- //       counterMessages.setStyle("-fx-background-color: #198d19; -fx-text-fill: white; -fx-padding: 2px 5px; -fx-background-radius: 50%;");
+        counterMessages.setStyle("-fx-background-color: #198d19; -fx-text-fill: white; -fx-padding: 2px 5px; -fx-background-radius: 50%;");
         counterMessages.setVisible(false);
 
         StackPane stackPane = new StackPane();
-        stackPane.getChildren().addAll(this.getGraphic(), counterMessages);
-   //     StackPane.setAlignment(counterMessages, javafx.geometry.Pos.TOP_RIGHT);
-
+        stackPane.getChildren().addAll(counterMessages);
+        StackPane.setAlignment(counterMessages, javafx.geometry.Pos.TOP_RIGHT);
+        System.out.println("fafsfsf");
         this.setGraphic(stackPane);
-        System.out.println("ChatTab created");
+
     }
 
     public void incrementUnreadMessages() {
