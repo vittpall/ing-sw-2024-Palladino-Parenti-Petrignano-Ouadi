@@ -2,6 +2,7 @@ package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.core.ClientState;
 import it.polimi.ingsw.gui.Controller.GameController;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.application.Platform;
@@ -34,6 +35,11 @@ public class GameStateGUI implements ClientState {
 
     public void refresh(String msg) {
 
+    }
+
+    public void updateChat(Message msg)
+    {
+        Platform.runLater(() -> controller.receiveMessage(msg));
     }
 
     public void cardPlayedRefresh(String username) {

@@ -86,4 +86,15 @@
             <Label fx:id="messagePopUp" alignment="CENTER" styleClass="normal-label" text="MESSAGE" textFill="SEAGREEN" BorderPane.alignment="CENTER" />
         </center>
     </BorderPane>
+    <VBox alignment="TOP_CENTER" layoutX="1148.0" layoutY="542.0" >
+        <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+        </padding>
+        <TabPane fx:id="chatGameTabPane" prefHeight="200.0" prefWidth="400.0">
+            <tabs>
+
+
+            </tabs>
+        </TabPane>
+    </VBox>
 </AnchorPane>

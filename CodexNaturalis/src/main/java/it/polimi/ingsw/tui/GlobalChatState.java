@@ -39,7 +39,6 @@ public class GlobalChatState implements ClientStateTUI {
                         System.out.println(message.getSenderColor().getColorValueANSII() + message.getSender() + UsefulData.RESET + ": " + message.getContent());
                 }
             }
-
             inputHandler(scanner.nextLine());
         } catch (IOException | ClassNotFoundException | InterruptedException e) {
             e.printStackTrace();

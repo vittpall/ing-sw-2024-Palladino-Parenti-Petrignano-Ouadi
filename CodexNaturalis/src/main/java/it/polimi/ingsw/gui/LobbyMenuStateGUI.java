@@ -31,9 +31,7 @@ public class LobbyMenuStateGUI implements ClientState {
     }
 
     public void gameClosedNotification(String msg) {
-        Platform.runLater(() -> {
-            controller.showGameClosedPopup(msg);
-        });
+        Platform.runLater(() -> controller.showGameClosedPopup(msg));
 
     }
 
