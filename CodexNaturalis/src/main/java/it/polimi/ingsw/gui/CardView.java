@@ -10,8 +10,8 @@ import java.util.Objects;
 public class CardView extends Pane {
     private ImageView frontImageView;
     private ImageView backImageView;
-    public static final double CARD_WIDTH = 160;
-    public static final double CARD_HEIGHT = 106;
+    public static final double CARD_WIDTH = 145;
+    public static final double CARD_HEIGHT = 95;
     private boolean isPlaceholder;
 
     public CardView(Card card, boolean showFront) {

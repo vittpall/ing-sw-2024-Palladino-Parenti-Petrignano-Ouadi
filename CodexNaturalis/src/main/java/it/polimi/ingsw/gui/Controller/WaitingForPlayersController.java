@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
@@ -96,11 +95,11 @@ public class WaitingForPlayersController implements FXMLController {
                     player2Info.setVisible(true);
                     break;
                 case 3:
-                    player2Info.setText("Player 3 : " + players.get(2).getUsername());
+                    player3Info.setText("Player 3 : " + players.get(2).getUsername());
                     player3Info.setVisible(true);
                     break;
                 case 4:
-                    player2Info.setText("Player 4 : " + players.get(3).getUsername());
+                    player4Info.setText("Player 4 : " + players.get(3).getUsername());
                     player4Info.setVisible(true);
                     break;
                 default:
