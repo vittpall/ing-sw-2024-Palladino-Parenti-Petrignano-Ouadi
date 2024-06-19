@@ -302,9 +302,9 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 } else
                 {
                     if(msg.getReceiver() == null)
-                        System.out.println(msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET + ": " + msg.getContent());
-                    else
                         System.out.println("You have received a message from the global chat from " + msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET);
+                    else
+                        System.out.println(msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET + ": " + msg.getContent());
                 }
 
             }

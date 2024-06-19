@@ -154,6 +154,7 @@ public class GameController {
                 "Player " + model.getPlayers().get(idClientIntoGame).getUsername() +
                 " chose the color " + model.getPlayers().get(idClientIntoGame).getTokenColor();
         ArrayList<TokenColor> avColors = model.getAvailableColors();
+        removeListenerList("ColorSelection", playerListener);
         listeners.get("ColorSelection").notifyColorSelection(message, avColors);
         return tokenColor;
     }
