@@ -21,6 +21,10 @@ public class GlobalChatState implements ClientStateTUI {
         this.returnState = returnState;
     }
 
+    public String getReceiver(){
+        return null;
+    }
+
     @Override
     public void display() {
         System.out.println("Global chat-------------------");

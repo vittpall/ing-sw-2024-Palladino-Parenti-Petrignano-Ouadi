@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class PrivateChatState implements ClientStateTUI {
     private BaseClient client;
     private final Scanner scanner;
-    private String receiver;
+    private final String receiver;
     private int lastMessageReceived;
     private ClientState returnState;
 
@@ -23,6 +23,10 @@ public class PrivateChatState implements ClientStateTUI {
         this.receiver = receiver;
         this.lastMessageReceived = 0;
         this.returnState = new ChatState(client, scanner);
+    }
+
+    public String getReceiver(){
+        return receiver;
     }
 
     @Override
