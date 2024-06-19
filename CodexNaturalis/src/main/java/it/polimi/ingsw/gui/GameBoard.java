@@ -1,63 +1,81 @@
 package it.polimi.ingsw.gui;
 
 
-import it.polimi.ingsw.model.Card;
-import javafx.scene.layout.Pane;
+import it.polimi.ingsw.model.BoardCoordinate;
+import javafx.scene.layout.AnchorPane;
 
-import java.awt.*;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class GameBoard extends Pane {
-    private final HashMap<Point, CardView> cards = new HashMap<>();
-    private static final double HORIZONTAL_SPACING_FACTOR = CardView.CARD_WIDTH * 0.2214;
-    private static final double VERTICAL_SPACING_FACTOR = CardView.CARD_HEIGHT * 0.365;
+import static it.polimi.ingsw.util.BoardConfig.loadCoordinates;
 
-    public void addCard(Card card, boolean showFront, int x, int y) {
-        CardView cardView = new CardView(card, showFront);
-        addCardView(cardView, x, y);
+public class GameBoard {
+
+    private final List<BoardCoordinate> coordinates;
+    private final AnchorPane gameBoardAnchorPane;
+    private final Map<Integer, TokenView> tokens;
+    private final Map<BoardCoordinate, Integer> tokenPositions;
+
+    public GameBoard(AnchorPane gameBoardAnchorPane) {
+        this.gameBoardAnchorPane = gameBoardAnchorPane;
+        this.coordinates = loadCoordinates();
+        tokens = new HashMap<>();
+        this.tokenPositions = new HashMap<>();
     }
 
-    public GameBoard() {
-        this.setPrefSize(1000, 1000);
-        this.setWidth(1000);
-        this.setHeight(1000);
-    }
-
-
-    public void addCardView(CardView cardView, int x, int y) {
-        double centerX = getWidth() / 2;
-        double centerY = getHeight() / 2;
-
-        double layoutX = centerX + x * CardView.CARD_WIDTH - CardView.CARD_WIDTH / 2;
-        if (x != 0) {
-            layoutX -= x * HORIZONTAL_SPACING_FACTOR;
-        }
-
-        double layoutY = centerY - y * CardView.CARD_HEIGHT - CardView.CARD_HEIGHT / 2;
-        if (y != 0) {
-            layoutY += y * VERTICAL_SPACING_FACTOR;
-        }
-
-        cardView.relocate(layoutX, layoutY);
-        cards.put(new Point(x, y), cardView);
-        this.getChildren().add(cardView);
-    }
-
-    public void addTokenToCard(int x, int y, String imagePath, boolean isBlackToken) {
-        CardView cardView = cards.get(new Point(x, y));
-        if (cardView != null) {
-            double percentX = isBlackToken ? TokenView.BLACK_TOKEN_X : TokenView.OTHER_TOKEN_X;
-            double percentY = isBlackToken ? TokenView.BLACK_TOKEN_Y : TokenView.OTHER_TOKEN_Y;
-
-            TokenView token = new TokenView(imagePath, percentX, percentY);
-            // Calcola la posizione del token basata sulle percentuali e sulla dimensione della carta
-            double tokenX = cardView.getLayoutX() + token.getOffsetX() * CardView.CARD_WIDTH - token.getFitWidth() / 2;
-            double tokenY = cardView.getLayoutY() + token.getOffsetY() * CardView.CARD_HEIGHT - token.getFitHeight() / 2;
-
-            token.relocate(tokenX, tokenY);
-            this.getChildren().add(token);
+    public void addToken(int playerId, String imagePath) {
+        BoardCoordinate startCoordinate = coordinates.getFirst();
+        if (startCoordinate != null) {
+            double[] layouts = getTokenLayout(startCoordinate);
+            TokenView token = new TokenView(imagePath, layouts[0], layouts[1]);
+            token.setLayoutX(token.getOffsetX());
+            token.setLayoutY(token.getOffsetY());
+            gameBoardAnchorPane.getChildren().add(token);
+            tokens.put(playerId, token);
+            tokenPositions.put(startCoordinate, tokenPositions.getOrDefault(startCoordinate, 0) + 1);
         }
     }
 
+    public void updateTokenPosition(int playerId, int newScore) {
+        BoardCoordinate newCoordinate = coordinates.stream().filter(coord -> coord.score() == newScore).findFirst().orElse(null);
+        if (newCoordinate != null) {
+            double[] layouts = getTokenLayout(newCoordinate);
+            TokenView playerToken = tokens.get(playerId);
+            playerToken.setLayoutX(layouts[0]);
+            playerToken.setLayoutY(layouts[1]);
+            tokenPositions.put(newCoordinate, tokenPositions.getOrDefault(newCoordinate, 0) + 1);
+        }
+    }
+
+    private double[] getTokenLayout(BoardCoordinate coordinate) {
+        double baseX = Double.parseDouble(coordinate.x().replace("%", "")) / 100 * gameBoardAnchorPane.getWidth();
+        double baseY = Double.parseDouble(coordinate.y().replace("%", "")) / 100 * gameBoardAnchorPane.getHeight();
+
+        double offsetX = 0;
+        double offsetY = 0;
+        int positionCount = tokenPositions.getOrDefault(coordinate, 0);
+
+        switch (positionCount) {
+            case 1:
+                offsetX = -30;
+                break;
+            case 2:
+                offsetY = -30;
+                break;
+            case 3:
+                offsetX = -30;
+                offsetY = -30;
+                break;
+        }
+        return new double[]{baseX + offsetX, baseY + offsetY};
+    }
+
+    public boolean hasToken(int playerId) {
+        return tokens.containsKey(playerId);
+    }
 
 }
+
+
+

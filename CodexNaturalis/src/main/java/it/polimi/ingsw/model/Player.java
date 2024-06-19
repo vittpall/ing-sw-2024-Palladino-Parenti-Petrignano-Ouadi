@@ -217,7 +217,7 @@ public class Player implements Serializable {
      * @throws CardNotFoundException       if the card sent is not into the playerHand
      * @throws RequirementsNotMetException when the player puts a gold card and the requirements are not met
      */
-    public void playCard(GameCard card, boolean faceDown, Point point)
+    public int playCard(GameCard card, boolean faceDown, Point point)
             throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
         if (card instanceof GoldCard goldCard && !faceDown) {
             playerDesk.checkRequirements(goldCard.getRequirements());
@@ -231,6 +231,7 @@ public class Player implements Serializable {
         card.setPlayedFaceDown(faceDown);
         int pointsToAdd = playerDesk.addCard(card, point);
         this.setPoints(pointsToAdd);
+        return pointsToAdd;
     }
 
     /**

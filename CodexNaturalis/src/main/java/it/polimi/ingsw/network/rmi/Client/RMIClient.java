@@ -105,9 +105,9 @@ public class RMIClient extends BaseClient {
     }
 
     @Override
-    public void playCard(int chosenCard, boolean faceDown, Point chosenPosition)
+    public int playCard(int chosenCard, boolean faceDown, Point chosenPosition)
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
-        server.playCard(getIdGame(), idClientIntoGame, chosenCard, faceDown, chosenPosition);
+        return server.playCard(getIdGame(), idClientIntoGame, chosenCard, faceDown, chosenPosition);
     }
 
     @Override
@@ -173,7 +173,7 @@ public class RMIClient extends BaseClient {
     }
 
     @Override
-    public void run() throws IOException{
+    public void run() throws IOException {
         this.server.connect(this);
         if (!isGUIMode())
             inputHandler();

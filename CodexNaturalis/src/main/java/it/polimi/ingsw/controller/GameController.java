@@ -83,9 +83,8 @@ public class GameController {
         listeners.get(state).subscribeListener(listener);
     }
 
-    private void removeListenerList(String state, GameListener listener)
-    {
-        if(listeners.containsKey(state))
+    private void removeListenerList(String state, GameListener listener) {
+        if (listeners.containsKey(state))
             listeners.get(state).unSubscribeListener(listener);
     }
 
@@ -155,7 +154,6 @@ public class GameController {
                 "Player " + model.getPlayers().get(idClientIntoGame).getUsername() +
                 " chose the color " + model.getPlayers().get(idClientIntoGame).getTokenColor();
         ArrayList<TokenColor> avColors = model.getAvailableColors();
-        removeListenerList("ColorSelection", playerListener);
         listeners.get("ColorSelection").notifyColorSelection(message, avColors);
         return tokenColor;
     }
@@ -182,10 +180,10 @@ public class GameController {
     }
 
 
-    public void playCard(int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
+    public int playCard(int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
         String content;
-        model.playCard(chosenCard, idClientIntoGame, faceDown, chosenPosition);
+        int points = model.playCard(chosenCard, idClientIntoGame, faceDown, chosenPosition);
         model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.DRAW);
         if (gameState == GameState.LAST_ROUND) {
             content = "\n----------------------------------\n" +
@@ -214,6 +212,7 @@ public class GameController {
             }
             listeners.get("GameRounds").notifyPlayedCard(message, playersPoints, model.getPlayers().get(idClientIntoGame).getUsername());
         }
+        return points;
     }
 
 

@@ -169,9 +169,9 @@ public class RMIServer implements VirtualServer {
 
 
     @Override
-    public void playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
+    public int playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
-        lobbyController.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
+        return lobbyController.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
     }
 
     @Override

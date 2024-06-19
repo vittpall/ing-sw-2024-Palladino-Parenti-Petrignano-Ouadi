@@ -56,7 +56,7 @@ public interface VirtualServer extends Remote {
 
     ObjectiveCard[] getSharedObjectiveCards(int idGame) throws RemoteException;
 
-    void playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
+    int playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException;
 
     void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws IOException, CardNotFoundException, InterruptedException;

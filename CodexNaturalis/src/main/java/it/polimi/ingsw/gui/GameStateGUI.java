@@ -8,6 +8,7 @@ import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class GameStateGUI implements ClientState {
@@ -56,5 +57,15 @@ public class GameStateGUI implements ClientState {
 
     public void endGameNotification(String winner, HashMap<String, Integer> scores) {
         Platform.runLater(() -> controller.endGameNotification(winner, scores));
+    }
+
+    public void colorSelectionNotification() {
+        Platform.runLater(() -> {
+            try {
+                controller.colorSelectionNotification();
+            } catch (IOException | InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 }

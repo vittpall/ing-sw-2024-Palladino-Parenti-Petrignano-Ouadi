@@ -151,9 +151,9 @@ public class LobbyController {
         return gameControllers.get(idGame).getCurrentPlayer();
     }
 
-    public void playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
+    public int playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
-        gameControllers.get(idGame).playCard(idClientIntoGame, chosenCard, faceDown, chosenPosition);
+        return gameControllers.get(idGame).playCard(idClientIntoGame, chosenCard, faceDown, chosenPosition);
     }
 
     public void drawCard(int idGame, int deckToChoose, int inVisible) throws CardNotFoundException {

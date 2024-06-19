@@ -176,6 +176,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
         } else {
             if (getClientCurrentState() instanceof ColorSelectionGUI)
                 ((ColorSelectionGUI) getClientCurrentState()).refresh(availableColors);
+            else if(getClientCurrentState() instanceof GameStateGUI)
+                ((GameStateGUI) getClientCurrentState()).colorSelectionNotification();
         }
     }
 

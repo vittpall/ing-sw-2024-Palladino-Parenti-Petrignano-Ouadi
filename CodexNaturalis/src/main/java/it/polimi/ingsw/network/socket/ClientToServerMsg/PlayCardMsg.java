@@ -30,7 +30,7 @@ public class PlayCardMsg extends ClientToServerMsg {
     public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, PlaceNotAvailableException, CardNotFoundException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
         try {
-            controller.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition);
+            response.setResponseReturnable(controller.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition));
         } catch (RequirementsNotMetException e) {
             response.setErrorCode(ErrorCodes.REQIORMENTS_NOT_MET);
             response.setErrorMessage(e.getMessage());
@@ -46,7 +46,7 @@ public class PlayCardMsg extends ClientToServerMsg {
 
 
     /**
-     * @return
+     * @return the id of the game
      */
     @Override
     public int getIdGame() {

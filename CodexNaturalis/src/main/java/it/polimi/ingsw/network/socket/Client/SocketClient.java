@@ -154,7 +154,7 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
-    public void close(){
+    public void close() {
         try {
             returnToLobby();
         } catch (NullPointerException | InterruptedException e) {
@@ -286,7 +286,7 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
-    public void playCard(int chosenCard, boolean faceDown, Point chosenPosition) throws IOException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException, InterruptedException {
+    public int playCard(int chosenCard, boolean faceDown, Point chosenPosition) throws IOException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException, InterruptedException {
         PlayCardMsg request = new PlayCardMsg(getIdGame(), idClientIntoGame, chosenCard, faceDown, chosenPosition);
         ServerToClientMsg response = sendRequest(request);
         if (!response.getResponse().isSuccess()) {
@@ -294,6 +294,7 @@ public class SocketClient extends BaseClient {
                 throw new RequirementsNotMetException(response.getResponse().getErrorMessage());
             }
         }
+        return (int) response.getResponse().getResponseReturnable();
     }
 
 
@@ -334,7 +335,7 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
-    public void run() throws IOException{
+    public void run() throws IOException {
 
         new Thread(this::runVirtualServer).start();
 

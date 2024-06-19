@@ -49,7 +49,7 @@ public interface VirtualView extends Remote {
 
     ObjectiveCard[] getSharedObjectiveCards() throws IOException, InterruptedException;
 
-    void playCard(int chosenCard, boolean faceDown, Point chosenPosition)
+    int playCard(int chosenCard, boolean faceDown, Point chosenPosition)
             throws IOException, PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException, InterruptedException;
 
     void drawCard(int input, int inVisible) throws IOException, CardNotFoundException, InterruptedException;
