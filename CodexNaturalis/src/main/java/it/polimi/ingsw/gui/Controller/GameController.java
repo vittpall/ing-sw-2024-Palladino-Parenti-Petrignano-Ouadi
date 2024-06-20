@@ -8,7 +8,9 @@ import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.CornerObject;
 import it.polimi.ingsw.model.enumeration.PlayerState;
+import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 import javafx.scene.Node;
@@ -49,6 +51,13 @@ public class GameController implements FXMLController {
     public TabPane playerDeskTabPane;
     public ImageView boardImage;
     public AnchorPane gameBoardAnchorPane;
+    public Label plantLabel;
+    public Label animalLabel;
+    public Label fungiLabel;
+    public Label insectLabel;
+    public Label manuscriptLabel;
+    public Label quillLabel;
+    public Label inkwellLabel;
     private BaseClient client;
     private Stage stage;
     private boolean playCardFaceDown = false;
@@ -78,10 +87,14 @@ public class GameController implements FXMLController {
             handleShowPlayerDesk(selectedIndex);
         });
 
-
         gameBoard = new GameBoard(gameBoardAnchorPane);
-
-
+        plantLabel.setText("0");
+        animalLabel.setText("0");
+        fungiLabel.setText("0");
+        insectLabel.setText("0");
+        manuscriptLabel.setText("0");
+        quillLabel.setText("0");
+        inkwellLabel.setText("0");
     }
 
 
@@ -166,9 +179,30 @@ public class GameController implements FXMLController {
             } else
                 infoGame.setText(client.getPlayers(client.getIdGame()).getFirst().getUsername() + " is playing");
             initialiseChat();
+            updateResourcesObjectsLabels();
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void updateResourcesObjectsLabels() throws IOException, InterruptedException {
+        EnumMap<Resource, Integer> resources = client.getPlayers(client.getIdGame()).get(client.getIdClientIntoGame()).getPlayerDesk().getTotalResources();
+        resources.keySet().forEach(resource -> {
+            switch (resource) {
+                case Resource.PLANT_KINGDOM -> plantLabel.setText(String.valueOf(resources.get(resource)));
+                case Resource.ANIMAL_KINGDOM -> animalLabel.setText(String.valueOf(resources.get(resource)));
+                case Resource.FUNGI_KINGDOM -> fungiLabel.setText(String.valueOf(resources.get(resource)));
+                case Resource.INSECT_KINGDOM -> insectLabel.setText(String.valueOf(resources.get(resource)));
+            }
+        });
+        EnumMap<CornerObject, Integer> cornerObjects= client.getPlayers(client.getIdGame()).get(client.getIdClientIntoGame()).getPlayerDesk().getTotalObjects();
+        cornerObjects.keySet().forEach(cornerObject -> {
+            switch (cornerObject) {
+                case CornerObject.MANUSCRIPT -> manuscriptLabel.setText(String.valueOf(cornerObjects.get(cornerObject)));
+                case CornerObject.QUILL -> quillLabel.setText(String.valueOf(cornerObjects.get(cornerObject)));
+                case CornerObject.INKWELL -> inkwellLabel.setText(String.valueOf(cornerObjects.get(cornerObject)));
+            }
+        });
     }
 
     private void loadDeskCards() throws IOException, InterruptedException {
@@ -370,6 +404,7 @@ public class GameController implements FXMLController {
             updatePlayerHandInteraction();
             loadDeskCards();
             updatePlayerDrawInteraction();
+            updateResourcesObjectsLabels();
             movePlayerToken(client.getIdClientIntoGame(), points);
             if (isPlayerStateDraw())
                 infoGame.setText("It's your turn: you should draw a card");
@@ -413,7 +448,7 @@ public class GameController implements FXMLController {
 
     public void handleShowPlayerDesk(int playerIndex) {
         try {
-            if (!playerDeskShown.equals(client.getPlayers(client.getIdGame()).get(playerIndex).getUsername())) {
+            if (playerDeskShown==null || !playerDeskShown.equals(client.getPlayers(client.getIdGame()).get(playerIndex).getUsername())) {
                 if (client.getUsername().equals(client.getPlayers(client.getIdGame()).get(playerIndex).getUsername())) {
                     isYourDeskShowing = true;
                     loadDeskCards();
