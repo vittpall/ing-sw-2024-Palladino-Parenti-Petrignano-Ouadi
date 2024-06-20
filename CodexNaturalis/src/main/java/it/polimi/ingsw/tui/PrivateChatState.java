@@ -1,6 +1,5 @@
 package it.polimi.ingsw.tui;
 
-import it.polimi.ingsw.core.ClientState;
 import it.polimi.ingsw.model.UsefulData;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.BaseClient;
@@ -11,18 +10,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PrivateChatState implements ClientStateTUI {
-    private BaseClient client;
+    private final BaseClient client;
     private final Scanner scanner;
     private final String receiver;
-    private int lastMessageReceived;
-    private ClientState returnState;
 
     public PrivateChatState(BaseClient client, Scanner scanner, String receiver, ChatState returnState) {
         this.client = client;
         this.scanner = scanner;
         this.receiver = receiver;
-        this.lastMessageReceived = 0;
-        this.returnState = new ChatState(client, scanner);
     }
 
     public String getReceiver() {

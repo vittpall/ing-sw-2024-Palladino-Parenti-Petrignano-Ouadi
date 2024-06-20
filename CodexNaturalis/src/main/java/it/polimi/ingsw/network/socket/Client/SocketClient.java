@@ -348,12 +348,6 @@ public class SocketClient extends BaseClient {
                 if (obj instanceof ServerNotification notification) {
                     update(notification);
                 } else if (obj instanceof ServerToClientMsg msg) {
- /*                   if (msg.getType() == TypeServerToClientMsg.CLOSE_CONNECTION) {
-                        System.out.println("Closing connection!!!");
-                        in.close();
-                        out.close();
-                        System.exit(0);
-                    }*/
                     TypeServerToClientMsg responseType = msg.getType();
                     responseQueues.computeIfAbsent(responseType, k -> new LinkedBlockingQueue<>()).put(msg);
                 }

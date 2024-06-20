@@ -35,9 +35,6 @@ public class GameStateGUI implements ClientState {
         return "GameState";
     }
 
-    public void refresh(String msg) {
-
-    }
 
     public void updateChat(Message msg) {
         Platform.runLater(() -> controller.receiveMessage(msg));

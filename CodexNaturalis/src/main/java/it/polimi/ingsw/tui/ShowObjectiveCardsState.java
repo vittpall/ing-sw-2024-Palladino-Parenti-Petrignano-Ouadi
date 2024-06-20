@@ -5,15 +5,12 @@ import it.polimi.ingsw.network.BaseClient;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.Scanner;
 
 public class ShowObjectiveCardsState implements ClientStateTUI {
     BaseClient client;
-    private final Scanner scanner;
 
-    public ShowObjectiveCardsState(BaseClient client, Scanner scanner) {
+    public ShowObjectiveCardsState(BaseClient client) {
         this.client = client;
-        this.scanner = scanner;
     }
 
     @Override

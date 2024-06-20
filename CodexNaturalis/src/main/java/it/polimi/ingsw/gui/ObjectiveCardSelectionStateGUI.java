@@ -11,7 +11,6 @@ import java.rmi.RemoteException;
 public class ObjectiveCardSelectionStateGUI implements ClientState {
     private final BaseClient client;
     private final Stage stage;
-    private ObjectiveCardSelectionController controller;
 
     public ObjectiveCardSelectionStateGUI(Stage stage, BaseClient client) {
         this.client = client;
@@ -20,20 +19,12 @@ public class ObjectiveCardSelectionStateGUI implements ClientState {
 
     @Override
     public void display() throws RemoteException {
-        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/ObjectiveCardSelection.fxml");
+        ObjectiveCardSelectionController controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/ObjectiveCardSelection.fxml");
         controller.loadCards();
     }
 
-   
-
-    
-
-    public String toString()
-    {
+    public String toString() {
         return "ObjectiveCardSelectionStateGUI";
     }
 
-        public void refresh(String msg) {
-
-    }
 }

@@ -79,19 +79,6 @@ public class RMIServer implements VirtualServer {
     @Override
     public void sendMessage(int idGame, Message msg) throws RemoteException {
         lobbyController.sendMessage(idGame, msg);
-        /*
-        if (msg.getReceiver() == null) {
-            for (VirtualView client : clients) {
-                if (client.getIdGame() == msg.getGameId())
-                    client.receiveMessage(msg);
-            }
-
-        } else {
-            for (VirtualView client : clients)
-                if (client.getIdGame() == msg.getGameId())
-                    client.receiveMessage(msg);
-        }
-*/
     }
 
 
@@ -177,18 +164,6 @@ public class RMIServer implements VirtualServer {
     @Override
     public void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws IOException, CardNotFoundException, InterruptedException {
         lobbyController.drawCard(idGame, deckToChoose, inVisible);
-        /*String content;
-        content = "\n----------------------------------\n" +
-                "Player " + lobbyController.getPlayers(idGame).get(idClientIntoGame).getUsername() + " drew a card\n" +
-                "Now is " + lobbyController.getPlayers(idGame).get(lobbyController.getCurrentPlayer(idGame)).getUsername() + " turn.";
-        if (lobbyController.getCurrentGameState(idGame).equals(GameState.FINISHING_ROUND_BEFORE_LAST.toString()) ||
-                lobbyController.getCurrentGameState(idGame).equals(GameState.LAST_ROUND.toString())) {
-            content = "\nThe game is ending. Player " + lobbyController.getUsernamePlayerThatStoppedTheGame(idGame) +
-                    " has reached 20 points or more\n " + content;
-        }
-        ReturnableObject<String> response = new ReturnableObject<>();
-        response.setResponseReturnable(content);
-          this.broadcastWhatHappened(idGame, response);*/
     }
 
 

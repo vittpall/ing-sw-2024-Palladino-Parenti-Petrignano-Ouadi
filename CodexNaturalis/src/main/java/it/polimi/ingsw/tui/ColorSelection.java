@@ -45,7 +45,7 @@ public class ColorSelection implements ClientStateTUI {
 
         if (selectedColor != null && client.getAvailableColors().contains(selectedColor)) {
             client.setTokenColor(selectedColor);
-            client.setCurrentState(new InitializeObjectiveCardState(client, scanner));
+            client.setCurrentState(new InitializeObjectiveCardState(client));
         } else {
             System.out.println("Color not available, please select another color.");
             display();

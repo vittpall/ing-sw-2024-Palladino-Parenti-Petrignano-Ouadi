@@ -467,11 +467,11 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     return checkState;
                 case 4:
                     checkState = checkState(RequestedActions.SHOW_OBJ_CARDS);
-                    if (checkState) currentState = new ShowObjectiveCardsState(this, scan);
+                    if (checkState) currentState = new ShowObjectiveCardsState(this);
                     return checkState;
                 case 5:
                     checkState = checkState(RequestedActions.SHOW_POINTS);
-                    if (checkState) currentState = new ShowPointsState(this, scan);
+                    if (checkState) currentState = new ShowPointsState(this);
                     return checkState;
                 case 6:
                     checkState = checkState(RequestedActions.CHAT);

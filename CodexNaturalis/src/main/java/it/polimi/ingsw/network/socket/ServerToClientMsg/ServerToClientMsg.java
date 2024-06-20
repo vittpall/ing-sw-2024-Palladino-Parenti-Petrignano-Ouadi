@@ -2,7 +2,6 @@ package it.polimi.ingsw.network.socket.ServerToClientMsg;
 
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.socket.Client.ReturnableObject;
 
 import java.io.Serializable;
@@ -18,13 +17,6 @@ public class ServerToClientMsg implements Serializable {
     public ServerToClientMsg(TypeServerToClientMsg type) {
         this.type = type;
         this.response = new ReturnableObject<>();
-    }
-
-
-    public ServerToClientMsg(TypeServerToClientMsg type, int idGame) {
-        this.type = type;
-        this.response = new ReturnableObject<>();
-        this.idGame = idGame;
     }
 
     public void setResponse(ReturnableObject response) {

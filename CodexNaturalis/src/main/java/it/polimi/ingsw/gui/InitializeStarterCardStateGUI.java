@@ -11,7 +11,6 @@ public class InitializeStarterCardStateGUI implements ClientState {
 
     private final BaseClient client;
     private final Stage stage;
-    private InitializeStarterCardController controller;
 
     public InitializeStarterCardStateGUI(Stage stage, BaseClient client) {
         this.client = client;
@@ -20,7 +19,7 @@ public class InitializeStarterCardStateGUI implements ClientState {
 
     @Override
     public void display() {
-        controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/InitializeStarterCard.fxml");
+        InitializeStarterCardController controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/InitializeStarterCard.fxml");
         controller.initializeStarterCard();
     }
 
@@ -29,7 +28,5 @@ public class InitializeStarterCardStateGUI implements ClientState {
         return "InitializeStarterCardStateGUI";
     }
 
-    public void refresh(String msg) {
 
-    }
 }

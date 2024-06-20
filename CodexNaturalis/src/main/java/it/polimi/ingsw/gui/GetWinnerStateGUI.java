@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gui;
 
+import it.polimi.ingsw.core.ClientState;
 import it.polimi.ingsw.gui.Controller.GetWinnerController;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.network.BaseClient;
@@ -8,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.util.HashMap;
 
-public class GetWinnerStateGUI implements ClientStateGUI {
+public class GetWinnerStateGUI implements ClientState {
     private final BaseClient client;
     private final Stage stage;
     private GetWinnerController controller;
@@ -27,10 +28,6 @@ public class GetWinnerStateGUI implements ClientStateGUI {
         return "GetWinnerStateGUI";
     }
 
-    @Override
-    public void refresh(String msg) {
-
-    }
 
     public void initializeWinner(String winner, HashMap<String, Integer> scores, HashMap<String, TokenColor> playersTokens) {
         display();
