@@ -47,6 +47,10 @@ public class ClientHandler implements GameListener {
                 if (request.getType() == TypeServerToClientMsg.USER_ALREADY_TAKEN) {
                     clientUsername = request.getUsername();
                 }
+                if (request.getType() == TypeServerToClientMsg.CLOSE_GAME_WHEN_ENDED)
+                {
+                    gameId = null;
+                }
                 sendMessage(response);
             }
         } catch (IOException e) {

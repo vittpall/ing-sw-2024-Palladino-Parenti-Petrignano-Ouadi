@@ -410,6 +410,19 @@ public class GameController implements FXMLController {
                 infoGame.setText("It's your turn: you should draw a card");
             else
                 infoGame.setText(client.getPlayers(client.getIdGame()).get((client.getIdClientIntoGame() + 1) % client.getnPlayer(client.getIdGame())).getUsername() + " is playing");
+                if (client.getIdGame() != null) {
+                    clearPlaceholders();
+                    loadPlayerHand();
+                    System.out.println(client.getIdGame());
+                    updatePlayerHandInteraction();
+                    loadDeskCards();
+                    updatePlayerDrawInteraction();
+                    movePlayerToken(client.getIdClientIntoGame(), points);
+                    if (isPlayerStateDraw())
+                        infoGame.setText("It's your turn: you should draw a card");
+                    else
+                        infoGame.setText(client.getPlayers(client.getIdGame()).get((client.getIdClientIntoGame() + 1) % client.getnPlayer(client.getIdGame())).getUsername() + " is playing");
+                }
         } catch (RequirementsNotMetException | PlaceNotAvailableException | CardNotFoundException e) {
             infoGame.setText("It's your turn: you should play another card");
             clearPlaceholders();

@@ -41,7 +41,7 @@ public class LobbyController {
 
     }
 
-    public synchronized void removeUsername(String username) {
+    public void removeUsername(String username) {
         synchronized (this.usernames) {
             usernames.remove(username);
         }
@@ -194,7 +194,8 @@ public class LobbyController {
 
     public void closeGame(int idGame, String userThatLeft) throws IOException {
         //TODO:notificare i giocatori del gioco specifico che il gioco viene chiuso dato che un giocatore l'ha fatto
-        gameControllers.get(idGame).closeGame(userThatLeft);
+        if(gameControllers.containsKey(idGame) && !gameControllers.get(idGame).getGameState().equals("End game"))
+            gameControllers.get(idGame).closeGame(userThatLeft);
         gameControllers.remove(idGame);
     }
 

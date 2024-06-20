@@ -202,7 +202,8 @@ public class GameController {
                 for (Player player : model.getPlayers()) {
                     playersPoints.put(player.getUsername(), player.getPoints());
                 }
-                listeners.get("GameRounds").notifyEndGame(model.endGame(), playersPoints);
+                String winner= model.endGame();
+                listeners.get("GameRounds").notifyEndGame(winner, playersPoints);
             }
         } else {
             String message = "\n----------------------------------\n" +

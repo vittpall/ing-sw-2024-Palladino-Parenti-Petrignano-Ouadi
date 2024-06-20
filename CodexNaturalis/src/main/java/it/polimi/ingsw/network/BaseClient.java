@@ -88,7 +88,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
         }
         else
         {
-            System.out.println("An error occurred: " + thrownException.getMessage());
+            System.out.println("An error occurred: " + thrownException.getMessage() + thrownException.getCause());
             thrownException.printStackTrace();
         }
     }
@@ -237,7 +237,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
     }
 
     public synchronized void onEndGame(String winner, HashMap<String, Integer> scores) {
-        idGame = null;
         if (!isGUIMode) {
             showWinnerTui=true;
             this.winner=winner;
@@ -248,12 +247,12 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 System.out.println("The game has ended. Go back to the main menu to see the winner ");
         } else if(getClientCurrentState() instanceof GameStateGUI)
             ((GameStateGUI) getClientCurrentState()).endGameNotification( winner, scores);
-        try{
-            closeGameWhenEnded();
-        } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
+
+    public void setIdGameNull(){
+        idGame=null;
+    }
+
     public String getWinnerForTui(){
         return winner;
     }

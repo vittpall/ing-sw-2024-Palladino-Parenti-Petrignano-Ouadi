@@ -28,14 +28,16 @@ public class GetWinnerController implements FXMLController{
 
     public void initializeWinner(String winner, HashMap<String, Integer>scores) {
         usernameWinner.setText(winner);
+        client.setIdGameNull();
         //TODO set scores into the board
     }
 
     public void handleReturnToLobby() {
         try {
+            client.returnToLobby();
             client.setCurrentState(new LobbyMenuStateGUI(stage, client));
             client.getClientCurrentState().display();
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
