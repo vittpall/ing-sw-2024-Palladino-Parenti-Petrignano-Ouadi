@@ -1,10 +1,6 @@
 package it.polimi.ingsw.gui.Controller;
 
-import it.polimi.ingsw.gui.CardView;
-import it.polimi.ingsw.gui.ChatTab;
-import it.polimi.ingsw.gui.GameBoard;
-import it.polimi.ingsw.gui.GameDesk;
-import it.polimi.ingsw.gui.GetWinnerStateGUI;
+import it.polimi.ingsw.gui.*;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
@@ -20,10 +16,10 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
@@ -64,7 +60,7 @@ public class GameController implements FXMLController {
     public Button sendGlobalChatButton;
     private GameBoard gameBoard;
 
-    public void initialize(){
+    public void initialize() {
         popUp.setVisible(false);
         gameDesk = new GameDesk();
         gameDeskContainer.getChildren().add(gameDesk);
@@ -132,14 +128,14 @@ public class GameController implements FXMLController {
 
     public void initializeGame() {
         try {
-            String username = client.getUsername();
+            playerDeskShown = client.getUsername();
             ArrayList<Player> players = client.getPlayers(client.getIdGame());
             playerDeskTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-            for (int i = playerDeskTabPane.getTabs().size()-1; i >=0; i--) {
+            for (int i = playerDeskTabPane.getTabs().size() - 1; i >= 0; i--) {
                 Tab tab = playerDeskTabPane.getTabs().get(i);
                 if (i < players.size()) {
                     tab.setDisable(false);
-                    if (players.get(i).getUsername().equals(username)) {
+                    if (players.get(i).getUsername().equals(playerDeskShown)) {
                         tab.setText("Your Desk");
                         playerDeskTabPane.getSelectionModel().select(i);
                     } else {
@@ -176,7 +172,6 @@ public class GameController implements FXMLController {
     }
 
     private void loadDeskCards() throws IOException, InterruptedException {
-        playerDeskShown = client.getUsername();
         playerDeskTabPane.getSelectionModel().select(client.getIdClientIntoGame());
         gameDesk.getChildren().clear();
         HashMap<Point, GameCard> deskCards = client.getPlayerDesk();
@@ -285,7 +280,7 @@ public class GameController implements FXMLController {
     }
 
     public void movePlayerToken(int playerId, int newScore) {
-        /*gameBoard.updateTokenPosition(playerId, newScore);*/
+        gameBoard.updateTokenPosition(playerId, newScore);
     }
 
     private void updatePlayerDrawInteraction() throws IOException, InterruptedException {
@@ -512,8 +507,7 @@ public class GameController implements FXMLController {
         ArrayList<Message> alreadyExistingMessages;
         //initialize the tab for the private chat
         for (Player player : players) {
-            if(!(player.getUsername()).equals(client.getUsername()))
-            {
+            if (!(player.getUsername()).equals(client.getUsername())) {
                 alreadyExistingMessages = client.getMessages(player.getUsername());
                 initialiseSingleChatTab(player.getUsername(), alreadyExistingMessages);
             }
@@ -522,7 +516,7 @@ public class GameController implements FXMLController {
 
     }
 
-    public void initialiseSingleChatTab(String username, ArrayList<Message> alreadyExistingMessages){
+    public void initialiseSingleChatTab(String username, ArrayList<Message> alreadyExistingMessages) {
         ChatTab newTab = new ChatTab(username);
 
         TextArea textArea = new TextArea();
@@ -534,8 +528,7 @@ public class GameController implements FXMLController {
         messageField.setPrefWidth(400.0);
 
 
-        for(Message message: alreadyExistingMessages)
-        {
+        for (Message message : alreadyExistingMessages) {
             if (message.getSender().equals(client.getUsername()))
                 textArea.appendText("You: " + message.getContent() + "\n");
             else
@@ -549,7 +542,7 @@ public class GameController implements FXMLController {
                 textArea.appendText("Me: " + message + "\n");
                 messageField.clear();
                 try {
-                    if(username.equals("GlobalChat"))
+                    if (username.equals("GlobalChat"))
                         sendMessage(null, message);
                     else
                         sendMessage(username, message);
@@ -587,31 +580,27 @@ public class GameController implements FXMLController {
 
     public void receiveMessage(Message message) {
         String whoSendTheMessage;
-        if(!message.getSender().equals(client.getUsername()))
+        if (!message.getSender().equals(client.getUsername()))
             whoSendTheMessage = message.getSender();
         else
             return;
         System.out.println("cafdfsff");
         //i've already handled the message the client send, no need to use this function to display that message
         for (Tab tab : chatGameTabPane.getTabs()) {
-            if(message.getReceiver() == null && tab.getText().equals("GlobalChat")) {
+            if (message.getReceiver() == null && tab.getText().equals("GlobalChat")) {
                 VBox vbox = (VBox) ((AnchorPane) tab.getContent()).getChildren().get(0);
                 TextArea textArea = (TextArea) vbox.getChildren().get(0);
                 textArea.appendText(whoSendTheMessage + ": " + message.getContent() + "\n");
-                if(!tab.isSelected())
-                {
-                    ((ChatTab)tab).incrementUnreadMessages();
+                if (!tab.isSelected()) {
+                    ((ChatTab) tab).incrementUnreadMessages();
                 }
                 break;
-            }
-            else
-            if (tab.getText().equals(message.getSender())) {
+            } else if (tab.getText().equals(message.getSender())) {
                 VBox vbox = (VBox) ((AnchorPane) tab.getContent()).getChildren().get(0);
                 TextArea textArea = (TextArea) vbox.getChildren().get(0);
                 textArea.appendText(whoSendTheMessage + ": " + message.getContent() + "\n");
-                if(!tab.isSelected())
-                {
-                    ((ChatTab)tab).incrementUnreadMessages();
+                if (!tab.isSelected()) {
+                    ((ChatTab) tab).incrementUnreadMessages();
                 }
                 break;
             }
