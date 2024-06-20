@@ -18,9 +18,6 @@ public class Lobby {
     }
 
 
-    public void removeGame(int gameId) {
-        //TODO: rimuovere il gioco quando tutti i giocatori sono usciti. tenere il conto di quanti giocatori sono usciti
-    }
 
     public Game getGame(int gameId) {
         return games.get(gameId);

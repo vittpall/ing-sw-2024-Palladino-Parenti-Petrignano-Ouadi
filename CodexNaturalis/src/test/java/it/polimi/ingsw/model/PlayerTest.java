@@ -101,7 +101,6 @@ class PlayerTest {
     }*/
 
 
-    //TODO errore da sistemare
     @Test
     void getPlayerHandTest_beforeAndAfterSettingIt() {
         ArrayList<GameCard> expectedPlayerHand = new ArrayList<>();

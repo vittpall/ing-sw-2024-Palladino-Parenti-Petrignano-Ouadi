@@ -29,7 +29,9 @@ public class GetWinnerState implements ClientStateTUI {
         //TODO gestire la chiusura del gioco
         switch (input) {
             case 1:
-                client.closeGame();
+                client.returnToLobby();
+                client.setCurrentState(new LobbyMenuState(client, scanner));
+                client.inputHandler();
                 break;
             case 2:
                 client.close();
@@ -42,7 +44,7 @@ public class GetWinnerState implements ClientStateTUI {
     @Override
     public void promptForInput() {
         System.out.println("Choose an option:");
-        System.out.println("1. Start a new game");
+        System.out.println("1. Return to lobby");
         System.out.println("2. Exit");
 
     }

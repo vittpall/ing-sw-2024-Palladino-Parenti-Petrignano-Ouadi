@@ -90,7 +90,6 @@ public class GameController {
     }
 
     public ArrayList<ObjectiveCard> getObjectiveCards(int idPlayer, GameListener playerListener) {
-        //TODO added to give the possibility to quit during the starter and objective card selection
         addListenerList("GameStarted", playerListener);
         return model.getPlayers().get(idPlayer).getDrawnObjectiveCards();
     }

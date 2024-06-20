@@ -35,7 +35,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
     protected BlockingQueue<ServerNotification> notificationsQueue;
     private boolean isGUIMode;
     protected UsefulData usefulData;
-    private volatile boolean waitingForCloseGameNotification;
+    protected boolean waitingForCloseGameNotification;
     protected TokenColor userTokenColor;
     String input;
     private final Stage stageUI;
@@ -321,7 +321,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
         notificationsQueue.add(notification);
     }
 
-    protected void inputHandler(){
+    public void inputHandler(){
 
         System.err.println("RETURN TO START OF THE GAME");
         showWinnerTui=false;
@@ -402,7 +402,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
                                 try {
                                     handleTUIInput(Integer.parseInt(input));
                                 } catch (NumberFormatException e) {
-                                    //TODO to catch the exception in case the player finishes his move while the game is being closed.
                                     System.out.println("Invalid input: Please enter a number.");
                                 } catch (Exception e) {
                                     System.out.println("The game is closing wait...");
