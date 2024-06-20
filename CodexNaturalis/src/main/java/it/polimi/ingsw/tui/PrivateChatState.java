@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.BaseClient;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,7 +31,7 @@ public class PrivateChatState implements ClientStateTUI {
     }
 
     @Override
-    public void display(){
+    public void display() throws RemoteException {
         try {
         System.out.println("Private chat with " + receiver);
         ArrayList<Message> chat = client.getMessages(receiver);
@@ -52,7 +53,7 @@ public class PrivateChatState implements ClientStateTUI {
         inputHandler(scanner.nextLine());
         } catch (IOException | InterruptedException | ClassNotFoundException e) {
             System.err.println("An error occurred: " + e.getMessage());
-            throw new RuntimeException(e);
+            throw new RemoteException();
         }
     }
 

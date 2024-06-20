@@ -584,7 +584,6 @@ public class GameController implements FXMLController {
             whoSendTheMessage = message.getSender();
         else
             return;
-        System.out.println("cafdfsff");
         //i've already handled the message the client send, no need to use this function to display that message
         for (Tab tab : chatGameTabPane.getTabs()) {
             if (message.getReceiver() == null && tab.getText().equals("GlobalChat")) {

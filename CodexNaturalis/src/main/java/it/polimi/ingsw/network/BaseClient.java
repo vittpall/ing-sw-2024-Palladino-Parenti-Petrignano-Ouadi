@@ -237,6 +237,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
     }
 
     public synchronized void onEndGame(String winner, HashMap<String, Integer> scores) {
+        idGame = null;
         if (!isGUIMode) {
             showWinnerTui=true;
             this.winner=winner;
@@ -322,6 +323,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
     }
 
     protected void inputHandler(){
+
+        System.err.println("RETURN TO START OF THE GAME");
         showWinnerTui=false;
         boolean correctInput;
         do {

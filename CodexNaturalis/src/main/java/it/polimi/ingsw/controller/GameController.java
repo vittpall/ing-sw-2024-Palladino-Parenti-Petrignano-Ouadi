@@ -71,6 +71,7 @@ public class GameController {
             }
         }
 
+        addListenerList("Chat", playerListener);
         addListenerList("WaitingForPlayersState", playerListener);
         listeners.get("WaitingForPlayersState").notifyJoinedGame(model.getPlayers(), nPlayers - model.getPlayers().size(), playerListener.getUsername());
 
@@ -171,8 +172,7 @@ public class GameController {
 
     public void sendMessage(Message msg) {
         model.getChats().addMessage(msg);
-        for (String s : listeners.keySet())
-            listeners.get(s).notifyChat(msg);
+        listeners.get("Chat").notifyChat(msg);
     }
 
     public int getCurrentPlayer() {
