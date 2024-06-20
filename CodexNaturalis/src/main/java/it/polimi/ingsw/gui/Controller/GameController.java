@@ -11,7 +11,6 @@ import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.UsefulData;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
@@ -32,9 +31,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
-import javax.sound.midi.Receiver;
 import java.awt.*;
 import java.io.IOException;
 import java.util.List;
@@ -67,7 +64,7 @@ public class GameController implements FXMLController {
     public Button sendGlobalChatButton;
     private GameBoard gameBoard;
 
-    public void initialize() throws IOException, InterruptedException {
+    public void initialize(){
         popUp.setVisible(false);
         gameDesk = new GameDesk();
         gameDeskContainer.getChildren().add(gameDesk);
@@ -136,9 +133,9 @@ public class GameController implements FXMLController {
     public void initializeGame() {
         try {
             String username = client.getUsername();
-            List<Player> players = client.getPlayers(client.getIdGame());
-
-            for (int i = 0; i < playerDeskTabPane.getTabs().size(); i++) {
+            ArrayList<Player> players = client.getPlayers(client.getIdGame());
+            playerDeskTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+            for (int i = playerDeskTabPane.getTabs().size()-1; i >=0; i--) {
                 Tab tab = playerDeskTabPane.getTabs().get(i);
                 if (i < players.size()) {
                     tab.setDisable(false);
@@ -525,7 +522,7 @@ public class GameController implements FXMLController {
 
     }
 
-    public void initialiseSingleChatTab(String username, ArrayList<Message> alreadyExistingMessages) throws IOException, InterruptedException {
+    public void initialiseSingleChatTab(String username, ArrayList<Message> alreadyExistingMessages){
         ChatTab newTab = new ChatTab(username);
 
         TextArea textArea = new TextArea();
@@ -581,6 +578,7 @@ public class GameController implements FXMLController {
 
         newTab.setContent(anchorPane);
         chatGameTabPane.getTabs().add(newTab);
+        chatGameTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
     }
 
     public void sendMessage(String receiver, String input) throws IOException, InterruptedException {
