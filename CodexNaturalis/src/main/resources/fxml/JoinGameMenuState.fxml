@@ -54,9 +54,9 @@
          <Image url="@../Images/CN_decoration9.png" />
       </image>
    </ImageView>
-     <Button fx:id="joinGameButton" disable="true" layoutX="586.0" layoutY="527.0" onAction="#handleJoinGame" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #6bf8f3;" styleClass="little-label" text="Join Selected Game" AnchorPane.bottomAnchor="233.0" AnchorPane.rightAnchor="14.0">
+     <Button fx:id="joinGameButton" disable="true" layoutX="586.0" layoutY="527.0" onAction="#handleJoinGame" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #6bf8f3;" styleClass="normal-label" text="Join Selected Game" AnchorPane.bottomAnchor="233.0" AnchorPane.rightAnchor="14.0">
         </Button>
-     <Button fx:id="createGameButton" layoutX="586.0" layoutY="576.0" onAction="#handleCreateGame" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #a2ecbb;" styleClass="little-label" text="Create New Game" AnchorPane.bottomAnchor="184.0" AnchorPane.rightAnchor="14.0">
+     <Button fx:id="createGameButton" layoutX="586.0" layoutY="576.0" onAction="#handleCreateGame" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="Create New Game" AnchorPane.bottomAnchor="184.0" AnchorPane.rightAnchor="14.0">
         </Button>
      <Label fx:id="messageLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="22.0" layoutY="194.0" style="-fx-text-fill: black;" text="Select An Avilable Game :" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <font>
@@ -92,14 +92,14 @@
                <Image url="@../Images/CN_decoration8.png" />
             </image>
          </ImageView>
+         <ImageView fitHeight="79.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" translateX="120.0">
+            <image>
+               <Image url="@../Images/CN_Funghi_kingdom.png" />
+            </image>
+         </ImageView>
          <ImageView fitHeight="86.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" translateX="-120.0">
             <image>
                <Image url="@../Images/CN_Plant_kingdom.png" />
-            </image>
-         </ImageView>
-         <ImageView fitHeight="103.0" fitWidth="107.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" translateX="120.0">
-            <image>
-               <Image url="@../Images/CN_Funghi_kingdom.png" />
             </image>
          </ImageView>
       </children>
