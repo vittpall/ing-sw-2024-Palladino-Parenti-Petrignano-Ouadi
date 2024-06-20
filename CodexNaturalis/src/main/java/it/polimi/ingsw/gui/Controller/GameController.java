@@ -11,6 +11,7 @@ import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.CornerObject;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 import javafx.scene.Node;
@@ -159,11 +160,10 @@ public class GameController implements FXMLController {
                 }
             }
 
-            for (int i = 0; i < players.size(); i++) {
-                Player player = players.get(i);
+            for (Player player : players) {
                 String imagePath = player.getTokenColor() != null ? "/Images/" + player.getTokenColor().getImageName() : null;
                 if (imagePath != null) {
-                    addPlayerToken(i, Objects.requireNonNull(getClass().getResource(imagePath)).toExternalForm());
+                    gameBoard.addToken(player.getUsername(), Objects.requireNonNull(getClass().getResource(imagePath)).toExternalForm());
                 }
             }
 
@@ -195,10 +195,11 @@ public class GameController implements FXMLController {
                 case Resource.INSECT_KINGDOM -> insectLabel.setText(String.valueOf(resources.get(resource)));
             }
         });
-        EnumMap<CornerObject, Integer> cornerObjects= client.getPlayers(client.getIdGame()).get(client.getIdClientIntoGame()).getPlayerDesk().getTotalObjects();
+        EnumMap<CornerObject, Integer> cornerObjects = client.getPlayers(client.getIdGame()).get(client.getIdClientIntoGame()).getPlayerDesk().getTotalObjects();
         cornerObjects.keySet().forEach(cornerObject -> {
             switch (cornerObject) {
-                case CornerObject.MANUSCRIPT -> manuscriptLabel.setText(String.valueOf(cornerObjects.get(cornerObject)));
+                case CornerObject.MANUSCRIPT ->
+                        manuscriptLabel.setText(String.valueOf(cornerObjects.get(cornerObject)));
                 case CornerObject.QUILL -> quillLabel.setText(String.valueOf(cornerObjects.get(cornerObject)));
                 case CornerObject.INKWELL -> inkwellLabel.setText(String.valueOf(cornerObjects.get(cornerObject)));
             }
@@ -309,13 +310,6 @@ public class GameController implements FXMLController {
         return client.getCurrentPlayerState() == PlayerState.DRAW;
     }
 
-    public void addPlayerToken(int playerId, String tokenImage) {
-        gameBoard.addToken(playerId, tokenImage);
-    }
-
-    public void movePlayerToken(int playerId, int newScore) {
-        gameBoard.updateTokenPosition(playerId, newScore);
-    }
 
     private void updatePlayerDrawInteraction() throws IOException, InterruptedException {
         int index = 3;
@@ -405,24 +399,24 @@ public class GameController implements FXMLController {
             loadDeskCards();
             updatePlayerDrawInteraction();
             updateResourcesObjectsLabels();
-            movePlayerToken(client.getIdClientIntoGame(), points);
+            gameBoard.updateTokenPosition(client.getUsername(), points);
             if (isPlayerStateDraw())
                 infoGame.setText("It's your turn: you should draw a card");
             else
                 infoGame.setText(client.getPlayers(client.getIdGame()).get((client.getIdClientIntoGame() + 1) % client.getnPlayer(client.getIdGame())).getUsername() + " is playing");
-                if (client.getIdGame() != null) {
-                    clearPlaceholders();
-                    loadPlayerHand();
-                    System.out.println(client.getIdGame());
-                    updatePlayerHandInteraction();
-                    loadDeskCards();
-                    updatePlayerDrawInteraction();
-                    movePlayerToken(client.getIdClientIntoGame(), points);
-                    if (isPlayerStateDraw())
-                        infoGame.setText("It's your turn: you should draw a card");
-                    else
-                        infoGame.setText(client.getPlayers(client.getIdGame()).get((client.getIdClientIntoGame() + 1) % client.getnPlayer(client.getIdGame())).getUsername() + " is playing");
-                }
+            if (client.getIdGame() != null) {
+                clearPlaceholders();
+                loadPlayerHand();
+                System.out.println(client.getIdGame());
+                updatePlayerHandInteraction();
+                loadDeskCards();
+                updatePlayerDrawInteraction();
+                gameBoard.updateTokenPosition(client.getUsername(), points);
+                if (isPlayerStateDraw())
+                    infoGame.setText("It's your turn: you should draw a card");
+                else
+                    infoGame.setText(client.getPlayers(client.getIdGame()).get((client.getIdClientIntoGame() + 1) % client.getnPlayer(client.getIdGame())).getUsername() + " is playing");
+            }
         } catch (RequirementsNotMetException | PlaceNotAvailableException | CardNotFoundException e) {
             infoGame.setText("It's your turn: you should play another card");
             clearPlaceholders();
@@ -461,7 +455,7 @@ public class GameController implements FXMLController {
 
     public void handleShowPlayerDesk(int playerIndex) {
         try {
-            if (playerDeskShown==null || !playerDeskShown.equals(client.getPlayers(client.getIdGame()).get(playerIndex).getUsername())) {
+            if (playerDeskShown == null || !playerDeskShown.equals(client.getPlayers(client.getIdGame()).get(playerIndex).getUsername())) {
                 if (client.getUsername().equals(client.getPlayers(client.getIdGame()).get(playerIndex).getUsername())) {
                     isYourDeskShowing = true;
                     loadDeskCards();
@@ -509,7 +503,7 @@ public class GameController implements FXMLController {
         }
     }
 
-    public void cardPlayedNotification(String username,HashMap<String, Integer> playersPoints) {
+    public void cardPlayedNotification(String username, HashMap<String, Integer> playersPoints) {
         int indexPlayer = 0;
         try {
             ArrayList<Player> players = client.getPlayers(client.getIdGame());
@@ -525,7 +519,7 @@ public class GameController implements FXMLController {
             if (!(players.get(indexPlayer).getPlayerState().equals(PlayerState.DRAW)))
                 infoGame.setText(players.get((indexPlayer + 1) % client.getnPlayer(client.getIdGame())).getUsername() + " is playing");
 
-            movePlayerToken(indexPlayer, playersPoints.get(username));
+            gameBoard.updateTokenPosition(username, playersPoints.get(username));
 
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -542,9 +536,9 @@ public class GameController implements FXMLController {
         popUp.setVisible(false);
     }
 
-    public void endGameNotification(String winner, HashMap<String, Integer> scores) {
+    public void endGameNotification(String winner, HashMap<String, Integer> scores, HashMap<String, TokenColor> playersTokens) {
         client.setCurrentState(new GetWinnerStateGUI(stage, client));
-        ((GetWinnerStateGUI) client.getClientCurrentState()).initializeWinner(winner, scores);
+        ((GetWinnerStateGUI) client.getClientCurrentState()).initializeWinner(winner, scores, playersTokens);
     }
 
     public void initialiseChat() throws IOException, InterruptedException {
@@ -661,9 +655,9 @@ public class GameController implements FXMLController {
         List<Player> players = client.getPlayers(client.getIdGame());
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-            if (!gameBoard.hasToken(i) && player.getTokenColor() != null) {
+            if (!gameBoard.hasToken(player.getUsername()) && player.getTokenColor() != null) {
                 String imagePath = "/Images/" + player.getTokenColor().getImageName();
-                addPlayerToken(i, Objects.requireNonNull(getClass().getResource(imagePath)).toExternalForm());
+                gameBoard.addToken(player.getUsername(), Objects.requireNonNull(getClass().getResource(imagePath)).toExternalForm());
             }
         }
     }

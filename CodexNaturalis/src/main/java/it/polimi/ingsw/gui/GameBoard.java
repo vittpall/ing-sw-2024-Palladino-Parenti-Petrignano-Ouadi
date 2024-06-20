@@ -14,9 +14,9 @@ public class GameBoard {
 
     private final List<BoardCoordinate> coordinates;
     private final AnchorPane gameBoardAnchorPane;
-    private final Map<Integer, TokenView> tokens;
+    private final Map<String, TokenView> tokens;
     private final Map<BoardCoordinate, Integer> tokenPositions;
-    private final Map<Integer, BoardCoordinate> currentPlayerPositions;
+    private final Map<String, BoardCoordinate> currentPlayerPositions;
 
     public GameBoard(AnchorPane gameBoardAnchorPane) {
         this.gameBoardAnchorPane = gameBoardAnchorPane;
@@ -26,7 +26,7 @@ public class GameBoard {
         this.currentPlayerPositions = new HashMap<>();
     }
 
-    public void addToken(int playerId, String imagePath) {
+    public void addToken(String username, String imagePath) {
         BoardCoordinate startCoordinate = coordinates.getFirst();
         if (startCoordinate != null) {
             double[] layouts = getTokenLayout(startCoordinate);
@@ -34,23 +34,23 @@ public class GameBoard {
             token.setLayoutX(token.getOffsetX());
             token.setLayoutY(token.getOffsetY());
             gameBoardAnchorPane.getChildren().add(token);
-            tokens.put(playerId, token);
+            tokens.put(username, token);
             tokenPositions.put(startCoordinate, tokenPositions.getOrDefault(startCoordinate, 0) + 1);
-            currentPlayerPositions.put(playerId, startCoordinate);
+            currentPlayerPositions.put(username, startCoordinate);
         }
     }
 
-    public void updateTokenPosition(int playerId, int newScore) {
-        BoardCoordinate oldCoordinate = currentPlayerPositions.get(playerId);
+    public void updateTokenPosition(String username, int newScore) {
+        BoardCoordinate oldCoordinate = currentPlayerPositions.get(username);
         BoardCoordinate newCoordinate = coordinates.stream().filter(coord -> coord.score() == newScore).findFirst().orElse(null);
         if (!oldCoordinate.equals(newCoordinate) && newCoordinate != null) {
             tokenPositions.put(oldCoordinate, tokenPositions.get(oldCoordinate) - 1);
             double[] layouts = getTokenLayout(newCoordinate);
-            TokenView playerToken = tokens.get(playerId);
+            TokenView playerToken = tokens.get(username);
             playerToken.setLayoutX(layouts[0]);
             playerToken.setLayoutY(layouts[1]);
             tokenPositions.put(newCoordinate, tokenPositions.getOrDefault(newCoordinate, 0) + 1);
-            currentPlayerPositions.put(playerId, newCoordinate);
+            currentPlayerPositions.put(username, newCoordinate);
         }
     }
 
@@ -77,8 +77,8 @@ public class GameBoard {
         return new double[]{baseX + offsetX, baseY + offsetY};
     }
 
-    public boolean hasToken(int playerId) {
-        return tokens.containsKey(playerId);
+    public boolean hasToken(String username) {
+        return tokens.containsKey(username);
     }
 
 }

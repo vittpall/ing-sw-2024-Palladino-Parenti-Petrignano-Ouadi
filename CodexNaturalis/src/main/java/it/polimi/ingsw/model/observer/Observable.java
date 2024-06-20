@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.observer;
 
-import it.polimi.ingsw.model.chat.Message;
-import it.polimi.ingsw.network.notifications.*;
 import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.network.notifications.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,8 +21,7 @@ public class Observable {
         listeners.add(listener);
     }
 
-    public HashSet<GameListener> getListeners()
-    {
+    public HashSet<GameListener> getListeners() {
         return new HashSet<>(listeners);
     }
 
@@ -37,29 +36,29 @@ public class Observable {
     public void notifyJoinedGame(ArrayList<Player> players, int nOfMissingPlayers, String usernameSender) {
         notifyListeners(new GameJoinedNotification(players, nOfMissingPlayers), usernameSender);
     }
+
     public void notifyJoinedGameToOutsider(String msg, HashMap<Integer, Integer[]> availableGames) {
         notifyListeners(new GameJoinedNotificationToOutsiders(msg, availableGames), null);
     }
 
-    public void notifyChangeTurn(String message, String username, String usernameSender){
+    public void notifyChangeTurn(String message, String username, String usernameSender) {
         notifyListeners(new ChangeTurnNotification(message, username), usernameSender);
     }
 
-    public void notifyPlayedCard(String message,HashMap<String, Integer> playersPoints, String username){
-        notifyListeners(new PlayedCardNotification(message,playersPoints, username), username);
+    public void notifyPlayedCard(String message, HashMap<String, Integer> playersPoints, String username) {
+        notifyListeners(new PlayedCardNotification(message, playersPoints, username), username);
     }
 
-    public void notifyLastTurnSet(String username){
+    public void notifyLastTurnSet(String username) {
         notifyListeners(new LastTurnSetNotification(username), null);
     }
 
-    public void notifyChat(Message msg)
-    {
+    public void notifyChat(Message msg) {
         notifyListeners(new ChatNotification(msg), null);
     }
 
-    public void notifyEndGame(String winner, HashMap<String, Integer> scores) {
-        notifyListeners(new EndGameNotification(winner, scores), null);
+    public void notifyEndGame(String winner, HashMap<String, Integer> scores, HashMap<String, TokenColor> playersTokens) {
+        notifyListeners(new EndGameNotification(winner, scores, playersTokens), null);
     }
 
     public void notifyCloseGame(String msg) {
@@ -70,7 +69,7 @@ public class Observable {
         for (GameListener listener : listeners) {
             new Thread(() -> {
                 try {
-                    if(usernameSender==null||!(listener.getUsername()).equals(usernameSender))
+                    if (usernameSender == null || !(listener.getUsername()).equals(usernameSender))
                         listener.update(notification);
                 } catch (IOException e) {
                     System.out.println("This listener cannot be reached");

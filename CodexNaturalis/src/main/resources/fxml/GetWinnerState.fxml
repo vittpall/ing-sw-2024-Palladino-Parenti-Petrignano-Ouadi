@@ -2,51 +2,44 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="scene-dimensions,scene-background"
+            stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.gui.Controller.GetWinnerController">
+    <VBox alignment="CENTER" layoutX="82.0" layoutY="63.0" spacing="20.0" AnchorPane.bottomAnchor="100.0"
+          AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+        <HBox alignment="CENTER" prefHeight="482.0" prefWidth="431.0" spacing="50.0">
+            <AnchorPane fx:id="gameBoardAnchorPane">
+                <ImageView fitHeight="555.0" fitWidth="443.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@../Images/Board.jpg"/>
+                </ImageView>
+            </AnchorPane>
+            <VBox alignment="CENTER" spacing="50.0">
+                <ImageView fitHeight="293.0" fitWidth="301.0" pickOnBounds="true" smooth="false">
+                    <Image url="@../Images/LogoCodexNaturalis.jpg"/>
+                </ImageView>
+                <Label alignment="CENTER" styleClass="title-label" text="THE WINNER IS"/>
+                <Label fx:id="usernameWinner" styleClass="title-label" text="PLAYER"/>
+            </VBox>
+        </HBox>
+        <Button fx:id="returnToLobbyButton" mnemonicParsing="false" onMouseClicked="#handleReturnToLobby"
+                style="-fx-background-color: #a2ecbb;" styleClass="primary-button" text="RETURN TO LOBBY"/>
+    </VBox>
+    <!-- Top-left Corner -->
+    <ImageView rotate="180" scaleX="-1" styleClass="corner-image" AnchorPane.leftAnchor="0.0"
+               AnchorPane.topAnchor="0.0">
+    </ImageView>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.GetWinnerController">
-   <children>
-      <VBox alignment="CENTER" layoutX="82.0" layoutY="63.0" spacing="20.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
-         <children>
-            <HBox alignment="CENTER" prefHeight="482.0" prefWidth="431.0" spacing="50.0">
-               <children>
-                  <ImageView fitHeight="555.0" fitWidth="443.0" pickOnBounds="true" preserveRatio="true">
-                          <Image url="@../Images/Board.jpg" />
-                  </ImageView>
-                  <VBox alignment="CENTER" spacing="50.0">
-                     <children>
-                        <ImageView fitHeight="293.0" fitWidth="301.0" pickOnBounds="true" smooth="false">
-                           <image>
-                              <Image url="@../Images/LogoCodexNaturalis.jpg" />
-                           </image>
-                        </ImageView>
-                        <Label alignment="CENTER" styleClass="title-label" text="THE WINNER IS" />
-                        <Label fx:id="usernameWinner" styleClass="title-label" text="PLAYER" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <Button fx:id="returnToLobbyButton" mnemonicParsing="false" onMouseClicked="#handleReturnToLobby" style="-fx-background-color: #a2ecbb;" styleClass="primary-button" text="RETURN TO LOBBY" />
-         </children>
-      </VBox>
-      <!-- Top-left Corner -->
-      <ImageView rotate="180" scaleX="-1" styleClass="corner-image" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-      </ImageView>
+    <!-- Top-Right Corner -->
+    <ImageView rotate="180" styleClass="corner-image" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
+    </ImageView>
 
-      <!-- Top-Right Corner -->
-      <ImageView rotate="180" styleClass="corner-image" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-      </ImageView>
+    <!-- Bottom-Left Corner -->
+    <ImageView styleClass="corner-image" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
+    </ImageView>
 
-      <!-- Bottom-Left Corner -->
-      <ImageView styleClass="corner-image" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
-      </ImageView>
-
-      <!-- Bottom-Right Corner -->
-      <ImageView scaleX="-1" styleClass="corner-image" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
-      </ImageView>
-   </children>
+    <!-- Bottom-Right Corner -->
+    <ImageView scaleX="-1" styleClass="corner-image" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+    </ImageView>
 </AnchorPane>

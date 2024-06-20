@@ -198,11 +198,16 @@ public class GameController {
             } else {
                 gameState = GameState.ENDGAME;
                 HashMap<String, Integer> playersPoints = new HashMap<>();
+                HashMap<String, TokenColor> playersTokens = new HashMap<>();
+
+
+                String winner = model.endGame();
+
                 for (Player player : model.getPlayers()) {
                     playersPoints.put(player.getUsername(), player.getPoints());
+                    playersTokens.put(player.getUsername(), player.getTokenColor());
                 }
-                String winner= model.endGame();
-                listeners.get("GameRounds").notifyEndGame(winner, playersPoints);
+                listeners.get("GameRounds").notifyEndGame(winner, playersPoints, playersTokens);
             }
         } else {
             String message = "\n----------------------------------\n" +

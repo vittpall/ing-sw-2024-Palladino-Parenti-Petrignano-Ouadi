@@ -3,6 +3,7 @@ package it.polimi.ingsw.gui;
 import it.polimi.ingsw.core.ClientState;
 import it.polimi.ingsw.gui.Controller.GameController;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.application.Platform;
@@ -54,8 +55,8 @@ public class GameStateGUI implements ClientState {
         Platform.runLater(() -> controller.lastTurnSetNotification(username));
     }
 
-    public void endGameNotification(String winner, HashMap<String, Integer> scores) {
-        Platform.runLater(() -> controller.endGameNotification(winner, scores));
+    public void endGameNotification(String winner, HashMap<String, Integer> scores, HashMap<String, TokenColor> playersTokens) {
+        Platform.runLater(() -> controller.endGameNotification(winner, scores, playersTokens));
     }
 
     public void colorSelectionNotification() {

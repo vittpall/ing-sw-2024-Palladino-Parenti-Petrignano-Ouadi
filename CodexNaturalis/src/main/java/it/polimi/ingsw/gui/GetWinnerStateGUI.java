@@ -1,12 +1,11 @@
 package it.polimi.ingsw.gui;
 
-import it.polimi.ingsw.gui.Controller.GameController;
 import it.polimi.ingsw.gui.Controller.GetWinnerController;
+import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.stage.Stage;
 
-import java.rmi.RemoteException;
 import java.util.HashMap;
 
 public class GetWinnerStateGUI implements ClientStateGUI {
@@ -18,6 +17,7 @@ public class GetWinnerStateGUI implements ClientStateGUI {
         this.client = client;
         this.stage = stage;
     }
+
     @Override
     public void display() {
         controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/GetWinnerState.fxml");
@@ -26,13 +26,14 @@ public class GetWinnerStateGUI implements ClientStateGUI {
     public String toString() {
         return "GetWinnerStateGUI";
     }
+
     @Override
     public void refresh(String msg) {
 
     }
 
-    public void initializeWinner(String winner, HashMap<String, Integer> scores) {
+    public void initializeWinner(String winner, HashMap<String, Integer> scores, HashMap<String, TokenColor> playersTokens) {
         display();
-        controller.initializeWinner(winner, scores);
+        controller.initializeWinner(winner, scores, playersTokens);
     }
 }

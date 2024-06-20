@@ -82,12 +82,9 @@ abstract public class BaseClient implements VirtualView, GameListener {
     }
 
     private static void handleException(Thread thread, Throwable thrownException) {
-        if(Platform.isFxApplicationThread())
-        {
+        if (Platform.isFxApplicationThread()) {
             showExceptionError(thrownException);
-        }
-        else
-        {
+        } else {
             System.out.println("An error occurred: " + thrownException.getMessage() + thrownException.getCause());
             thrownException.printStackTrace();
         }
@@ -95,8 +92,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     private static Throwable getInitialCause(Throwable thrownException) {
         Throwable thrownExceptionReserched;
-        while((thrownExceptionReserched = thrownException.getCause()) != null)
-        {
+        while ((thrownExceptionReserched = thrownException.getCause()) != null) {
             thrownException = thrownExceptionReserched;
         }
         return thrownException;
@@ -106,12 +102,10 @@ abstract public class BaseClient implements VirtualView, GameListener {
     private static void showExceptionError(Throwable thrownException) {
         Throwable throwableToDispatch = getInitialCause(thrownException);
 
-        if(throwableToDispatch instanceof RemoteException)
-        {
+        if (throwableToDispatch instanceof RemoteException) {
             System.out.println("The server has crashed, thanks for playing");
             System.exit(0);
-        }
-        else {
+        } else {
             //other catched exceptions
             throwableToDispatch.printStackTrace();
         }
@@ -180,7 +174,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
         } else {
             if (getClientCurrentState() instanceof ColorSelectionGUI)
                 ((ColorSelectionGUI) getClientCurrentState()).refresh(availableColors);
-            else if(getClientCurrentState() instanceof GameStateGUI)
+            else if (getClientCurrentState() instanceof GameStateGUI)
                 ((GameStateGUI) getClientCurrentState()).colorSelectionNotification();
         }
     }
@@ -224,7 +218,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 System.out.println("You can see the updated desk by choosing " + username + "'s desk");
             }
         } else if (getClientCurrentState() instanceof GameStateGUI)
-            ((GameStateGUI) getClientCurrentState()).cardPlayedRefresh(username,playersPoints);
+            ((GameStateGUI) getClientCurrentState()).cardPlayedRefresh(username, playersPoints);
     }
 
     public synchronized void onLastTurnSet(String username) {
@@ -236,29 +230,31 @@ abstract public class BaseClient implements VirtualView, GameListener {
             ((GameStateGUI) getClientCurrentState()).lastTurnSetNotification(username);
     }
 
-    public synchronized void onEndGame(String winner, HashMap<String, Integer> scores) {
+    public synchronized void onEndGame(String winner, HashMap<String, Integer> scores, HashMap<String, TokenColor> playersTokens) {
         if (!isGUIMode) {
-            showWinnerTui=true;
-            this.winner=winner;
-            this.scores=scores;
-            if(getClientCurrentState() == null)
-               display();
+            showWinnerTui = true;
+            this.winner = winner;
+            this.scores = scores;
+            if (getClientCurrentState() == null)
+                display();
             else
                 System.out.println("The game has ended. Go back to the main menu to see the winner ");
-        } else if(getClientCurrentState() instanceof GameStateGUI)
-            ((GameStateGUI) getClientCurrentState()).endGameNotification( winner, scores);
+        } else if (getClientCurrentState() instanceof GameStateGUI)
+            ((GameStateGUI) getClientCurrentState()).endGameNotification(winner, scores, playersTokens);
     }
 
-    public void setIdGameNull(){
-        idGame=null;
+    public void setIdGameNull() {
+        idGame = null;
     }
 
-    public String getWinnerForTui(){
+    public String getWinnerForTui() {
         return winner;
     }
-    public HashMap<String, Integer> getScoresForTui(){
+
+    public HashMap<String, Integer> getScoresForTui() {
         return new HashMap<>(scores);
     }
+
     public synchronized void onGameClosed(String msg) {
         //to avoid trying close game already closed
         idGame = null;
@@ -280,38 +276,32 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     public void onChatMessageReceived(Message msg) {
         if (!isGUIMode) {
-            if(!msg.getSender().equals(username)) {
+            if (!msg.getSender().equals(username)) {
                 if (getClientCurrentState() != null) {
                     if (msg.getReceiver() == null && getClientCurrentState() instanceof GlobalChatState) {
                         System.out.println(msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET + ": " + msg.getContent());
-                    } else
-                    {
-                        if(!(getClientCurrentState() instanceof GlobalChatState) && msg.getReceiver() == null)
-                        {
+                    } else {
+                        if (!(getClientCurrentState() instanceof GlobalChatState) && msg.getReceiver() == null) {
                             System.out.println("You have received a message from the global chat from" + msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET);
                         }
                     }
 
                     if (msg.getReceiver() != null && getClientCurrentState() instanceof PrivateChatState && ((PrivateChatState) getClientCurrentState()).getReceiver().equals(msg.getSender())) {
                         System.out.println(msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET + ": " + msg.getContent());
-                    } else
-                    {
-                        if(msg.getReceiver() != null && !(getClientCurrentState() instanceof PrivateChatState) || !((PrivateChatState) getClientCurrentState()).getReceiver().equals(msg.getSender()))
+                    } else {
+                        if (msg.getReceiver() != null && !(getClientCurrentState() instanceof PrivateChatState) || !((PrivateChatState) getClientCurrentState()).getReceiver().equals(msg.getSender()))
                             System.out.println("You have received a message from " + msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET);
                     }
-                } else
-                {
-                    if(msg.getReceiver() == null)
+                } else {
+                    if (msg.getReceiver() == null)
                         System.out.println("You have received a message from the global chat from " + msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET);
                     else
                         System.out.println(msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET + ": " + msg.getContent());
                 }
 
             }
-        }
-        else
-        {
-            if(getClientCurrentState() instanceof GameStateGUI)
+        } else {
+            if (getClientCurrentState() instanceof GameStateGUI)
                 ((GameStateGUI) getClientCurrentState()).updateChat(msg);
         }
     }
@@ -321,10 +311,10 @@ abstract public class BaseClient implements VirtualView, GameListener {
         notificationsQueue.add(notification);
     }
 
-    public void inputHandler(){
+    public void inputHandler() {
 
         System.err.println("RETURN TO START OF THE GAME");
-        showWinnerTui=false;
+        showWinnerTui = false;
         boolean correctInput;
         do {
             if (!input.equals("exit"))
@@ -508,7 +498,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
         System.out.println("|                                       |");
         System.out.println("|   Please choose an action:            |");
         try {
-            if(!showWinnerTui){
+            if (!showWinnerTui) {
                 if (getCurrentPlayerState().equals(PlayerState.PLAY_CARD))
                     System.out.println("|   1. Play a card🎮                    |");
                 else if (getCurrentPlayerState().equals(PlayerState.DRAW))
@@ -518,7 +508,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 System.out.println("|      and your objective card          |");
                 System.out.println("|   5. Show players' points             |");
                 System.out.println("|   6. Chat 💬                          |");
-            }else
+            } else
                 System.out.println("|   7. Show winner                      |");
             System.out.println("|_______________________________________|\n");
         } catch (IOException | InterruptedException e) {
