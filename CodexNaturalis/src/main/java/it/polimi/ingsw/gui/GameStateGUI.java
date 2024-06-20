@@ -38,13 +38,12 @@ public class GameStateGUI implements ClientState {
 
     }
 
-    public void updateChat(Message msg)
-    {
+    public void updateChat(Message msg) {
         Platform.runLater(() -> controller.receiveMessage(msg));
     }
 
-    public void cardPlayedRefresh(String username) {
-        Platform.runLater(() -> controller.cardPlayedNotification(username));
+    public void cardPlayedRefresh(String username, HashMap<String, Integer> playersPoints) {
+        Platform.runLater(() -> controller.cardPlayedNotification(username, playersPoints));
     }
 
     public void changeTurnNotified(String usernameCurrentPlayer) {

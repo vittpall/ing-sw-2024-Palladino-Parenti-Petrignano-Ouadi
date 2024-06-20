@@ -201,11 +201,11 @@ public class Game {
      * @throws CardNotFoundException       when the card sent is not part of the current player's hand
      * @throws RequirementsNotMetException when the card's requirements are not met into the player's desk
      */
-    public int playCard(int idCard, int idClient, boolean faceDown, Point point)
+    public void playCard(int idCard, int idClient, boolean faceDown, Point point)
             throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
         if (idClient != currentPlayerIndex) throw new CardNotFoundException("Not your turn");
         GameCard card = players.get(currentPlayerIndex).getPlayerHand().get(idCard);
-        return players.get(currentPlayerIndex).playCard(card, faceDown, point);
+        players.get(currentPlayerIndex).playCard(card, faceDown, point);
     }
 
     /**

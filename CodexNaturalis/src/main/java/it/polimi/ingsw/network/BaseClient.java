@@ -224,7 +224,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 System.out.println("You can see the updated desk by choosing " + username + "'s desk");
             }
         } else if (getClientCurrentState() instanceof GameStateGUI)
-            ((GameStateGUI) getClientCurrentState()).cardPlayedRefresh(username);
+            ((GameStateGUI) getClientCurrentState()).cardPlayedRefresh(username,playersPoints);
     }
 
     public synchronized void onLastTurnSet(String username) {

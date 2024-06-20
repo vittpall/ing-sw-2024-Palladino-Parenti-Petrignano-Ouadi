@@ -16,12 +16,14 @@ public class GameBoard {
     private final AnchorPane gameBoardAnchorPane;
     private final Map<Integer, TokenView> tokens;
     private final Map<BoardCoordinate, Integer> tokenPositions;
+    private final Map<Integer, BoardCoordinate> currentPlayerPositions;
 
     public GameBoard(AnchorPane gameBoardAnchorPane) {
         this.gameBoardAnchorPane = gameBoardAnchorPane;
         this.coordinates = loadCoordinates();
-        tokens = new HashMap<>();
+        this.tokens = new HashMap<>();
         this.tokenPositions = new HashMap<>();
+        this.currentPlayerPositions = new HashMap<>();
     }
 
     public void addToken(int playerId, String imagePath) {
@@ -34,17 +36,21 @@ public class GameBoard {
             gameBoardAnchorPane.getChildren().add(token);
             tokens.put(playerId, token);
             tokenPositions.put(startCoordinate, tokenPositions.getOrDefault(startCoordinate, 0) + 1);
+            currentPlayerPositions.put(playerId, startCoordinate);
         }
     }
 
     public void updateTokenPosition(int playerId, int newScore) {
+        BoardCoordinate oldCoordinate = currentPlayerPositions.get(playerId);
         BoardCoordinate newCoordinate = coordinates.stream().filter(coord -> coord.score() == newScore).findFirst().orElse(null);
-        if (newCoordinate != null) {
+        if (!oldCoordinate.equals(newCoordinate) && newCoordinate != null) {
+            tokenPositions.put(oldCoordinate, tokenPositions.get(oldCoordinate) - 1);
             double[] layouts = getTokenLayout(newCoordinate);
             TokenView playerToken = tokens.get(playerId);
             playerToken.setLayoutX(layouts[0]);
             playerToken.setLayoutY(layouts[1]);
             tokenPositions.put(newCoordinate, tokenPositions.getOrDefault(newCoordinate, 0) + 1);
+            currentPlayerPositions.put(playerId, newCoordinate);
         }
     }
 

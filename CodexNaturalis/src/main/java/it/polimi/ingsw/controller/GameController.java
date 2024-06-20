@@ -183,7 +183,8 @@ public class GameController {
     public int playCard(int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
         String content;
-        int points = model.playCard(chosenCard, idClientIntoGame, faceDown, chosenPosition);
+        model.playCard(chosenCard, idClientIntoGame, faceDown, chosenPosition);
+        int points = model.getPlayers().get(idClientIntoGame).getPoints();
         model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.DRAW);
         if (gameState == GameState.LAST_ROUND) {
             content = "\n----------------------------------\n" +

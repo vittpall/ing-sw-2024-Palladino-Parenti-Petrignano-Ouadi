@@ -461,8 +461,7 @@ public class GameController implements FXMLController {
         }
     }
 
-    public void cardPlayedNotification(String username) {
-        //TODO modificare i punti sulla board dell'utente username
+    public void cardPlayedNotification(String username,HashMap<String, Integer> playersPoints) {
         int indexPlayer = 0;
         try {
             ArrayList<Player> players = client.getPlayers(client.getIdGame());
@@ -477,6 +476,9 @@ public class GameController implements FXMLController {
             }
             if (!(players.get(indexPlayer).getPlayerState().equals(PlayerState.DRAW)))
                 infoGame.setText(players.get((indexPlayer + 1) % client.getnPlayer(client.getIdGame())).getUsername() + " is playing");
+
+            movePlayerToken(indexPlayer, playersPoints.get(username));
+
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
