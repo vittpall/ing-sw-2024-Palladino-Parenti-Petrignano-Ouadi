@@ -12,7 +12,7 @@ public class GlobalChatState implements ClientStateTUI {
 
     private final BaseClient client;
     private final Scanner scanner;
-    private ChatState returnState;
+    private final ChatState returnState;
 
 
     public GlobalChatState(BaseClient client, Scanner scanner, ChatState returnState) {

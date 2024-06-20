@@ -6,9 +6,9 @@ import it.polimi.ingsw.network.BaseClient;
 import java.util.HashMap;
 
 public class EndGameNotification implements ServerNotification {
-    String winner;
-    HashMap<String, Integer> scores;
-    HashMap<String, TokenColor> playersTokens;
+    private final String winner;
+    private final HashMap<String, Integer> scores;
+    private final HashMap<String, TokenColor> playersTokens;
 
     public EndGameNotification(String winner, HashMap<String, Integer> scores, HashMap<String, TokenColor> playersTokens) {
         this.winner = winner;

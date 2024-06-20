@@ -9,15 +9,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20" styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.InitializeStarterCardController">
+<VBox alignment="CENTER" spacing="20" styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.controller.InitializeStarterCardController">
     <padding>
         <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
-   <ImageView fitHeight="201.0" fitWidth="1012.0" pickOnBounds="true" preserveRatio="true">
-      <image>
-         <Image url="@../Images/CN_decoration10.png" />
-      </image>
-   </ImageView>
+    <ImageView fitHeight="201.0" fitWidth="1012.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../Images/CN_decoration10.png"/>
+    </ImageView>
    <Label styleClass="title-label" text="PLAY YOUR STARTER CARD">
    </Label>
     <HBox alignment="CENTER" spacing="20">
@@ -37,11 +35,9 @@
             </Button>
         </VBox>
     </HBox>
-   <ImageView fitHeight="201.0" fitWidth="1012.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
-      <image>
-         <Image url="@../Images/CN_decoration10.png" />
-      </image>
-   </ImageView>
+    <ImageView fitHeight="201.0" fitWidth="1012.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+        <Image url="@../Images/CN_decoration10.png"/>
+    </ImageView>
    <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="78.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT">
       <VBox.margin>
          <Insets />

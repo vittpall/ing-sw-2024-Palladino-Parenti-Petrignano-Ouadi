@@ -1,9 +1,9 @@
 package it.polimi.ingsw.main;
 
 import it.polimi.ingsw.controller.LobbyController;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
-import it.polimi.ingsw.network.rmi.Server.RMIServer;
-import it.polimi.ingsw.network.socket.Server.SocketServer;
+import it.polimi.ingsw.network.remoteInterfaces.VirtualServer;
+import it.polimi.ingsw.network.rmi.server.RMIServer;
+import it.polimi.ingsw.network.socket.server.SocketServer;
 
 import java.io.IOException;
 import java.rmi.RemoteException;

@@ -1,10 +1,9 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
-import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.chat.Chat;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.util.GameCardLoader;
 import it.polimi.ingsw.util.ObjectiveCardLoader;
@@ -122,7 +121,7 @@ public class Game {
     }
 
 
-    public void setObjectiveCards(int idPlayer, int chosenCard) throws CardNotFoundException {
+    public void setObjectiveCards(int idPlayer, int chosenCard) {
         players.get(idPlayer).setObjectiveCard(chosenCard);
     }
 
@@ -198,12 +197,10 @@ public class Game {
      * @param idCard   card the user wants to play
      * @param faceDown how the user wants to play it
      * @param point    coordinates of desk where the user wants to play the card
-     * @throws CardNotFoundException       when the card sent is not part of the current player's hand
      * @throws RequirementsNotMetException when the card's requirements are not met into the player's desk
      */
-    public void playCard(int idCard, int idClient, boolean faceDown, Point point)
-            throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
-        if (idClient != currentPlayerIndex) throw new CardNotFoundException("Not your turn");
+    public void playCard(int idCard, boolean faceDown, Point point)
+            throws RequirementsNotMetException, PlaceNotAvailableException {
         GameCard card = players.get(currentPlayerIndex).getPlayerHand().get(idCard);
         players.get(currentPlayerIndex).playCard(card, faceDown, point);
     }
@@ -227,9 +224,8 @@ public class Game {
      *
      * @param deck
      * @param card
-     * @throws CardNotFoundException when card is not part of the deck's visible cards list
      */
-    public void drawVisibleCard(Deck deck, GameCard card) throws CardNotFoundException {
+    public void drawVisibleCard(Deck deck, GameCard card) {
         players.get(currentPlayerIndex).drawVisible(deck, card);
         if (players.get(currentPlayerIndex).getPoints() >= 20)
             isLastRoundStarted = true;

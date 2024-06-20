@@ -9,14 +9,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.WaitingForPlayersController">
-   <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <children>
-          <ImageView fitHeight="800.0" fitWidth="800.0" opacity="0.7" styleClass="scene-dimensions">
-              <Image url="@../Images/CN_copertina.jpg" />
-          </ImageView>
-      </children>
-   </StackPane>
+<AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.controller.WaitingForPlayersController">
+    <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+               AnchorPane.topAnchor="0.0">
+        <ImageView fitHeight="800.0" fitWidth="800.0" opacity="0.7" styleClass="scene-dimensions">
+            <Image url="@../Images/CN_copertina.jpg"/>
+        </ImageView>
+    </StackPane>
     <StackPane styleClass="scene-dimensions" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <VBox alignment="CENTER">
             <Label alignment="CENTER" prefHeight="35.0" prefWidth="422.0" styleClass="normal-label" text="Waiting for players to join the game">

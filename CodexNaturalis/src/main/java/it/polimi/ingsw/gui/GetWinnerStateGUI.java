@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.core.ClientState;
-import it.polimi.ingsw.gui.Controller.GetWinnerController;
+import it.polimi.ingsw.gui.controller.GetWinnerController;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.util.FXMLLoaderUtility;

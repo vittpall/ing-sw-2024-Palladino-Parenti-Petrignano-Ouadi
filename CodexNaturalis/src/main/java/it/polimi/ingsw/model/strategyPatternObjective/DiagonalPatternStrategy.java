@@ -13,10 +13,7 @@ import java.util.HashMap;
  * Concrete strategy of the strategy design pattern, check the diagonal objective
  */
 
-public class DiagonalPatternStrategy implements ObjectiveStrategy {
-
-    private final Resource primarySource;
-    private final Point diagonalOffset;
+public record DiagonalPatternStrategy(Resource primarySource, Point diagonalOffset) implements ObjectiveStrategy {
 
     /**
      * Constructor for creating a DiagonalPatternStrategy with a primary resource and a diagonal offset.
@@ -24,22 +21,22 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
      * @param primarySource  the primary resource for the diagonal pattern
      * @param diagonalOffset the offset for the diagonal pattern
      */
-    public DiagonalPatternStrategy(Resource primarySource, Point diagonalOffset) {
-        this.primarySource = primarySource;
-        this.diagonalOffset = diagonalOffset;
+    public DiagonalPatternStrategy {
     }
 
     /**
      * @return the primary resource for the diagonal pattern
      */
-    public Resource getPrimarySource() {
+    @Override
+    public Resource primarySource() {
         return primarySource;
     }
 
     /**
      * @return the offset for the diagonal pattern
      */
-    public Point getDiagonalOffset() {
+    @Override
+    public Point diagonalOffset() {
         return diagonalOffset;
     }
 
@@ -73,8 +70,8 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
      */
     @Override
     public void print(PrintContext context) {
-        Point offset = getDiagonalOffset();
-        Resource primarySource = getPrimarySource();
+        Point offset = diagonalOffset();
+        Resource primarySource = primarySource();
         CardPrinter.Color resourceColor = context.chooseColor(primarySource);
         CardPrinter.Color backgroundColor = CardPrinter.Color.GREY; // Default background color for the card
 
@@ -132,7 +129,7 @@ public class DiagonalPatternStrategy implements ObjectiveStrategy {
         }
 
         //if i==0 it means that the first checked card does not correspond to the starting diagonal's card then it can return false.
-        if(i == 0)
+        if (i == 0)
             return false;
 
         i--;

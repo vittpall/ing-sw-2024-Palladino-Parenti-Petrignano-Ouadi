@@ -1,14 +1,13 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
-import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.GameState;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
@@ -23,7 +22,7 @@ public class GameController {
     private final Game model;
     private final int nPlayers;
     private GameState gameState;
-    private String winner;
+    private final String winner;
     private final HashMap<String, Observable> listeners;
 
     public GameController(int nPlayers) {
@@ -94,7 +93,7 @@ public class GameController {
         return model.getPlayers().get(idPlayer).getDrawnObjectiveCards();
     }
 
-    public void setObjectiveCard(int idClientIntoGame, int idObjCard, GameListener playerListener) throws CardNotFoundException {
+    public void setObjectiveCard(int idClientIntoGame, int idObjCard) {
         model.setObjectiveCards(idClientIntoGame, idObjCard);
     }
 
@@ -109,7 +108,7 @@ public class GameController {
     }
 
     public synchronized void playStarterCard(int idClientIntoGame, boolean playedFacedDown, GameListener playerListener)
-            throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
+            throws RequirementsNotMetException, PlaceNotAvailableException {
         GameCard starterCard = model.getPlayers().get(idClientIntoGame).getStarterCard();
         model.getPlayers().get(idClientIntoGame).playCard(starterCard, playedFacedDown, new Point(0, 0));
         if (model.getCurrentPlayerIndex() == idClientIntoGame)
@@ -180,9 +179,9 @@ public class GameController {
 
 
     public int playCard(int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
-            throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
+            throws PlaceNotAvailableException, RequirementsNotMetException {
         String content;
-        model.playCard(chosenCard, idClientIntoGame, faceDown, chosenPosition);
+        model.playCard(chosenCard, faceDown, chosenPosition);
         int points = model.getPlayers().get(idClientIntoGame).getPoints();
         model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.DRAW);
         if (gameState == GameState.LAST_ROUND) {
@@ -222,7 +221,7 @@ public class GameController {
     }
 
 
-    public synchronized void drawCard(int deckToChoose, int inVisible) throws CardNotFoundException {
+    public synchronized void drawCard(int deckToChoose, int inVisible)  {
         Deck chosenDeck;
         if (deckToChoose == 1)
             chosenDeck = model.getResourceDeck();

@@ -1,10 +1,9 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
-import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;
@@ -116,15 +115,12 @@ public class Player implements Serializable {
      * sets objectiveCard as the parameter and set drawnObjectiveCards as null
      *
      * @param chosenObjectiveCard is the index of the chosenObjectiveCard in the drawnObjectiveCards
-     * @throws CardNotFoundException if the chosenObjectiveCard is not in the drawnObjectiveCards
      */
-    public void setObjectiveCard(int chosenObjectiveCard) throws CardNotFoundException {
+    public void setObjectiveCard(int chosenObjectiveCard) {
         ObjectiveCard chosenCard = drawnObjectiveCards.get(chosenObjectiveCard);
-        if (!drawnObjectiveCards.contains(chosenCard))
-            throw new CardNotFoundException("The ObjectiveCard is not in the drawnObjectiveCards");
+
         this.objectiveCard = new ObjectiveCard(chosenCard);
         this.drawnObjectiveCards = null;
-        //le carte 2 carte obiettivo da cui sceglierla si gestiscono nel game per ogni player
     }
 
     /**
@@ -200,7 +196,7 @@ public class Player implements Serializable {
      * @param chosenDeck is the deck from which the player draws the card
      * @param chosenCard is the card that the player wants to draw
      */
-    public void drawVisible(Deck chosenDeck, GameCard chosenCard) throws CardNotFoundException {
+    public void drawVisible(Deck chosenDeck, GameCard chosenCard) {
         GameCard card;
         card = chosenDeck.drawVisibleCard(chosenCard);
         playerHand.add(card);
@@ -214,20 +210,16 @@ public class Player implements Serializable {
      * @param card     is the card that the user chose from the playerHands
      * @param faceDown defines if the card is played face down or not
      * @param point    is the position where the user wants to put the card
-     * @throws CardNotFoundException       if the card sent is not into the playerHand
      * @throws RequirementsNotMetException when the player puts a gold card and the requirements are not met
      */
     public void playCard(GameCard card, boolean faceDown, Point point)
-            throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
+            throws RequirementsNotMetException, PlaceNotAvailableException {
         if (card instanceof GoldCard goldCard && !faceDown) {
             playerDesk.checkRequirements(goldCard.getRequirements());
         }
-        if (!(card instanceof StarterCard)) {
-            boolean cardRemoved = playerHand.remove(card);
-            if (!cardRemoved) {
-                throw new CardNotFoundException("Card not found in hand.");
-            }
-        }
+        if (!(card instanceof StarterCard))
+            playerHand.remove(card);
+
         card.setPlayedFaceDown(faceDown);
         int pointsToAdd = playerDesk.addCard(card, point);
         this.setPoints(pointsToAdd);

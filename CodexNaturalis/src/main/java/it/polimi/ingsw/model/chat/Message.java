@@ -6,21 +6,21 @@ import java.io.Serializable;
 
 /**
  * This class represents a message that can be sent in the chat.
-
  */
 
 public class Message implements Serializable {
-    private String sender;
+    private final String sender;
     private String receiver;
-    private String content;
-    private int gameId;
-    private TokenColor senderColor;
+    private final String content;
+    private final int gameId;
+    private final TokenColor senderColor;
 
     /**
      * Default constructor
-     * @param sender
-     * @param receiver
-     * @param content
+     *
+     * @param sender   the sender of the message
+     * @param receiver the receiver of the message
+     * @param content  the content of the message
      */
     public Message(String sender, String receiver, String content, int gameId, TokenColor senderColor) {
         this.sender = sender;
@@ -46,16 +46,8 @@ public class Message implements Serializable {
         return content;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-
     public void setReceiver(String receiver) {
         this.receiver = receiver;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public int getGameId() {

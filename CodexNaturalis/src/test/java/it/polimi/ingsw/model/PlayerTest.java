@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
 import it.polimi.ingsw.model.enumeration.TokenColor;
@@ -151,7 +150,7 @@ class PlayerTest {
     }
 
     @Test
-    void drawVisible() throws CardNotFoundException {
+    void drawVisible() {
         ArrayList<GameCard> playerHand = player.getPlayerHand();
         assertEquals(new HashSet<>(playerHand), new HashSet<>(player.getPlayerHand()));
         resourceDeck.makeTopCardsVisible();

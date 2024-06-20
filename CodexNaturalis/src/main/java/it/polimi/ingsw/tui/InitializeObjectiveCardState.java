@@ -1,6 +1,5 @@
 package it.polimi.ingsw.tui;
 
-import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 
@@ -48,7 +47,7 @@ public class InitializeObjectiveCardState implements ClientStateTUI {
                 try {
                     client.setObjectiveCard(0);
                     client.setCurrentState(new InitializeStarterCardState(client));
-                } catch (CardNotFoundException | IOException | InterruptedException ex) {
+                } catch (IOException | InterruptedException ex) {
                     System.out.println("Card not found. Please try again");
                 }
                 break;
@@ -56,7 +55,7 @@ public class InitializeObjectiveCardState implements ClientStateTUI {
                 try {
                     client.setObjectiveCard(1);
                     client.setCurrentState(new InitializeStarterCardState(client));
-                } catch (CardNotFoundException | RemoteException ex) {
+                } catch ( RemoteException ex) {
                     System.out.println("Card not found. Please try again");
                 } catch (IOException | InterruptedException e) {
                     throw new RuntimeException(e);

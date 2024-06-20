@@ -1,7 +1,7 @@
 package it.polimi.ingsw.network;
 
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
-import it.polimi.ingsw.network.rmi.Server.RMIServer;
+import it.polimi.ingsw.network.remoteInterfaces.VirtualView;
+import it.polimi.ingsw.network.rmi.server.RMIServer;
 
 import java.io.IOException;
 import java.rmi.RemoteException;

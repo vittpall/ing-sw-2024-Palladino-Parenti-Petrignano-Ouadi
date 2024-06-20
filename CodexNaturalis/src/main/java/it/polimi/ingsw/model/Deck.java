@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -51,12 +49,8 @@ public class Deck {
      *
      * @param card the card to be returned
      * @return the VisibleCard chosen
-     * @throws CardNotFoundException if the card is not found
      */
-    public GameCard drawVisibleCard(GameCard card) throws CardNotFoundException {
-        if (!visibleCards.contains(card))
-            throw new CardNotFoundException("Card not found");
-
+    public GameCard drawVisibleCard(GameCard card) {
         visibleCards.remove(card);
         visibleCards.add(usableCards.removeLast());
         return card;

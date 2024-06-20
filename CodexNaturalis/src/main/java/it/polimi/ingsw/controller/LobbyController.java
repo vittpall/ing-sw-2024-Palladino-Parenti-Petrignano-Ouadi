@@ -1,8 +1,5 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
-import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
@@ -10,6 +7,8 @@ import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.observer.Observable;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
@@ -109,9 +108,8 @@ public class LobbyController {
         return gameControllers.get(idGame).getObjectiveCards(idPlayer, playerListener);
     }
 
-    public void setObjectiveCard(int idGame, int idClientIntoGame, int idObjCard, GameListener playerListener) throws CardNotFoundException {
-        //model.getGame(idGame).getPlayers().get(idClientIntoGame).setObjectiveCard(objCard);
-        gameControllers.get(idGame).setObjectiveCard(idClientIntoGame, idObjCard, playerListener);
+    public void setObjectiveCard(int idGame, int idClientIntoGame, int idObjCard) {
+        gameControllers.get(idGame).setObjectiveCard(idClientIntoGame, idObjCard);
     }
 
     public StarterCard getStarterCard(int idGame, int idClientIntoGame) {
@@ -119,7 +117,7 @@ public class LobbyController {
     }
 
     public void playStarterCard(int idGame, int idClientIntoGame, boolean playedFacedDown, GameListener playerListener)
-            throws CardNotFoundException, RequirementsNotMetException, PlaceNotAvailableException {
+            throws RequirementsNotMetException, PlaceNotAvailableException {
         gameControllers.get(idGame).playStarterCard(idClientIntoGame, playedFacedDown, playerListener);
     }
 
@@ -152,11 +150,11 @@ public class LobbyController {
     }
 
     public int playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
-            throws PlaceNotAvailableException, RequirementsNotMetException, CardNotFoundException {
+            throws PlaceNotAvailableException, RequirementsNotMetException {
         return gameControllers.get(idGame).playCard(idClientIntoGame, chosenCard, faceDown, chosenPosition);
     }
 
-    public void drawCard(int idGame, int deckToChoose, int inVisible) throws CardNotFoundException {
+    public void drawCard(int idGame, int deckToChoose, int inVisible) {
         gameControllers.get(idGame).drawCard(deckToChoose, inVisible);
     }
 
@@ -193,7 +191,7 @@ public class LobbyController {
     }
 
     public void closeGame(int idGame, String userThatLeft) throws IOException {
-        if(gameControllers.containsKey(idGame) && !gameControllers.get(idGame).getGameState().equals("End game"))
+        if (gameControllers.containsKey(idGame) && !gameControllers.get(idGame).getGameState().equals("End game"))
             gameControllers.get(idGame).closeGame(userThatLeft);
         gameControllers.remove(idGame);
     }

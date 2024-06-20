@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.Controller.LobbyMenuController">
+<AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.controller.LobbyMenuController">
     <StackPane styleClass="scene-dimensions,scene-background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <VBox alignment="CENTER" spacing="10">
             <Label prefHeight="75.0" prefWidth="176.0" style="-fx-font-size: 30px; -fx-font-family: 'Book Antiqua Bold Italic'; -fx-text-fill: #333333;" text="Lobby Menu" textAlignment="JUSTIFY" />
@@ -38,12 +38,13 @@
    </Button>
    <BorderPane fx:id="popup" layoutX="600.0" layoutY="271.0" prefHeight="229.0" prefWidth="200.0" styleClass="popup">
       <top>
-         <HBox prefHeight="43.0" prefWidth="498.0" style="-fx-background-color: #2E8B57;" BorderPane.alignment="CENTER">
-            <children>
-               <Label alignment="CENTER" prefHeight="38.0" prefWidth="374.0" styleClass="normal-label" text="INFO" textFill="#a2ecbb" />
-               <Button mnemonicParsing="false" onMouseClicked="#handleClosePopUp" prefHeight="40.0" prefWidth="128.0" style="-fx-background-color: #2E8B57;" text="X" textFill="#a2ecbb" />
-            </children>
-         </HBox>
+          <HBox prefHeight="43.0" prefWidth="498.0" style="-fx-background-color: #2E8B57;"
+                BorderPane.alignment="CENTER">
+              <Label alignment="CENTER" prefHeight="38.0" prefWidth="374.0" styleClass="normal-label" text="INFO"
+                     textFill="#a2ecbb"/>
+              <Button mnemonicParsing="false" onMouseClicked="#handleClosePopUp" prefHeight="40.0" prefWidth="128.0"
+                      style="-fx-background-color: #2E8B57;" text="X" textFill="#a2ecbb"/>
+          </HBox>
       </top>
       <center>
          <Label fx:id="popupLabel" alignment="CENTER" styleClass="normal-label" text="The game has been closed because Player finished the game " textFill="SEAGREEN" BorderPane.alignment="CENTER" />

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GetOtherPlayerDesk implements ClientStateTUI {
-    BaseClient client;
+    private final BaseClient client;
     private final Scanner scanner;
 
     @Override

@@ -1,6 +1,5 @@
 package it.polimi.ingsw.tui;
 
-import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.network.BaseClient;
 
@@ -9,7 +8,7 @@ import java.rmi.RemoteException;
 import java.util.Scanner;
 
 public class DrawCardState implements ClientStateTUI {
-    BaseClient client;
+    private final BaseClient client;
     private final Scanner scanner;
 
     public DrawCardState(BaseClient client, Scanner scanner) {
@@ -45,17 +44,13 @@ public class DrawCardState implements ClientStateTUI {
 
     @Override
     public void inputHandler(int input) throws IOException, InterruptedException {
-        //l'input mi darà 1 se è resource e 2 se è gold per esempio
         switch (input) {
             case 1:
             case 2:
                 int inVisible = chooseWhichCardToDraw();
-                try {
-                    client.drawCard(input, inVisible);
-                    client.setCurrentState(null);
-                } catch (CardNotFoundException ex) {
-                    System.out.println(ex.getMessage());
-                }
+                client.drawCard(input, inVisible);
+                client.setCurrentState(null);
+
                 break;
             default:
                 System.out.println("Invalid input");

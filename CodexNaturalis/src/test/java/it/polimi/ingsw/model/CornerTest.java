@@ -51,7 +51,7 @@ class CornerTest {
     void resourceIsNotMutable(){
         Resource initialRes = Resource.ANIMAL_KINGDOM;
         Corner corner = new Corner(initialRes);
-        Resource cornerRes= corner.getResource();
+        Resource cornerRes;
         cornerRes = Resource.FUNGI_KINGDOM;
         assertEquals(initialRes, corner.getResource());
         assertNotEquals(cornerRes, corner.getResource());
@@ -61,7 +61,7 @@ class CornerTest {
     void objectIsNotMutable(){
         CornerObject initialObj = CornerObject.INKWELL;
         Corner corner = new Corner(initialObj);
-        CornerObject cornerObj= corner.getObject();
+        CornerObject cornerObj;
         cornerObj = CornerObject.QUILL;
         assertEquals(initialObj, corner.getObject());
         assertNotEquals(cornerObj, corner.getObject());

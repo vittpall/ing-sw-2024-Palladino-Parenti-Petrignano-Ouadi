@@ -9,8 +9,8 @@ import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.GameListener;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualView;
 import it.polimi.ingsw.network.notifications.ServerNotification;
+import it.polimi.ingsw.network.remoteInterfaces.VirtualView;
 import it.polimi.ingsw.tui.*;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -65,10 +65,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
             try {
                 notificationsHandler();
             } catch (InterruptedException | RemoteException e) {
-                //throw new RuntimeException(e);
                 System.out.println(e.getMessage());
-                e.printStackTrace();
-
             }
         }).start();
     }
@@ -542,9 +539,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
             ServerNotification msg = notificationsQueue.take();
             try {
                 msg.notifyClient(this);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }

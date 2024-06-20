@@ -5,7 +5,7 @@ import it.polimi.ingsw.network.BaseClient;
 import java.io.IOException;
 
 public class CloseGameNotification implements ServerNotification {
-    String message;
+    private final String message;
 
     public CloseGameNotification(String message) {
         this.message = message;

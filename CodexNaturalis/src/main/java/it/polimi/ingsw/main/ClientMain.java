@@ -1,9 +1,9 @@
 package it.polimi.ingsw.main;
 
 import it.polimi.ingsw.network.BaseClient;
-import it.polimi.ingsw.network.RemoteInterfaces.VirtualServer;
-import it.polimi.ingsw.network.rmi.Client.RMIClient;
-import it.polimi.ingsw.network.socket.Client.SocketClient;
+import it.polimi.ingsw.network.remoteInterfaces.VirtualServer;
+import it.polimi.ingsw.network.rmi.client.RMIClient;
+import it.polimi.ingsw.network.socket.client.SocketClient;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -12,8 +12,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.rmi.NotBoundException;
-import java.rmi.Remote;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Scanner;
@@ -37,10 +35,9 @@ public class ClientMain extends Application {
             serverAddress = scanner.nextLine().trim();
             if (serverAddress.isEmpty())
                 serverAddress = "127.0.0.1";
-            else
-            if (!serverAddress.matches(PATTERN))
+            else if (!serverAddress.matches(PATTERN))
                 System.out.println("Invalid IP address");
-        }while (!serverAddress.matches(PATTERN) && !serverAddress.isEmpty());
+        } while (!serverAddress.matches(PATTERN) && !serverAddress.isEmpty());
 
         String[] options = {
                 "TUI + SOCKET",
@@ -73,12 +70,12 @@ public class ClientMain extends Application {
             ObjectInputStream socketRx = new ObjectInputStream(serverSocket.getInputStream());
             this.client = new SocketClient(socketRx, socketTx, interfaceType, stage);
             client.run();
-        } catch (IOException e ) {
+        } catch (IOException e) {
             System.err.println("Failed to initialize Socket client: " + e.getMessage());
         }
     }
 
-    private void setupRMIClient(String interfaceType, Stage stage){
+    private void setupRMIClient(String interfaceType, Stage stage) {
         try {
             Registry registry = LocateRegistry.getRegistry(serverAddress, 1234);
             VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
@@ -87,7 +84,7 @@ public class ClientMain extends Application {
         } catch (NotBoundException | IOException e) {
             e.printStackTrace();
             System.err.println("Something went wrong, restart the game...");
-       //     Thread.sleep(3000);
+            //     Thread.sleep(3000);
             System.exit(0);
         }
     }
@@ -107,9 +104,9 @@ public class ClientMain extends Application {
     }
 
     @Override
-    public void stop(){
+    public void stop() {
         if (client != null)
-                client.close();
+            client.close();
     }
 
 

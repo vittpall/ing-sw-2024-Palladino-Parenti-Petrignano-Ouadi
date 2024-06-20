@@ -1,10 +1,9 @@
 package it.polimi.ingsw.tui;
 
-import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
-import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.StarterCard;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 
@@ -63,7 +62,7 @@ public class InitializeStarterCardState implements ClientStateTUI {
                 try {
                     client.playStarterCard(false);
                     client.setCurrentState(null);
-                } catch (PlaceNotAvailableException | CardNotFoundException | RequirementsNotMetException |
+                } catch (PlaceNotAvailableException | RequirementsNotMetException |
                          IOException | InterruptedException ex) {
                     System.out.println("Card not found. Please try again");
                 }
@@ -72,7 +71,7 @@ public class InitializeStarterCardState implements ClientStateTUI {
                 try {
                     client.playStarterCard(true);
                     client.setCurrentState(null);
-                } catch (RemoteException | PlaceNotAvailableException | CardNotFoundException |
+                } catch (RemoteException | PlaceNotAvailableException |
                          RequirementsNotMetException ex) {
                     System.out.println("Card not found. Please try again");
                 }

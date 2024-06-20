@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.core.ClientState;
-import it.polimi.ingsw.gui.Controller.ObjectiveCardSelectionController;
+import it.polimi.ingsw.gui.controller.ObjectiveCardSelectionController;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.stage.Stage;

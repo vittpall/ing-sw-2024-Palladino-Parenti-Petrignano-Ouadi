@@ -1,11 +1,10 @@
 package it.polimi.ingsw.tui;
 
-import it.polimi.ingsw.model.Exceptions.CardNotFoundException;
-import it.polimi.ingsw.model.Exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.model.Exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enumeration.PlayerState;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 
@@ -63,9 +62,6 @@ public class PlayCardState implements ClientStateTUI {
                 ex.printStackTrace();
             } catch (PlaceNotAvailableException ex) {
                 System.out.println("Place not available");
-            } catch (CardNotFoundException ex) {
-                System.out.println("Card not found");
-                System.out.println(ex.getMessage());
             } catch (RequirementsNotMetException ex) {
                 System.out.println("Requirements not met. Please choose another card");
             }

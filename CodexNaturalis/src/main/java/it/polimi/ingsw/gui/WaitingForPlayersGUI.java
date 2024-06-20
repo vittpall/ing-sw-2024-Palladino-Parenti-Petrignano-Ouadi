@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.core.ClientState;
-import it.polimi.ingsw.gui.Controller.WaitingForPlayersController;
+import it.polimi.ingsw.gui.controller.WaitingForPlayersController;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
@@ -32,8 +32,6 @@ public class WaitingForPlayersGUI implements ClientState {
     }
 
     public void refresh(ArrayList<Player> players, int nOfMissingPlayers) {
-        Platform.runLater(() -> {
-            controller.handleServerNotification(players, nOfMissingPlayers);
-        });
+        Platform.runLater(() -> controller.handleServerNotification(players, nOfMissingPlayers));
     }
 }

@@ -7,7 +7,7 @@ import javafx.scene.layout.StackPane;
 public class ChatTab extends Tab {
 
     private int unreadMessages;
-    private Label counterMessages;
+    private final Label counterMessages;
 
     public ChatTab(String title) {
         super(title);

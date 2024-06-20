@@ -5,36 +5,27 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Chat implements Serializable {
-    private ArrayList<Message> globalChat;
-    private HashMap<String, ArrayList<Message>> privateChats;
+    private final ArrayList<Message> globalChat;
+    private final HashMap<String, ArrayList<Message>> privateChats;
 
-    public Chat(){
+    public Chat() {
         globalChat = new ArrayList<>();
         privateChats = new HashMap<>();
     }
 
-    public void addMessage(Message message)
-    {
+    public void addMessage(Message message) {
 
-        if(message.getReceiver() == null)
-        {
+        if (message.getReceiver() == null) {
             //global message
             globalChat.add(message);
-        }
-        else
-        {
+        } else {
             //private message
             System.out.println("receiver: " + message.getReceiver() + " sender: " + message.getSender());
-            if(privateChats.containsKey(message.getReceiver() + "_" + message.getSender()))
-            {
+            if (privateChats.containsKey(message.getReceiver() + "_" + message.getSender())) {
                 privateChats.get(message.getReceiver() + "_" + message.getSender()).add(message);
-            }
-            else if(privateChats.containsKey(message.getSender() + "_" + message.getReceiver()))
-            {
+            } else if (privateChats.containsKey(message.getSender() + "_" + message.getReceiver())) {
                 privateChats.get(message.getSender() + "_" + message.getReceiver()).add(message);
-            }
-            else
-            {
+            } else {
                 privateChats.put(message.getReceiver() + "_" + message.getSender(), new ArrayList<>());
                 privateChats.get(message.getReceiver() + "_" + message.getSender()).add(message);
             }
@@ -48,29 +39,14 @@ public class Chat implements Serializable {
     }
 
     public ArrayList<Message> getPrivateChat(String receiver, String sender) {
-        if(privateChats.containsKey(receiver + "_" + sender))
-        {
-            return privateChats.get(receiver + "_" + sender);
-        }
-        else
-        {
-            if(privateChats.containsKey(sender + "_" + receiver))
-            {
+        if (!privateChats.containsKey(receiver + "_" + sender)) {
+            if (privateChats.containsKey(sender + "_" + receiver)) {
                 return privateChats.get(sender + "_" + receiver);
             }
 
             privateChats.put(receiver + "_" + sender, new ArrayList<>());
-            return privateChats.get(receiver + "_" + sender);
 
         }
-    }
-
-
-    public void setGlobalChat(ArrayList<Message> globalChat) {
-        this.globalChat = globalChat;
-    }
-
-    public void setPrivateChats(HashMap<String, ArrayList<Message>> privateChats) {
-        this.privateChats = privateChats;
+        return privateChats.get(receiver + "_" + sender);
     }
 }

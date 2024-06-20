@@ -20,30 +20,6 @@ public class WaitingForPlayersState implements ClientStateTUI {
     public void display() {
         try {
             refresh(client.getPlayers(client.getIdGame()), client.getnPlayer(client.getIdGame()) - client.getPlayers(client.getIdGame()).size());
-            /*System.out.println("⚔️  _________________________________________________  ⚔️");
-            if (client.getnPlayer(client.getIdGame()) > client.getPlayers(client.getIdGame()).size()){
-                System.out.println("|   Waiting for players to join the game...           |");
-                System.out.println("|   Current players:                                  |");
-
-                int i=0;
-                for (Player player : client.getPlayers(client.getIdGame())) {
-                    System.out.println("|   Player "+i+" : "+player.getUsername()+"                                   |");
-                    i++;
-                }
-                System.out.println("|   Waiting for "+(client.getnPlayer(client.getIdGame())-client.getPlayers(client.getIdGame()).size())+
-                        " more players to join the game.      |");
-                System.out.println("|   Please select 1 to start the game as soon as the  |");
-                System.out.println("|   right number of players have joined.              |");
-            }else{
-                System.out.println("|   Current players:                                  |");
-                int i=0;
-                for (Player player : client.getPlayers(client.getIdGame())) {
-                    System.out.println("|   Player "+i+" : "+player.getUsername()+"                                   |");
-                    i++;
-                }
-                System.out.println("|   Please select 1 to start the game.                |");
-            }
-            System.out.println("⚔️  _______________________________________________  ⚔️\n");*/
         } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
         }

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.gui;
 
 import it.polimi.ingsw.core.ClientState;
-import it.polimi.ingsw.gui.Controller.GameController;
+import it.polimi.ingsw.gui.controller.GameController;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.network.BaseClient;
