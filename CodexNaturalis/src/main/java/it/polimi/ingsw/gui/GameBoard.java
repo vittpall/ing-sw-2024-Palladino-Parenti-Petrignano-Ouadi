@@ -64,14 +64,14 @@ public class GameBoard {
 
         switch (positionCount) {
             case 1:
-                offsetX = -30;
+                offsetX = -20;
                 break;
             case 2:
-                offsetY = -30;
+                offsetY = -20;
                 break;
             case 3:
-                offsetX = -30;
-                offsetY = -30;
+                offsetX = -20;
+                offsetY = -20;
                 break;
         }
         return new double[]{baseX + offsetX, baseY + offsetY};

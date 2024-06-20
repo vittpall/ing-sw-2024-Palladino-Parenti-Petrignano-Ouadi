@@ -16,8 +16,8 @@ public class TokenView extends ImageView {
     public TokenView(String imagePath, double offsetX, double offsetY) {
         Image image = new Image(imagePath);
         this.setImage(image);
-        this.setFitWidth(30);
-        this.setFitHeight(30);
+        this.setFitWidth(25);
+        this.setFitHeight(25);
         this.offsetX = offsetX;
         this.offsetY = offsetY;
     }
