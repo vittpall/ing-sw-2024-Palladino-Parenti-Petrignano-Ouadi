@@ -50,7 +50,7 @@ public class InitializeObjectiveCardState implements ClientStateTUI {
             case 1:
                 try {
                     client.setObjectiveCard(0);
-                    client.setCurrentState(new InitializeStarterCardState(client, scanner));
+                    client.setCurrentState(new InitializeStarterCardState(client));
                 } catch (CardNotFoundException | IOException | InterruptedException ex) {
                     System.out.println("Card not found. Please try again");
                 }
@@ -58,7 +58,7 @@ public class InitializeObjectiveCardState implements ClientStateTUI {
             case 2:
                 try {
                     client.setObjectiveCard(1);
-                    client.setCurrentState(new InitializeStarterCardState(client, scanner));
+                    client.setCurrentState(new InitializeStarterCardState(client));
                 } catch (CardNotFoundException | RemoteException ex) {
                     System.out.println("Card not found. Please try again");
                 } catch (IOException | InterruptedException e) {

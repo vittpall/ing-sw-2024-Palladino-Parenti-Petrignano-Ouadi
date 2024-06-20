@@ -35,18 +35,16 @@ public class DrawCardState implements ClientStateTUI {
             for (GameCard card : client.getVisibleCardsDeck(2)) {
                 printer.printCard(card, false);
             }
-        } catch (RemoteException e)
-        {
+        } catch (RemoteException e) {
             throw new RemoteException();
-        }
-        catch (IOException | InterruptedException ex) {
+        } catch (IOException | InterruptedException ex) {
             System.out.println("Error while getting cards");
         }
 
     }
 
     @Override
-    public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
+    public void inputHandler(int input) throws IOException, InterruptedException {
         //l'input mi darà 1 se è resource e 2 se è gold per esempio
         switch (input) {
             case 1:

@@ -15,29 +15,28 @@ public class ShowObjectiveCardsState implements ClientStateTUI {
         this.client = client;
         this.scanner = scanner;
     }
+
     @Override
     public void display() throws RemoteException {
         System.out.println("|-------- Show objective cards ---------|");
-        try{
+        try {
             CardPrinter printer = new CardPrinter();
             System.out.println("|--- The common objective cards are: ---|");
             for (ObjectiveCard card : client.getSharedObjectiveCards())
                 printer.printCard(card, false);
             System.out.println("|------- Your objective card is: -------|");
             printer.printCard(client.getPlayerObjectiveCard(), false);
-        } catch (RemoteException ex)
-        {
+        } catch (RemoteException ex) {
             throw new RemoteException();
-        }
-        catch(IOException | InterruptedException e){
+        } catch (IOException | InterruptedException e) {
             System.out.println("Error while getting the objective cards");
             System.out.println(e.getMessage());
         }
     }
 
     @Override
-    public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
-        if(input!=1)
+    public void inputHandler(int input) throws IOException, InterruptedException {
+        if (input != 1)
             System.out.println("Invalid input");
         client.setCurrentState(null);
     }
@@ -51,6 +50,5 @@ public class ShowObjectiveCardsState implements ClientStateTUI {
         return "ShowObjectiveCardsState";
     }
 
-    
-   
+
 }

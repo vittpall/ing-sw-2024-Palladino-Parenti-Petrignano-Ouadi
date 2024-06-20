@@ -54,7 +54,7 @@ public class WaitingForPlayersState implements ClientStateTUI {
         System.out.println("|   Current players:                                  |");
         int i = 0;
         for (Player player : players) {
-            System.out.println("|   Player " + (i +1) + " : " + player.getUsername() + "                                   |");
+            System.out.println("|   Player " + (i + 1) + " : " + player.getUsername() + "                                   |");
             i++;
         }
         if (nOfMissingPlayers == 0)
@@ -68,7 +68,7 @@ public class WaitingForPlayersState implements ClientStateTUI {
     }
 
     @Override
-    public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
+    public void inputHandler(int input) throws IOException, InterruptedException {
         if (input == 1) {
             if (client.isGameStarted())
                 client.setCurrentState(new ColorSelection(client, scanner));

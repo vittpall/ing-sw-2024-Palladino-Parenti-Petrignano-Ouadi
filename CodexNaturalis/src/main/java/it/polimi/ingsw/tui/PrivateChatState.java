@@ -2,7 +2,6 @@ package it.polimi.ingsw.tui;
 
 import it.polimi.ingsw.core.ClientState;
 import it.polimi.ingsw.model.UsefulData;
-import it.polimi.ingsw.model.chat.Chat;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.network.BaseClient;
 
@@ -26,31 +25,29 @@ public class PrivateChatState implements ClientStateTUI {
         this.returnState = new ChatState(client, scanner);
     }
 
-    public String getReceiver(){
+    public String getReceiver() {
         return receiver;
     }
 
     @Override
     public void display() throws RemoteException {
         try {
-        System.out.println("Private chat with " + receiver);
-        ArrayList<Message> chat = client.getMessages(receiver);
-        if(chat == null || chat.isEmpty()){
-            System.out.println("No messages available");
-        }
-        else
-        {
-            for (Message message : chat) {
-                //show all the messages till the last one that has been received
+            System.out.println("Private chat with " + receiver);
+            ArrayList<Message> chat = client.getMessages(receiver);
+            if (chat == null || chat.isEmpty()) {
+                System.out.println("No messages available");
+            } else {
+                for (Message message : chat) {
+                    //show all the messages till the last one that has been received
 
-                if (message.getSender().equals(client.getUsername()))
-                    System.out.println(message.getSenderColor().getColorValueANSII() + "You: " + UsefulData.RESET + message.getContent());
-                else
-                    System.out.println(message.getSenderColor().getColorValueANSII() + message.getSender() + UsefulData.RESET + ": " + message.getContent());
+                    if (message.getSender().equals(client.getUsername()))
+                        System.out.println(message.getSenderColor().getColorValueANSII() + "You: " + UsefulData.RESET + message.getContent());
+                    else
+                        System.out.println(message.getSenderColor().getColorValueANSII() + message.getSender() + UsefulData.RESET + ": " + message.getContent());
+                }
             }
-        }
 
-        inputHandler(scanner.nextLine());
+            inputHandler(scanner.nextLine());
         } catch (IOException | InterruptedException | ClassNotFoundException e) {
             System.err.println("An error occurred: " + e.getMessage());
             throw new RemoteException();
@@ -58,11 +55,11 @@ public class PrivateChatState implements ClientStateTUI {
     }
 
     @Override
-    public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
+    public void inputHandler(int input) throws IOException, InterruptedException {
     }
 
     public void inputHandler(String input) throws IOException, ClassNotFoundException, InterruptedException {
-        while(!input.equals("exit chat")){
+        while (!input.equals("exit chat")) {
             client.sendMessage(receiver, input);
             input = scanner.nextLine().trim();
         }
@@ -78,6 +75,5 @@ public class PrivateChatState implements ClientStateTUI {
         return "PrivateChatState";
     }
 
-    
-   
+
 }

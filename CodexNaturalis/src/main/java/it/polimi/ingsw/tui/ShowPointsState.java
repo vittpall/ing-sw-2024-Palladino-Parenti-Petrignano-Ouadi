@@ -17,11 +17,12 @@ public class ShowPointsState implements ClientStateTUI {
         this.client = client;
         this.scanner = scanner;
     }
+
     @Override
     public void display() throws RemoteException {
         System.out.println("|-------- Show Points --------|");
 
-        try{
+        try {
             System.out.println("|---- Provisional Ranking:----|");
             ArrayList<Player> allPlayers = client.getAllPlayers();
             for (Player player : allPlayers) {
@@ -29,19 +30,17 @@ public class ShowPointsState implements ClientStateTUI {
                 System.out.println("Player: " + player.getUsername() + " | Score: " + playerScore);
             }
             System.out.println("--------------------------------");
-        } catch (RemoteException ex)
-        {
+        } catch (RemoteException ex) {
             throw new RemoteException();
-        }
-        catch (IOException | InterruptedException e){
+        } catch (IOException | InterruptedException e) {
             System.out.println("Error while getting the points");
             System.out.println(e.getMessage());
         }
     }
 
     @Override
-    public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException{
-        if(input!=1)
+    public void inputHandler(int input) throws IOException, InterruptedException {
+        if (input != 1)
             System.out.println("Invalid input");
         client.setCurrentState(null);
     }
@@ -55,9 +54,8 @@ public class ShowPointsState implements ClientStateTUI {
         return "ShowPointsState";
     }
 
-    
-   
-    public void refresh(HashMap<String, Integer> playersPoints){
+
+    public void refresh(HashMap<String, Integer> playersPoints) {
         System.out.println("|---- Provisional Ranking:----|");
         for (String username : playersPoints.keySet()) {
             System.out.println("Player: " + username + " | Score: " + playersPoints.get(username));

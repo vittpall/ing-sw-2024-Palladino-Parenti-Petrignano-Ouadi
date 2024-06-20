@@ -46,7 +46,7 @@ public class MainMenuState implements ClientStateTUI, Remote {
     }
 
     @Override
-    public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
+    public void inputHandler(int input) throws IOException, InterruptedException {
 
         if (input == 1)
             requestUsername();
@@ -55,7 +55,7 @@ public class MainMenuState implements ClientStateTUI, Remote {
     }
 
 
-    private void requestUsername() throws IOException, ClassNotFoundException, InterruptedException {
+    private void requestUsername() throws IOException, InterruptedException {
         String username;
         do {
             System.out.println("Enter your username (cannot be empty):");
@@ -75,6 +75,5 @@ public class MainMenuState implements ClientStateTUI, Remote {
         return "MainMenuState";
     }
 
-    
-   
+
 }

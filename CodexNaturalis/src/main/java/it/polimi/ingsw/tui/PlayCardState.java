@@ -44,7 +44,7 @@ public class PlayCardState implements ClientStateTUI {
     }
 
     @Override
-    public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
+    public void inputHandler(int input) throws IOException, InterruptedException {
         if (input > 0 && input < 4) {
             //scelgo se giocare la carta 1,2,3
             Point pointChosen = choosePosition();

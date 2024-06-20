@@ -25,7 +25,7 @@ public class GetWinnerState implements ClientStateTUI {
     }
 
     @Override
-    public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
+    public void inputHandler(int input) throws IOException, InterruptedException {
         //TODO gestire la chiusura del gioco
         switch (input) {
             case 1:

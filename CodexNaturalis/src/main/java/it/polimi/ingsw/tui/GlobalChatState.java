@@ -21,7 +21,7 @@ public class GlobalChatState implements ClientStateTUI {
         this.returnState = returnState;
     }
 
-    public String getReceiver(){
+    public String getReceiver() {
         return null;
     }
 
@@ -31,13 +31,11 @@ public class GlobalChatState implements ClientStateTUI {
         try {
             //if the receiver is null it will return the null value
             ArrayList<Message> globalChat = client.getMessages(null);
-            if(globalChat == null || globalChat.isEmpty()){
+            if (globalChat == null || globalChat.isEmpty()) {
                 System.out.println("No messages available");
-            }
-            else
-            {
-                for(Message message : globalChat){
-                    if(message.getSender().equals(client.getUsername()))
+            } else {
+                for (Message message : globalChat) {
+                    if (message.getSender().equals(client.getUsername()))
                         System.out.println(message.getSenderColor().getColorValueANSII() + "You: " + UsefulData.RESET + message.getContent());
                     else
                         System.out.println(message.getSenderColor().getColorValueANSII() + message.getSender() + UsefulData.RESET + ": " + message.getContent());
@@ -50,12 +48,12 @@ public class GlobalChatState implements ClientStateTUI {
     }
 
     @Override
-    public void inputHandler(int input) throws IOException, ClassNotFoundException, InterruptedException {
+    public void inputHandler(int input) throws IOException, InterruptedException {
 
     }
 
     public void inputHandler(String input) throws IOException, ClassNotFoundException, InterruptedException {
-        while(!input.equals("exit chat")){
+        while (!input.equals("exit chat")) {
             client.sendMessage(null, input);
             input = scanner.nextLine();
         }
@@ -71,6 +69,5 @@ public class GlobalChatState implements ClientStateTUI {
         return "GlobalChatState";
     }
 
-    
-   
+
 }
