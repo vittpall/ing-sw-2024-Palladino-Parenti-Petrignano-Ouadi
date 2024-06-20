@@ -80,6 +80,20 @@
     -fx-border-style: solid;
     -fx-border-radius: 5;
 }
+.list-cell {
+    -fx-font-family: "Book Antiqua Bold Italic";
+    -fx-font-size: 14pt;
+    -fx-text-fill: #333;
+    -fx-background-color: #f8f1c9;
+    -fx-border-color: #f8f1c9;
+    -fx-border-width: 1px;
+    -fx-padding: 5;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #daae82;
+    -fx-text-fill: #000000;
+}
 
 
 .inputs-width {
