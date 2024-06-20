@@ -141,14 +141,14 @@ public class GameController implements FXMLController {
 
     public void initializeGame() {
         try {
-            playerDeskShown = client.getUsername();
+            String username = client.getUsername();
             ArrayList<Player> players = client.getPlayers(client.getIdGame());
             playerDeskTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
             for (int i = playerDeskTabPane.getTabs().size() - 1; i >= 0; i--) {
                 Tab tab = playerDeskTabPane.getTabs().get(i);
                 if (i < players.size()) {
                     tab.setDisable(false);
-                    if (players.get(i).getUsername().equals(playerDeskShown)) {
+                    if (players.get(i).getUsername().equals(username)) {
                         tab.setText("Your Desk");
                         playerDeskTabPane.getSelectionModel().select(i);
                     } else {
@@ -206,6 +206,7 @@ public class GameController implements FXMLController {
     }
 
     private void loadDeskCards() throws IOException, InterruptedException {
+        playerDeskShown = client.getUsername();
         playerDeskTabPane.getSelectionModel().select(client.getIdClientIntoGame());
         gameDesk.getChildren().clear();
         HashMap<Point, GameCard> deskCards = client.getPlayerDesk();
