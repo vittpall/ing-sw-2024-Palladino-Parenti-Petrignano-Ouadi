@@ -20,6 +20,7 @@ public class ClientMain extends Application {
 
     private BaseClient client;
     private String serverAddress;
+    String ip;
 
     public static void main(String[] args) {
         launch(args); // Use launch to start JavaFX application and pass arguments
@@ -46,6 +47,7 @@ public class ClientMain extends Application {
                 "GUI + RMI"
         };
 
+
         System.out.println("Please choose an option:");
         for (int i = 0; i < options.length; i++) {
             System.out.println((i + 1) + ". " + options[i]);
@@ -59,6 +61,8 @@ public class ClientMain extends Application {
         if (useSocket) {
             setupSocketClient(useTUI ? "TUI" : "GUI", stage);
         } else {
+            System.out.println("Please insert your personal ip:\n");
+            String ip = scanner.nextLine();
             setupRMIClient(useTUI ? "TUI" : "GUI", stage);
         }
     }
@@ -77,6 +81,7 @@ public class ClientMain extends Application {
 
     private void setupRMIClient(String interfaceType, Stage stage) {
         try {
+            System.setProperty("java.rmi.server.hostname", ip);
             Registry registry = LocateRegistry.getRegistry(serverAddress, 1234);
             VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
             this.client = new RMIClient(server, interfaceType, stage);

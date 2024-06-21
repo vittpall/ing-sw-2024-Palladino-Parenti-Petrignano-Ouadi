@@ -166,6 +166,7 @@ public class SocketClient extends BaseClient {
     public void returnToLobby() throws InterruptedException {
         ClosedConnectionMsg request = new ClosedConnectionMsg(getUsername(), getIdGame());
         sendRequest(request);
+        setIdGameNull();
     }
 
     @Override
