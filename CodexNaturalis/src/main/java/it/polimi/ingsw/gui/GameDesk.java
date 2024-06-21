@@ -43,8 +43,8 @@ public class GameDesk extends Pane {
         this.getChildren().add(cardView);
     }
 
-    public void addTokenToCard(int x, int y, String imagePath, boolean isBlackToken) {
-        CardView cardView = cards.get(new Point(x, y));
+    public void addTokenToCard(String imagePath, boolean isBlackToken) {
+        CardView cardView = cards.get(new Point(0, 0));
         if (cardView != null) {
             double percentX = isBlackToken ? TokenView.BLACK_TOKEN_X : TokenView.OTHER_TOKEN_X;
             double percentY = isBlackToken ? TokenView.BLACK_TOKEN_Y : TokenView.OTHER_TOKEN_Y;

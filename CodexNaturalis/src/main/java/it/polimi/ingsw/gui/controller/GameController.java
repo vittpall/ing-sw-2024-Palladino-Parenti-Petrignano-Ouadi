@@ -216,9 +216,9 @@ public class GameController implements FXMLController {
             gameDesk.addCard(card, !card.isPlayedFaceDown(), p.x, p.y);
             if (p.x == 0 && p.y == 0) {
                 if (client.getIdClientIntoGame() == 0)
-                    gameDesk.addTokenToCard(0, 0, Objects.requireNonNull(getClass().getResource("/Images/CODEX_pion_noir.png")).toExternalForm(), true);
+                    gameDesk.addTokenToCard(Objects.requireNonNull(getClass().getResource("/Images/CODEX_pion_noir.png")).toExternalForm(), true);
 
-                gameDesk.addTokenToCard(0, 0, Objects.requireNonNull(getClass().getResource("/Images/" + client.getTokenColor().getImageName())).toExternalForm(), false);
+                gameDesk.addTokenToCard(Objects.requireNonNull(getClass().getResource("/Images/" + client.getTokenColor().getImageName())).toExternalForm(), false);
             }
 
         }

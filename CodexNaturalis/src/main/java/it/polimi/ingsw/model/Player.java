@@ -72,7 +72,7 @@ public class Player implements Serializable {
      */
     public Player(String username) {
         this.username = username;
-        this.points = 19;
+        this.points = 0;
         this.objectiveCard = null;
         this.starterCard = null;
         this.playerHand = new ArrayList<>();
