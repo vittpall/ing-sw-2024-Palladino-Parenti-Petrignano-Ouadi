@@ -21,6 +21,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
@@ -56,6 +58,7 @@ public class GameController implements FXMLController {
     public Label manuscriptLabel;
     public Label quillLabel;
     public Label inkwellLabel;
+    public Button centerButton;
     private BaseClient client;
     private Stage stage;
     private boolean playCardFaceDown = false;
@@ -73,14 +76,14 @@ public class GameController implements FXMLController {
         setupZoomControls();
 
         //center scroll pane
-        double hValue = (gameDesk.getPrefWidth() - gameDeskScrollPane.getViewportBounds().getWidth()) / 2 / gameDesk.getPrefWidth();
-        double vValue = (gameDesk.getPrefHeight() - gameDeskScrollPane.getViewportBounds().getHeight()) / 2 / gameDesk.getPrefHeight();
-        gameDeskScrollPane.setHvalue(hValue);
-        gameDeskScrollPane.setVvalue(vValue);
+        centerGameDesk();
+
 
         playerDeskTabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
-            int selectedIndex = playerDeskTabPane.getSelectionModel().getSelectedIndex();
-            handleShowPlayerDesk(selectedIndex);
+            if (newTab.getText() != null && !newTab.getText().isEmpty()) {
+                int selectedIndex = playerDeskTabPane.getSelectionModel().getSelectedIndex();
+                handleShowPlayerDesk(selectedIndex);
+            }
         });
 
         gameBoard = new GameBoard(gameBoardAnchorPane);
@@ -93,6 +96,10 @@ public class GameController implements FXMLController {
         inkwellLabel.setText("0");
     }
 
+    private void centerGameDesk() {
+        gameDeskScrollPane.setHvalue(0.5);
+        gameDeskScrollPane.setVvalue(0.5);
+    }
 
     private void setupZoomControls() {
         gameDeskScrollPane.setOnMouseEntered(event -> {
@@ -118,7 +125,7 @@ public class GameController implements FXMLController {
                 } else {
                     scaleContent(gameDesk, 1 / zoomFactor);
                 }
-                event.consume();  // Consuma l'evento per evitare lo scrolling del ScrollPane
+                event.consume();
             }
         });
     }
@@ -140,18 +147,21 @@ public class GameController implements FXMLController {
             String username = client.getUsername();
             ArrayList<Player> players = client.getPlayers(client.getIdGame());
             playerDeskTabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-            for (int i = playerDeskTabPane.getTabs().size() - 1; i >= 0; i--) {
-                Tab tab = playerDeskTabPane.getTabs().get(i);
-                if (i < players.size()) {
-                    tab.setDisable(false);
-                    if (players.get(i).getUsername().equals(username)) {
-                        tab.setText("Your Desk");
-                        playerDeskTabPane.getSelectionModel().select(i);
-                    } else {
-                        tab.setText(players.get(i).getUsername() + "'s Desk");
-                    }
+            for (Player player : players) {
+                Tab tab = new Tab();
+
+                String imagePath = player.getTokenColor() != null ? Objects.requireNonNull(getClass().getResource("/Images/" + player.getTokenColor().getImageName())).toExternalForm() : null;
+                if (imagePath != null) {
+                    ImageView imageView = createImageView(imagePath);
+                    tab.setGraphic(imageView);
+                }
+                playerDeskTabPane.getTabs().add(tab);
+
+                if (player.getUsername().equals(username)) {
+                    tab.setText("Your Desk");
+                    playerDeskTabPane.getSelectionModel().select(tab);
                 } else {
-                    playerDeskTabPane.getTabs().remove(tab);
+                    tab.setText(player.getUsername() + "'s Desk");
                 }
             }
 
@@ -456,7 +466,8 @@ public class GameController implements FXMLController {
         playerDeskShown = player.getUsername();
         playerDeskTabPane.getSelectionModel().select(playerIndex);
         HashMap<Point, GameCard> deskCards = player.getPlayerDesk().getDesk();
-        loadDesk(deskCards, playerIndex, player.getTokenColor().getImageName());
+        String imageName = player.getTokenColor() != null ? player.getTokenColor().getImageName() : null;
+        loadDesk(deskCards, playerIndex, imageName);
     }
 
     private void loadCurrentPlayerDesk() throws IOException, InterruptedException {
@@ -477,8 +488,10 @@ public class GameController implements FXMLController {
                     gameDesk.addTokenToCard(Objects.requireNonNull(getClass().getResource("/Images/CODEX_pion_noir.png")).toExternalForm(), true);
                 }
 
-                String tokenPath = "/Images/" + tokenColorImageName;
-                gameDesk.addTokenToCard(Objects.requireNonNull(getClass().getResource(tokenPath)).toExternalForm(), false);
+                if (tokenColorImageName != null) {
+                    String tokenPath = "/Images/" + tokenColorImageName;
+                    gameDesk.addTokenToCard(Objects.requireNonNull(getClass().getResource(tokenPath)).toExternalForm(), false);
+                }
             }
         }
     }
@@ -655,10 +668,31 @@ public class GameController implements FXMLController {
         List<Player> players = client.getPlayers(client.getIdGame());
         for (Player player : players) {
             if (!gameBoard.hasToken(player.getUsername()) && player.getTokenColor() != null) {
-                String imagePath = "/Images/" + player.getTokenColor().getImageName();
-                gameBoard.addToken(player.getUsername(), Objects.requireNonNull(getClass().getResource(imagePath)).toExternalForm());
+                String imagePath = Objects.requireNonNull(getClass().getResource("/Images/" + player.getTokenColor().getImageName())).toExternalForm();
+                int playerIndex = players.indexOf(player);
+                Tab tab = playerDeskTabPane.getTabs().get(playerIndex);
+
+                ImageView imageView = createImageView(imagePath);
+                tab.setGraphic(imageView);
+
+                gameBoard.addToken(player.getUsername(), imagePath);
             }
         }
+    }
+
+    private ImageView createImageView(String imagePath) {
+        ImageView imageView = new ImageView();
+        imageView.setFitHeight(19);
+        imageView.setFitWidth(39);
+        imageView.setPreserveRatio(true);
+
+        Image image = new Image(imagePath);
+        imageView.setImage(image);
+        return imageView;
+    }
+
+    public void handleCenterClick() {
+        centerGameDesk();
     }
 }
 

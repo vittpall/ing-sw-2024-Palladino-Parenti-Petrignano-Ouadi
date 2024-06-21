@@ -11,6 +11,8 @@ public class GameDesk extends Pane {
     private final HashMap<Point, CardView> cards = new HashMap<>();
     private static final double HORIZONTAL_SPACING_FACTOR = CardView.CARD_WIDTH * 0.2214;
     private static final double VERTICAL_SPACING_FACTOR = CardView.CARD_HEIGHT * 0.365;
+    private static final double GAME_DESK_WIDTH = 40 * CardView.CARD_WIDTH;
+    private static final double GAME_DESK_HEIGHT = 40 * CardView.CARD_HEIGHT;
 
     public void addCard(Card card, boolean showFront, int x, int y) {
         CardView cardView = new CardView(card, showFront);
@@ -18,9 +20,9 @@ public class GameDesk extends Pane {
     }
 
     public GameDesk() {
-        this.setPrefSize(1000, 1000);
-        this.setWidth(1000);
-        this.setHeight(1000);
+        this.setPrefSize(GAME_DESK_WIDTH, GAME_DESK_HEIGHT);
+        this.setWidth(GAME_DESK_WIDTH);
+        this.setHeight(GAME_DESK_HEIGHT);
     }
 
 

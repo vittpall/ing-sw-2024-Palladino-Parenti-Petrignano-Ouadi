@@ -1,133 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.controller.GameController">
-    <HBox alignment="CENTER" spacing="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+<AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="it.polimi.ingsw.gui.controller.GameController">
+    <HBox alignment="CENTER" spacing="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0"
+          AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
         <VBox alignment="CENTER" layoutX="14.0" layoutY="14.0" spacing="10.0">
             <padding>
-                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
             </padding>
             <VBox alignment="CENTER" style="-fx-border-color: purple; -fx-border-style: dashed;" styleClass="border">
                 <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                 </padding>
-                <Label alignment="CENTER" prefHeight="30.0" prefWidth="129.0" styleClass="normal-label" text="OBJECTIVE CARDS">
+                <Label alignment="CENTER" prefHeight="30.0" prefWidth="129.0" styleClass="normal-label"
+                       text="OBJECTIVE CARDS">
                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                     </VBox.margin>
                 </Label>
-                <VBox fx:id="objectiveCardsContainer" alignment="CENTER" spacing="5" />
+                <VBox fx:id="objectiveCardsContainer" alignment="CENTER" spacing="5"/>
             </VBox>
-            <VBox alignment="CENTER" spacing="5.0" style="-fx-border-color: #00d3ff; -fx-border-style: dashed;" styleClass="border" translateY="10.0">
+            <VBox alignment="CENTER" spacing="5.0" style="-fx-border-color: #00d3ff; -fx-border-style: dashed;"
+                  styleClass="border" translateY="10.0">
                 <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                 </padding>
                 <Label alignment="CENTER" styleClass="normal-label" text="YOUR  CARDS">
                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
+                        <Insets bottom="5.0" top="5.0"/>
                     </VBox.margin>
                 </Label>
-                <Button fx:id="showBackButton" onAction="#handleShowBackButton" style="-fx-background-color: #a2ecbb;" text="Show Back" />
-                <VBox fx:id="playerHandBox" alignment="CENTER" spacing="10" />
+                <Button fx:id="showBackButton" onAction="#handleShowBackButton" style="-fx-background-color: #a2ecbb;"
+                        text="Show Back"/>
+                <VBox fx:id="playerHandBox" alignment="CENTER" spacing="10"/>
             </VBox>
         </VBox>
         <VBox alignment="CENTER_LEFT" layoutX="222.0" layoutY="14.0" spacing="20.0">
             <AnchorPane>
-                <ScrollPane fx:id="gameDeskScrollPane" hbarPolicy="NEVER" pannable="true" prefHeight="450.0" prefWidth="900.0" style="-fx-focus-color: transparent; -fx-border-color: #4ac997; -fx-background-radius: 5;" vbarPolicy="NEVER">
-                    <AnchorPane fx:id="gameDeskContainer" style="-fx-background-color: #dedccc;" />
+                <ScrollPane fx:id="gameDeskScrollPane" hbarPolicy="NEVER" pannable="true" prefHeight="450.0"
+                            prefWidth="900.0"
+                            style="-fx-focus-color: transparent; -fx-border-color: #4ac997; -fx-background-radius: 5;"
+                            vbarPolicy="NEVER">
+                    <AnchorPane fx:id="gameDeskContainer" style="-fx-background-color: #dedccc;">
+                    </AnchorPane>
                 </ScrollPane>
                 <TabPane fx:id="playerDeskTabPane" prefWidth="845.0" style="-fx-background-color: #e7dfbd;">
-                    <Tab text="Player1 desk" />
-                    <Tab text="Player2 desk" />
-                    <Tab text="Player3 desk" />
-                    <Tab text="Player4 desk" />
                 </TabPane>
+                <Button fx:id="centerButton" text="center" AnchorPane.rightAnchor="10.0" AnchorPane.bottomAnchor="10.0"
+                        onAction="#handleCenterClick"/>
             </AnchorPane>
 
-            <Label fx:id="infoGame" alignment="CENTER" contentDisplay="CENTER" styleClass="normal-label" text="what is happening" />
+            <Label fx:id="infoGame" alignment="CENTER" contentDisplay="CENTER" styleClass="normal-label"
+                   text="what is happening"/>
             <HBox alignment="CENTER" spacing="20.0">
                 <VBox alignment="CENTER" spacing="10.0">
                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                     </padding>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <ImageView fitHeight="50.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../Images/CN_Plant_kingdom.png" />
+                            <Image url="@../Images/CN_Plant_kingdom.png"/>
                         </ImageView>
-                        <Label fx:id="plantLabel" alignment="CENTER" text="PLANT " />
+                        <Label fx:id="plantLabel" alignment="CENTER" text="PLANT "/>
                     </HBox>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../Images/CN_Animal_kingdom.png" />
+                            <Image url="@../Images/CN_Animal_kingdom.png"/>
                         </ImageView>
-                        <Label fx:id="animalLabel" alignment="CENTER" text="ANIMAL" />
+                        <Label fx:id="animalLabel" alignment="CENTER" text="ANIMAL"/>
                     </HBox>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../Images/CN_Funghi_kingdom.png" />
+                            <Image url="@../Images/CN_Funghi_kingdom.png"/>
                         </ImageView>
-                        <Label fx:id="fungiLabel" alignment="CENTER" text="FUNGI" />
+                        <Label fx:id="fungiLabel" alignment="CENTER" text="FUNGI"/>
                     </HBox>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../Images/CN_Insect_kingdom.png" />
+                            <Image url="@../Images/CN_Insect_kingdom.png"/>
                         </ImageView>
-                        <Label fx:id="insectLabel" alignment="CENTER" text="INSECT" />
+                        <Label fx:id="insectLabel" alignment="CENTER" text="INSECT"/>
                     </HBox>
                 </VBox>
                 <VBox alignment="CENTER" spacing="10.0">
                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
                     </padding>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <ImageView fitHeight="50.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../Images/CN_Manuscript.png" />
+                            <Image url="@../Images/CN_Manuscript.png"/>
                         </ImageView>
-                        <Label fx:id="manuscriptLabel" alignment="CENTER" text="MANUSCRIPT" />
+                        <Label fx:id="manuscriptLabel" alignment="CENTER" text="MANUSCRIPT"/>
                     </HBox>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../Images/CN_Quill.png" />
+                            <Image url="@../Images/CN_Quill.png"/>
                         </ImageView>
-                        <Label fx:id="quillLabel" alignment="CENTER" text="QUILL" />
+                        <Label fx:id="quillLabel" alignment="CENTER" text="QUILL"/>
                     </HBox>
                     <HBox alignment="CENTER_LEFT" spacing="10.0">
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../Images/CN_inkwell.png" />
+                            <Image url="@../Images/CN_inkwell.png"/>
                         </ImageView>
-                        <Label fx:id="inkwellLabel" alignment="CENTER" text="INQUELL" />
+                        <Label fx:id="inkwellLabel" alignment="CENTER" text="INQUELL"/>
                     </HBox>
                 </VBox>
                 <VBox alignment="CENTER" spacing="20.0">
-                    <HBox alignment="CENTER" spacing="5.0" style="-fx-border-color: #eaab58; -fx-border-style: dashed;" styleClass="border">
+                    <HBox alignment="CENTER" spacing="5.0" style="-fx-border-color: #eaab58; -fx-border-style: dashed;"
+                          styleClass="border">
                         <padding>
-                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                         </padding>
                         <Label styleClass="normal-label" text="RESOURCE CARD DECK">
                         </Label>
-                        <HBox fx:id="resourceDeck" spacing="10" />
+                        <HBox fx:id="resourceDeck" spacing="10"/>
                     </HBox>
-                    <HBox alignment="CENTER" spacing="5.0" style="-fx-border-color: #8e90fd; -fx-border-style: dashed;" styleClass="border">
+                    <HBox alignment="CENTER" spacing="5.0" style="-fx-border-color: #8e90fd; -fx-border-style: dashed;"
+                          styleClass="border">
                         <padding>
-                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                         </padding>
                         <Label styleClass="normal-label" text="GOLDEN CARD DECK">
 
                         </Label>
-                        <HBox fx:id="goldenDeck" spacing="10" />
+                        <HBox fx:id="goldenDeck" spacing="10"/>
                     </HBox>
                 </VBox>
             </HBox>
@@ -135,25 +137,33 @@
         <VBox alignment="CENTER" spacing="10.0">
             <AnchorPane fx:id="gameBoardAnchorPane">
                 <ImageView fitHeight="498.0" fitWidth="286.0" preserveRatio="true">
-                    <Image url="@../Images/Board.jpg" />
+                    <Image url="@../Images/Board.jpg"/>
                 </ImageView>
             </AnchorPane>
-            <TabPane fx:id="chatGameTabPane" prefWidth="280.0" style="-fx-background-color: #e7dfbd; -fx-background-radius: 5; -fx-border-color: orange;" styleClass="border" translateY="10.0" />
+            <TabPane fx:id="chatGameTabPane" prefWidth="280.0"
+                     style="-fx-background-color: #e7dfbd; -fx-background-radius: 5; -fx-border-color: orange;"
+                     styleClass="border" translateY="10.0"/>
         </VBox>
     </HBox>
-    <BorderPane fx:id="popUp" layoutX="641.0" layoutY="250.0" prefHeight="198.0" prefWidth="468.0" styleClass="popup" AnchorPane.bottomAnchor="302.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="300.0">
+    <BorderPane fx:id="popUp" layoutX="641.0" layoutY="250.0" prefHeight="198.0" prefWidth="468.0" styleClass="popup"
+                AnchorPane.bottomAnchor="302.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0"
+                AnchorPane.topAnchor="300.0">
         <top>
-            <HBox prefHeight="32.0" prefWidth="500.0" style="-fx-background-color: #2E8B57;" BorderPane.alignment="CENTER">
-                <Label fx:id="titlePopUp" alignment="CENTER" prefHeight="31.0" prefWidth="396.0" style="-fx-border-radius: 15;" styleClass="normal-label" text="TITLE" textFill="#a2ecbb" />
-                <Button fx:id="closePopUpButton" onMouseClicked="#closePopUp" prefHeight="31.0" prefWidth="104.0" style="-fx-background-color: #2E8B57;" text="X" textFill="#a2ecbb">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Button>
+            <HBox prefHeight="32.0" prefWidth="500.0" style="-fx-background-color: #2E8B57;"
+                  BorderPane.alignment="CENTER">
+                <Label fx:id="titlePopUp" alignment="CENTER" prefHeight="31.0" prefWidth="396.0"
+                       style="-fx-border-radius: 15;" styleClass="normal-label" text="TITLE" textFill="#a2ecbb"/>
+                <Button fx:id="closePopUpButton" onMouseClicked="#closePopUp" prefHeight="31.0" prefWidth="104.0"
+                        style="-fx-background-color: #2E8B57;" text="X" textFill="#a2ecbb">
+                    <font>
+                        <Font name="System Bold" size="15.0"/>
+                    </font>
+                </Button>
             </HBox>
         </top>
         <center>
-            <Label fx:id="messagePopUp" alignment="CENTER" styleClass="normal-label" text="MESSAGE" textFill="SEAGREEN" BorderPane.alignment="CENTER" />
+            <Label fx:id="messagePopUp" alignment="CENTER" styleClass="normal-label" text="MESSAGE" textFill="SEAGREEN"
+                   BorderPane.alignment="CENTER"/>
         </center>
     </BorderPane>
 </AnchorPane>

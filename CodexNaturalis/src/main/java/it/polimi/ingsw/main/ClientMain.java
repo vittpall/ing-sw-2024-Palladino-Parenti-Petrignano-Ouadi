@@ -20,10 +20,9 @@ public class ClientMain extends Application {
 
     private BaseClient client;
     private String serverAddress;
-    String ip;
 
     public static void main(String[] args) {
-        launch(args); // Use launch to start JavaFX application and pass arguments
+        launch(args);
     }
 
     @Override
@@ -61,8 +60,6 @@ public class ClientMain extends Application {
         if (useSocket) {
             setupSocketClient(useTUI ? "TUI" : "GUI", stage);
         } else {
-            System.out.println("Please insert your personal ip:\n");
-            String ip = scanner.nextLine();
             setupRMIClient(useTUI ? "TUI" : "GUI", stage);
         }
     }
@@ -81,7 +78,6 @@ public class ClientMain extends Application {
 
     private void setupRMIClient(String interfaceType, Stage stage) {
         try {
-            System.setProperty("java.rmi.server.hostname", ip);
             Registry registry = LocateRegistry.getRegistry(serverAddress, 1234);
             VirtualServer server = (VirtualServer) registry.lookup("VirtualServer");
             this.client = new RMIClient(server, interfaceType, stage);
@@ -89,7 +85,6 @@ public class ClientMain extends Application {
         } catch (NotBoundException | IOException e) {
             e.printStackTrace();
             System.err.println("Something went wrong, restart the game...");
-            //     Thread.sleep(3000);
             System.exit(0);
         }
     }
