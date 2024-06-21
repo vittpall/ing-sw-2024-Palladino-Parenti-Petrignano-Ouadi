@@ -21,7 +21,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
@@ -49,7 +48,6 @@ public class GameController implements FXMLController {
     public BorderPane popUp;
     public Button showBackButton;
     public TabPane playerDeskTabPane;
-    public ImageView boardImage;
     public AnchorPane gameBoardAnchorPane;
     public Label plantLabel;
     public Label animalLabel;
@@ -65,8 +63,6 @@ public class GameController implements FXMLController {
     private boolean isYourDeskShowing = true;
     private String playerDeskShown;
     public TabPane chatGameTabPane;
-    public TextArea globalChatTextArea;
-    public Button sendGlobalChatButton;
     private GameBoard gameBoard;
 
     public void initialize() {
@@ -166,7 +162,7 @@ public class GameController implements FXMLController {
                 }
             }
 
-            loadDeskCards();
+            loadCurrentPlayerDesk();
             loadObjectiveCards();
             loadUsableCards();
             loadVisibleCards();
@@ -205,24 +201,6 @@ public class GameController implements FXMLController {
         });
     }
 
-    private void loadDeskCards() throws IOException, InterruptedException {
-        playerDeskShown = client.getUsername();
-        playerDeskTabPane.getSelectionModel().select(client.getIdClientIntoGame());
-        gameDesk.getChildren().clear();
-        HashMap<Point, GameCard> deskCards = client.getPlayerDesk();
-        for (Map.Entry<Point, GameCard> entry : deskCards.entrySet()) {
-            Point p = entry.getKey();
-            GameCard card = entry.getValue();
-            gameDesk.addCard(card, !card.isPlayedFaceDown(), p.x, p.y);
-            if (p.x == 0 && p.y == 0) {
-                if (client.getIdClientIntoGame() == 0)
-                    gameDesk.addTokenToCard(Objects.requireNonNull(getClass().getResource("/Images/CODEX_pion_noir.png")).toExternalForm(), true);
-
-                gameDesk.addTokenToCard(Objects.requireNonNull(getClass().getResource("/Images/" + client.getTokenColor().getImageName())).toExternalForm(), false);
-            }
-
-        }
-    }
 
     private void loadObjectiveCards() throws IOException, InterruptedException {
         List<ObjectiveCard> objectiveCards = new ArrayList<>(Arrays.asList(client.getSharedObjectiveCards()));
@@ -396,7 +374,7 @@ public class GameController implements FXMLController {
             clearPlaceholders();
             loadPlayerHand();
             updatePlayerHandInteraction();
-            loadDeskCards();
+            loadCurrentPlayerDesk();
             updatePlayerDrawInteraction();
             updateResourcesObjectsLabels();
             gameBoard.updateTokenPosition(client.getUsername(), points);
@@ -409,7 +387,7 @@ public class GameController implements FXMLController {
                 loadPlayerHand();
                 System.out.println(client.getIdGame());
                 updatePlayerHandInteraction();
-                loadDeskCards();
+                loadCurrentPlayerDesk();
                 updatePlayerDrawInteraction();
                 gameBoard.updateTokenPosition(client.getUsername(), points);
                 if (isPlayerStateDraw())
@@ -458,12 +436,12 @@ public class GameController implements FXMLController {
             if (playerDeskShown == null || !playerDeskShown.equals(client.getPlayers(client.getIdGame()).get(playerIndex).getUsername())) {
                 if (client.getUsername().equals(client.getPlayers(client.getIdGame()).get(playerIndex).getUsername())) {
                     isYourDeskShowing = true;
-                    loadDeskCards();
+                    loadCurrentPlayerDesk();
                     if (isPlayerTurn())
                         showAvailablePositions();
                 } else {
                     isYourDeskShowing = false;
-                    loadPlayerDesk(playerIndex);
+                    loadOtherPlayerDesk(playerIndex);
                 }
             }
         } catch (IOException | InterruptedException e) {
@@ -472,17 +450,39 @@ public class GameController implements FXMLController {
         }
     }
 
-    private void loadPlayerDesk(int i) throws IOException, InterruptedException {
-        playerDeskShown = client.getPlayers(client.getIdGame()).get(i).getUsername();
+
+    private void loadOtherPlayerDesk(int playerIndex) throws IOException, InterruptedException {
+        Player player = client.getPlayers(client.getIdGame()).get(playerIndex);
+        playerDeskShown = player.getUsername();
+        playerDeskTabPane.getSelectionModel().select(playerIndex);
+        HashMap<Point, GameCard> deskCards = player.getPlayerDesk().getDesk();
+        loadDesk(deskCards, playerIndex, player.getTokenColor().getImageName());
+    }
+
+    private void loadCurrentPlayerDesk() throws IOException, InterruptedException {
+        playerDeskShown = client.getUsername();
+        playerDeskTabPane.getSelectionModel().select(client.getIdClientIntoGame());
+        HashMap<Point, GameCard> deskCards = client.getPlayerDesk();
+        loadDesk(deskCards, client.getIdClientIntoGame(), client.getTokenColor().getImageName());
+    }
+
+    private void loadDesk(HashMap<Point, GameCard> deskCards, int playerIndex, String tokenColorImageName) {
         gameDesk.getChildren().clear();
-        HashMap<Point, GameCard> deskCards = client.getPlayers(client.getIdGame()).get(i).getPlayerDesk().getDesk();
         for (Map.Entry<Point, GameCard> entry : deskCards.entrySet()) {
             Point p = entry.getKey();
             GameCard card = entry.getValue();
             gameDesk.addCard(card, !card.isPlayedFaceDown(), p.x, p.y);
+            if (p.x == 0 && p.y == 0) {
+                if (playerIndex == 0) {
+                    gameDesk.addTokenToCard(Objects.requireNonNull(getClass().getResource("/Images/CODEX_pion_noir.png")).toExternalForm(), true);
+                }
+
+                String tokenPath = "/Images/" + tokenColorImageName;
+                gameDesk.addTokenToCard(Objects.requireNonNull(getClass().getResource(tokenPath)).toExternalForm(), false);
+            }
         }
-        playerDeskTabPane.getSelectionModel().select(i);
     }
+
 
     public void setMyTurn(String usernameCurrentPlayer) {
         try {
@@ -493,7 +493,7 @@ public class GameController implements FXMLController {
             if (client.getUsername().equals(usernameCurrentPlayer)) {
                 infoGame.setText("It's your turn: you should play a card");
                 if (!isYourDeskShowing)
-                    loadDeskCards();
+                    loadCurrentPlayerDesk();
                 updatePlayerHandInteraction();
                 showAvailablePositions();
             } else
@@ -514,7 +514,7 @@ public class GameController implements FXMLController {
                 }
             }
             if (playerDeskShown.equals(username)) {
-                loadPlayerDesk(indexPlayer);
+                loadOtherPlayerDesk(indexPlayer);
             }
             if (!(players.get(indexPlayer).getPlayerState().equals(PlayerState.DRAW)))
                 infoGame.setText(players.get((indexPlayer + 1) % client.getnPlayer(client.getIdGame())).getUsername() + " is playing");
@@ -628,7 +628,7 @@ public class GameController implements FXMLController {
             whoSendTheMessage = message.getSender();
         else
             return;
-        //i've already handled the message the client send, no need to use this function to display that message
+        //I've already handled the message the client send, no need to use this function to display that message
         for (Tab tab : chatGameTabPane.getTabs()) {
             if (message.getReceiver() == null && tab.getText().equals("GlobalChat")) {
                 VBox vbox = (VBox) ((AnchorPane) tab.getContent()).getChildren().getFirst();
