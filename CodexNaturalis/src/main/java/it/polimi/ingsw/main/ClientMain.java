@@ -85,7 +85,6 @@ public class ClientMain extends Application {
         } catch (NotBoundException | IOException e) {
             e.printStackTrace();
             System.err.println("Something went wrong, restart the game...");
-            System.exit(0);
         }
     }
 

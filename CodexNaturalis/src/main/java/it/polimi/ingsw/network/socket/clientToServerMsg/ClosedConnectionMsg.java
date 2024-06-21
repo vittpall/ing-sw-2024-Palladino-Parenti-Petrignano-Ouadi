@@ -10,9 +10,9 @@ import java.io.IOException;
 public class ClosedConnectionMsg extends ClientToServerMsg {
 
     private final String username;
-    private final int idGame;
+    private final Integer idGame;
 
-    public ClosedConnectionMsg(String username, int idGame) {
+    public ClosedConnectionMsg(String username, Integer idGame) {
         this.username = username;
         this.idGame = idGame;
     }

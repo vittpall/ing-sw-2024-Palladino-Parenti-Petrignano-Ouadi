@@ -157,6 +157,7 @@ public class SocketClient extends BaseClient {
         try {
             returnToLobby();
         } catch (NullPointerException | InterruptedException e) {
+            e.printStackTrace();
             System.out.println("Something went wrong, restart the game...");
         }
         System.exit(0);
@@ -164,8 +165,11 @@ public class SocketClient extends BaseClient {
 
     @Override
     public void returnToLobby() throws InterruptedException {
-        ClosedConnectionMsg request = new ClosedConnectionMsg(getUsername(), getIdGame());
-        sendRequest(request);
+        if(getIdGame() != null)
+        {
+            ClosedConnectionMsg request = new ClosedConnectionMsg(getUsername(), getIdGame());
+            sendRequest(request);
+        }
         setIdGameNull();
     }
 

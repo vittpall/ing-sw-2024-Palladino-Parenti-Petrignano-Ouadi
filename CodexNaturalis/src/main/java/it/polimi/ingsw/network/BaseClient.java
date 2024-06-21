@@ -35,7 +35,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
     protected BlockingQueue<ServerNotification> notificationsQueue;
     private boolean isGUIMode;
     protected UsefulData usefulData;
-    protected boolean waitingForCloseGameNotification;
+    protected volatile boolean waitingForCloseGameNotification;
     protected TokenColor userTokenColor;
     String input;
     private final Stage stageUI;
@@ -310,7 +310,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     public void inputHandler() {
 
-        System.err.println("RETURN TO START OF THE GAME");
+    //    System.err.println("RETURN TO START OF THE GAME");
         showWinnerTui = false;
         boolean correctInput;
         do {
