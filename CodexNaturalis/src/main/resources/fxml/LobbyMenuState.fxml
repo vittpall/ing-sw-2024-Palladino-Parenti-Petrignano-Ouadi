@@ -8,12 +8,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.controller.LobbyMenuController">
     <StackPane styleClass="scene-dimensions,scene-background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <VBox alignment="CENTER" spacing="10">
-            <Label prefHeight="75.0" prefWidth="176.0" style="-fx-font-size: 30px; -fx-font-family: 'Book Antiqua Bold Italic'; -fx-text-fill: #333333;" text="Lobby Menu" textAlignment="JUSTIFY" />
-            <Label prefHeight="25.0" prefWidth="194.0" style="-fx-font-size: 16px; -fx-font-family: 'Book Antiqua Bold Italic'; -fx-text-fill: #555555;" text="Please select an option:" />
+            <Label prefHeight="75.0" prefWidth="194.0" text="Lobby Menu" textAlignment="JUSTIFY" translateY="10.0">
+            <font>
+               <Font name="Book Antiqua Bold Italic" size="34.0" />
+            </font></Label>
+            <Label prefHeight="25.0" prefWidth="194.0" text="Please select an option:">
+            <font>
+               <Font name="Book Antiqua Bold Italic" size="16.0" />
+            </font></Label>
 
             <Button onAction="#handleCreateGame" style="-fx-background-color: #a2ecbb;" styleClass="primary-button" text="Create a new game" />
             <Button onAction="#handleJoinGame" style="-fx-background-color: #a6f84b;" styleClass="primary-button" text="Join a game " />
@@ -31,19 +38,16 @@
     <ImageView styleClass="corner-image" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
     </ImageView>
 
-    <!-- Bottom-Right Corner -->
-    <ImageView scaleX="-1" styleClass="corner-image" AnchorPane.bottomAnchor="0" AnchorPane.rightAnchor="0">
+          <!-- Bottom-Right Corner -->
+    <ImageView scaleX="-1" styleClass="corner-image" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
     </ImageView>
    <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="128.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="40.0">
    </Button>
    <BorderPane fx:id="popup" layoutX="600.0" layoutY="271.0" prefHeight="229.0" prefWidth="200.0" styleClass="popup">
       <top>
-          <HBox prefHeight="43.0" prefWidth="498.0" style="-fx-background-color: #2E8B57;"
-                BorderPane.alignment="CENTER">
-              <Label alignment="CENTER" prefHeight="38.0" prefWidth="374.0" styleClass="normal-label" text="INFO"
-                     textFill="#a2ecbb"/>
-              <Button mnemonicParsing="false" onMouseClicked="#handleClosePopUp" prefHeight="40.0" prefWidth="128.0"
-                      style="-fx-background-color: #2E8B57;" text="X" textFill="#a2ecbb"/>
+          <HBox prefHeight="43.0" prefWidth="498.0" style="-fx-background-color: #2E8B57;" BorderPane.alignment="CENTER">
+              <Label alignment="CENTER" prefHeight="38.0" prefWidth="374.0" styleClass="normal-label" text="INFO" textFill="#a2ecbb" />
+              <Button mnemonicParsing="false" onMouseClicked="#handleClosePopUp" prefHeight="40.0" prefWidth="128.0" style="-fx-background-color: #2E8B57;" text="X" textFill="#a2ecbb" />
           </HBox>
       </top>
       <center>
