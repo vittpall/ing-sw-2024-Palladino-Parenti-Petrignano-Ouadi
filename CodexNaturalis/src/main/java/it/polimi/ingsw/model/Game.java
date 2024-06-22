@@ -13,13 +13,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * this class defines and describes the match
- * players is a list of all the players of the match
- * sharedObjectiveCards is an array containing the shared ObjectiveCard that all the player can meet
- * resourceDeck and GoldDeck represents the decks of that game
- * isLastRoundStarted is set as true when one player achieves 20 points and indicates that there will be one last complete round
- * gameStarted is set as true as soon as nPlayer players have joined the game
- * starterCards and objectiveCards are lists of all the possible starter and objective cards that are not played or drawn yet
+ * this class defines and describes a game in the application.
+ * nPlayer the number of players in the game.
+ * players a list of all the players in the game.
+ * sharedObjectiveCards an array containing the shared ObjectiveCard that all the player can meet.
+ * resourceDeck and GoldDeck represents the decks of the game
+ * isLastRoundStarted a boolean indicating if the last round has started.
+ * playerWhoStoppedTheGame the index the player who achieved 20 points first.
+ * starterCards and objectiveCards are lists of all the possible starter and objective cards that are not played or drawn yet.
+ * chats are the chats of the game
  */
 public class Game {
     private final int nPlayer;
@@ -35,11 +37,9 @@ public class Game {
     private final Chat chats;
 
     /**
-     * constructor
-     * creates the starterCards, players and objectiveCards lists as empty
-     * sets  nPlayer, isLastRoundStarted, gameStarted and currentPlayerIndex
+     * The constructor for the Game class. It initializes the fields with the provided parameters and default values.
      *
-     * @param n the number of player chosen
+     * @param n the number of players in the game.
      */
     public Game(int n) {
         nPlayer = n;
@@ -53,10 +53,8 @@ public class Game {
     }
 
     /**
-     * it sets up the game:
-     * creates the goldDeck and resourceDeck
-     * it initializes the sharedObjectiveCards and every player's hand, starterCard and drawnObjectiveCards
-     * it is called when gameStarted is set as true
+     * This method sets up the game. It creates the goldDeck and resourceDeck, initializes the sharedObjectiveCards,
+     * and sets up each player's hand, starterCard, and drawnObjectiveCards. It is called when the game starts.
      */
     public void setUpGame() {
         ArrayList<GameCard> usableGoldCard = new ArrayList<>();
@@ -101,6 +99,11 @@ public class Game {
         }
     }
 
+    /**
+     * method that returns the available colors for the players
+     *
+     * @return the list of available colors that the players can choose
+     */
     public ArrayList<TokenColor> getAvailableColors() {
         ArrayList<TokenColor> usedColors = new ArrayList<>();
         for (Player player : players) {
@@ -116,11 +119,22 @@ public class Game {
         return availableColors;
     }
 
+    /**
+     * This method sets the token  for a player.
+     *
+     * @param idPlayer the ID of the player.
+     * @param color    the token to set.
+     */
     public void setTokenColor(int idPlayer, TokenColor color) {
         players.get(idPlayer).setTokenColor(color);
     }
 
-
+    /**
+     * This method sets the objective cards for a player.
+     *
+     * @param idPlayer   the ID of the player.
+     * @param chosenCard the chosen card.
+     */
     public void setObjectiveCards(int idPlayer, int chosenCard) {
         players.get(idPlayer).setObjectiveCard(chosenCard);
     }
@@ -174,6 +188,9 @@ public class Game {
         return isLastRoundStarted;
     }
 
+    /**
+     * @return chats of the game
+     */
     public Chat getChats() {
         return chats;
     }
@@ -183,7 +200,8 @@ public class Game {
      * adds the player playerToAdd to the list of players of the game
      * it can be called until gameStarted==false
      *
-     * @param playerToAdd
+     * @param playerToAdd the player to add
+     * @return the index of the player in the list of players
      */
     public int addPlayer(Player playerToAdd) {
         players.add(playerToAdd);
@@ -209,7 +227,7 @@ public class Game {
      * draws a card and puts it into the current player's hand
      * sets isLastRoundStarted as true if the current player's points are greater or equal to 20
      *
-     * @param deck
+     * @param deck the deck from which the card is drawn
      */
     public void drawCard(Deck deck) {
         players.get(currentPlayerIndex).draw(deck);
@@ -222,8 +240,8 @@ public class Game {
     /**
      * draws the card sent as a parameter and puts it into the current player's hand
      *
-     * @param deck
-     * @param card
+     * @param deck the deck from which the card is drawn
+     * @param card the card to draw
      */
     public void drawVisibleCard(Deck deck, GameCard card) {
         players.get(currentPlayerIndex).drawVisible(deck, card);
@@ -238,7 +256,9 @@ public class Game {
         currentPlayerIndex = (currentPlayerIndex + 1) % nPlayer;
     }
 
-
+    /**
+     * @return player who is playing
+     */
     public Player getCurrentPlayer() {
         return players.get(currentPlayerIndex);
     }
@@ -270,6 +290,9 @@ public class Game {
         return winner;
     }
 
+    /**
+     * @return username of the player who first achieved 20 points
+     */
     public String getUsernamePlayerThatStoppedTheGame() {
         return players.get(playerWhoStoppedTheGame).getUsername();
     }
