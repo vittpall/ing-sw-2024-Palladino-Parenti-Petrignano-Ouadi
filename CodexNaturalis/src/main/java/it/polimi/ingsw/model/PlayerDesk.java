@@ -172,7 +172,7 @@ public class PlayerDesk implements Serializable {
             } else if (!forbiddenPlaces.contains(pos)) {
                 availablePlaces.add(pos);
             }
-            if (!card.isPlayedFaceDown() && !cardCorners[i + addIfFaceDown].isHidden()) {
+            if (!(cardCorners[i + addIfFaceDown]).isHidden()) {
                 if (cardCorners[i + addIfFaceDown].getResource() != null) {
                     int res = totalResources.get(cardCorners[i + addIfFaceDown].getResource());
                     res++;
