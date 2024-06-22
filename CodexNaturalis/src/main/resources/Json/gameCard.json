@@ -1399,8 +1399,8 @@
       "INSECT_KINGDOM",
       "FUNGI_KINGDOM",
       "PLANT_KINGDOM",
-      "INSECT_KINGDOM",
-      "ANIMAL_KINGDOM"
+      "ANIMAL_KINGDOM",
+      "INSECT_KINGDOM"
     ],
     "requirements": {},
     "type": "starter"
@@ -1421,8 +1421,8 @@
       "free",
       "PLANT_KINGDOM",
       "ANIMAL_KINGDOM",
-      "FUNGI_KINGDOM",
-      "INSECT_KINGDOM"
+      "INSECT_KINGDOM",
+      "FUNGI_KINGDOM"
     ],
     "requirements": {},
     "type": "starter"
@@ -1444,8 +1444,8 @@
       "free",
       "INSECT_KINGDOM",
       "ANIMAL_KINGDOM",
-      "FUNGI_KINGDOM",
-      "PLANT_KINGDOM"
+      "PLANT_KINGDOM",
+      "FUNGI_KINGDOM"
     ],
     "requirements": {},
     "type": "starter"
@@ -1467,8 +1467,8 @@
       "free",
       "PLANT_KINGDOM",
       "INSECT_KINGDOM",
-      "ANIMAL_KINGDOM",
-      "FUNGI_KINGDOM"
+      "FUNGI_KINGDOM",
+      "ANIMAL_KINGDOM"
     ],
     "requirements": {},
     "type": "starter"
@@ -1491,8 +1491,8 @@
       "hidden",
       "INSECT_KINGDOM",
       "FUNGI_KINGDOM",
-      "PLANT_KINGDOM",
-      "ANIMAL_KINGDOM"
+      "ANIMAL_KINGDOM",
+      "PLANT_KINGDOM"
     ],
     "requirements": {},
     "type": "starter"
@@ -1515,8 +1515,8 @@
       "hidden",
       "FUNGI_KINGDOM",
       "ANIMAL_KINGDOM",
-      "PLANT_KINGDOM",
-      "INSECT_KINGDOM"
+      "INSECT_KINGDOM",
+      "PLANT_KINGDOM"
     ],
     "requirements": {},
     "type": "starter"
