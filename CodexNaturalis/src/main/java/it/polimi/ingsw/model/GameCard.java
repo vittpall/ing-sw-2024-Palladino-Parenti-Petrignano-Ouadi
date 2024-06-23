@@ -127,9 +127,9 @@ public abstract class GameCard extends Card {
         printCardDetails(context, colorBackground, faceDown);
 
         if (faceDown) {
-            context.printColorBorder(corners[6], corners[7], colorBackground);
+            context.printColorBorder(corners[7], corners[6], colorBackground);
         } else {
-            context.printColorBorder(corners[2], corners[3], colorBackground);
+            context.printColorBorder(corners[3], corners[2], colorBackground);
 
         }
         System.out.println(); // For spacing between cards
