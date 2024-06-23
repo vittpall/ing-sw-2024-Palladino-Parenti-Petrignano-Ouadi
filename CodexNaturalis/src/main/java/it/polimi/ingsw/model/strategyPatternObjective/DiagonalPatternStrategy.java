@@ -41,9 +41,9 @@ public record DiagonalPatternStrategy(Resource primarySource, Point diagonalOffs
     }
 
     /**
-     * this method will be recognized if the Resource cards
+     * this method will recognize if the Resource cards
      * on the PlayerDesk meet the requirements of the objective card.
-     * in this case it will analyze the objective that requires two vertical cards and another one over one corner.
+     * in this case it will analyze the objective that requires three cards of the same type put in a diagonal.
      *
      * @param desk the player's desk
      * @return the number of times the objective is satisfied

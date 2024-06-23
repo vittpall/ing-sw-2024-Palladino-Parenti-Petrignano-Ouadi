@@ -26,7 +26,7 @@ public class PlayStarterCard extends ClientToServerMsg {
         try {
             controller.playStarterCard(idGame, idClientIntoGame, playedFacedDown, playerListener);
         } catch (RequirementsNotMetException e) {
-            response.setErrorCode(ErrorCodes.REQIORMENTS_NOT_MET);
+            response.setErrorCode(ErrorCodes.REQUIREMENTS_NOT_MET);
             response.setErrorMessage(e.getMessage());
         }
         response.setResponseReturnable(-1);

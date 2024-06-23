@@ -5,7 +5,6 @@ import java.io.Serializable;
 /**
  * this enum contains the possible colors that can be associated to the players' token
  *
- * @author Carolina Parenti
  */
 public enum TokenColor implements Serializable {
 
@@ -21,8 +20,9 @@ public enum TokenColor implements Serializable {
     /**
      * constructor
      *
-     * @param value     represents the name of the TokenColor
+     * @param value represents the name of the TokenColor
      * @param imageName represents the image file name of the TokenColor
+     * @param colorValueANSII represents the color value in ANSI
      */
     TokenColor(String value, String imageName, String colorValueANSII) {
         this.value = value;
@@ -31,14 +31,14 @@ public enum TokenColor implements Serializable {
     }
 
     /**
-     * Returns the value of the string representing the TokenColor
+     * @return the value of the string representing the TokenColor
      */
     public String get() {
         return value;
     }
 
     /**
-     * Returns the image name representing the TokenColor
+     * @return the image name representing the TokenColor
      */
     public String getImageName() {
         return imageName;
@@ -49,6 +49,9 @@ public enum TokenColor implements Serializable {
         return value;
     }
 
+    /**
+     * @return the value of the string representing the color value in ANSI
+     */
     public String getColorValueANSII() {
         return colorValueANSII;
     }

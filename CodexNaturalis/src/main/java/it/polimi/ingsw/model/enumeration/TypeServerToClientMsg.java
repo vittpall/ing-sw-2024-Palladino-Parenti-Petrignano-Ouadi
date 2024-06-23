@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model.enumeration;
 
+/**
+ * This enums contains all the possible types of messages that can be sent from the server to the client
+ */
 public enum TypeServerToClientMsg {
     CLOSE_GAME_WHEN_ENDED("CloseGameWhenEnded"),
     USER_ALREADY_TAKEN("UserAlreadyTaken"),
@@ -28,23 +31,27 @@ public enum TypeServerToClientMsg {
     IS_LAST_ROUND_STARTED("IsLastRoundStarted"),
     JOIN_GAME("JoinGame"),
     PLAY_CARD("PlayCard"),
-    PLAY_LAST_TURN("PlayLastTurn"),
     PLAY_STARTED_CARD("PlayStartedCard"),
     SELECTED_TOKEN_COLOR("SelectedTokenCard"),
     RECEIVED_MESSAGE("ReceivedMessage"),
-    SET_OBJECTIVE_CARD("SetObjectiveCard"),
     WAIT_FOR_YOUR_TURN("WaitForYourTurn"),
     GET_CURRENT_STATE("GetCurrentState"),
-    CHECK_STATE("CheckState"),
-    TOKEN_COLOR_SELECTED("TokenColorSelected"),
-    CLOSE_CONNECTION("CloseConnection");
+    CHECK_STATE("CheckState");
 
     private final String text;
 
+    /**
+     * Constructor
+     *
+     * @param text represents the type of message
+     */
     TypeServerToClientMsg(String text) {
         this.text = text;
     }
 
+    /**
+     * @return the value of the string representing the type of message
+     */
     public String get() {
         return text;
     }

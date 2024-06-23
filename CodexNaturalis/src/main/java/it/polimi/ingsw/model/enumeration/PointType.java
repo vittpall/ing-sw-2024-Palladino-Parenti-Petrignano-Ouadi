@@ -20,7 +20,7 @@ public enum PointType {
     }
 
     /**
-     * Returns the value of the string representing the PointType
+     * @return the value of the string representing the PointType
      */
 
     public String get()

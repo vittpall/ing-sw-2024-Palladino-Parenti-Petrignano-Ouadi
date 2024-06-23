@@ -31,7 +31,7 @@ public class PlayCardMsg extends ClientToServerMsg {
         try {
             response.setResponseReturnable(controller.playCard(idGame, idClientIntoGame, chosenCard, faceDown, chosenPosition));
         } catch (RequirementsNotMetException e) {
-            response.setErrorCode(ErrorCodes.REQIORMENTS_NOT_MET);
+            response.setErrorCode(ErrorCodes.REQUIREMENTS_NOT_MET);
             response.setErrorMessage(e.getMessage());
             return response;
         }

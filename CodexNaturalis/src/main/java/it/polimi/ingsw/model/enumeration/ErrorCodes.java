@@ -1,19 +1,25 @@
 package it.polimi.ingsw.model.enumeration;
 
+/**
+ * This enums contains possible error codes
+ */
 public enum ErrorCodes {
     SUCCESS(0),
-    PLACE_NOT_AVAILABLE(1),
-    REQIORMENTS_NOT_MET(2),
-    CARD_NOT_FOUND(3);
-
+    REQUIREMENTS_NOT_MET(2);
 
     private final int code;
 
-
+    /**
+     * Constructor
+     * @param code represents the error code
+     */
     ErrorCodes(int code) {
         this.code = code;
     }
 
+    /**
+     * @return the value of the error code
+     */
     public int get() {
         return code;
     }

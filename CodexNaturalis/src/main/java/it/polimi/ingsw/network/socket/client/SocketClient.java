@@ -255,7 +255,7 @@ public class SocketClient extends BaseClient {
         PlayStarterCard request = new PlayStarterCard(getIdGame(), idClientIntoGame, playedFacedDown);
         ServerToClientMsg response = sendRequest(request);
         if (!response.getResponse().isSuccess()) {
-            if (response.getResponse().getErrorCode() == ErrorCodes.REQIORMENTS_NOT_MET) {
+            if (response.getResponse().getErrorCode() == ErrorCodes.REQUIREMENTS_NOT_MET) {
                 throw new RequirementsNotMetException(response.getResponse().getErrorMessage());
             }
         }
@@ -288,7 +288,7 @@ public class SocketClient extends BaseClient {
         PlayCardMsg request = new PlayCardMsg(getIdGame(), idClientIntoGame, chosenCard, faceDown, chosenPosition);
         ServerToClientMsg response = sendRequest(request);
         if (!response.getResponse().isSuccess()) {
-            if (response.getResponse().getErrorCode() == ErrorCodes.REQIORMENTS_NOT_MET) {
+            if (response.getResponse().getErrorCode() == ErrorCodes.REQUIREMENTS_NOT_MET) {
                 throw new RequirementsNotMetException(response.getResponse().getErrorMessage());
             }
         }

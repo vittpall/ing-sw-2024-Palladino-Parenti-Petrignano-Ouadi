@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model.enumeration;
 
+/**
+ * This numeration contains all the possible states of the game
+ */
+
 public enum GameState {
     WAITING_FOR_PLAYERS("Waiting for players"), SETUP_GAME ("Setup game"),
     ROUNDS("Game rounds"), FINISHING_ROUND_BEFORE_LAST("Finishing round before last"),
@@ -19,7 +23,7 @@ public enum GameState {
     }
 
     /**
-     * Returns the value of the string representing the GameState
+     * @return the value of the string representing the GameState
      */
 
     public String get()

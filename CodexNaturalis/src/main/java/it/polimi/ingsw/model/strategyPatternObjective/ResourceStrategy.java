@@ -18,10 +18,11 @@ public class ResourceStrategy implements ObjectiveStrategy {
     private final int numOfResourceToCheck;
 
     /**
-     * Constructor which assigns the Strategy that needs to be checked inside the class ResourceStrategy (i.g. The ObjcetiveCard requires two elements of type insect)
+     * Constructor which assigns the Strategy that needs to be checked inside the class ResourceStrategy
+     * (i.g. The ObjectiveCard requires two elements of type insect)
      *
-     * @param resourceStrategyToCheck
-     * @param numResource
+     * @param resourceStrategyToCheck the resource that the objective card requires
+     * @param numResource the number of times that resource needs to be present
      */
 
     public ResourceStrategy(Resource resourceStrategyToCheck, int numResource) {
@@ -30,7 +31,11 @@ public class ResourceStrategy implements ObjectiveStrategy {
 
     }
 
-
+    /**
+     * This method prints the objective card.
+     *
+     * @param context represents the context of the print
+     */
     @Override
     public void print(PrintContext context) {
         int cardWidth = context.getCardWidth();
@@ -59,13 +64,12 @@ public class ResourceStrategy implements ObjectiveStrategy {
 
 
     /**
-     * enum map is a map where thw key is Resource and the integer is the number of times the resource is on the playerDesk.
-     * <p>
-     * this method will be recognized if the Resource cards
+
+     * this method will recognize if the cards
      * on the PlayerDesk meet the requirements of the objective card.
-     * in this case it will analyze the objective that requires a specific sequence of resources
+     * in this case it will analyze the objective that requires a specific number and type of resources
      *
-     * @param desk
+     * @param desk represents the player's desk
      * @return NumberOfTimesVerifiedObjective
      */
     public int isSatisfied(PlayerDesk desk) {

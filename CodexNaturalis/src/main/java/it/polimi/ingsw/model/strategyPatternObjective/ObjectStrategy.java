@@ -8,12 +8,15 @@ import it.polimi.ingsw.tui.PrintContext;
 import java.util.EnumMap;
 import java.util.Map;
 
+/**
+ * This class represents a concrete strategy of the strategy design pattern, check object patterns in the game.
+ */
 public class ObjectStrategy implements ObjectiveStrategy {
 
     private final EnumMap<CornerObject, Integer> objectToCheck;
 
     /**
-     * Constructor which assigns the Strategy that needs to be checked inside the class ObjectStrategy (the required object and the respective number of object
+     * Constructor which assigns the Strategy that needs to be checked inside the class ObjectStrategy (the required object and the respective number of object)
      *
      * @param objectToCheck the map of objects to check
      */
@@ -24,9 +27,9 @@ public class ObjectStrategy implements ObjectiveStrategy {
 
 
     /**
-     * this method will be recognized if the Resource cards
+     * this method will be recognized if the cards
      * on the PlayerDesk meet the requirements of the objective card.
-     * in this case it will analyze the objective that requires a specific sequence of objects
+     * in this case it will analyze the objective that requires a specific number of objects
      *
      * @param desk the player's desk
      * @return the number of times the objective is satisfied

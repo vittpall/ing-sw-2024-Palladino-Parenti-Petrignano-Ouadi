@@ -12,6 +12,11 @@ import java.io.Serializable;
  */
 public class ObjectiveCard extends Card implements Serializable {
     ObjectiveStrategy strategy;
+    /**
+     * Constructor
+     *
+     * @param copy it's the object we want to copy
+     */
 
     public ObjectiveCard(ObjectiveCard copy) {
         super(copy.getPoints(), copy.getImageFrontPath(), copy.getImageBackPath());
@@ -31,7 +36,7 @@ public class ObjectiveCard extends Card implements Serializable {
     /**
      * Will call the method isSatisfied which will make override on the concrete strategies
      *
-     * @param desk
+     * @param desk represents the desk of the player
      * @return the number of times the objective is verified
      */
     public int verifyObjective(PlayerDesk desk) {
@@ -39,14 +44,11 @@ public class ObjectiveCard extends Card implements Serializable {
     }
 
     /**
-     * standard getter to return strategy
-     *
-     * @return
+     * @return the strategy of the objective
      */
     public ObjectiveStrategy getStrategy() {
         return strategy;
     }
-
 
     @Override
     public void print(PrintContext context, boolean faceDown) {

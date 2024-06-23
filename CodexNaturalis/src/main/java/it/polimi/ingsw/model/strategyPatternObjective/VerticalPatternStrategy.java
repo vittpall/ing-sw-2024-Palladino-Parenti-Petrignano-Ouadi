@@ -124,7 +124,7 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
 
 
     /**
-     * this method will be recognized if the Resource cards
+     * this method will recognize if the Resource cards
      * on the PlayerDesk meet the requirements of the objective card.
      * in this case it will analyze the objective that requires two vertical cards and another one over one corner.
      *

@@ -14,23 +14,20 @@ public enum Resource {
      * @param text is the representation the Resource
      */
 
-    Resource(String text)
-    {
+    Resource(String text) {
         this.text = text;
     }
 
     /**
-     * Returns the value of the string representing the Resource
+     * @return the value of the string representing the Resource
      */
 
-    public String get()
-    {
+    public String get() {
         return text;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return text;
     }
 

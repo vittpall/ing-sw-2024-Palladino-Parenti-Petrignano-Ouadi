@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model.enumeration;
-
+/**
+ * Enumeration of the possible actions that can be requested by the client
+ */
 public enum RequestedActions {
     DRAW("Draw"), PLAY_CARD("Game rounds"), SHOW_DESKS("Last round"),
     SHOW_OBJ_CARDS("End game"), SHOW_POINTS("Show points"), CHAT("Chat"), SHOW_WINNER("Show winner");
@@ -18,7 +20,7 @@ public enum RequestedActions {
     }
 
     /**
-     * Returns the value of the string representing the GameState
+     * @return the value of the string representing the GameState
      */
 
     public String get()
