@@ -19,12 +19,13 @@ public class StarterCard extends GameCard {
      * This is the constructor for the StarterCard class.
      * It initializes the cardResourceFront, backSideResource, pointType, points, frontImagePath, backImagePath from the superclass.
      *
-     * @param frontSideResources The resources on the front of the card
      * @param backSideResource   The resource on the back of the card
-     * @param pointType          The type that will be used to calculate points
-     * @param points             The number of points the card gives
      * @param frontImagePath     The path to the image for the front of the card
      * @param backImagePath      The path to the image for the back of the card
+     * @param points             The number of points the card gives
+     * @param pointType          The type that will be used to calculate points
+     * @param frontSideResources The resources on the front of the card
+     * @param corners            The corners of the card
      */
     public StarterCard(
             @JsonProperty("backSideResource") Resource backSideResource,

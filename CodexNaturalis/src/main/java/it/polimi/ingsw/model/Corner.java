@@ -89,13 +89,6 @@ public class Corner implements Serializable {
         this.hidden = true;
     }
 
-
-    /**
-     * This method checks if the current corner is equal to the given object.
-     *
-     * @param o the object to be compared with the current corner
-     * @return whether the current corner is equal to the given object
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

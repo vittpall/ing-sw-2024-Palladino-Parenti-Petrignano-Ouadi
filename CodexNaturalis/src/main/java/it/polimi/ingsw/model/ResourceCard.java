@@ -28,6 +28,7 @@ public class ResourceCard extends GameCard {
      * @param points             The number of points the card gives
      * @param frontImagePath     The path to the image for the front of the card
      * @param backImagePath      The path to the image for the back of the card
+     * @param corners            The corners of the card
      */
     @JsonCreator
     public ResourceCard(

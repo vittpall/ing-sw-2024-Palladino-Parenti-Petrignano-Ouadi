@@ -10,6 +10,12 @@ import it.polimi.ingsw.tui.PrintContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * This abstract class represents a generic game card.
+ * It contains the resources on the front side and the back side of the card,
+ * the points that the card gives if played, the type of the pattern that is used to calculate the points,
+ * the corners of the card and a boolean that indicates if the card is played face down or not.
+ */
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = ResourceCard.class, name = "resource"),
@@ -25,6 +31,17 @@ public abstract class GameCard extends Card {
 
     private final Corner[] corners;
 
+    /**
+     * Constructor for GameCard class.
+     *
+     * @param backSideResource   resource on the back side of the card
+     * @param frontImagePath     path to the image of the front of the card
+     * @param backImagePath      path to the image of the back of the card
+     * @param points             number of points that the card gives if played
+     * @param pointType          type of the pattern that is used to calculate the points
+     * @param frontSideResources resources on the front side of the card
+     * @param corners            array of corners of the card
+     */
     public GameCard(Resource backSideResource, String frontImagePath, String backImagePath, int points, PointType pointType, ArrayList<Resource> frontSideResources, Corner[] corners) {
         super(points, frontImagePath, backImagePath);
         this.frontSideResources = frontSideResources;
@@ -37,35 +54,61 @@ public abstract class GameCard extends Card {
         this.pointType = pointType;
     }
 
+    /**
+     * Set the parameter playedFaceDown
+     *
+     * @param playedFaceDown true if the card is played face down, false otherwise
+     */
     public void setPlayedFaceDown(boolean playedFaceDown) {
         this.playedFaceDown = playedFaceDown;
     }
 
+    /**
+     * @return the resource on the back side of the card
+     */
     public Resource getBackSideResource() {
         return backSideResource;
     }
 
+    /**
+     * @return the type of the pattern that is used to calculate the points
+     */
     public PointType getPointType() {
         return pointType;
     }
 
+    /**
+     * @return true if the card is played face down, false otherwise
+     */
     public boolean isPlayedFaceDown() {
         return playedFaceDown;
     }
 
+    /**
+     * @return the resources on the front side of the card
+     */
     public ArrayList<Resource> getFrontSideResources() {
         return frontSideResources;
     }
 
+    /**
+     * Flips the card
+     */
     public void flipCard() {
         playedFaceDown = !playedFaceDown;
     }
 
-
+    /**
+     * @param index index of the corner requested
+     * @return the corner of the card at the specified index
+     */
     public Corner getCorner(int index) {
         return this.corners[index];
     }
 
+    /**
+     * @return the array of corners of the card
+     */
     public Corner[] getCorners() {
         return Arrays.copyOf(corners, corners.length);
     }
@@ -93,7 +136,13 @@ public abstract class GameCard extends Card {
 
     }
 
-
+    /**
+     * Prints the card specified details
+     *
+     * @param context         print context
+     * @param colorBackground background color of the card
+     * @param faceDown        true if the card is face down, false otherwise
+     */
     protected abstract void printCardDetails(PrintContext context, CardPrinter.Color colorBackground, boolean faceDown);
 
 }

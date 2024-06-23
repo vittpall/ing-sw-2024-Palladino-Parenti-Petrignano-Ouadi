@@ -12,13 +12,15 @@ import java.util.ArrayList;
 
 /**
  * this class defines the player
+ * username is the player's username
  * points are the points that the player has
  * playerHand are the card that the player has but has not played yet
  * objectiveCard is the ObjectiveCard chosen from the player
  * drawnObjectiveCards are the ObjectiveCard assigned to the player
- * color is the TokenColor assigned to the player
+ * color is the TokenColor of the player
  * starterCard is the StarterCard assigned to the player
  * playerDesk is a reference to the assigned PlayerDesk
+ * playerState is the state of the player in the game
  */
 public class Player implements Serializable {
     private final String username;
@@ -31,42 +33,10 @@ public class Player implements Serializable {
     private final PlayerDesk playerDesk;
     private PlayerState playerState;
 
-
-    public void setPlayerState(PlayerState playerState) {
-        this.playerState = playerState;
-    }
-
-    public PlayerState getPlayerState() {
-        return playerState;
-    }
-
-    /*    /**
-     * constructor
-     * it sets points to 0 and assigned the player's token and username. it creates the objectiveCard, starterCard,
-     * playerHand, playerDesk and drawnObjectiveCards and sets them as null
-     *
-     * @param color
-     * @param username
-
-   public Player(TokenColor color, String username) {
-        this.color = color;
-        this.username = username;
-        this.points = 0;
-        this.objectiveCard = null;
-        this.starterCard = null;
-        this.playerHand = new ArrayList<>();
-        this.playerDesk = new PlayerDesk();
-        this.drawnObjectiveCards = new ArrayList<>();
-    }*/
-
-    public void setTokenColor(TokenColor color) {
-        this.color = color;
-    }
-
     /**
      * constructor
-     * it sets points to 0 and assigned the player's token and username. it creates the objectiveCard, starterCard,
-     * playerHand, playerDesk and drawnObjectiveCards and sets them as null
+     * it sets points to 0 and assigned the player's username. it creates the
+     * playerHand, playerDesk and drawnObjectiveCards
      *
      * @param username is the player's username
      */
@@ -78,49 +48,6 @@ public class Player implements Serializable {
         this.playerHand = new ArrayList<>();
         this.playerDesk = new PlayerDesk();
         this.drawnObjectiveCards = new ArrayList<>();
-    }
-
-    /**
-     * put into the playerHand two resourceCard and one goldCard randomly chosen from the decks
-     *
-     * @param resourceDeck the deck of resourceCard
-     * @param goldDeck     the deck of goldCard
-     */
-    public void setPlayerHand(Deck resourceDeck, Deck goldDeck) {
-        for (int i = 0; i < 2; i++) {
-            this.draw(resourceDeck);
-        }
-        this.draw(goldDeck);
-    }
-
-    /**
-     * set starterCard as the parameter passed
-     *
-     * @param starter is the StarterCard that the player has chosen
-     */
-    public void setStarterCard(StarterCard starter) {
-        this.starterCard = starter;
-    }
-
-    /**
-     * set drawnObjectiveCard as the list passed as a parameter
-     *
-     * @param objectiveCards
-     */
-    public void setDrawnObjectiveCards(ArrayList<ObjectiveCard> objectiveCards) {
-        this.drawnObjectiveCards = new ArrayList<>(objectiveCards);
-    }
-
-    /**
-     * sets objectiveCard as the parameter and set drawnObjectiveCards as null
-     *
-     * @param chosenObjectiveCard is the index of the chosenObjectiveCard in the drawnObjectiveCards
-     */
-    public void setObjectiveCard(int chosenObjectiveCard) {
-        ObjectiveCard chosenCard = drawnObjectiveCards.get(chosenObjectiveCard);
-
-        this.objectiveCard = new ObjectiveCard(chosenCard);
-        this.drawnObjectiveCards = null;
     }
 
     /**
@@ -180,6 +107,84 @@ public class Player implements Serializable {
     }
 
     /**
+     * @return the player's state in the game
+     */
+    public PlayerState getPlayerState() {
+        return playerState;
+    }
+
+    /**
+     * sets the playerState as the parameter passed
+     *
+     * @param playerState represents the state of the player in the game
+     */
+    public void setPlayerState(PlayerState playerState) {
+        this.playerState = playerState;
+    }
+
+    /**
+     * Sets color as the parameter passed
+     *
+     * @param color is the TokenColor that the player has chosen
+     */
+    public void setTokenColor(TokenColor color) {
+        this.color = color;
+    }
+
+    /**
+     * put into the playerHand two resourceCard and one goldCard randomly chosen from the decks
+     *
+     * @param resourceDeck the deck of resourceCard
+     * @param goldDeck     the deck of goldCard
+     */
+    public void setPlayerHand(Deck resourceDeck, Deck goldDeck) {
+        for (int i = 0; i < 2; i++) {
+            this.draw(resourceDeck);
+        }
+        this.draw(goldDeck);
+    }
+
+    /**
+     * Sets starterCard as the parameter passed
+     *
+     * @param starter is the StarterCard that the player has chosen
+     */
+    public void setStarterCard(StarterCard starter) {
+        this.starterCard = starter;
+    }
+
+    /**
+     * Sets drawnObjectiveCard as the list passed as a parameter
+     *
+     * @param objectiveCards is the list of ObjectiveCard drawn for the player
+     */
+    public void setDrawnObjectiveCards(ArrayList<ObjectiveCard> objectiveCards) {
+        this.drawnObjectiveCards = new ArrayList<>(objectiveCards);
+    }
+
+    /**
+     * Sets objectiveCard as the card in the position passed and set drawnObjectiveCards as null
+     *
+     * @param chosenObjectiveCard is the index of the chosenObjectiveCard in the drawnObjectiveCards
+     */
+    public void setObjectiveCard(int chosenObjectiveCard) {
+        ObjectiveCard chosenCard = drawnObjectiveCards.get(chosenObjectiveCard);
+
+        this.objectiveCard = new ObjectiveCard(chosenCard);
+        this.drawnObjectiveCards = null;
+    }
+
+
+    /**
+     * adds the pointsToAdd to points
+     *
+     * @param pointsToAdd is the number of points to add
+     */
+    private void setPoints(int pointsToAdd) {
+        points += pointsToAdd;
+    }
+
+    /**
      * draws a card from the chosenDeck and puts it into the playerHand
      *
      * @param chosenDeck is the deck from which the player draws the card
@@ -210,7 +215,7 @@ public class Player implements Serializable {
      * @param card     is the card that the user chose from the playerHands
      * @param faceDown defines if the card is played face down or not
      * @param point    is the position where the user wants to put the card
-     * @throws RequirementsNotMetException when the player puts a gold card and the requirements are not met
+     * @throws RequirementsNotMetException when the player tries to put a gold card and the requirements are not met
      */
     public void playCard(GameCard card, boolean faceDown, Point point)
             throws RequirementsNotMetException, PlaceNotAvailableException {
@@ -223,15 +228,6 @@ public class Player implements Serializable {
         card.setPlayedFaceDown(faceDown);
         int pointsToAdd = playerDesk.addCard(card, point);
         this.setPoints(pointsToAdd);
-    }
-
-    /**
-     * adds the pointsToAdd to points
-     *
-     * @param pointsToAdd is the number of points to add
-     */
-    private void setPoints(int pointsToAdd) {
-        points += pointsToAdd;
     }
 
     /**

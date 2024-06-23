@@ -46,6 +46,10 @@ public class PlayerDesk implements Serializable {
         }
     }
 
+    /**
+     * copy constructor
+     * @param deskToCopy the desk that needs to be copied
+     */
     public PlayerDesk(PlayerDesk deskToCopy) {
         this.desk = new LinkedHashMap<>(deskToCopy.getDesk());
         this.availablePlaces = new HashSet<>(deskToCopy.getAvailablePlaces());
@@ -138,7 +142,6 @@ public class PlayerDesk implements Serializable {
      * @param card  the card that has been put
      * @param point the card's position
      */
-
     private void updateDesk(GameCard card, Point point) {
         Corner[] cardCorners = card.getCorners();
         int addIfFaceDown = card.isPlayedFaceDown() ? 4 : 0;
@@ -198,7 +201,7 @@ public class PlayerDesk implements Serializable {
     /**
      * it calculates the points to give to the player thanks to the placing of the card
      *
-     * @param card the card's to add
+     * @param card the card added
      * @param p    the card's position
      * @return the points that the player gains thanks to that card
      */

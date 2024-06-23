@@ -18,6 +18,7 @@ import java.util.Arrays;
  * players a list of all the players in the game.
  * sharedObjectiveCards an array containing the shared ObjectiveCard that all the player can meet.
  * resourceDeck and GoldDeck represents the decks of the game
+ * currentPlayerIndex the index of the player who is playing.
  * isLastRoundStarted a boolean indicating if the last round has started.
  * playerWhoStoppedTheGame the index the player who achieved 20 points first.
  * starterCards and objectiveCards are lists of all the possible starter and objective cards that are not played or drawn yet.
@@ -74,22 +75,20 @@ public class Game {
         goldDeck = new Deck(usableGoldCard);
         resourceDeck.makeTopCardsVisible();
         goldDeck.makeTopCardsVisible();
-        //inizializzazione objectiveCard che conterrà tutte le carte obiettivo possibili
+        //initializing objectiveCard with all the possible objective cards
         ObjectiveCardLoader objectiveCardLoader = new ObjectiveCardLoader();
         objectiveCards.addAll(objectiveCardLoader.loadObjectiveCards());
-        //inizializzazione delle 2 carte obiettivo condivise
+        //initialize the sharedObjectiveCards with 2 random objective cards
         this.sharedObjectiveCards = new ObjectiveCard[2];
         double nRandom = Math.random() * objectiveCards.size();
         this.sharedObjectiveCards[0] = objectiveCards.remove((int) nRandom);
         nRandom = Math.random() * objectiveCards.size();
         this.sharedObjectiveCards[1] = objectiveCards.remove((int) nRandom);
-        //viene settata la mano iniziale e la starter card del player
+        //initialize the players' hand, starterCard and drawnObjectiveCards
         for (Player player : players) {
             player.setPlayerHand(resourceDeck, goldDeck);
             nRandom = Math.random() * starterCards.size();
             player.setStarterCard(starterCards.remove((int) nRandom));
-            //playerObjCards le 2 carte obiettivo da cui i giocatori sceglieranno quella specifica
-            //questa specifica viene settata chiamando setObjectiveCard dal controller su ogni player
             ArrayList<ObjectiveCard> playerObjCards = new ArrayList<>();
             nRandom = Math.random() * objectiveCards.size();
             playerObjCards.add(objectiveCards.remove((int) nRandom));
@@ -189,6 +188,13 @@ public class Game {
     }
 
     /**
+     * @return player who is playing
+     */
+    public Player getCurrentPlayer() {
+        return players.get(currentPlayerIndex);
+    }
+
+    /**
      * @return chats of the game
      */
     public Chat getChats() {
@@ -198,7 +204,7 @@ public class Game {
 
     /**
      * adds the player playerToAdd to the list of players of the game
-     * it can be called until gameStarted==false
+     * it can be called until the game has not started
      *
      * @param playerToAdd the player to add
      * @return the index of the player in the list of players
@@ -257,15 +263,7 @@ public class Game {
     }
 
     /**
-     * @return player who is playing
-     */
-    public Player getCurrentPlayer() {
-        return players.get(currentPlayerIndex);
-    }
-
-
-    /**
-     * calculates if the players' objectives are met and adds the points of the met objectives  to the players
+     * calculates if the players' objectives are met and adds the points of the met objectives to the players
      * calculates the winner and ends the game
      *
      * @return the winner of the game

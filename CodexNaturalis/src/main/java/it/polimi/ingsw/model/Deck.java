@@ -5,7 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * This class defines the deck, which could be made of gold or resource card. The UsableCard represent the Deck itself while the VisibleCard are the two cards set next to the deck.
+ * This class defines the deck, which could be made of gold or resource card.
+ * The UsableCard represent the Deck itself while the VisibleCard are the two cards set next to the deck.
  */
 public class Deck {
 
