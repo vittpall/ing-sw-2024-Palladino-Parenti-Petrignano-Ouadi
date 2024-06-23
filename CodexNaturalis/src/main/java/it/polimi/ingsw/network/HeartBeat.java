@@ -8,6 +8,10 @@ import java.rmi.RemoteException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+/**
+ * The HeartBeat class is responsible for maintaining the connection between the server and the client.
+ * It periodically sends a "ping" to the client to check if the connection is still active.
+ */
 public class HeartBeat {
     private ScheduledExecutorService executorService;
     private final RMIServer rmiServer;
@@ -15,15 +19,23 @@ public class HeartBeat {
     private String rmiClientUsername;
     private Integer gameId;
 
+    /**
+     * Constructor for the HeartBeat class.
+     * @param rmiClient The client to which the heartbeat will be sent.
+     * @param rmiServer The server from which the heartbeat is sent.
+     */
     public HeartBeat(VirtualView rmiClient, RMIServer rmiServer) {
         this.rmiClient = rmiClient;
         this.rmiServer = rmiServer;
         runLogic();
     }
 
+    /**
+     * This method sets up the logic for sending the heartbeat to the client.
+     */
     private void runLogic() {
         this.executorService = Executors.newScheduledThreadPool(1);
-        int timeout = 1000;
+        int timeout = 10000;
         this.executorService.scheduleAtFixedRate(() -> {
             try {
                 rmiClient.ping();
@@ -35,15 +47,26 @@ public class HeartBeat {
         }, 0, timeout, java.util.concurrent.TimeUnit.MILLISECONDS);
     }
 
-
+    /**
+     * This method sets the username of the client.
+     * @param username The username of the client.
+     */
     public void setUsername(String username) {
         this.rmiClientUsername = username;
     }
 
+    /**
+     * This method sets the game ID.
+     * @param gameId The ID of the game.
+     */
     public void setGameId(Integer gameId) {
         this.gameId = gameId;
     }
 
+    /**
+     * This method handles the disconnection of a client.
+     * It removes the client from the server and shuts down the executor service.
+     */
     private void handleDisconnection() {
         if (rmiClientUsername != null) {
             System.out.println(rmiClientUsername + " is being closed(RMIClient)");
