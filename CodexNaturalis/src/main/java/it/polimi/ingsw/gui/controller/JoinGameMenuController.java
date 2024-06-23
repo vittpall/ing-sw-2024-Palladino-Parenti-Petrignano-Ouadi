@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 public class JoinGameMenuController implements FXMLController {
     public Button createGameButton;
+    public Button exit;
     @FXML
     private ListView<Integer> gamesListView;
     @FXML
@@ -86,7 +87,9 @@ public class JoinGameMenuController implements FXMLController {
         client.setCurrentState(new CreateGameStateGUI(stage, client));
         client.getClientCurrentState().display();
     }
-
+    public void handleExit() throws RemoteException {
+        client.close();
+    }
     public void handleBack() throws RemoteException {
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
         client.getClientCurrentState().display();

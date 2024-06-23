@@ -210,7 +210,6 @@ public class RMIClient extends BaseClient {
 
 
     public void returnToLobby() throws IOException {
-        removeUsername();
         if (getIdGame() != null)
             this.closeGame();
         setIdGameNull();
@@ -224,6 +223,7 @@ public class RMIClient extends BaseClient {
 
     @Override
     public void closeGame() throws IOException {
+        removeUsername();
         server.closeGame(getIdGame(), username);
     }
 

@@ -4,6 +4,7 @@ import it.polimi.ingsw.gui.LobbyMenuStateGUI;
 import it.polimi.ingsw.gui.WaitingForPlayersGUI;
 import it.polimi.ingsw.network.BaseClient;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 
 public class CreateGameMenuController implements FXMLController {
+    public Button exit;
     private Stage stage;
     @FXML
     private ChoiceBox<Integer> playerChoiceBox;
@@ -39,7 +41,9 @@ public class CreateGameMenuController implements FXMLController {
         }
     }
 
-
+    public void handleExit() throws RemoteException {
+        client.close();
+    }
     public void handleBack() throws RemoteException {
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
         client.getClientCurrentState().display();

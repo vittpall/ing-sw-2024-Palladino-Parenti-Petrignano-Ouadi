@@ -2,8 +2,10 @@ package it.polimi.ingsw.gui.controller;
 
 import it.polimi.ingsw.gui.CardView;
 import it.polimi.ingsw.gui.InitializeStarterCardStateGUI;
+import it.polimi.ingsw.gui.LobbyMenuStateGUI;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 public class ObjectiveCardSelectionController implements FXMLController {
     public VBox card1Container;
     public VBox card2Container;
+    public Button exit;
     private Stage stage;
     public Label messageLabel;
 
@@ -63,6 +66,17 @@ public class ObjectiveCardSelectionController implements FXMLController {
         } catch (IOException | InterruptedException ex) {
             messageLabel.setText("Error selecting card: " + ex.getMessage());
         }
+    }
+    public void handleExit() throws RemoteException {
+        try {
+            client.returnToLobby();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        client.setCurrentState(new LobbyMenuStateGUI(stage, client));
+        client.getClientCurrentState().display();
     }
 
     public void setClient(BaseClient client) {

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.gui.controller;
 
+import it.polimi.ingsw.gui.LobbyMenuStateGUI;
 import it.polimi.ingsw.gui.ObjectiveCardSelectionStateGUI;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.network.BaseClient;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -20,8 +22,9 @@ public class ColorSelectionController implements FXMLController {
     public HBox colorContainer;
     public Label messageLabel;
     public Button selectColorButton;
-    private Stage stage;
 
+    public Button exit;
+    private Stage stage;
     private BaseClient client;
     private TokenColor selectedColor;
 
@@ -63,6 +66,17 @@ public class ColorSelectionController implements FXMLController {
         } else {
             messageLabel.setText("Color not available, please select another color.");
         }
+    }
+    public void handleExit() throws RemoteException {
+        try {
+            client.returnToLobby();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        client.setCurrentState(new LobbyMenuStateGUI(stage, client));
+        client.getClientCurrentState().display();
     }
 
     public void handleException(Exception e) {

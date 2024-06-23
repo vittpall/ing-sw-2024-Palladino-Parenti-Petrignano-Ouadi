@@ -2,6 +2,7 @@ package it.polimi.ingsw.gui.controller;
 
 import it.polimi.ingsw.gui.CardView;
 import it.polimi.ingsw.gui.GameStateGUI;
+import it.polimi.ingsw.gui.LobbyMenuStateGUI;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
@@ -16,6 +17,8 @@ import java.rmi.RemoteException;
 public class InitializeStarterCardController implements FXMLController {
     public Button playFrontButton;
     public Button playBackButton;
+
+    public Button exit;
     public VBox frontCardContainer;
     public VBox backCardContainer;
     private BaseClient client;
@@ -42,6 +45,17 @@ public class InitializeStarterCardController implements FXMLController {
 
     public void handlePlayBack() throws RemoteException {
         playStarterCard(true);
+    }
+    public void handleExit() throws RemoteException {
+        try {
+            client.returnToLobby();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        client.setCurrentState(new LobbyMenuStateGUI(stage, client));
+        client.getClientCurrentState().display();
     }
 
     private void playStarterCard(boolean faceDown) throws RemoteException {

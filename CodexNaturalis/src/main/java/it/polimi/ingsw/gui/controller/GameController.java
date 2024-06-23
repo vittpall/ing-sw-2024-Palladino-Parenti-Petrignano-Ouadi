@@ -33,6 +33,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.*;
 
@@ -59,6 +60,7 @@ public class GameController implements FXMLController {
     public Label quillLabel;
     public Label inkwellLabel;
     public Button centerButton;
+    public Button exitButton;
     private BaseClient client;
     private Stage stage;
     private boolean playCardFaceDown = false;
@@ -99,6 +101,17 @@ public class GameController implements FXMLController {
     private void centerGameDesk() {
         gameDeskScrollPane.setHvalue(0.5);
         gameDeskScrollPane.setVvalue(0.5);
+    }
+    public void handleExit() throws RemoteException {
+        try {
+            client.returnToLobby();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        client.setCurrentState(new LobbyMenuStateGUI(stage, client));
+        client.getClientCurrentState().display();
     }
 
     private void setupZoomControls() {

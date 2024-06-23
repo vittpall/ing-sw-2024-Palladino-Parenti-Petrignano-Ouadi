@@ -14,7 +14,7 @@
         <Insets bottom="10" left="10" right="10" top="10" />
     </padding>
     <ImageView fitHeight="201.0" fitWidth="1012.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../Images/CN_decoration10.png"/>
+        <Image url="@../Images/CN_decoration10.png" />
     </ImageView>
     <Label styleClass="title-label" text="CHOOSE A COLOR">
     </Label>
@@ -28,8 +28,8 @@
     <Button fx:id="selectColorButton" onAction="#handleSelectColor" style="-fx-background-color: #a2ecbb;" styleClass="little-label" text="Select Color">
     </Button>
     <ImageView fitHeight="201.0" fitWidth="1012.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
-        <Image url="@../Images/CN_decoration10.png"/>
+        <Image url="@../Images/CN_decoration10.png" />
     </ImageView>
-   <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="78.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT">
+   <Button fx:id="exit" mnemonicParsing="false" onAction="#handleExit" prefHeight="27.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT and return to LOBBY">
    </Button>
 </VBox>

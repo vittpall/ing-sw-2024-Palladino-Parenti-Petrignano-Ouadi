@@ -17,7 +17,7 @@
 <AnchorPane prefHeight="870.0" prefWidth="928.0" styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.controller.CreateGameMenuController">
     <StackPane styleClass="scene-dimensions,scene-background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <ImageView fitHeight="794.0" fitWidth="796.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../Images/CN_decoration6.png"/>
+            <Image url="@../Images/CN_decoration6.png" />
         </ImageView>
         <VBox alignment="CENTER" spacing="10">
             <Label text="Create A New Game" textAlignment="JUSTIFY">
@@ -45,22 +45,19 @@
 
     </StackPane>
     <Button onAction="#handleBack" styleClass="primary-button" text="Back" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="10.0" />
-    <ImageView fitHeight="200.0" fitWidth="252.0" layoutX="59.0" layoutY="50.0" preserveRatio="true" rotate="180.0"
-               AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <Image url="@../Images/CN_decoration9.png"/>
+    <ImageView fitHeight="200.0" fitWidth="252.0" layoutX="59.0" layoutY="50.0" preserveRatio="true" rotate="180.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Image url="@../Images/CN_decoration9.png" />
     </ImageView>
-    <ImageView fitHeight="200.0" fitWidth="252.0" layoutX="69.0" layoutY="60.0" preserveRatio="true"
-               AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
-        <Image url="@../Images/CN_decoration9.png"/>
+    <ImageView fitHeight="200.0" fitWidth="252.0" layoutX="69.0" layoutY="60.0" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <Image url="@../Images/CN_decoration9.png" />
     </ImageView>
-    <ImageView fitHeight="200.0" fitWidth="252.0" layoutX="79.0" layoutY="70.0" preserveRatio="true" rotate="180.0"
-               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <ImageView fitHeight="200.0" fitWidth="252.0" layoutX="79.0" layoutY="70.0" preserveRatio="true" rotate="180.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <rotationAxis>
-            <Point3D x="90.0" z="1.0"/>
+            <Point3D x="90.0" z="1.0" />
         </rotationAxis>
-        <Image url="@../Images/CN_decoration9.png"/>
+        <Image url="@../Images/CN_decoration9.png" />
     </ImageView>
-   <Button layoutX="668.0" layoutY="745.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="11.0">
+   <Button fx:id="exit" layoutX="668.0" layoutY="745.0" mnemonicParsing="false" onAction="#handleExit" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="11.0">
    </Button>
 
 </AnchorPane>

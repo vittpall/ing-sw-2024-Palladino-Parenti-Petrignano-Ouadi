@@ -1,6 +1,7 @@
 package it.polimi.ingsw.gui.controller;
 
 import it.polimi.ingsw.gui.ColorSelectionGUI;
+import it.polimi.ingsw.gui.LobbyMenuStateGUI;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.BaseClient;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 
 public class WaitingForPlayersController implements FXMLController {
     public Button StartGameButton;
+    public Button exit;
     private BaseClient client;
     private Stage stage;
     @FXML
@@ -86,6 +88,17 @@ public class WaitingForPlayersController implements FXMLController {
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    public void handleExit() throws RemoteException {
+        try {
+            client.returnToLobby();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        client.setCurrentState(new LobbyMenuStateGUI(stage, client));
+        client.getClientCurrentState().display();
     }
 
     public void handleServerNotification(ArrayList<Player> players, int nOfMissingPlayers) {

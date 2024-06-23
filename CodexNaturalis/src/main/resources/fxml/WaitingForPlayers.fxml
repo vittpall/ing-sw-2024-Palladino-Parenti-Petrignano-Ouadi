@@ -10,10 +10,9 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.controller.WaitingForPlayersController">
-    <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-               AnchorPane.topAnchor="0.0">
+    <StackPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <ImageView fitHeight="800.0" fitWidth="800.0" opacity="0.7" styleClass="scene-dimensions">
-            <Image url="@../Images/CN_copertina.jpg"/>
+            <Image url="@../Images/CN_copertina.jpg" />
         </ImageView>
     </StackPane>
     <StackPane styleClass="scene-dimensions" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -38,6 +37,6 @@
 
         </VBox>
     </StackPane>
-   <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="78.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
+   <Button fx:id="exit" mnemonicParsing="false" onAction="#handleExit" prefHeight="27.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT and return to LOBBY" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
    </Button>
 </AnchorPane>

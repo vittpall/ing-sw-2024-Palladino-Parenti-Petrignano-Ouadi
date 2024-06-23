@@ -41,7 +41,7 @@
           <!-- Bottom-Right Corner -->
     <ImageView scaleX="-1" styleClass="corner-image" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
     </ImageView>
-   <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="128.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="40.0">
+   <Button fx:id="exit" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleExit" prefHeight="33.0" prefWidth="128.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="40.0">
    </Button>
    <BorderPane fx:id="popup" layoutX="600.0" layoutY="271.0" prefHeight="229.0" prefWidth="200.0" styleClass="popup">
       <top>

@@ -2,19 +2,24 @@ package it.polimi.ingsw.gui.controller;
 
 import it.polimi.ingsw.gui.CreateGameStateGUI;
 import it.polimi.ingsw.gui.JoinGameMenuStateGUI;
+import it.polimi.ingsw.gui.LobbyMenuStateGUI;
 import it.polimi.ingsw.network.BaseClient;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 
 public class LobbyMenuController implements FXMLController {
 
     public BorderPane popup;
     public Label popupLabel;
+
+    public Button exit;
     private BaseClient client;
     private Stage stage;
 
@@ -40,6 +45,11 @@ public class LobbyMenuController implements FXMLController {
     private void handleJoinGame() throws RemoteException {
         client.setCurrentState(new JoinGameMenuStateGUI(stage, client));
         client.getClientCurrentState().display();
+    }
+
+
+    public void handleExit() throws RemoteException {
+        client.close();
     }
 
     private void showAlert(String content) {
