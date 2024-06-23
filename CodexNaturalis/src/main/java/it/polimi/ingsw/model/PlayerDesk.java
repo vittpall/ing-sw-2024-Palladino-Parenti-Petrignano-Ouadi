@@ -1,17 +1,14 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.CornerObject;
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 
 import java.awt.*;
 import java.io.Serializable;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 /**
  * this class represents the player's desk.
@@ -35,7 +32,7 @@ public class PlayerDesk implements Serializable {
      */
     public PlayerDesk() {
         Point k = new Point(0, 0);
-        desk = new HashMap<>();
+        desk = new LinkedHashMap<>();
         forbiddenPlaces = new HashSet<>();
         availablePlaces = new HashSet<>();
         availablePlaces.add(k);
@@ -49,13 +46,14 @@ public class PlayerDesk implements Serializable {
         }
     }
 
-    public PlayerDesk(PlayerDesk deskToCopy){
-        this.desk = new HashMap<>(deskToCopy.getDesk());
+    public PlayerDesk(PlayerDesk deskToCopy) {
+        this.desk = new LinkedHashMap<>(deskToCopy.getDesk());
         this.availablePlaces = new HashSet<>(deskToCopy.getAvailablePlaces());
         this.forbiddenPlaces = new HashSet<>(deskToCopy.getForbiddenPlaces());
         this.totalResources = new EnumMap<>(deskToCopy.getTotalResources());
         this.totalObjects = new EnumMap<>(deskToCopy.getTotalObjects());
     }
+
     /**
      * @return totalResources
      */
@@ -74,7 +72,7 @@ public class PlayerDesk implements Serializable {
      * @return desk
      */
     public HashMap<Point, GameCard> getDesk() {
-        return new HashMap<>(desk);
+        return new LinkedHashMap<>(desk);
     }
 
     /**
@@ -119,14 +117,14 @@ public class PlayerDesk implements Serializable {
      * @param point The point on the desk where the card is to be added.
      * @return the points that the player gains after the move
      */
-    public int addCard(GameCard card, Point point) throws PlaceNotAvailableException{
-        int pointsToAdd = 0;
+    public int addCard(GameCard card, Point point) throws PlaceNotAvailableException {
+        int pointsToAdd;
         if (availablePlaces.remove(point)) {
             desk.put(point, card);
             this.updateDesk(card, point);
             pointsToAdd = card.isPlayedFaceDown() ? 0 : this.getPointsToAdd(card, point);
-        }else
-            throw new PlaceNotAvailableException("Place"+point+" not available");
+        } else
+            throw new PlaceNotAvailableException("Place" + point + " not available");
         return pointsToAdd;
     }
 
@@ -184,11 +182,11 @@ public class PlayerDesk implements Serializable {
                 }
             }
         }
-        if (card.isPlayedFaceDown()&& !(card instanceof StarterCard)) {
+        if (card.isPlayedFaceDown() && !(card instanceof StarterCard)) {
             int res = totalResources.get(card.getBackSideResource());
             res++;
             totalResources.put(card.getBackSideResource(), res);
-        } else if (card instanceof StarterCard &&!card.isPlayedFaceDown() && card.getFrontSideResources()!=null){
+        } else if (card instanceof StarterCard && !card.isPlayedFaceDown() && card.getFrontSideResources() != null) {
             for (Resource resource : card.getFrontSideResources()) {
                 int res = totalResources.get(resource);
                 res++;
@@ -207,7 +205,7 @@ public class PlayerDesk implements Serializable {
     private int getPointsToAdd(GameCard card, Point p) {
         if (card.getPointType().equals(PointType.GENERAL))
             return card.getPoints();
-        if (card.getPointType().equals(PointType.INKWELL)){
+        if (card.getPointType().equals(PointType.INKWELL)) {
             return card.getPoints() * totalObjects.get(CornerObject.INKWELL);
         }
         if (card.getPointType().equals(PointType.MANUSCRIPT))
