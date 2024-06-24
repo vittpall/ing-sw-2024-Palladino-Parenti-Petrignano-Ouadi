@@ -6,11 +6,20 @@ import java.io.IOException;
 import java.rmi.Remote;
 import java.util.Scanner;
 
+/**
+ * This client state is used when the user enters the game and needs to choose the username
+ */
 public class MainMenuState implements ClientStateTUI, Remote {
 
-    BaseClient client;
+    private final BaseClient client;
     private final Scanner scanner;
 
+    /**
+     * Constructor
+     *
+     * @param client  is a reference to the client class that can call the methods in the server
+     * @param scanner is a reference to the class that handles and returns the input of the user
+     */
     public MainMenuState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
@@ -54,7 +63,12 @@ public class MainMenuState implements ClientStateTUI, Remote {
             System.out.print("Invalid input");
     }
 
-
+    /**
+     * Get the input and check if it is a valid username. If so, it saves it
+     *
+     * @throws IOException          when an I/O operation fails
+     * @throws InterruptedException when the thread running is interrupted
+     */
     private void requestUsername() throws IOException, InterruptedException {
         String username;
         do {
@@ -71,6 +85,7 @@ public class MainMenuState implements ClientStateTUI, Remote {
         }
     }
 
+    @Override
     public String toString() {
         return "MainMenuState";
     }

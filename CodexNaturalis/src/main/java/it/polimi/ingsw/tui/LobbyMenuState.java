@@ -9,7 +9,7 @@ import java.util.Scanner;
  */
 public class LobbyMenuState implements ClientStateTUI {
 
-    BaseClient client;
+    private final BaseClient client;
     private final Scanner scanner;
 
     /**

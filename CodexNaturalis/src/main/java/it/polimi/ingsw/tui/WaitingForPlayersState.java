@@ -7,10 +7,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This client state is used when the user has to wait for other player to enter the game in order to start it
+ */
 public class WaitingForPlayersState implements ClientStateTUI {
-    BaseClient client;
+    private final BaseClient client;
     private final Scanner scanner;
 
+    /**
+     * Constructor
+     *
+     * @param client  is a reference to the client class that can call the methods in the server
+     * @param scanner is a reference to the class that handles and returns the input of the user
+     */
     public WaitingForPlayersState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
@@ -25,6 +34,13 @@ public class WaitingForPlayersState implements ClientStateTUI {
         }
     }
 
+    /**
+     * Notification method
+     * It prints the updated list of the Player's that entered the game
+     *
+     * @param players           is the list of the Player inside the game
+     * @param nOfMissingPlayers integer representing the number of missing players
+     */
     public void refresh(ArrayList<Player> players, int nOfMissingPlayers) {
         System.out.println("\n⚔️  _________________________________________________  ⚔️");
         System.out.println("|   Current players:                                  |");
@@ -58,6 +74,7 @@ public class WaitingForPlayersState implements ClientStateTUI {
 
     }
 
+    @Override
     public String toString() {
         return "WaitingForPlayersState";
     }

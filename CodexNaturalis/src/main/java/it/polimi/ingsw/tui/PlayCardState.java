@@ -15,10 +15,19 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 
+/**
+ * This client state is used to choose which card to play
+ */
 public class PlayCardState implements ClientStateTUI {
-    BaseClient client;
+    private final BaseClient client;
     private final Scanner scanner;
 
+    /**
+     * Constructor
+     *
+     * @param client  is a reference to the client class that can call the methods in the server
+     * @param scanner is a reference to the class that handles and returns the input of the user
+     */
     public PlayCardState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
@@ -45,7 +54,7 @@ public class PlayCardState implements ClientStateTUI {
     @Override
     public void inputHandler(int input) throws IOException, InterruptedException {
         if (input > 0 && input < 4) {
-            //scelgo se giocare la carta 1,2,3
+            //Choose which card to play, where and how
             Point pointChosen = choosePosition();
             boolean faceDown = chooseIfFaceDown();
             try {
@@ -78,7 +87,12 @@ public class PlayCardState implements ClientStateTUI {
         System.out.println("3. Play card 3");
     }
 
-
+    /**
+     * Private method used to print the provisional rankings
+     *
+     * @throws IOException          when an I/O operation fails
+     * @throws InterruptedException when the thread running is interrupted
+     */
     private void showProvisionalRanking() throws IOException, InterruptedException {
         ArrayList<Player> allPlayers = client.getAllPlayers();
         System.out.println("--------------------------------");
@@ -90,6 +104,13 @@ public class PlayCardState implements ClientStateTUI {
         System.out.println("--------------------------------");
     }
 
+    /**
+     * Private method used to print the shared and secret Objective cards
+     *
+     * @param printer is the instance of the Printer used to print the cards
+     * @throws IOException          when an I/O operation fails
+     * @throws InterruptedException when the thread running is interrupted
+     */
     private void showObjectiveCards(CardPrinter printer) throws IOException, InterruptedException {
         System.out.println("|-------- Objective Cards --------|");
         System.out.println("Common objective cards:");
@@ -100,11 +121,25 @@ public class PlayCardState implements ClientStateTUI {
         printer.printCard(client.getPlayerObjectiveCard(), false);
     }
 
+    /**
+     * Private method used to print the user's desk
+     *
+     * @param printer is the instance of the Printer used to print the cards
+     * @throws IOException          when an I/O operation fails
+     * @throws InterruptedException when the thread running is interrupted
+     */
     private void showPlayerDesk(CardPrinter printer) throws IOException, InterruptedException {
         System.out.println("Your desk:");
         printer.printDesk(client.getPlayerDesk());
     }
 
+    /**
+     * Private method used to print the user's hand
+     *
+     * @param printer is the instance of the Printer used to print the cards
+     * @throws IOException          when an I/O operation fails
+     * @throws InterruptedException when the thread running is interrupted
+     */
     private void showPlayerHand(CardPrinter printer) throws IOException, InterruptedException {
         System.out.println("Choose a card to play:");
         ArrayList<GameCard> playerHand = client.getPlayerHand();
@@ -114,7 +149,11 @@ public class PlayCardState implements ClientStateTUI {
         }
     }
 
-
+    /**
+     * Private method used to check if the card needs to be played faced down or not
+     *
+     * @return true if the card needs to be played faced down, false otherwise
+     */
     private boolean chooseIfFaceDown() {
         System.out.println("Choose how to play the card");
         System.out.println("1. Faced up");
@@ -132,6 +171,11 @@ public class PlayCardState implements ClientStateTUI {
         return chooseIfFaceDown();
     }
 
+    /**
+     * Private method used to choose where to play the card
+     *
+     * @return a Point that represents the position in which the player wants to play the card
+     */
     private Point choosePosition() {
         HashSet<Point> availablePlaces;
         try {
@@ -157,6 +201,12 @@ public class PlayCardState implements ClientStateTUI {
         return null;
     }
 
+    /**
+     * Private method used to check if the prompt sent is valid. If not it requests a valid one
+     *
+     * @param prompt a String that represent the input sent by the user
+     * @return an integer that represents the prompt sent as a parameter (if valid)
+     */
     private int getValidCoordinate(String prompt) {
         int coordinate = -1;
         boolean isValid = false;
@@ -173,6 +223,7 @@ public class PlayCardState implements ClientStateTUI {
         return coordinate;
     }
 
+    @Override
     public String toString() {
         return "PlayCardState";
     }

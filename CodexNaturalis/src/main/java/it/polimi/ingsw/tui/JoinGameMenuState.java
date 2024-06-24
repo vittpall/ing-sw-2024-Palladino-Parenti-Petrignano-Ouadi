@@ -12,9 +12,9 @@ import java.util.Scanner;
  * This client state is used when the user wants to enter an existing game
  */
 public class JoinGameMenuState implements ClientStateTUI {
-    BaseClient client;
-    Scanner scanner;
-    HashMap<Integer, Integer> availableGamesToShow;
+    private final BaseClient client;
+    private final Scanner scanner;
+    private final HashMap<Integer, Integer> availableGamesToShow;
 
     /**
      * Constructor

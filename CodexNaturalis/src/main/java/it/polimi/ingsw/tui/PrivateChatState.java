@@ -9,17 +9,30 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This client state is used when the user wants to chat in a private chat
+ */
 public class PrivateChatState implements ClientStateTUI {
     private final BaseClient client;
     private final Scanner scanner;
     private final String receiver;
 
-    public PrivateChatState(BaseClient client, Scanner scanner, String receiver, ChatState returnState) {
+    /**
+     * Constructor
+     *
+     * @param client   is a reference to the client class that can call the methods in the server
+     * @param scanner  is a reference to the class that handles and returns the input of the user
+     * @param receiver is a reference to the player with which he wants to chat
+     */
+    public PrivateChatState(BaseClient client, Scanner scanner, String receiver) {
         this.client = client;
         this.scanner = scanner;
         this.receiver = receiver;
     }
 
+    /**
+     * @return the receiver of the message
+     */
     public String getReceiver() {
         return receiver;
     }
@@ -53,6 +66,14 @@ public class PrivateChatState implements ClientStateTUI {
     public void inputHandler(int input) throws IOException, InterruptedException {
     }
 
+    /**
+     * Defines how to handle the user's input in a specific way for this class
+     *
+     * @param input The user's input
+     * @throws IOException            when an I/O operation fails
+     * @throws ClassNotFoundException when the class loaded can not be found
+     * @throws InterruptedException   when the thread running is interrupted
+     */
     public void inputHandler(String input) throws IOException, ClassNotFoundException, InterruptedException {
         while (!input.equals("exit chat")) {
             client.sendMessage(receiver, input);
@@ -66,9 +87,9 @@ public class PrivateChatState implements ClientStateTUI {
 
     }
 
+    @Override
     public String toString() {
         return "PrivateChatState";
     }
-
 
 }

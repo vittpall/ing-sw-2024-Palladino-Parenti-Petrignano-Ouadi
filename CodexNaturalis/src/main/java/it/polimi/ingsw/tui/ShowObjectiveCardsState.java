@@ -6,9 +6,17 @@ import it.polimi.ingsw.network.BaseClient;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
+/**
+ * This client state is used to show the secret and shared objective cards
+ */
 public class ShowObjectiveCardsState implements ClientStateTUI {
-    BaseClient client;
+    private final BaseClient client;
 
+    /**
+     * Constructor
+     *
+     * @param client is a reference to the client class that can call the methods in the server
+     */
     public ShowObjectiveCardsState(BaseClient client) {
         this.client = client;
     }
@@ -43,6 +51,7 @@ public class ShowObjectiveCardsState implements ClientStateTUI {
         System.out.println("1. Return to main menu");
     }
 
+    @Override
     public String toString() {
         return "ShowObjectiveCardsState";
     }

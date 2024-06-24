@@ -8,13 +8,23 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This client state is used to choose with which client the user wants to chat
+ */
 public class PrivateChatSelectingReceiverState implements ClientStateTUI {
     private final BaseClient client;
     private final Scanner scanner;
     private int finalOption;
-    ArrayList<Player> availablePlayers;
+    private ArrayList<Player> availablePlayers;
     private final ChatState returnState;
 
+    /**
+     * Constructor
+     *
+     * @param client      is a reference to the client class that can call the methods in the server
+     * @param scanner     is a reference to the class that handles and returns the input of the user
+     * @param returnState is a reference to the class that created the instance
+     */
     public PrivateChatSelectingReceiverState(BaseClient client, Scanner scanner, ChatState returnState) {
         this.client = client;
         this.scanner = scanner;
@@ -49,6 +59,12 @@ public class PrivateChatSelectingReceiverState implements ClientStateTUI {
 
     }
 
+    /**
+     * Private method that removes the current player from the list of available players
+     *
+     * @param availablePlayers list of all the available players
+     * @throws RemoteException when a communication-related problem occurs
+     */
     private void removePlayerFromList(ArrayList<Player> availablePlayers) throws RemoteException {
         for (int i = 0; i < availablePlayers.size(); i++) {
             if (availablePlayers.get(i).getUsername().equals(client.getUsername())) {
@@ -70,7 +86,7 @@ public class PrivateChatSelectingReceiverState implements ClientStateTUI {
                         System.out.println("Invalid input");
                         inputHandler(scanner.nextInt());
                     } else {
-                        client.setCurrentState(new PrivateChatState(client, scanner, availablePlayers.get(input - 1).getUsername(), this.returnState));
+                        client.setCurrentState(new PrivateChatState(client, scanner, availablePlayers.get(input - 1).getUsername()));
                     }
                 } else {
                     System.out.println("Invalid input");
@@ -89,9 +105,9 @@ public class PrivateChatSelectingReceiverState implements ClientStateTUI {
         System.out.println(this.finalOption + 1 + ")Exit chat");
     }
 
+    @Override
     public String toString() {
         return "PrivateChatSelectingReceiverState";
     }
-
 
 }

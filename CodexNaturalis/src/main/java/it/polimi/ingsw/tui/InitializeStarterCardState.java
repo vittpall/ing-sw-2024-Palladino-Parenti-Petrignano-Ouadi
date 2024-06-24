@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * This client state is used when the users need to initialize the starter card
  */
 public class InitializeStarterCardState implements ClientStateTUI {
-    BaseClient client;
+    private final BaseClient client;
 
     /**
      * Constructor

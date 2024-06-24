@@ -8,9 +8,17 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This client state is used to show the points of every player in the game
+ */
 public class ShowPointsState implements ClientStateTUI {
-    BaseClient client;
+    private final BaseClient client;
 
+    /**
+     * Constructor
+     *
+     * @param client is a reference to the client class that can call the methods in the server
+     */
     public ShowPointsState(BaseClient client) {
         this.client = client;
     }
@@ -47,11 +55,17 @@ public class ShowPointsState implements ClientStateTUI {
         System.out.println("1. Return to main menu");
     }
 
+    @Override
     public String toString() {
         return "ShowPointsState";
     }
 
-
+    /**
+     * Notification method
+     * It prints the updated ranking
+     *
+     * @param playersPoints a map that associates every Player to his points
+     */
     public void refresh(HashMap<String, Integer> playersPoints) {
         System.out.println("|---- Provisional Ranking:----|");
         for (String username : playersPoints.keySet()) {

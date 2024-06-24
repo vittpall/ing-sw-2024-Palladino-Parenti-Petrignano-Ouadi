@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * This client state is used when the users need to initialize its secret objective card
  */
 public class InitializeObjectiveCardState implements ClientStateTUI {
-    BaseClient client;
+    private final BaseClient client;
 
     /**
      * Constructor
@@ -48,7 +48,7 @@ public class InitializeObjectiveCardState implements ClientStateTUI {
     }
 
     @Override
-    public void inputHandler(int input) throws RemoteException {
+    public void inputHandler(int input) throws IOException, InterruptedException {
 
         switch (input) {
             case 1:

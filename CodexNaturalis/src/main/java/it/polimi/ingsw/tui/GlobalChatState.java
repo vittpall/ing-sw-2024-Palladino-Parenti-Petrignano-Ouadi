@@ -12,7 +12,6 @@ import java.util.Scanner;
  * This client state is used when the user wants to chat in the global chat
  */
 public class GlobalChatState implements ClientStateTUI {
-
     private final BaseClient client;
     private final Scanner scanner;
     private final ChatState returnState;
