@@ -12,7 +12,6 @@ import it.polimi.ingsw.network.socket.serverToClientMsg.ServerToClientMsg;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.rmi.RemoteException;
 
 public class ClientHandler implements GameListener {
     final SocketServer server;
@@ -81,10 +80,7 @@ public class ClientHandler implements GameListener {
 
     }
 
-    /**
-     * @param notification the notification to send to the client
-     * @throws RemoteException if the client is not reachable
-     */
+
     @Override
     public void update(ServerNotification notification) throws IOException {
         //i need to remove the gameId to avoid the server the close a game that is already closed

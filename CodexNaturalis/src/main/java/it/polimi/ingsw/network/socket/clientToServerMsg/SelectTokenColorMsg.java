@@ -34,9 +34,7 @@ public class SelectTokenColorMsg extends ClientToServerMsg {
     }
 
 
-    /**
-     * @return the id of the game
-     */
+
     @Override
     public int getIdGame() {
         return idGame;

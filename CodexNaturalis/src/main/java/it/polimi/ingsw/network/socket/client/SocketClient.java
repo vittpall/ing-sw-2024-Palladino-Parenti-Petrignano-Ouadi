@@ -84,7 +84,7 @@ public class SocketClient extends BaseClient {
 
     @Override
     @SuppressWarnings("unchecked")
-    public ArrayList<Integer> getNotStartedGames() throws IOException, InterruptedException {
+    public ArrayList<Integer> getNotStartedGames() throws InterruptedException {
         GetNotStartedGamesMsg request = new GetNotStartedGamesMsg();
         ServerToClientMsg response = sendRequest(request);
         return (ArrayList<Integer>) response.getResponse().getResponseReturnable();
@@ -97,7 +97,7 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
-    public void createGame(String username, int nPlayers) throws IOException, InterruptedException {
+    public void createGame(String username, int nPlayers) throws InterruptedException {
         CreateGameMsg request = new CreateGameMsg(username, nPlayers);
         ServerToClientMsg response = sendRequest(request);
         idClientIntoGame = 0;
@@ -115,7 +115,7 @@ public class SocketClient extends BaseClient {
 
     @Override
     @SuppressWarnings("unchecked")
-    public ArrayList<ObjectiveCard> getPlayerObjectiveCards() throws IOException, InterruptedException {
+    public ArrayList<ObjectiveCard> getPlayerObjectiveCards() throws InterruptedException {
         GetPlayerObjectiveCardsMsg request = new GetPlayerObjectiveCardsMsg(getIdGame(), idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
         return (ArrayList<ObjectiveCard>) response.getResponse().getResponseReturnable();
@@ -165,8 +165,7 @@ public class SocketClient extends BaseClient {
 
     @Override
     public void returnToLobby() throws InterruptedException {
-        if(getIdGame() != null)
-        {
+        if (getIdGame() != null) {
             ClosedConnectionMsg request = new ClosedConnectionMsg(getUsername(), getIdGame());
             sendRequest(request);
         }
@@ -174,7 +173,7 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
-    public GameCard getLastFromUsableCards(int deck) throws IOException, InterruptedException {
+    public GameCard getLastFromUsableCards(int deck) throws InterruptedException {
         GetLastFromUsableCards request = new GetLastFromUsableCards(getIdGame(), deck);
         ServerToClientMsg response = sendRequest(request);
         return (GameCard) response.getResponse().getResponseReturnable();
@@ -182,7 +181,7 @@ public class SocketClient extends BaseClient {
 
 
     @Override
-    public String getWinner() throws IOException, InterruptedException {
+    public String getWinner() throws InterruptedException {
         GetWinnerMsg request = new GetWinnerMsg(getIdGame());
         ServerToClientMsg response = sendRequest(request);
         return (String) response.getResponse().getResponseReturnable();
@@ -195,12 +194,6 @@ public class SocketClient extends BaseClient {
     }
 
 
-    /**
-     * @param idGame the id of the game
-     * @return the number of players in the game
-     * @throws IOException          if an I/O error occurs
-     * @throws InterruptedException if the thread is interrupted
-     */
     @Override
     public int getnPlayer(int idGame) throws IOException, InterruptedException {
         GetNPlayer request = new GetNPlayer(idGame);
@@ -208,12 +201,7 @@ public class SocketClient extends BaseClient {
         return (int) response.getResponse().getResponseReturnable();
     }
 
-    /**
-     * @param idGame the id of the game
-     * @return the players in the game
-     * @throws IOException          if an I/O error occurs
-     * @throws InterruptedException if the thread is interrupted
-     */
+
     @Override
     @SuppressWarnings("unchecked")
     public ArrayList<Player> getPlayers(int idGame) throws IOException, InterruptedException {
@@ -229,7 +217,7 @@ public class SocketClient extends BaseClient {
 
 
     @Override
-    public String getUsernamePlayerThatStoppedTheGame() throws IOException, InterruptedException {
+    public String getUsernamePlayerThatStoppedTheGame() throws InterruptedException {
         GetUsernamePlayerThatStoppedTheGameMsg request = new GetUsernamePlayerThatStoppedTheGameMsg(getIdGame());
         ServerToClientMsg response = sendRequest(request);
         return (String) response.getResponse().getResponseReturnable();
@@ -262,7 +250,7 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
-    public ObjectiveCard getPlayerObjectiveCard() throws IOException, InterruptedException {
+    public ObjectiveCard getPlayerObjectiveCard() throws InterruptedException {
         GetObjectiveCardMsg request = new GetObjectiveCardMsg(getIdGame(), idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
         return (ObjectiveCard) response.getResponse().getResponseReturnable();
@@ -320,7 +308,7 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
-    public boolean isGameStarted() throws IOException, InterruptedException {
+    public boolean isGameStarted() throws InterruptedException {
         GetCurrentGameStateMsg request = new GetCurrentGameStateMsg(getIdGame());
         ServerToClientMsg response = sendRequest(request);
         return !(response.getResponse().getResponseReturnable().equals(GameState.WAITING_FOR_PLAYERS.toString()));
@@ -364,7 +352,7 @@ public class SocketClient extends BaseClient {
         }
     }
 
-    public String getServerCurrentState() throws IOException, InterruptedException {
+    public String getServerCurrentState() throws InterruptedException {
         GetCurrentStateMsg request = new GetCurrentStateMsg(getIdGame(), idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
         return (String) response.getResponse().getResponseReturnable();
@@ -378,14 +366,14 @@ public class SocketClient extends BaseClient {
     }
 
 
-    public boolean checkState(RequestedActions requestedActions) throws IOException, InterruptedException {
+    public boolean checkState(RequestedActions requestedActions) throws InterruptedException {
         CheckStateMsg request = new CheckStateMsg(getIdGame(), idClientIntoGame, requestedActions);
         ServerToClientMsg response = sendRequest(request);
         return (boolean) response.getResponse().getResponseReturnable();
     }
 
 
-    public boolean checkUsername(String username) throws IOException, InterruptedException {
+    public boolean checkUsername(String username) throws InterruptedException {
         CheckUsernameMsg request = new CheckUsernameMsg(username);
         ServerToClientMsg response = sendRequest(request);
         return (boolean) response.getResponse().getResponseReturnable();

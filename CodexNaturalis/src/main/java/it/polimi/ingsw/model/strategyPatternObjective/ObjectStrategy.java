@@ -55,11 +55,7 @@ public class ObjectStrategy implements ObjectiveStrategy {
     }
 
 
-    /**
-     * This method prints the object pattern objective.
-     *
-     * @param context the print context
-     */
+
     @Override
     public void print(PrintContext context) {
         CardPrinter.Color backgroundColor = CardPrinter.Color.GREY;

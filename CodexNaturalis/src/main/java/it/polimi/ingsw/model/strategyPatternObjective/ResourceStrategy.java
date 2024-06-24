@@ -31,11 +31,7 @@ public class ResourceStrategy implements ObjectiveStrategy {
 
     }
 
-    /**
-     * This method prints the objective card.
-     *
-     * @param context represents the context of the print
-     */
+
     @Override
     public void print(PrintContext context) {
         int cardWidth = context.getCardWidth();

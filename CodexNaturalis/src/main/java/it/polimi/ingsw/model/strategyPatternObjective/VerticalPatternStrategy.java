@@ -79,11 +79,7 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
         this.whichCorner = whichCorner;
     }
 
-    /**
-     * This method prints the vertical pattern objective.
-     *
-     * @param context the print context
-     */
+
     @Override
     public void print(PrintContext context) {
         int cardWidth = context.getCardWidth();

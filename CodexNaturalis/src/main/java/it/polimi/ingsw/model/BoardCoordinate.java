@@ -9,10 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record BoardCoordinate(@JsonProperty("x") String x, @JsonProperty("y") String y,
                               @JsonProperty("score") int score) {
 
-    /**
-     * @param obj the reference object with which to compare.
-     * @return true if this object is the same as the obj argument; false otherwise.
-     */
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

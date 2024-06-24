@@ -44,9 +44,7 @@ public class PlayCardMsg extends ClientToServerMsg {
     }
 
 
-    /**
-     * @return the id of the game
-     */
+
     @Override
     public int getIdGame() {
         return idGame;

@@ -24,17 +24,13 @@ public record DiagonalPatternStrategy(Resource primarySource, Point diagonalOffs
     public DiagonalPatternStrategy {
     }
 
-    /**
-     * @return the primary resource for the diagonal pattern
-     */
+
     @Override
     public Resource primarySource() {
         return primarySource;
     }
 
-    /**
-     * @return the offset for the diagonal pattern
-     */
+
     @Override
     public Point diagonalOffset() {
         return diagonalOffset;
@@ -63,11 +59,7 @@ public record DiagonalPatternStrategy(Resource primarySource, Point diagonalOffs
         return numberOfTimesVerifiedObjective;
     }
 
-    /**
-     * This method prints the diagonal pattern objective.
-     *
-     * @param context the print context
-     */
+
     @Override
     public void print(PrintContext context) {
         Point offset = diagonalOffset();
