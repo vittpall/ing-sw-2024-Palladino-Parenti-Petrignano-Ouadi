@@ -1,24 +1,32 @@
 package it.polimi.ingsw.tui;
 
-import it.polimi.ingsw.core.ClientState;
 import it.polimi.ingsw.network.BaseClient;
 
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
+/**
+ * This client state is used when the user wants to chat in TUI mode
+ * It makes the user decide if he wants to chat with a single player or the whole group
+ */
 public class ChatState implements ClientStateTUI {
     private final BaseClient client;
     private final Scanner scanner;
-    private ClientState returnState;
+
+    /**
+     * Constructor
+     *
+     * @param client  is a reference to the client class that can call the methods in the server
+     * @param scanner is a reference to the class that handles and returns the input of the user
+     */
+    public ChatState(BaseClient client, Scanner scanner) {
+        this.client = client;
+        this.scanner = scanner;
+    }
 
     @Override
     public void display() {
         System.out.println("Chat-------------------");
-    }
-
-    public ChatState(BaseClient client, Scanner scanner) {
-        this.client = client;
-        this.scanner = scanner;
     }
 
     @Override

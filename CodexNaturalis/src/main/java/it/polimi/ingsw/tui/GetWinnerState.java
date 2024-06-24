@@ -10,6 +10,12 @@ public class GetWinnerState implements ClientStateTUI {
     BaseClient client;
     private final Scanner scanner;
 
+    /**
+     * Constructor
+     *
+     * @param client  is a reference to the client class that can call the methods in the server
+     * @param scanner is a reference to the class that handles and returns the input of the user
+     */
     public GetWinnerState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
@@ -48,10 +54,9 @@ public class GetWinnerState implements ClientStateTUI {
         System.out.println("2. Exit");
 
     }
-
+    @Override
     public String toString() {
         return "GetWinnerState";
     }
-
 
 }

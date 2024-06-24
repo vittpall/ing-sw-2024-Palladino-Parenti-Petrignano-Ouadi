@@ -8,17 +8,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This client state is used when the player wants to see his or the other players' desks
+ */
 public class GetOtherPlayerDesk implements ClientStateTUI {
     private final BaseClient client;
     private final Scanner scanner;
 
-    @Override
-    public void promptForInput() {
-    }
-
+    /**
+     * Constructor
+     *
+     * @param client  is a reference to the client class that can call the methods in the server
+     * @param scanner is a reference to the class that handles and returns the input of the user
+     */
     public GetOtherPlayerDesk(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
+    }
+
+    @Override
+    public void promptForInput() {
     }
 
     @Override
@@ -49,6 +58,12 @@ public class GetOtherPlayerDesk implements ClientStateTUI {
         }
     }
 
+    /**
+     * Get the player that corresponds to the input sent
+     *
+     * @param input integer that corresponds to the player chosen
+     * @return the Player chosen
+     */
     private Player getPlayerFromInput(int input) {
         try {
             if (input < client.getAllPlayers().size()) {
@@ -61,6 +76,7 @@ public class GetOtherPlayerDesk implements ClientStateTUI {
         return null;
     }
 
+    @Override
     public String toString() {
         return "GetOtherPlayerDesk";
     }

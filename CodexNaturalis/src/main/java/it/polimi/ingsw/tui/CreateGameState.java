@@ -6,12 +6,21 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
+/**
+ * This client state is used when the user wants to create a new game.
+ * In this state the user can choose the number of players of the new game
+ */
 public class CreateGameState implements ClientStateTUI {
 
     private final BaseClient client;
     private final Scanner scanner;
 
-
+    /**
+     * Constructor
+     *
+     * @param client  is a reference to the client class that can call the methods in the server
+     * @param scanner is a reference to the class that handles and returns the input of the user
+     */
     public CreateGameState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
@@ -40,7 +49,12 @@ public class CreateGameState implements ClientStateTUI {
         }
     }
 
-    private void createGame() throws RemoteException, InterruptedException {
+    /**
+     * Private method used to send a notification to create a game with the number of players chosen by the client
+     *
+     * @throws RemoteException when a communication-related problem occurs
+     */
+    private void createGame() throws RemoteException {
         System.out.println("Enter the number of players (2-4):");
 
         int nPlayers = 0;
@@ -76,6 +90,7 @@ public class CreateGameState implements ClientStateTUI {
         }
     }
 
+    @Override
     public String toString() {
         return "CreateGameState";
     }

@@ -7,9 +7,17 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+/**
+ * This client state is used when the users need to initialize its secret objective card
+ */
 public class InitializeObjectiveCardState implements ClientStateTUI {
     BaseClient client;
 
+    /**
+     * Constructor
+     *
+     * @param client is a reference to the client class that can call the methods in the server
+     */
     public InitializeObjectiveCardState(BaseClient client) {
         this.client = client;
     }
@@ -55,7 +63,7 @@ public class InitializeObjectiveCardState implements ClientStateTUI {
                 try {
                     client.setObjectiveCard(1);
                     client.setCurrentState(new InitializeStarterCardState(client));
-                } catch ( RemoteException ex) {
+                } catch (RemoteException ex) {
                     System.out.println("Card not found. Please try again");
                 } catch (IOException | InterruptedException e) {
                     throw new RuntimeException(e);
@@ -66,9 +74,9 @@ public class InitializeObjectiveCardState implements ClientStateTUI {
         }
     }
 
+    @Override
     public String toString() {
         return "InitializeObjectiveCardState";
     }
-
 
 }

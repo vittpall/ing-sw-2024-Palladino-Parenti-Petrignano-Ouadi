@@ -7,10 +7,19 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Scanner;
 
+/**
+ * This client state is used when the user wants to create a new game, so that he can choose its characteristics
+ */
 public class DrawCardState implements ClientStateTUI {
     private final BaseClient client;
     private final Scanner scanner;
 
+    /**
+     * Constructor
+     *
+     * @param client  is a reference to the client class that can call the methods in the server
+     * @param scanner is a reference to the class that handles and returns the input of the user
+     */
     public DrawCardState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
@@ -58,6 +67,12 @@ public class DrawCardState implements ClientStateTUI {
         }
     }
 
+    /**
+     * Private method
+     * Gets the client's input that represents which card he wants to draw
+     *
+     * @return an integer that identify the specific or generic card the user wants to draw
+     */
     private int chooseWhichCardToDraw() {
         System.out.println("1. Draw first visible card of the deck chosen");
         System.out.println("2. Draw second visible card of the deck chosen");
@@ -81,6 +96,7 @@ public class DrawCardState implements ClientStateTUI {
 
     }
 
+    @Override
     public String toString() {
         return "DrawCardState";
     }

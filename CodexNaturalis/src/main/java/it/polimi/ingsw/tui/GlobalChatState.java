@@ -8,21 +8,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This client state is used when the user wants to chat in the global chat
+ */
 public class GlobalChatState implements ClientStateTUI {
 
     private final BaseClient client;
     private final Scanner scanner;
     private final ChatState returnState;
 
-
+    /**
+     * Constructor
+     *
+     * @param client      is a reference to the client class that can call the methods in the server
+     * @param scanner     is a reference to the class that handles and returns the input of the user
+     * @param returnState is a reference to the class that created the instance
+     */
     public GlobalChatState(BaseClient client, Scanner scanner, ChatState returnState) {
         this.client = client;
         this.scanner = scanner;
         this.returnState = returnState;
-    }
-
-    public String getReceiver() {
-        return null;
     }
 
     @Override
@@ -52,6 +57,14 @@ public class GlobalChatState implements ClientStateTUI {
 
     }
 
+    /**
+     * Defines how to handle the user's input in a specific way for this class
+     *
+     * @param input The user's input
+     * @throws IOException            when an I/O operation fails
+     * @throws ClassNotFoundException when the class loaded can not be found
+     * @throws InterruptedException   when the thread running is interrupted
+     */
     public void inputHandler(String input) throws IOException, ClassNotFoundException, InterruptedException {
         while (!input.equals("exit chat")) {
             client.sendMessage(null, input);
@@ -65,6 +78,7 @@ public class GlobalChatState implements ClientStateTUI {
     public void promptForInput() {
     }
 
+    @Override
     public String toString() {
         return "GlobalChatState";
     }
