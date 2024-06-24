@@ -19,12 +19,7 @@ public class GetVisibleCardsDeckMsg extends ClientToServerMsg {
         this.idGame = idGame;
     }
 
-    /**
-     * @param controller the controller instance
-     * @return ReturnableObject
-     * @throws InterruptedException       if the thread is interrupted
-     * @throws PlaceNotAvailableException if the place is not available
-     */
+
     @Override
     public ReturnableObject<ArrayList<GameCard>> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, PlaceNotAvailableException {
         ReturnableObject<ArrayList<GameCard>> response = new ReturnableObject<>();
@@ -38,9 +33,6 @@ public class GetVisibleCardsDeckMsg extends ClientToServerMsg {
         return TypeServerToClientMsg.GET_VISIBLE_CARDS_DECK;
     }
 
-    /**
-     * @return
-     */
     @Override
     public int getIdGame() {
         return idGame;

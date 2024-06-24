@@ -30,9 +30,6 @@ public class GetAvailablePlacesMsg extends ClientToServerMsg {
         return TypeServerToClientMsg.AVAILABLE_PLACES;
     }
 
-    /**
-     * @return
-     */
     @Override
     public int getIdGame() {
         return idGame;

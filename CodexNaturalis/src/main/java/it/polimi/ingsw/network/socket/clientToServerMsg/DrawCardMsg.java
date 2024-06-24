@@ -31,9 +31,6 @@ public class DrawCardMsg extends ClientToServerMsg {
     }
 
 
-    /**
-     * @return
-     */
     @Override
     public int getIdGame() {
         return this.idGame;

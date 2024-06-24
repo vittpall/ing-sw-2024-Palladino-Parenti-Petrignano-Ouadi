@@ -25,9 +25,6 @@ public class IsLastRoundStartedMsg extends ClientToServerMsg {
     }
 
 
-    /**
-     * @return
-     */
     @Override
     public int getIdGame() {
         return idGame;

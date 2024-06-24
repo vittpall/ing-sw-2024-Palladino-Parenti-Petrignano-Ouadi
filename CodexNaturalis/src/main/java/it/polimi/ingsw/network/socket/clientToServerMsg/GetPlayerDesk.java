@@ -31,9 +31,6 @@ public class GetPlayerDesk extends ClientToServerMsg {
     }
 
 
-    /**
-     * @return
-     */
     @Override
     public int getIdGame() {
         return idGame;

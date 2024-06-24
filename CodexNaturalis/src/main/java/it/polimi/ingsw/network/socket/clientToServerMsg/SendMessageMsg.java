@@ -27,9 +27,6 @@ public class SendMessageMsg extends ClientToServerMsg {
     }
 
 
-    /**
-     * @return
-     */
     @Override
     public int getIdGame() {
         return this.msg.getGameId();

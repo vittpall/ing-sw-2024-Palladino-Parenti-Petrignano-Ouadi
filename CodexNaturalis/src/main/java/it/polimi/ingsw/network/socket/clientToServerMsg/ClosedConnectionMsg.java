@@ -31,9 +31,7 @@ public class ClosedConnectionMsg extends ClientToServerMsg {
     }
 
 
-    /**
-     * @return
-     */
+
     @Override
     public int getIdGame() {
         return this.idGame;

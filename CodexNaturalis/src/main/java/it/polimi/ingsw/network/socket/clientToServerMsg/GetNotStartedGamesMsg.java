@@ -26,9 +26,6 @@ public class GetNotStartedGamesMsg extends ClientToServerMsg {
     }
 
 
-    /**
-     * @return
-     */
     @Override
     public int getIdGame() {
         return -1;

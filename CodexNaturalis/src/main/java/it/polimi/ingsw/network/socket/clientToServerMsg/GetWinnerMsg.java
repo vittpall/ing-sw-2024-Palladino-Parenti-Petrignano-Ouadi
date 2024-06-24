@@ -29,9 +29,6 @@ public class GetWinnerMsg extends ClientToServerMsg {
     }
 
 
-    /**
-     * @return
-     */
     @Override
     public int getIdGame() {
         return idGame;

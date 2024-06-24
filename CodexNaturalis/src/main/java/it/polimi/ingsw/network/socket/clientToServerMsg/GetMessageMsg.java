@@ -36,9 +36,6 @@ public class GetMessageMsg extends ClientToServerMsg {
     }
 
 
-    /**
-     * @return
-     */
     @Override
     public int getIdGame() {
         return gameId;
