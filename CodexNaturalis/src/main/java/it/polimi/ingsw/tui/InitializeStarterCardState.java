@@ -11,9 +11,18 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+/**
+ * This client state is used when the users need to initialize the starter card
+ */
 public class InitializeStarterCardState implements ClientStateTUI {
     BaseClient client;
 
+    /**
+     * Constructor
+     *
+     * @param client is a reference to the client class that can call the methods in the server
+     *               +
+     */
     public InitializeStarterCardState(BaseClient client) {
         this.client = client;
     }
@@ -28,16 +37,16 @@ public class InitializeStarterCardState implements ClientStateTUI {
         System.out.println("\n---------- Initialize starter card ----------");
         try {
             System.out.println("The common objective cards are:");
-            //stampare le objective card comuni a tutti i giocatori
+            //Print the shared objective card
             ObjectiveCard[] sharedObjectiveCards = client.getSharedObjectiveCards();
             for (ObjectiveCard card : sharedObjectiveCards) {
                 printer.printCard(card, false);
             }
             System.out.println("Your objective card is:");
-            //stampare l'objective card richiesta
+            //Print the secret objective card
             printer.printCard(client.getPlayerObjectiveCard(), false);
             System.out.println("Your hand is:");
-            //stampare la mano del giocatore richiesta
+            //Print the player hand and starter card
             ArrayList<GameCard> playerHand = client.getPlayerHand();
             for (GameCard card : playerHand) {
                 printer.printCard(card, false);
@@ -83,6 +92,7 @@ public class InitializeStarterCardState implements ClientStateTUI {
 
     }
 
+    @Override
     public String toString() {
         return "InitializeStarterCardState";
     }

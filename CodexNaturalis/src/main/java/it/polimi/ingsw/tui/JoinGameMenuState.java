@@ -8,11 +8,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/**
+ * This client state is used when the user wants to enter an existing game
+ */
 public class JoinGameMenuState implements ClientStateTUI {
     BaseClient client;
     Scanner scanner;
     HashMap<Integer, Integer> availableGamesToShow;
 
+    /**
+     * Constructor
+     *
+     * @param client  is a reference to the client class that can call the methods in the server
+     * @param scanner is a reference to the class that handles and returns the input of the user
+     */
     public JoinGameMenuState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
@@ -64,19 +73,24 @@ public class JoinGameMenuState implements ClientStateTUI {
             }
             client.joinGame(availableGamesToShow.get(input), client.getUsername());
             client.setCurrentState(new WaitingForPlayersState(client, scanner));
-        } catch(RemoteException ex)
-        {
+        } catch (RemoteException ex) {
             throw new RemoteException();
-        }
-        catch (InterruptedException | IOException ex) {
+        } catch (InterruptedException | IOException ex) {
             System.out.println("Error while joining the game");
         }
     }
 
+    @Override
     public String toString() {
         return "JoinGameMenuState";
     }
 
+    /**
+     * Notification method
+     * It prints the updated list of the available games
+     *
+     * @param availableGames HashMap that describes the available games, the total number of players and of the needed ones
+     */
     public void refresh(HashMap<Integer, Integer[]> availableGames) {
         int positionGameAvailable = 1;
         System.out.println("These are the games to enter option:");
@@ -91,7 +105,6 @@ public class JoinGameMenuState implements ClientStateTUI {
             }
         }
     }
-
 
 }
 

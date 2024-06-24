@@ -4,12 +4,20 @@ import it.polimi.ingsw.network.BaseClient;
 
 import java.util.Scanner;
 
+/**
+ * This client state is used when the user has to choose if he wants to create a new game or enter an existing one
+ */
 public class LobbyMenuState implements ClientStateTUI {
-
 
     BaseClient client;
     private final Scanner scanner;
 
+    /**
+     * Constructor
+     *
+     * @param client  is a reference to the client class that can call the methods in the server
+     * @param scanner is a reference to the class that handles and returns the input of the user
+     */
     public LobbyMenuState(BaseClient client, Scanner scanner) {
         this.client = client;
         this.scanner = scanner;
@@ -43,10 +51,9 @@ public class LobbyMenuState implements ClientStateTUI {
         }
     }
 
+    @Override
     public String toString() {
         return "LobbyMenuState";
     }
 
-    
-   
 }
