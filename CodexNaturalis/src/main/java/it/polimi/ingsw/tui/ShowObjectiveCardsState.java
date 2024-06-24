@@ -15,7 +15,7 @@ public class ShowObjectiveCardsState implements ClientStateTUI {
     /**
      * Constructor
      *
-     * @param client is a reference to the client class that can call the methods in the server
+     * @param client is a reference to the BaseClient class that can call the methods in the server
      */
     public ShowObjectiveCardsState(BaseClient client) {
         this.client = client;

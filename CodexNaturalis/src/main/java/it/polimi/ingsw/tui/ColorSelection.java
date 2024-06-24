@@ -19,8 +19,8 @@ public class ColorSelection implements ClientStateTUI {
     /**
      * Constructor
      *
-     * @param client  is a reference to the client class that can call the methods in the server
-     * @param scanner is a reference to the class that handles and returns the input of the user
+     * @param client  is a reference to the BaseClient class that can call the methods in the server
+     * @param scanner is a reference to the Scanner class that handles and returns the input of the user
      */
     public ColorSelection(BaseClient client, Scanner scanner) {
         this.client = client;
@@ -67,7 +67,7 @@ public class ColorSelection implements ClientStateTUI {
     /**
      * Private method used to transform the user input in the corresponding enum's color
      *
-     * @param input is the client input
+     * @param input Integer representing the client input
      * @return the enumeration of the color chosen
      */
     private TokenColor getColorFromInput(int input) {
@@ -83,7 +83,7 @@ public class ColorSelection implements ClientStateTUI {
     /**
      * Private method used to transform the enum's color in the value to write in the display
      *
-     * @param color is the enum's color to transform
+     * @param color is the enum's TokenColor to transform
      * @return the value to write in the display
      */
     private String formatColorOutput(TokenColor color) {
@@ -104,7 +104,7 @@ public class ColorSelection implements ClientStateTUI {
      * Notification method
      * It prints an updated copy of the available colors.
      *
-     * @param availableColors the updated list of available colors
+     * @param availableColors ArrayList representing the updated list of available colors
      */
     public void refresh(ArrayList<TokenColor> availableColors) {
         System.out.println("The available colors are now:");

@@ -18,8 +18,8 @@ public class GetOtherPlayerDesk implements ClientStateTUI {
     /**
      * Constructor
      *
-     * @param client  is a reference to the client class that can call the methods in the server
-     * @param scanner is a reference to the class that handles and returns the input of the user
+     * @param client  is a reference to the BaseClient class that can call the methods in the server
+     * @param scanner is a reference to the Scanner class that handles and returns the input of the user
      */
     public GetOtherPlayerDesk(BaseClient client, Scanner scanner) {
         this.client = client;
@@ -61,7 +61,7 @@ public class GetOtherPlayerDesk implements ClientStateTUI {
     /**
      * Get the player that corresponds to the input sent
      *
-     * @param input integer that corresponds to the player chosen
+     * @param input Integer that corresponds to the player chosen
      * @return the Player chosen
      */
     private Player getPlayerFromInput(int input) {

@@ -19,8 +19,8 @@ public class JoinGameMenuState implements ClientStateTUI {
     /**
      * Constructor
      *
-     * @param client  is a reference to the client class that can call the methods in the server
-     * @param scanner is a reference to the class that handles and returns the input of the user
+     * @param client  is a reference to the BaseClient class that can call the methods in the server
+     * @param scanner is a reference to the Scanner class that handles and returns the input of the user
      */
     public JoinGameMenuState(BaseClient client, Scanner scanner) {
         this.client = client;

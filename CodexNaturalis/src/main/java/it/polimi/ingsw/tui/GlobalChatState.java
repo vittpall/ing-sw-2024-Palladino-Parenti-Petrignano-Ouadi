@@ -19,9 +19,9 @@ public class GlobalChatState implements ClientStateTUI {
     /**
      * Constructor
      *
-     * @param client      is a reference to the client class that can call the methods in the server
-     * @param scanner     is a reference to the class that handles and returns the input of the user
-     * @param returnState is a reference to the class that created the instance
+     * @param client      is a reference to the BaseClient class that can call the methods in the server
+     * @param scanner     is a reference to the Scanner class that handles and returns the input of the user
+     * @param returnState is a reference to the ChatState class that created the instance
      */
     public GlobalChatState(BaseClient client, Scanner scanner, ChatState returnState) {
         this.client = client;
@@ -59,7 +59,7 @@ public class GlobalChatState implements ClientStateTUI {
     /**
      * Defines how to handle the user's input in a specific way for this class
      *
-     * @param input The user's input
+     * @param input String representing the user's input
      * @throws IOException            when an I/O operation fails
      * @throws ClassNotFoundException when the class loaded can not be found
      * @throws InterruptedException   when the thread running is interrupted

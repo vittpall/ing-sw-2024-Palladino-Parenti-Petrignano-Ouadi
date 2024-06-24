@@ -21,9 +21,9 @@ public class PrivateChatSelectingReceiverState implements ClientStateTUI {
     /**
      * Constructor
      *
-     * @param client      is a reference to the client class that can call the methods in the server
-     * @param scanner     is a reference to the class that handles and returns the input of the user
-     * @param returnState is a reference to the class that created the instance
+     * @param client      is a reference to the BaseClient class that can call the methods in the server
+     * @param scanner     is a reference to the Scanner class that handles and returns the input of the user
+     * @param returnState is a reference to the ChatState class that created the instance
      */
     public PrivateChatSelectingReceiverState(BaseClient client, Scanner scanner, ChatState returnState) {
         this.client = client;
@@ -62,7 +62,7 @@ public class PrivateChatSelectingReceiverState implements ClientStateTUI {
     /**
      * Private method that removes the current player from the list of available players
      *
-     * @param availablePlayers list of all the available players
+     * @param availablePlayers ArrayList of all the available players
      * @throws RemoteException when a communication-related problem occurs
      */
     private void removePlayerFromList(ArrayList<Player> availablePlayers) throws RemoteException {

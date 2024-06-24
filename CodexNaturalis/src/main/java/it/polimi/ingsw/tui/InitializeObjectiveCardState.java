@@ -16,7 +16,7 @@ public class InitializeObjectiveCardState implements ClientStateTUI {
     /**
      * Constructor
      *
-     * @param client is a reference to the client class that can call the methods in the server
+     * @param client is a reference to the BaseClient class that can call the methods in the server
      */
     public InitializeObjectiveCardState(BaseClient client) {
         this.client = client;

@@ -17,7 +17,7 @@ public class ShowPointsState implements ClientStateTUI {
     /**
      * Constructor
      *
-     * @param client is a reference to the client class that can call the methods in the server
+     * @param client is a reference to the BaseClient class that can call the methods in the server
      */
     public ShowPointsState(BaseClient client) {
         this.client = client;
@@ -64,7 +64,7 @@ public class ShowPointsState implements ClientStateTUI {
      * Notification method
      * It prints the updated ranking
      *
-     * @param playersPoints a map that associates every Player to his points
+     * @param playersPoints HashMap that associates every Player to his points
      */
     public void refresh(HashMap<String, Integer> playersPoints) {
         System.out.println("|---- Provisional Ranking:----|");

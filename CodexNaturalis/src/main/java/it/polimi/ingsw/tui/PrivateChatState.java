@@ -20,9 +20,9 @@ public class PrivateChatState implements ClientStateTUI {
     /**
      * Constructor
      *
-     * @param client   is a reference to the client class that can call the methods in the server
-     * @param scanner  is a reference to the class that handles and returns the input of the user
-     * @param receiver is a reference to the player with which he wants to chat
+     * @param client   is a reference to the BaseClient class that can call the methods in the server
+     * @param scanner  is a reference to the Scanner class that handles and returns the input of the user
+     * @param receiver String representing the player with which the user wants to chat
      */
     public PrivateChatState(BaseClient client, Scanner scanner, String receiver) {
         this.client = client;
@@ -31,7 +31,7 @@ public class PrivateChatState implements ClientStateTUI {
     }
 
     /**
-     * @return the receiver of the message
+     * @return String representing the receiver of the message
      */
     public String getReceiver() {
         return receiver;
@@ -69,7 +69,7 @@ public class PrivateChatState implements ClientStateTUI {
     /**
      * Defines how to handle the user's input in a specific way for this class
      *
-     * @param input The user's input
+     * @param input String representing the user's input
      * @throws IOException            when an I/O operation fails
      * @throws ClassNotFoundException when the class loaded can not be found
      * @throws InterruptedException   when the thread running is interrupted
