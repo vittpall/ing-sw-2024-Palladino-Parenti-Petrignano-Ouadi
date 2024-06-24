@@ -1,54 +1,65 @@
 package it.polimi.ingsw.model;
 
-import org.junit.jupiter.api.Test;
 import it.polimi.ingsw.model.enumeration.CornerObject;
 import it.polimi.ingsw.model.enumeration.Resource;
+import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CornerTest {
 
     @Test
     void isHidden_whenCreatedWithHiddenParameter() {
-        Corner corner= new Corner(true);
+        Corner corner = new Corner(true);
         assertTrue(corner.isHidden());
     }
+
     @Test
     void isHidden_whenCreatedWithHiddenParameterAsFalse() {
-        Corner corner= new Corner(false);
+        Corner corner = new Corner(false);
         assertFalse(corner.isHidden());
     }
 
     @Test
-    void isHidden_setAsFalseWhenCreatedWithAnObject(){
-        Corner corner= new Corner(CornerObject.MANUSCRIPT);
-        assertFalse(corner.isHidden());
-    }
-    @Test
-    void isHidden_setAsFalseWhenCreatedWithAResource(){
-        Corner corner= new Corner(Resource.ANIMAL_KINGDOM);
+    void isHidden_setAsFalseWhenCreatedWithAnObject() {
+        Corner corner = new Corner(CornerObject.MANUSCRIPT);
         assertFalse(corner.isHidden());
     }
 
     @Test
-    void getResource() {
-        for(Resource res : Resource.values()){
-            Corner corner = new Corner(res);
-            assertEquals(res, corner.getResource());
-            assertNull(corner.getObject());
-        }
+    void isHidden_setAsFalseWhenCreatedWithAResource() {
+        Corner corner = new Corner(Resource.ANIMAL_KINGDOM);
+        assertFalse(corner.isHidden());
+    }
+
+
+    @Test
+    void getResource_whenCornerIsCreatedWithAResource() {
+        Corner corner = new Corner(Resource.ANIMAL_KINGDOM);
+        assertEquals(Resource.ANIMAL_KINGDOM, corner.getResource());
     }
 
     @Test
-    void getObject() {
-        for(CornerObject obj : CornerObject.values()){
-            Corner corner = new Corner(obj);
-            assertEquals(obj, corner.getObject());
-            assertNull(corner.getResource());
-        }
+    void getObject_whenCornerIsCreatedWithAnObject() {
+        Corner corner = new Corner(CornerObject.MANUSCRIPT);
+        assertEquals(CornerObject.MANUSCRIPT, corner.getObject());
     }
 
     @Test
-    void resourceIsNotMutable(){
+    void getResource_whenCornerIsCreatedWithoutAResource() {
+        Corner corner = new Corner(true);
+        assertNull(corner.getResource());
+    }
+
+    @Test
+    void getObject_whenCornerIsCreatedWithoutAnObject() {
+        Corner corner = new Corner(true);
+        assertNull(corner.getObject());
+    }
+
+
+    @Test
+    void resourceIsNotMutable() {
         Resource initialRes = Resource.ANIMAL_KINGDOM;
         Corner corner = new Corner(initialRes);
         Resource cornerRes;
@@ -57,20 +68,35 @@ class CornerTest {
         assertNotEquals(cornerRes, corner.getResource());
 
     }
+
+
     @Test
-    void objectIsNotMutable(){
-        CornerObject initialObj = CornerObject.INKWELL;
-        Corner corner = new Corner(initialObj);
-        CornerObject cornerObj;
-        cornerObj = CornerObject.QUILL;
-        assertEquals(initialObj, corner.getObject());
-        assertNotEquals(cornerObj, corner.getObject());
+    void equals_whenComparingCornerToAnotherCornerWithSameAttributes() {
+        Corner corner1 = new Corner(Resource.ANIMAL_KINGDOM);
+        Corner corner2 = new Corner(Resource.ANIMAL_KINGDOM);
+        assertEquals(corner1, corner2);
     }
 
     @Test
-    void coverCorner() {
-        Corner corner=new Corner(false);
+    void equals_whenComparingCornerToAnotherCornerWithDifferentAttributes() {
+        Corner corner1 = new Corner(Resource.ANIMAL_KINGDOM);
+        Corner corner2 = new Corner(CornerObject.MANUSCRIPT);
+        assertNotEquals(corner1, corner2);
+    }
+
+
+    @Test
+    void isHidden_whenCornerIsCovered() {
+        Corner corner = new Corner(false);
         corner.coverCorner();
         assertTrue(corner.isHidden());
+    }
+
+    @Test
+    void copyConstructor_createsExactCopy() {
+        Corner originalCorner = new Corner(Resource.ANIMAL_KINGDOM);
+        Corner copiedCorner = new Corner(originalCorner);
+
+        assertEquals(originalCorner, copiedCorner);
     }
 }

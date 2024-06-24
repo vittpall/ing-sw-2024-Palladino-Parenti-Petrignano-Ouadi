@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CardTest {
 
+
     @Test
     void getPoints_returnsCorrectPoints_whenPointsArePositive() {
         Card card = new Card(7, "/path/to/front/image", "/path/to/back/image") {
@@ -86,4 +87,6 @@ class CardTest {
         };
         assertNull(card.getImageBackPath());
     }
+
+
 }
