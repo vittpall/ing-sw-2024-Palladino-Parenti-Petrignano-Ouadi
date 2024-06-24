@@ -201,6 +201,7 @@ public class RMIClient extends BaseClient {
 
     public void close() {
         try {
+            removeUsername();
             returnToLobby();
         } catch (IOException e) {
             System.out.println("The server is already closed, no need to remove the username");
@@ -223,7 +224,6 @@ public class RMIClient extends BaseClient {
 
     @Override
     public void closeGame() throws IOException {
-        removeUsername();
         server.closeGame(getIdGame(), username);
     }
 
