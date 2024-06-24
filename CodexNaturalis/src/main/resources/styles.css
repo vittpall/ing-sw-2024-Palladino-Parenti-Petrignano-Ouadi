@@ -29,11 +29,6 @@
     -fx-background-radius: 5px;
 }
 
-.primary-button:hover {
-    -fx-background-color: #1a7955;
-    -fx-font-family: 'Book Antiqua Bold Italic';
-}
-
 .popup {
     -fx-background-color: #a2ecbb;
     -fx-border-color: #2E8B57;
@@ -60,15 +55,24 @@
     -fx-preserve-ratio: true;
     -fx-fit-height: 150px;
     -fx-fit-width: 200px;
+    -fx-transition: -fx-scale-x 0.3s, -fx-scale-y 0.3s;
+}
+.card-image:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0.5, 0, 0);
 }
 
 .border {
-    -fx-border-color: #1a7955;
     -fx-border-width: 3;
     -fx-border-style: solid;
     -fx-border-radius: 5;
 }
-
+.button:hover{
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0.5, 0, 0);
+}
 .list-cell {
     -fx-font-family: "Book Antiqua Bold Italic";
     -fx-font-size: 14pt;

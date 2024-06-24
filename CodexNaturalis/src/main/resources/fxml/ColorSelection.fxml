@@ -18,7 +18,7 @@
     </ImageView>
     <Label styleClass="title-label" text="CHOOSE A COLOR">
     </Label>
-    <HBox fx:id="colorContainer" alignment="CENTER" spacing="20">
+    <HBox fx:id="colorContainer" alignment="CENTER" spacing="20" styleClass="card-image">
 
     </HBox>
     <Label fx:id="messageLabel">

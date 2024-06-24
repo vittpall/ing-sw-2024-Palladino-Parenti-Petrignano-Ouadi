@@ -40,7 +40,7 @@
                     </VBox.margin>
                 </Label>
                 <Button fx:id="showBackButton" onAction="#handleShowBackButton" style="-fx-background-color: #a2ecbb;" text="Show Back" />
-                <VBox fx:id="playerHandBox" alignment="CENTER" spacing="10" />
+                <VBox fx:id="playerHandBox" alignment="CENTER" spacing="10" styleClass="card-image" />
             </VBox>
         </VBox>
         <VBox alignment="CENTER_LEFT" layoutX="222.0" layoutY="14.0" spacing="20.0">
