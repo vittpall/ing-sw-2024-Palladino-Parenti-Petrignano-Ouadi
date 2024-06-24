@@ -29,10 +29,17 @@ public class ColorSelectionController implements FXMLController {
     private TokenColor selectedColor;
 
     @FXML
+    /**
+     *this method disables the selectColorButton until the clint doesn't select a color
+     */
     private void initialize() {
         selectColorButton.setDisable(true);
     }
 
+    /**
+     * this method updates the available token colors
+     * @param colorList is the list that contains the available token colors
+     */
     public void updateColorList(ArrayList<TokenColor> colorList) {
 
             colorContainer.getChildren().clear();
@@ -52,6 +59,9 @@ public class ColorSelectionController implements FXMLController {
     }
 
     @FXML
+    /**
+     * this method connects the chosen color to the respective client. If two client choose the same color there is an error message
+     */
     public void handleSelectColor() throws IOException, InterruptedException {
         if (selectedColor != null && client.getAvailableColors().contains(selectedColor)) {
             try {
@@ -67,6 +77,11 @@ public class ColorSelectionController implements FXMLController {
             messageLabel.setText("Color not available, please select another color.");
         }
     }
+
+    /**
+     *this method handles when the client decide to close the game and return to the Lobby Menu
+     * @throws RemoteException
+     */
     public void handleExit() throws RemoteException {
         try {
             client.returnToLobby();
@@ -79,13 +94,26 @@ public class ColorSelectionController implements FXMLController {
         client.getClientCurrentState().display();
     }
 
+    /**
+     *this method sets the Error message
+     * @param e if there is a problem reaching the server
+     */
     public void handleException(Exception e) {
         messageLabel.setText("Error reaching the server: " + e.getMessage());
     }
+
+    /**
+     *Constructor
+     * @param client is the current client
+     */
     public void setClient(BaseClient client) {
         this.client = client;
     }
 
+    /**
+     * Constructor
+     * @param stage is the stage of the current state
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }

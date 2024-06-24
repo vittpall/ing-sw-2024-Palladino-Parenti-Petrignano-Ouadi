@@ -28,7 +28,7 @@
             <Label fx:id="feedbackLabel" styleClass="normal-label" text="Select number of players (2-4):" />
             <ChoiceBox fx:id="playerChoiceBox" styleClass="inputs-width">
                 <tooltip>
-                    <Tooltip text="Choose how many players will be in the game" />
+                    <Tooltip fx:id="numberPlayers" text="Choose how many players will be in the game" />
                 </tooltip>
                 <items>
                     <FXCollections fx:factory="observableArrayList">

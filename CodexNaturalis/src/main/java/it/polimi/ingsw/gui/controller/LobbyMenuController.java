@@ -23,35 +23,60 @@ public class LobbyMenuController implements FXMLController {
     private BaseClient client;
     private Stage stage;
 
+    /**
+     * Constructor
+     * @param client refers to the current client
+     */
     public void setClient(BaseClient client) {
         this.client = client;
     }
 
+    /**
+     * Constructor
+     * @param stage refers to the stage of the window
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     * this method sets the popup message invisible. it will set visible in case of error
+     */
     public void initializeLobbyMenu() {
         popup.setVisible(false);
     }
 
     @FXML
+    /**
+     * this method handle the case where the client press "Create Game" button and go to the CreateGame state
+     */
     private void handleCreateGame() throws RemoteException {
         client.setCurrentState(new CreateGameStateGUI(stage, client));
         client.getClientCurrentState().display();
     }
 
     @FXML
+    /**
+     * this method handle the case where the client press "Join Game" button and go to the JoinGameMenu state
+     */
     private void handleJoinGame() throws RemoteException {
         client.setCurrentState(new JoinGameMenuStateGUI(stage, client));
         client.getClientCurrentState().display();
     }
 
 
+    /**
+     * this method closes the game if the client press EXIT
+     * @throws RemoteException
+     */
     public void handleExit() throws RemoteException {
         client.close();
     }
 
+    /**
+     * set the error message
+     * @param content content of the message error
+     */
     private void showAlert(String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -60,10 +85,17 @@ public class LobbyMenuController implements FXMLController {
         alert.showAndWait();
     }
 
+    /**
+     * this methods set the PopUp invisible after the client close it
+     */
     public void handleClosePopUp() {
         popup.setVisible(false);
     }
 
+    /**
+     * this method set the PopUp visible in case of error or a message
+     * @param msg message of error
+     */
     public void showGameClosedPopup(String msg) {
         popupLabel.setText(msg);
         popup.setVisible(true);

@@ -22,6 +22,10 @@ public class CreateGameMenuController implements FXMLController {
     private BaseClient client;
 
 
+    /**
+     * this method creates a new game. the client has to select the number of players and then wait for other players
+     * @throws RemoteException
+     */
     @FXML
     private void handleCreateGame() throws RemoteException {
         Integer nPlayers = playerChoiceBox.getValue();
@@ -41,19 +45,36 @@ public class CreateGameMenuController implements FXMLController {
         }
     }
 
+    /**
+     * this method closes the game if the client press EXIT
+     * @throws RemoteException
+     */
     public void handleExit() throws RemoteException {
         client.close();
     }
+
+    /**
+     * this method allows the client to turn back to the lobby menu from the CreateGame state
+     * @throws RemoteException
+     */
     public void handleBack() throws RemoteException {
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
         client.getClientCurrentState().display();
     }
 
 
+    /**
+     *Constructor
+     * @param client is the current client
+     */
     public void setClient(BaseClient client) {
         this.client = client;
     }
 
+    /**
+     * Constructor
+     * @param stage is the stage of the current state
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }

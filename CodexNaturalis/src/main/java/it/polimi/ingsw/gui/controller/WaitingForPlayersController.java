@@ -30,6 +30,11 @@ public class WaitingForPlayersController implements FXMLController {
     Label waitingForNPlayersLabel;
 
 
+    /**
+     * initialize the WaitingForPlayers state. it prints how many player the game needs before it can start, and which player has join the game.
+     * once every player joined the game, it will be possible start the game
+     * @throws RemoteException
+     */
     public void initializeWaitingForPlayers() throws RemoteException {
 
         try {
@@ -79,6 +84,9 @@ public class WaitingForPlayersController implements FXMLController {
         }
     }
 
+    /**
+     * if the client press the button "start game", he will go on the next state
+     */
     public void handleStartGame() {
         try {
             if (client.isGameStarted()) {
@@ -89,6 +97,10 @@ public class WaitingForPlayersController implements FXMLController {
             e.printStackTrace();
         }
     }
+    /**
+     *this method handles when the client decide to close the game and return to the Lobby Menu
+     * @throws RemoteException
+     */
     public void handleExit() throws RemoteException {
         try {
             client.returnToLobby();
@@ -101,6 +113,11 @@ public class WaitingForPlayersController implements FXMLController {
         client.getClientCurrentState().display();
     }
 
+    /**
+     * this method handles the notifications in based of how many players are needed to start the game and print the name of the players that have joined the game
+     * @param players players that have joined the game
+     * @param nOfMissingPlayers number of player needed before it is possible start the game. it can be a number between 1 and 3
+     */
     public void handleServerNotification(ArrayList<Player> players, int nOfMissingPlayers) {
             switch (players.size()) {
                 case 2:

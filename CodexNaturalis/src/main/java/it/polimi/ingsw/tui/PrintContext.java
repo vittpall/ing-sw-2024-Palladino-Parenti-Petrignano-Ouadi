@@ -11,11 +11,20 @@ import java.util.HashMap;
 public class PrintContext {
     private final CardPrinter printer;
 
+    /**
+     * Constructor
+     *
+     * @param printer
+     */
     public PrintContext(CardPrinter printer) {
         this.printer = printer;
     }
 
 
+    /**
+     *this method prints the client's desk, with every card and their position
+     * @param desk reference to GameCard, it is the respective card in the player's desk
+     */
     public void printDesk(HashMap<Point, GameCard> desk) {
         desk.forEach((point, gameCard) -> {
             String formattedCoordinates = String.format("Position: (%d, %d)", point.x, point.y);
@@ -24,6 +33,11 @@ public class PrintContext {
         });
     }
 
+    /**
+     *
+     * @param content
+     * @param backgroundColor
+     */
     public void printCenteredLine(String content, CardPrinter.Color backgroundColor) {
         int contentLength = content.length();
         int start = (printer.getCardWidth() - contentLength) / 2; // Calculate the starting point for the content to be centered
@@ -41,15 +55,33 @@ public class PrintContext {
         System.out.println(line);
     }
 
+    /**
+     *
+     * @param times
+     * @return
+     */
     public String repeat(int times) {
         return " ".repeat(Math.max(0, times));
     }
 
+    /**
+     *
+     * @param cornerLeft
+     * @param cornerRight
+     * @param color
+     */
     public void printColorBorder(Corner cornerLeft, Corner cornerRight, CardPrinter.Color color) {
         String border = createBorderString(cornerLeft, cornerRight, color);
         System.out.println(border);
     }
 
+    /**
+     *
+     * @param cornerLeft
+     * @param cornerRight
+     * @param color
+     * @return
+     */
     private String createBorderString(Corner cornerLeft, Corner cornerRight, CardPrinter.Color color) {
         String leftInitial = getInitial(cornerLeft); // Get the initial for the left corner if visible
         String rightInitial = getInitial(cornerRight); // Get the initial for the right corner if visible
@@ -65,6 +97,12 @@ public class PrintContext {
         }
     }
 
+
+    /**
+     *
+     * @param corner
+     * @return
+     */
     private String getInitial(Corner corner) {
         if (corner.getResource() != null) {
             return String.valueOf(corner.getResource().get().charAt(0));
@@ -74,19 +112,38 @@ public class PrintContext {
         return " ";
     }
 
+    /**
+     *
+     * @param text
+     * @param width
+     * @return
+     */
     public String centerString(String text, int width) {
         int padding = (width - text.length()) / 2;
         return repeat(padding) + text + repeat(padding + (text.length() % 2 == 1 ? 1 : 0));
     }
 
+    /**
+     *
+     * @return the width of the card
+     */
     public int getCardWidth() {
         return printer.getCardWidth();
     }
 
+    /**
+     *
+     * @return the height of the card
+     */
     public int getCardHeight() {
         return printer.getCardHeight();
     }
 
+    /**
+     *
+     * @param resource is a reference to the Resource class
+     * @return the color of the resource of the card
+     */
     public CardPrinter.Color chooseColor(Resource resource) {
         return printer.chooseColor(resource);
     }

@@ -24,6 +24,9 @@ public class InitializeStarterCardController implements FXMLController {
     private BaseClient client;
     private Stage stage;
 
+    /**
+     * this method gets the front and the back of the initialise card to print. the client has to choose which side he will play
+     */
     public void initializeStarterCard() {
         try {
             StarterCard starterCard = client.getStarterCard();
@@ -39,13 +42,26 @@ public class InitializeStarterCardController implements FXMLController {
         }
     }
 
+    /**
+     * this method handles the case where the client select the button "play front"
+     * @throws RemoteException
+     */
     public void handlePlayFront() throws RemoteException {
         playStarterCard(false);
     }
 
+    /**
+     * this method handles the case where the client select the button "play front"
+     * @throws RemoteException
+     */
     public void handlePlayBack() throws RemoteException {
         playStarterCard(true);
     }
+
+    /**
+     *this method handles when the client decide to close the game and return to the Lobby Menu
+     * @throws RemoteException
+     */
     public void handleExit() throws RemoteException {
         try {
             client.returnToLobby();
@@ -58,6 +74,11 @@ public class InitializeStarterCardController implements FXMLController {
         client.getClientCurrentState().display();
     }
 
+    /**
+     * this method select the side of the card chosen by the client
+     * @param faceDown it's true if the client choose "play front", else it is false
+     * @throws RemoteException
+     */
     private void playStarterCard(boolean faceDown) throws RemoteException {
         try {
             client.playStarterCard(faceDown);
@@ -72,10 +93,18 @@ public class InitializeStarterCardController implements FXMLController {
     }
 
 
+    /**
+     * Constructor
+     * @param client refers to the current client
+     */
     public void setClient(BaseClient client) {
         this.client = client;
     }
 
+    /**
+     * Constructor
+     * @param stage refers to the stage of the window
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }

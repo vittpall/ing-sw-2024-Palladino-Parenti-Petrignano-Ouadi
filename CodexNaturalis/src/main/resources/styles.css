@@ -94,6 +94,30 @@
     -fx-prefWidth: 200;
 }
 
+
 .choice-box-popup .list-cell {
     min-width: 200px;
+}
+.choice-box {
+    -fx-background-color: #a2ecbb;
+    -fx-text-fill: #1a7955;
+    -fx-font-family: "Book Antiqua Bold Italic";
+    -fx-font-size: 14px;
+    -fx-border-radius: 5;
+}
+
+.choice-box:hover{
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0.5, 0, 0);
+}
+
+.choice-box .arrow {
+    -fx-background-color: #1a7955;
+}
+
+.tooltip {
+    -fx-background-color: #a2ecbb;
+    -fx-text-fill: #000000;
+    -fx-background-radius: 5;
 }

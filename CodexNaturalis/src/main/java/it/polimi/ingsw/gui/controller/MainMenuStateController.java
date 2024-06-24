@@ -3,6 +3,8 @@ package it.polimi.ingsw.gui.controller;
 import it.polimi.ingsw.gui.LobbyMenuStateGUI;
 import it.polimi.ingsw.network.BaseClient;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -43,5 +45,7 @@ public class MainMenuStateController implements FXMLController {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+
     }
+
 }

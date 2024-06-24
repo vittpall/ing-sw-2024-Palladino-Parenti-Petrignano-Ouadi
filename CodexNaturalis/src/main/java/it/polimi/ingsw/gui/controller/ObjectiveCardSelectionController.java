@@ -25,6 +25,10 @@ public class ObjectiveCardSelectionController implements FXMLController {
     private ArrayList<ObjectiveCard> playerObjectiveCards;
 
 
+    /**
+     * this method loads two objective cards. the client will choose one of them
+     * @throws RemoteException
+     */
     public void loadCards() throws RemoteException {
         try {
             playerObjectiveCards = client.getPlayerObjectiveCards();
@@ -44,18 +48,31 @@ public class ObjectiveCardSelectionController implements FXMLController {
         }
     }
 
+    /**
+     * it is called if the client select the first objective card
+     * @throws RemoteException
+     */
     public void handleSelectCard1() throws RemoteException {
         if (!playerObjectiveCards.isEmpty()) {
             selectCard(0);
         }
     }
 
+    /**
+     * it is called if the client select the second objective card
+     * @throws RemoteException
+     */
     public void handleSelectCard2() throws RemoteException {
         if (playerObjectiveCards.size() > 1) {
             selectCard(1);
         }
     }
 
+    /**
+     * save the selected card. in the next state, Game state, it will be printed, so the client can always see his objective card
+     * @param cardIndex is the number of the card
+     * @throws RemoteException
+     */
     private void selectCard(int cardIndex) throws RemoteException {
         try {
             client.setObjectiveCard(cardIndex);
@@ -67,6 +84,10 @@ public class ObjectiveCardSelectionController implements FXMLController {
             messageLabel.setText("Error selecting card: " + ex.getMessage());
         }
     }
+    /**
+     *this method handles when the client decide to close the game and return to the Lobby Menu
+     * @throws RemoteException
+     */
     public void handleExit() throws RemoteException {
         try {
             client.returnToLobby();
@@ -79,10 +100,18 @@ public class ObjectiveCardSelectionController implements FXMLController {
         client.getClientCurrentState().display();
     }
 
+    /***
+     * Constructor
+     * @param client refers to the current client
+     */
     public void setClient(BaseClient client) {
         this.client = client;
     }
 
+    /**
+     * Constructor
+     * @param stage refers to the stage of the window
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
