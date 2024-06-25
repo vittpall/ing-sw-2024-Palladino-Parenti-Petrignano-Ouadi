@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class ObjectiveCardLoader {
         mapper.registerModule(module);
         List<ObjectiveCard> cards = new ArrayList<>();
         try {
-            cards = mapper.readValue(new File("src/main/resources/Json/objectiveCard.json"), new TypeReference<>() {
+            cards = mapper.readValue(ObjectiveCardLoader.class.getResource("/Json/objectiveCard.json"), new TypeReference<>() {
             });
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error loading objective cards", e);

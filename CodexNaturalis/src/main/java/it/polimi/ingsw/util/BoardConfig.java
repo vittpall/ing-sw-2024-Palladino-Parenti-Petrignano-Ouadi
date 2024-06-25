@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import it.polimi.ingsw.model.BoardCoordinate;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ public class BoardConfig {
         ObjectMapper mapper = new ObjectMapper();
         List<BoardCoordinate> coordinates = new ArrayList<>();
         try {
-            coordinates = mapper.readValue(new File("src/main/resources/Json/boardCoordinates.json"), new TypeReference<>() {
+            coordinates = mapper.readValue(BoardConfig.class.getResource("/Json/boardCoordinates.json"), new TypeReference<>() {
             });
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error loading game cards", e);

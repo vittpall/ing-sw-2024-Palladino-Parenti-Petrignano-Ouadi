@@ -47,7 +47,7 @@ public class ColorSelectionController implements FXMLController {
 
         colorContainer.getChildren().clear();
         for (TokenColor color : colorList) {
-            ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + color.getImageName()))));
+            ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Images/" + color.getImageName()))));
             imageView.setFitHeight(100);
             imageView.setFitWidth(100);
             imageView.setPreserveRatio(true);

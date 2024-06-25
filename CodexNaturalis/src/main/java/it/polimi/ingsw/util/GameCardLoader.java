@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import it.polimi.ingsw.model.Corner;
 import it.polimi.ingsw.model.GameCard;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +28,7 @@ public class GameCardLoader {
         List<GameCard> cards = new ArrayList<>();
         try {
             //load the game data
-            cards = mapper.readValue(new File("src/main/resources/Json/gameCard.json"), new TypeReference<>() {
+            cards = mapper.readValue(GameCardLoader.class.getResource("/Json/gameCard.json"), new TypeReference<>() {
             });
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error loading game cards", e);
