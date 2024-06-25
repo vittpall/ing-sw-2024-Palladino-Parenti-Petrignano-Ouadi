@@ -29,6 +29,7 @@ public class ColorSelectionController implements FXMLController {
     private Stage stage;
     private BaseClient client;
     private TokenColor selectedColor;
+    private ImageView selectedImageView = null;
 
     /**
      * This method initialize the stage and disables the selectColorButton
@@ -52,9 +53,23 @@ public class ColorSelectionController implements FXMLController {
             imageView.setFitWidth(100);
             imageView.setPreserveRatio(true);
 
+            imageView.getStyleClass().add("card-image");
+
+            imageView.setOnMouseEntered(event -> imageView.getStyleClass().add("card-image-hover"));
+            imageView.setOnMouseExited(event -> {
+                if (imageView != selectedImageView) {
+                    imageView.getStyleClass().remove("card-image-hover");
+                }
+            });
+
             imageView.setOnMouseClicked(event -> {
-                selectedColor = color;
+                if (selectedImageView != null) {
+                    selectedImageView.getStyleClass().removeAll("card-image-selected", "card-image-hover");
+                }
+                selectedImageView = imageView;
+                imageView.getStyleClass().add("card-image-selected");
                 selectColorButton.setDisable(false);
+                selectedColor = color;
             });
 
             colorContainer.getChildren().add(imageView);
