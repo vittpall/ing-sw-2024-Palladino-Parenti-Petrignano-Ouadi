@@ -114,14 +114,14 @@
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </padding>
                         <Label styleClass="normal-label" text="RESOURCE CARD DECK"> </Label>
-                        <HBox fx:id="resourceDeck" spacing="10" />
+                        <HBox fx:id="resourceDeck" spacing="10" styleClass="card-image" />
                     </HBox>
                     <HBox alignment="CENTER" spacing="5.0" style="-fx-border-color: #8e90fd; -fx-border-style: dashed;" styleClass="border">
                         <padding>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </padding>
                         <Label styleClass="normal-label" text="GOLDEN CARD DECK"> </Label>
-                        <HBox fx:id="goldenDeck" spacing="10" />
+                        <HBox fx:id="goldenDeck" spacing="10" styleClass="card-image" />
                     </HBox>
                 </VBox>
             </HBox>
