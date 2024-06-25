@@ -12,6 +12,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
+/**
+ * This class is the controller for the CreateGameMenu.fxml file
+ */
 public class CreateGameMenuController implements FXMLController {
     public Button exit;
     private Stage stage;
@@ -23,8 +26,9 @@ public class CreateGameMenuController implements FXMLController {
 
 
     /**
-     * this method creates a new game. the client has to select the number of players and then wait for other players
-     * @throws RemoteException
+     * This method creates a new game. It changes the state of the client to WaitingForPlayersGUI
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     @FXML
     private void handleCreateGame() throws RemoteException {
@@ -46,35 +50,30 @@ public class CreateGameMenuController implements FXMLController {
     }
 
     /**
-     * this method closes the game if the client press EXIT
-     * @throws RemoteException
+     * This method closes the game if the client press EXIT
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     public void handleExit() throws RemoteException {
         client.close();
     }
 
     /**
-     * this method allows the client to turn back to the lobby menu from the CreateGame state
-     * @throws RemoteException
+     * This method allows the client to turn back to the lobby menu from the CreateGame state
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     public void handleBack() throws RemoteException {
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
         client.getClientCurrentState().display();
     }
 
-
-    /**
-     *Constructor
-     * @param client is the current client
-     */
+    @Override
     public void setClient(BaseClient client) {
         this.client = client;
     }
 
-    /**
-     * Constructor
-     * @param stage is the stage of the current state
-     */
+    @Override
     public void setStage(Stage stage) {
         this.stage = stage;
     }

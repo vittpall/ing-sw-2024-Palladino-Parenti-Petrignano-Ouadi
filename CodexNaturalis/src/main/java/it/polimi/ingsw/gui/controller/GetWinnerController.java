@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
 
+/**
+ * This class is the controller for the GetWinner.fxml file
+ */
 public class GetWinnerController implements FXMLController {
     public Label usernameWinner;
     public Button returnToLobbyButton;
@@ -31,10 +34,11 @@ public class GetWinnerController implements FXMLController {
     }
 
     /**
-     * this method get the winner at the end of the game and updates the score on the gameBoard
-     * @param winner is a string with the name of the winner player
-     * @param scores is the score of the players that will bel represented on the board
-     * @param playersTokens is the Token that represent the score of the player on the board
+     * This method get the winner at the end of the game and updates the score on the gameBoard
+     *
+     * @param winner        is a String with the name of the winner player
+     * @param scores        is an HaspMap representing the score of the players that will bel shown on the board
+     * @param playersTokens is an HaspMap representing the Token of the player
      */
     public void initializeWinner(String winner, HashMap<String, Integer> scores, HashMap<String, TokenColor> playersTokens) {
         usernameWinner.setText(winner);
@@ -49,7 +53,7 @@ public class GetWinnerController implements FXMLController {
 
 
     /**
-     * this method returns the client to the lobby menu state if the client press the button return to lobby at the end of the game
+     * This method returns the client to the lobby menu state if the client press the button return to lobby at the end of the game
      */
     public void handleReturnToLobby() {
         try {

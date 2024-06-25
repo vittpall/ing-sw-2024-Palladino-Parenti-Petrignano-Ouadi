@@ -15,6 +15,9 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This class is the controller for the JoinGameMenu.fxml file
+ */
 public class JoinGameMenuController implements FXMLController {
     public Button createGameButton;
     public Button exit;
@@ -28,20 +31,18 @@ public class JoinGameMenuController implements FXMLController {
     private BaseClient client;
     private Stage stage;
 
-
-    @FXML
     /**
      * disable the join game until the client doesn't select a game from the list
      */
+    @FXML
     private void initialize() {
         gamesListView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> joinGameButton.setDisable(newSelection == null));
     }
 
-    //alla posizione 0 c'è il numero totale di giocatori, alla posizione 1 c'è il numero di giocatori mancanti
-
     /**
-     * this method get the list of available games and how many player need a game.
+     * this method shows the list of available games and how many player need a game.
      * if there isn't any game the client has to create a new game or turn to the lobby menu and wait the creation of a new game.
+     *
      * @param availableGames list of available games: at position 0 there is the total number of players, at position 1 the number of players needed .
      */
     public void updateGamesList(HashMap<Integer, Integer[]> availableGames) {
@@ -75,8 +76,9 @@ public class JoinGameMenuController implements FXMLController {
     }
 
     /**
-     * this method updates the state after the client press "Join selected game" button. If the client didn't select a game he can't go on.
-      * @throws RemoteException
+     * this method updates the stage after the client press "Join selected game" button. If the client didn't select a game he can't go on.
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     public void handleJoinGame() throws RemoteException {
         Integer selectedGame = gamesListView.getSelectionModel().getSelectedItem();
@@ -98,7 +100,8 @@ public class JoinGameMenuController implements FXMLController {
 
     /**
      * this method return to the CreateGame state if the client press the button "Create a new Game"
-     * @throws RemoteException
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     public void handleCreateGame() throws RemoteException {
         client.setCurrentState(new CreateGameStateGUI(stage, client));
@@ -107,7 +110,8 @@ public class JoinGameMenuController implements FXMLController {
 
     /**
      * this method closes the game if the client press the button "EXIT"
-     * @throws RemoteException
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     public void handleExit() throws RemoteException {
         client.close();
@@ -115,7 +119,8 @@ public class JoinGameMenuController implements FXMLController {
 
     /**
      * this method return to the LobbyMenu state if the client press the button "back"
-     * @throws RemoteException
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     public void handleBack() throws RemoteException {
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
@@ -123,8 +128,9 @@ public class JoinGameMenuController implements FXMLController {
     }
 
     /**
-     *this method sets the Error message
-     * @param e if there is a problem reaching the server
+     * this method sets the Error message
+     *
+     * @param e Exception that needs to be shown to the user
      */
     public void handleException(Exception e) {
         messageLabel.setText("Error reaching the server: " + e.getMessage());
@@ -132,18 +138,12 @@ public class JoinGameMenuController implements FXMLController {
         joinGameButton.setVisible(false);
     }
 
-    /**
-     * Constructor
-     * @param client refers to the current client
-     */
+    @Override
     public void setClient(BaseClient client) {
         this.client = client;
     }
 
-    /**
-     * Constructor
-     * @param stage refers to the stage of the window
-     */
+    @Override
     public void setStage(Stage stage) {
         this.stage = stage;
     }

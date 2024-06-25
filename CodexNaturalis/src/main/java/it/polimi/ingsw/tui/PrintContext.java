@@ -7,14 +7,16 @@ import it.polimi.ingsw.model.enumeration.Resource;
 import java.awt.*;
 import java.util.HashMap;
 
-
+/**
+ * Class used to print the cards in the TUI
+ */
 public class PrintContext {
     private final CardPrinter printer;
 
     /**
      * Constructor
      *
-     * @param printer
+     * @param printer the instance of the Printer used to print the cards
      */
     public PrintContext(CardPrinter printer) {
         this.printer = printer;
@@ -22,8 +24,9 @@ public class PrintContext {
 
 
     /**
-     *this method prints the client's desk, with every card and their position
-     * @param desk reference to GameCard, it is the respective card in the player's desk
+     * This method prints the client's desk, with every card and their position
+     *
+     * @param desk reference to the user's desk: his cards and the respective position
      */
     public void printDesk(HashMap<Point, GameCard> desk) {
         desk.forEach((point, gameCard) -> {
@@ -34,9 +37,10 @@ public class PrintContext {
     }
 
     /**
+     * Prints the centered line of every StarterCard or ObjectiveCard, if they have a pattern in the middle
      *
-     * @param content
-     * @param backgroundColor
+     * @param content         String representing the value to print
+     * @param backgroundColor CardPrinter.Color representing the color of the card
      */
     public void printCenteredLine(String content, CardPrinter.Color backgroundColor) {
         int contentLength = content.length();
@@ -56,19 +60,21 @@ public class PrintContext {
     }
 
     /**
+     * Repeats the space character a number of times
      *
-     * @param times
-     * @return
+     * @param times Integer representing the number of times to repeat the space character
+     * @return String representing the space character repeated the requested number of times
      */
     public String repeat(int times) {
         return " ".repeat(Math.max(0, times));
     }
 
     /**
+     * Prints the upper or lower border of the card with the set color and Resources or CornerObjects to the sides
      *
-     * @param cornerLeft
-     * @param cornerRight
-     * @param color
+     * @param cornerLeft  Corner representing the left corner of the border
+     * @param cornerRight Corner representing the right corner of the border
+     * @param color       CardPrinter.Color representing the background color of the card
      */
     public void printColorBorder(Corner cornerLeft, Corner cornerRight, CardPrinter.Color color) {
         String border = createBorderString(cornerLeft, cornerRight, color);
@@ -76,11 +82,12 @@ public class PrintContext {
     }
 
     /**
+     * Creates the border string with the set color and Resources or CornerObjects to the sides
      *
-     * @param cornerLeft
-     * @param cornerRight
-     * @param color
-     * @return
+     * @param cornerLeft  Corner representing the left corner of the border
+     * @param cornerRight Corner representing the right corner of the border
+     * @param color       CardPrinter.Color representing the background color of the card
+     * @return String representing the border of the card with the set color and Resources or CornerObjects to the sides
      */
     private String createBorderString(Corner cornerLeft, Corner cornerRight, CardPrinter.Color color) {
         String leftInitial = getInitial(cornerLeft); // Get the initial for the left corner if visible
@@ -99,9 +106,10 @@ public class PrintContext {
 
 
     /**
+     * Gets the initial of the Resource or CornerObject to be printed in the corner
      *
-     * @param corner
-     * @return
+     * @param corner Corner that has the Resource or CornerObject to get the initial from
+     * @return String representing the initial of the Resource or CornerObject
      */
     private String getInitial(Corner corner) {
         if (corner.getResource() != null) {
@@ -113,10 +121,11 @@ public class PrintContext {
     }
 
     /**
+     * Set the centered string of the card with the right text inside
      *
-     * @param text
-     * @param width
-     * @return
+     * @param text  is the string to print in the middle of the card
+     * @param width is the width of the card
+     * @return the String with the text in the middle
      */
     public String centerString(String text, int width) {
         int padding = (width - text.length()) / 2;
@@ -124,7 +133,6 @@ public class PrintContext {
     }
 
     /**
-     *
      * @return the width of the card
      */
     public int getCardWidth() {
@@ -132,7 +140,6 @@ public class PrintContext {
     }
 
     /**
-     *
      * @return the height of the card
      */
     public int getCardHeight() {
@@ -140,9 +147,10 @@ public class PrintContext {
     }
 
     /**
+     * Return the color of the card based on its background Resource
      *
-     * @param resource is a reference to the Resource class
-     * @return the color of the resource of the card
+     * @param resource is a reference to the Resource of the card
+     * @return the color of the card
      */
     public CardPrinter.Color chooseColor(Resource resource) {
         return printer.chooseColor(resource);

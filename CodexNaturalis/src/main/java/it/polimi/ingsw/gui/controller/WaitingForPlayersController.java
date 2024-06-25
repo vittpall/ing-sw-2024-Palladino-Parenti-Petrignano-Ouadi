@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+/**
+ * This class is the controller for the WaitingForPlayers.fxml file
+ */
 public class WaitingForPlayersController implements FXMLController {
     public Button StartGameButton;
     public Button exit;
@@ -31,9 +34,10 @@ public class WaitingForPlayersController implements FXMLController {
 
 
     /**
-     * initialize the WaitingForPlayers state. it prints how many player the game needs before it can start, and which player has join the game.
+     * initialize the WaitingForPlayers stage. it prints how many player the game needs before it can start, and which player has join the game.
      * once every player joined the game, it will be possible start the game
-     * @throws RemoteException
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     public void initializeWaitingForPlayers() throws RemoteException {
 
@@ -75,17 +79,15 @@ public class WaitingForPlayersController implements FXMLController {
                 StartGameButton.setVisible(false);
                 waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame()) - size) + " players to join the game...");
             }
-        } catch (RemoteException e)
-        {
+        } catch (RemoteException e) {
             throw new RemoteException();
-        }
-        catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * if the client press the button "start game", he will go on the next state
+     * if the client press the button "start game", he will go on to ColorSelection stage
      */
     public void handleStartGame() {
         try {
@@ -97,16 +99,16 @@ public class WaitingForPlayersController implements FXMLController {
             e.printStackTrace();
         }
     }
+
     /**
-     *this method handles when the client decide to close the game and return to the Lobby Menu
-     * @throws RemoteException
+     * this method handles when the client decide to close the game and return to the Lobby Menu
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     public void handleExit() throws RemoteException {
         try {
             client.returnToLobby();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
@@ -114,36 +116,39 @@ public class WaitingForPlayersController implements FXMLController {
     }
 
     /**
-     * this method handles the notifications in based of how many players are needed to start the game and print the name of the players that have joined the game
-     * @param players players that have joined the game
+     * Notification method
+     * It is called when a player joins the specific game
+     * It updates how many players are needed to start the game and prints the name of the players that have joined the game
+     *
+     * @param players           ArrayList of players that have joined the game
      * @param nOfMissingPlayers number of player needed before it is possible start the game. it can be a number between 1 and 3
      */
     public void handleServerNotification(ArrayList<Player> players, int nOfMissingPlayers) {
-            switch (players.size()) {
-                case 2:
-                    player2Info.setText("Player 2 : " + players.get(1).getUsername());
-                    player2Info.setVisible(true);
-                    break;
-                case 3:
-                    player3Info.setText("Player 3 : " + players.get(2).getUsername());
-                    player3Info.setVisible(true);
-                    break;
-                case 4:
-                    player4Info.setText("Player 4 : " + players.get(3).getUsername());
-                    player4Info.setVisible(true);
-                    break;
-                default:
-                    break;
-            }
+        switch (players.size()) {
+            case 2:
+                player2Info.setText("Player 2 : " + players.get(1).getUsername());
+                player2Info.setVisible(true);
+                break;
+            case 3:
+                player3Info.setText("Player 3 : " + players.get(2).getUsername());
+                player3Info.setVisible(true);
+                break;
+            case 4:
+                player4Info.setText("Player 4 : " + players.get(3).getUsername());
+                player4Info.setVisible(true);
+                break;
+            default:
+                break;
+        }
 
-            waitingForNPlayersLabel.setText("Waiting for " + nOfMissingPlayers + " players to join the game...");
+        waitingForNPlayersLabel.setText("Waiting for " + nOfMissingPlayers + " players to join the game...");
 
-            if (nOfMissingPlayers==0) {
-                waitingForNPlayersLabel.setText("You can start the game");
-                StartGameButton.setVisible(true);
-            } else {
-                StartGameButton.setVisible(false);
-            }
+        if (nOfMissingPlayers == 0) {
+            waitingForNPlayersLabel.setText("You can start the game");
+            StartGameButton.setVisible(true);
+        } else {
+            StartGameButton.setVisible(false);
+        }
 
     }
 

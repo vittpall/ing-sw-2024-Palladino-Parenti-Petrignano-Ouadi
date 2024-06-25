@@ -12,6 +12,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * This class is the controller for the MainMenu.fxml file
+ */
 public class MainMenuStateController implements FXMLController {
 
     public Button playButton;
@@ -24,8 +27,14 @@ public class MainMenuStateController implements FXMLController {
     @FXML
     private Label errorLabel;
 
+    /**
+     * This method is used to handle the play button. It sets the username and, only if it is valid, goes to the LobbyMenu state
+     *
+     * @throws IOException          if there is a problem with I/O operations
+     * @throws InterruptedException if the thread running is interrupted
+     */
     @FXML
-    private void handlePlayButton() throws IOException, ClassNotFoundException, InterruptedException {
+    private void handlePlayButton() throws IOException, InterruptedException {
         String username = usernameField.getText();
         if (!username.isEmpty() && this.client != null && client.checkUsername(username)) {
             client.setUsername(username);
@@ -39,10 +48,12 @@ public class MainMenuStateController implements FXMLController {
         }
     }
 
+    @Override
     public void setClient(BaseClient client) {
         this.client = client;
     }
 
+    @Override
     public void setStage(Stage stage) {
         this.stage = stage;
 

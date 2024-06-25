@@ -33,7 +33,7 @@ public class LobbyController {
         lobbyListeners = new Observable();
     }
 
-    public boolean checkUsername(String username, GameListener lobbyListener) {
+    public boolean checkUsername(String username) {
         synchronized (this.usernames) {
             return usernames.add(username);
         }
@@ -137,8 +137,8 @@ public class LobbyController {
         return gameControllers.get(idGame).getAvailableColors(playerListener);
     }
 
-    public synchronized TokenColor setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor, GameListener playerListener) throws IOException {
-        return gameControllers.get(idGame).setTokenColor(idClientIntoGame, tokenColor, playerListener);
+    public synchronized TokenColor setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws IOException {
+        return gameControllers.get(idGame).setTokenColor(idClientIntoGame, tokenColor);
     }
 
     public int getPoints(int idGame, int idClientIntoGame) {
@@ -220,8 +220,4 @@ public class LobbyController {
         return gameControllers.get(idGame).getPlayerState(idClientIntoGame);
     }
 
-
-    public void closeGameWhenEnded(Integer idGame) {
-        gameControllers.remove(idGame);
-    }
 }

@@ -28,7 +28,7 @@ public class GameController {
     /**
      * Constructor of the class
      *
-     * @param nPlayers
+     * @param nPlayers Integer representing the number of players
      */
     public GameController(int nPlayers) {
         this.nPlayers = nPlayers;
@@ -39,9 +39,10 @@ public class GameController {
     }
 
     /**
-     * This method checks if the player can perform the requested action
-     * @param idPlayerIntoGame
-     * @param requestedActions
+     * This method checks if the specific player can perform the requested action
+     *
+     * @param idPlayerIntoGame Integer representing the id of the player into the game
+     * @param requestedActions the RequestedAction requested by the user
      * @return true if the player can perform the requested action, false otherwise
      */
     public boolean checkState(int idPlayerIntoGame, RequestedActions requestedActions) {
@@ -54,14 +55,15 @@ public class GameController {
                             && getPlayerState(idPlayerIntoGame) == PlayerState.PLAY_CARD;
             case RequestedActions.SHOW_WINNER -> gameState == GameState.ENDGAME;
             case RequestedActions.SHOW_DESKS, RequestedActions.SHOW_OBJ_CARDS,
-                 RequestedActions.SHOW_POINTS, RequestedActions.CHAT -> true;
+                    RequestedActions.SHOW_POINTS, RequestedActions.CHAT -> true;
         };
     }
 
     /**
      * This method returns the current state of the game
-     * @param idClientIntoGame
-     * @return the current state of the game
+     *
+     * @param idClientIntoGame Integer representing the id of the player into the game
+     * @return String representing the current state of the game
      */
     public String getCurrentState(int idClientIntoGame) {
         return getGameState() + " " + getPlayerState(idClientIntoGame).toString();
@@ -69,15 +71,17 @@ public class GameController {
 
     /**
      * This method returns the state of the player
-     * @param idClientIntoGame
-     * @return the state of the player
+     *
+     * @param idClientIntoGame Integer representing the id of the player into the game
+     * @return PlayerState representing the state of the player
      */
     public PlayerState getPlayerState(int idClientIntoGame) {
         return model.getPlayers().get(idClientIntoGame).getPlayerState();
     }
 
     /**
-     * This method returns the state of the game
+     * This getter returns the state of the game
+     *
      * @return the state of the game
      */
     public String getGameState() {
@@ -85,12 +89,14 @@ public class GameController {
     }
 
     /**
-     * This method lets the player create a game and join one
-     * @param username
-     * @param playerListener
+     * This method lets the player join a game and notify the other players that another one has joined.
+     * It sets up the game if the number of players is reached.
+     *
+     * @param username       String representing the username of the player
+     * @param playerListener GameListener representing the listener
      * @return the id of the player
-     * @throws InterruptedException
-     * @throws IOException
+     * @throws InterruptedException if the thread running is interrupted
+     * @throws IOException          if an I/O error occurs
      */
     public synchronized int joinGame(String username, GameListener playerListener) throws InterruptedException, IOException {
         Player player = new Player(username);
@@ -111,9 +117,10 @@ public class GameController {
     }
 
     /**
-     * This method lets the player create a game
-     * @param state
-     * @param listener
+     * This method subscribes a listener to an observable state
+     *
+     * @param state    the state to subscribe to
+     * @param listener the listener to subscribe
      */
     private void addListenerList(String state, GameListener listener) {
         if (!listeners.containsKey(state))
@@ -122,9 +129,10 @@ public class GameController {
     }
 
     /**
-     * This method remove a listener from an observable
-     * @param state
-     * @param listener
+     * This method remove a listener from an observable state
+     *
+     * @param state    the state to remove the listener from
+     * @param listener the listener to remove
      */
     private void removeListenerList(String state, GameListener listener) {
         if (listeners.containsKey(state))
@@ -132,9 +140,10 @@ public class GameController {
     }
 
     /**
-     * This method gets the objective cards of the player
-     * @param idPlayer
-     * @param playerListener
+     * This method gets the initial objective cards of the player
+     *
+     * @param idPlayer       Integer representing the id of the player in the game
+     * @param playerListener GameListener representing the listener of the player
      * @return the objective cards of the player
      */
     public ArrayList<ObjectiveCard> getObjectiveCards(int idPlayer, GameListener playerListener) {
@@ -143,9 +152,10 @@ public class GameController {
     }
 
     /**
-     * This method sets the objective card of the player
-     * @param idClientIntoGame
-     * @param idObjCard
+     * This method sets the secret objective card of the player
+     *
+     * @param idClientIntoGame Integer representing the id of the player into the game
+     * @param idObjCard        Integer representing the id of the objective card
      */
     public void setObjectiveCard(int idClientIntoGame, int idObjCard) {
         model.setObjectiveCards(idClientIntoGame, idObjCard);
@@ -153,8 +163,9 @@ public class GameController {
 
     /**
      * This method closes the game and notifies the players that the game has been closed
-     * @param userThatLeft
-     * @throws IOException
+     *
+     * @param userThatLeft the username of the player that left the game
+     * @throws IOException if an I/O error occurs
      */
     public void closeGame(String userThatLeft) throws IOException {
         String msg = "The game has been closed because " + userThatLeft + " finished the game";
@@ -164,6 +175,7 @@ public class GameController {
 
     /**
      * This method gets the starter card of the player
+     *
      * @param idClientIntoGame the id of the player into the game
      * @return the starter card of the player
      */
@@ -173,11 +185,12 @@ public class GameController {
 
     /**
      * This method lets the player play the starter card and notifies the other players that the starter card has been played
-     * @param idClientIntoGame
-     * @param playedFacedDown
-     * @param playerListener
-     * @throws RequirementsNotMetException
-     * @throws PlaceNotAvailableException
+     *
+     * @param idClientIntoGame Integer representing the id of the player into the game
+     * @param playedFacedDown  true if the card has to be played faced down, false otherwise
+     * @param playerListener   GameListener representing the listener of the player
+     * @throws RequirementsNotMetException if the requirements of the card played are not met
+     * @throws PlaceNotAvailableException  if the place where the client wants to play the card is not available
      */
     public synchronized void playStarterCard(int idClientIntoGame, boolean playedFacedDown, GameListener playerListener)
             throws RequirementsNotMetException, PlaceNotAvailableException {
@@ -201,9 +214,10 @@ public class GameController {
     }
 
     /**
-     * This method gets the objective card of the player
-     * @param idClientIntoGame the id of the player into the game
-     * @return the objective card of the player
+     * This method gets the secret objective card of the player
+     *
+     * @param idClientIntoGame Integer representing the id of the player into the game
+     * @return the ObjectiveCard of the player
      */
     public ObjectiveCard getObjectiveCard(int idClientIntoGame) {
         return model.getPlayers().get(idClientIntoGame).getObjectiveCard();
@@ -211,7 +225,8 @@ public class GameController {
 
     /**
      * This method gets the hand of the player
-     * @param idClientIntoGame the id of the player into the game
+     *
+     * @param idClientIntoGame Integer representing the id of the player into the game
      * @return the hand of the player
      */
     public ArrayList<GameCard> getPlayerHand(int idClientIntoGame) {
@@ -219,7 +234,8 @@ public class GameController {
     }
 
     /**
-     * This method gets the shared objective cards
+     * This method gets the shared objective cards of the game
+     *
      * @return the shared objective cards
      */
     public ObjectiveCard[] getSharedObjectiveCards() {
@@ -227,7 +243,8 @@ public class GameController {
     }
 
     /**
-     * This method gets the available colors for the player
+     * This method gets the available colors for the player to choose from
+     *
      * @param playerListener the listener of the player
      * @return the available colors for the player
      */
@@ -240,13 +257,13 @@ public class GameController {
 
     /**
      * This method sets the token color of the player
+     *
      * @param idClientIntoGame the id of the player into the game
-     * @param tokenColor the token color of the player
-     * @param playerListener the listener of the player
+     * @param tokenColor       the token color of the player
      * @return the token color of the player
-     * @throws IOException
+     * @throws IOException if an I/O error occurs
      */
-    public synchronized TokenColor setTokenColor(int idClientIntoGame, TokenColor tokenColor, GameListener playerListener) throws IOException {
+    public synchronized TokenColor setTokenColor(int idClientIntoGame, TokenColor tokenColor) throws IOException {
         model.setTokenColor(idClientIntoGame, tokenColor);
         String message = "\n------------------------------------\n" +
                 "Player " + model.getPlayers().get(idClientIntoGame).getUsername() +
@@ -258,6 +275,8 @@ public class GameController {
 
     /**
      * This method gets all the player of the game
+     *
+     * @return ArrayList representing the players of the game
      */
     public ArrayList<Player> getAllPlayers() {
         return model.getPlayers();
@@ -265,8 +284,9 @@ public class GameController {
 
     /**
      * This method returns the message of the chat
-     * @param receiver
-     * @param sender
+     *
+     * @param receiver the receiver of the message
+     * @param sender   the sender of the message
      * @return the message of the chat
      */
     public ArrayList<Message> getMessages(String receiver, String sender) {
@@ -278,7 +298,8 @@ public class GameController {
 
     /**
      * This method sends a message
-     * @param msg
+     *
+     * @param msg the message that has to be sent
      */
     public void sendMessage(Message msg) {
         model.getChats().addMessage(msg);
@@ -286,7 +307,8 @@ public class GameController {
     }
 
     /**
-     * This method returns the current index of a player inside the game
+     * This method returns the index of the current player inside the game
+     *
      * @return the current index of a player inside the game
      */
     public int getCurrentPlayer() {
@@ -295,13 +317,14 @@ public class GameController {
 
     /**
      * This method plays a card
+     *
      * @param idClientIntoGame the id of the player into the game
-     * @param chosenCard the card chosen by the player
-     * @param faceDown the face of the card
-     * @param chosenPosition the position chosen by the player
+     * @param chosenCard       the card chosen by the player
+     * @param faceDown         the face of the card
+     * @param chosenPosition   the position chosen by the player
      * @return the points of the player
-     * @throws PlaceNotAvailableException
-     * @throws RequirementsNotMetException
+     * @throws PlaceNotAvailableException  if the place where the player wants to play the card is not available
+     * @throws RequirementsNotMetException if the requirements of the card played are not met
      */
     public int playCard(int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws PlaceNotAvailableException, RequirementsNotMetException {
@@ -346,11 +369,13 @@ public class GameController {
     }
 
     /**
-     * This method draws a card from a deck and notifies the other players that a card has been drawn by a player and that it is now the turn of another player
+     * This method draws a card from a deck and notifies the other players that a card has been drawn
+     * by a player and that it is now the turn of another player
+     *
      * @param deckToChoose the deck to choose
-     * @param inVisible the visibility of the card
+     * @param inVisible    the visibility of the card
      */
-    public synchronized void drawCard(int deckToChoose, int inVisible)  {
+    public synchronized void drawCard(int deckToChoose, int inVisible) {
         Deck chosenDeck;
         if (deckToChoose == 1)
             chosenDeck = model.getResourceDeck();
@@ -389,6 +414,7 @@ public class GameController {
 
     /**
      * This method tells if the last round has started
+     *
      * @return true if the last round has started, false otherwise
      */
     public boolean getIsLastRoundStarted() {
@@ -397,7 +423,8 @@ public class GameController {
 
     /**
      * This method gets the available places for the player
-     * @param idClientIntoGame
+     *
+     * @param idClientIntoGame the id of the player into the game
      * @return the available places for the player
      */
     public HashSet<Point> getAvailablePlaces(int idClientIntoGame) {
@@ -406,7 +433,8 @@ public class GameController {
 
     /**
      * This method gets the visible cards of a deck
-     * @param deck
+     *
+     * @param deck the deck from which to get the visible cards
      * @return the visible cards of a deck
      */
     public ArrayList<GameCard> getVisibleCardsDeck(int deck) {
@@ -417,7 +445,8 @@ public class GameController {
 
     /**
      * This method gets the last card of the usable cards of a deck
-     * @param deck
+     *
+     * @param deck the deck from which to get the last card
      * @return the last card of the usable cards of a deck
      */
     public GameCard getLastCardOfUsableCards(int deck) {
@@ -428,6 +457,7 @@ public class GameController {
 
     /**
      * This method gets the username of the player that stopped the game
+     *
      * @return the username of the player that stopped the game
      */
     public String getUsernamePlayerThatStoppedTheGame() {
@@ -436,6 +466,7 @@ public class GameController {
 
     /**
      * This method gets the winner of the game
+     *
      * @return the winner of the game
      */
     public synchronized String getWinner() {
@@ -444,6 +475,7 @@ public class GameController {
 
     /**
      * This method gets the players of the game
+     *
      * @return the players of the game
      */
     public ArrayList<Player> getPlayers() {
@@ -452,6 +484,7 @@ public class GameController {
 
     /**
      * This method gets the number of players inside the game instead of returning an arraylist of players
+     *
      * @return the number of players inside the game
      */
     public int getnPlayer() {

@@ -11,10 +11,10 @@ public class CheckUsernameMsg extends ClientToServerMsg {
     public CheckUsernameMsg(String username) {
         this.username = username;
     }
-
+    @Override
     public ReturnableObject<Boolean> functionToCall(LobbyController controller, GameListener playerListener) {
         ReturnableObject<Boolean> toReturn = new ReturnableObject<>();
-        toReturn.setResponseReturnable(controller.checkUsername(username, playerListener));
+        toReturn.setResponseReturnable(controller.checkUsername(username));
         return toReturn;
     }
 

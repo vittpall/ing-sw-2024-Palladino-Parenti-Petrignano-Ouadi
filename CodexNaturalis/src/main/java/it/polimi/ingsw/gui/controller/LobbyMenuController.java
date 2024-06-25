@@ -14,6 +14,9 @@ import javafx.scene.control.Button;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
+/**
+ * This class is the controller for the LobbyMenu.fxml file
+ */
 public class LobbyMenuController implements FXMLController {
 
     public BorderPane popup;
@@ -23,18 +26,12 @@ public class LobbyMenuController implements FXMLController {
     private BaseClient client;
     private Stage stage;
 
-    /**
-     * Constructor
-     * @param client refers to the current client
-     */
+    @Override
     public void setClient(BaseClient client) {
         this.client = client;
     }
 
-    /**
-     * Constructor
-     * @param stage refers to the stage of the window
-     */
+    @Override
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -46,19 +43,23 @@ public class LobbyMenuController implements FXMLController {
         popup.setVisible(false);
     }
 
-    @FXML
     /**
      * this method handle the case where the client press "Create Game" button and go to the CreateGame state
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
+    @FXML
     private void handleCreateGame() throws RemoteException {
         client.setCurrentState(new CreateGameStateGUI(stage, client));
         client.getClientCurrentState().display();
     }
 
-    @FXML
     /**
      * this method handle the case where the client press "Join Game" button and go to the JoinGameMenu state
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
+    @FXML
     private void handleJoinGame() throws RemoteException {
         client.setCurrentState(new JoinGameMenuStateGUI(stage, client));
         client.getClientCurrentState().display();
@@ -67,7 +68,8 @@ public class LobbyMenuController implements FXMLController {
 
     /**
      * this method closes the game if the client press EXIT
-     * @throws RemoteException
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     public void handleExit() throws RemoteException {
         client.close();
@@ -75,6 +77,7 @@ public class LobbyMenuController implements FXMLController {
 
     /**
      * set the error message
+     *
      * @param content content of the message error
      */
     private void showAlert(String content) {
@@ -86,7 +89,7 @@ public class LobbyMenuController implements FXMLController {
     }
 
     /**
-     * this methods set the PopUp invisible after the client close it
+     * this method set the PopUp invisible after the client close it
      */
     public void handleClosePopUp() {
         popup.setVisible(false);
@@ -94,6 +97,7 @@ public class LobbyMenuController implements FXMLController {
 
     /**
      * this method set the PopUp visible in case of error or a message
+     *
      * @param msg message of error
      */
     public void showGameClosedPopup(String msg) {

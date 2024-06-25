@@ -60,13 +60,11 @@ public interface VirtualServer extends Remote {
 
     void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws IOException, InterruptedException;
 
-    boolean getIsLastRoundStarted(int idGame) throws RemoteException;
-
     HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame) throws RemoteException;
 
     ArrayList<TokenColor> getAvailableColors(int idGame, GameListener playerListener) throws RemoteException;
 
-    TokenColor setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor, GameListener playerListener) throws IOException;
+    TokenColor setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws IOException;
 
     int getPoints(int idGame, int idClientIntoGame) throws RemoteException;
 
@@ -93,6 +91,4 @@ public interface VirtualServer extends Remote {
     boolean isGameStarted(int idGame) throws RemoteException;
 
     PlayerState getCurrentPlayerState(int idGame, int idClientIntoGame) throws RemoteException;
-
-    void closeGameWhenEnded(Integer idGame) throws RemoteException;
 }

@@ -14,10 +14,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * This class is the controller for the ColorSelection.fxml file
+ */
 public class ColorSelectionController implements FXMLController {
     public HBox colorContainer;
     public Label messageLabel;
@@ -28,40 +30,45 @@ public class ColorSelectionController implements FXMLController {
     private BaseClient client;
     private TokenColor selectedColor;
 
-    @FXML
     /**
-     *this method disables the selectColorButton until the clint doesn't select a color
+     * This method initialize the stage and disables the selectColorButton
      */
+    @FXML
     private void initialize() {
         selectColorButton.setDisable(true);
     }
 
     /**
-     * this method updates the available token colors
-     * @param colorList is the list that contains the available token colors
+     * This method updates the available token colors
+     *
+     * @param colorList is the ArrayList that contains the available token colors
      */
     public void updateColorList(ArrayList<TokenColor> colorList) {
 
-            colorContainer.getChildren().clear();
-            for (TokenColor color : colorList) {
-                ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + color.getImageName()))));
-                imageView.setFitHeight(100);
-                imageView.setFitWidth(100);
-                imageView.setPreserveRatio(true);
+        colorContainer.getChildren().clear();
+        for (TokenColor color : colorList) {
+            ImageView imageView = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/" + color.getImageName()))));
+            imageView.setFitHeight(100);
+            imageView.setFitWidth(100);
+            imageView.setPreserveRatio(true);
 
-                imageView.setOnMouseClicked(event -> {
-                    selectedColor = color;
-                    selectColorButton.setDisable(false);
-                });
+            imageView.setOnMouseClicked(event -> {
+                selectedColor = color;
+                selectColorButton.setDisable(false);
+            });
 
-                colorContainer.getChildren().add(imageView);
-            }
+            colorContainer.getChildren().add(imageView);
+        }
     }
 
-    @FXML
     /**
-     * this method connects the chosen color to the respective client. If two client choose the same color there is an error message
+     * This method connects the chosen color to the respective client.
+     * If two client choose the same color there is an error message
+     *
+     * @throws IOException          if there is a problem with the I/O operations
+     * @throws InterruptedException if the thread running is interrupted
      */
+    @FXML
     public void handleSelectColor() throws IOException, InterruptedException {
         if (selectedColor != null && client.getAvailableColors().contains(selectedColor)) {
             try {
@@ -79,15 +86,14 @@ public class ColorSelectionController implements FXMLController {
     }
 
     /**
-     *this method handles when the client decide to close the game and return to the Lobby Menu
-     * @throws RemoteException
+     * This method handles when the client decide to close the game and return to the Lobby Menu
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     public void handleExit() throws RemoteException {
         try {
             client.returnToLobby();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
@@ -95,25 +101,20 @@ public class ColorSelectionController implements FXMLController {
     }
 
     /**
-     *this method sets the Error message
-     * @param e if there is a problem reaching the server
+     * This method sets the Error message
+     *
+     * @param e the Exception that needs to be shawn
      */
     public void handleException(Exception e) {
         messageLabel.setText("Error reaching the server: " + e.getMessage());
     }
 
-    /**
-     *Constructor
-     * @param client is the current client
-     */
+    @Override
     public void setClient(BaseClient client) {
         this.client = client;
     }
 
-    /**
-     * Constructor
-     * @param stage is the stage of the current state
-     */
+    @Override
     public void setStage(Stage stage) {
         this.stage = stage;
     }

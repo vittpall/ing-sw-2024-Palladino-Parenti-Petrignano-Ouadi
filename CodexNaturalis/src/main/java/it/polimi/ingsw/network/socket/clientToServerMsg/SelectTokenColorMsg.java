@@ -23,7 +23,7 @@ public class SelectTokenColorMsg extends ClientToServerMsg {
     @Override
     public ReturnableObject<TokenColor> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, IOException {
         ReturnableObject<TokenColor> response = new ReturnableObject<>();
-        TokenColor token = controller.setTokenColor(idGame, idClientIntoGame, tokenColor, playerListener);
+        TokenColor token = controller.setTokenColor(idGame, idClientIntoGame, tokenColor);
         response.setResponseReturnable(token);
         return response;
     }

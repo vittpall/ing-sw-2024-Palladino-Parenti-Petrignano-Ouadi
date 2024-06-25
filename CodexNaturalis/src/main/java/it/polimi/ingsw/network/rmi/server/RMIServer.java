@@ -26,8 +26,6 @@ import java.util.HashSet;
 
 public class RMIServer implements VirtualServer {
     final HashMap<VirtualView, HeartBeat> clients = new HashMap<>();
-
-
     private final LobbyController lobbyController;
 
     public RMIServer(LobbyController lobbyController) throws RemoteException {
@@ -44,7 +42,7 @@ public class RMIServer implements VirtualServer {
 
     @Override
     public boolean checkUsername(String username, GameListener playerListener) throws RemoteException {
-        boolean usernameValid = lobbyController.checkUsername(username, playerListener);
+        boolean usernameValid = lobbyController.checkUsername(username);
         if (usernameValid) {
             VirtualView client = (VirtualView) playerListener;
             HeartBeat hb = clients.get(client);
@@ -113,11 +111,6 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public void closeGameWhenEnded(Integer idGame) throws RemoteException {
-        lobbyController.closeGameWhenEnded(idGame);
-    }
-
-    @Override
     public ArrayList<ObjectiveCard> getPlayerObjectiveCards(int idGame, int idPlayer, GameListener playerListener) throws RemoteException {
         return lobbyController.getObjectiveCards(idGame, idPlayer, playerListener);
     }
@@ -165,12 +158,6 @@ public class RMIServer implements VirtualServer {
         lobbyController.drawCard(idGame, deckToChoose, inVisible);
     }
 
-
-    @Override
-    public boolean getIsLastRoundStarted(int idGame) throws RemoteException {
-        return lobbyController.getIsLastRoundStarted(idGame);
-    }
-
     @Override
     public HashSet<Point> getAvailablePlaces(int idGame, int idClientIntoGame) throws RemoteException {
         return lobbyController.getAvailablePlaces(idGame, idClientIntoGame);
@@ -204,8 +191,8 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public TokenColor setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor, GameListener playerListener) throws IOException {
-        return lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor, playerListener);
+    public TokenColor setTokenColor(int idGame, int idClientIntoGame, TokenColor tokenColor) throws IOException {
+        return lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor);
     }
 
     public int getPoints(int idGame, int idClientIntoGame) throws RemoteException {

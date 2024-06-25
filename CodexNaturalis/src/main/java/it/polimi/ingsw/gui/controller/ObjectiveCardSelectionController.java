@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+/**
+ * This class is the controller for the ObjectiveCardSelection.fxml file
+ */
 public class ObjectiveCardSelectionController implements FXMLController {
     public VBox card1Container;
     public VBox card2Container;
@@ -27,7 +30,8 @@ public class ObjectiveCardSelectionController implements FXMLController {
 
     /**
      * this method loads two objective cards. the client will choose one of them
-     * @throws RemoteException
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     public void loadCards() throws RemoteException {
         try {
@@ -50,7 +54,8 @@ public class ObjectiveCardSelectionController implements FXMLController {
 
     /**
      * it is called if the client select the first objective card
-     * @throws RemoteException
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     public void handleSelectCard1() throws RemoteException {
         if (!playerObjectiveCards.isEmpty()) {
@@ -60,7 +65,8 @@ public class ObjectiveCardSelectionController implements FXMLController {
 
     /**
      * it is called if the client select the second objective card
-     * @throws RemoteException
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     public void handleSelectCard2() throws RemoteException {
         if (playerObjectiveCards.size() > 1) {
@@ -69,9 +75,10 @@ public class ObjectiveCardSelectionController implements FXMLController {
     }
 
     /**
-     * save the selected card. in the next state, Game state, it will be printed, so the client can always see his objective card
-     * @param cardIndex is the number of the card
-     * @throws RemoteException
+     * save the selected card and move to the next stage
+     *
+     * @param cardIndex is the number of the card chosen
+     * @throws RemoteException if there is a problem with the remote connection
      */
     private void selectCard(int cardIndex) throws RemoteException {
         try {
@@ -84,34 +91,28 @@ public class ObjectiveCardSelectionController implements FXMLController {
             messageLabel.setText("Error selecting card: " + ex.getMessage());
         }
     }
+
     /**
-     *this method handles when the client decide to close the game and return to the Lobby Menu
-     * @throws RemoteException
+     * this method handles when the client decide to close the game and return to the Lobby Menu
+     *
+     * @throws RemoteException if there is a problem with the remote connection
      */
     public void handleExit() throws RemoteException {
         try {
             client.returnToLobby();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
         client.getClientCurrentState().display();
     }
 
-    /***
-     * Constructor
-     * @param client refers to the current client
-     */
+    @Override
     public void setClient(BaseClient client) {
         this.client = client;
     }
 
-    /**
-     * Constructor
-     * @param stage refers to the stage of the window
-     */
+    @Override
     public void setStage(Stage stage) {
         this.stage = stage;
     }
