@@ -102,12 +102,11 @@ public class GameController implements FXMLController {
         gameDeskScrollPane.setHvalue(0.5);
         gameDeskScrollPane.setVvalue(0.5);
     }
+
     public void handleExit() throws RemoteException {
         try {
             client.returnToLobby();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
@@ -239,6 +238,10 @@ public class GameController implements FXMLController {
         Card usableCard2 = client.getLastFromUsableCards(2);
         CardView usableCardBackView1 = new CardView(usableCard1, false);
         CardView usableCardBackView2 = new CardView(usableCard2, false);
+
+        applyHoverEffects(usableCardBackView1);
+        applyHoverEffects(usableCardBackView2);
+
         resourceDeck.getChildren().add(usableCardBackView1);
         goldenDeck.getChildren().add(usableCardBackView2);
     }
@@ -255,6 +258,7 @@ public class GameController implements FXMLController {
             if (i < playerHand.size()) {
                 GameCard card = playerHand.get(i);
                 CardView cardView = new CardView(card, !playCardFaceDown);
+                applyHoverEffects(cardView);
                 playerHandBox.getChildren().add(cardView);
             }
         }
@@ -264,8 +268,17 @@ public class GameController implements FXMLController {
     private void initializeVisibleCards(ArrayList<GameCard> cards, HBox pane) {
         CardView card1 = new CardView(cards.get(0), true);
         CardView card2 = new CardView(cards.get(1), true);
+
+        applyHoverEffects(card1);
+        applyHoverEffects(card2);
+
         pane.getChildren().add(card1);
         pane.getChildren().add(card2);
+    }
+
+
+    private void applyHoverEffects(CardView cardView) {
+        cardView.getStyleClass().add("card-image");
     }
 
 
@@ -328,7 +341,7 @@ public class GameController implements FXMLController {
                         loadPlayerHand();
                         infoGame.setText(client.getPlayers(client.getIdGame()).get((client.getIdClientIntoGame() + 1) % client.getnPlayer(client.getIdGame())).getUsername() + " is playing");
                     } catch (IOException | InterruptedException e) {
-                        e.printStackTrace();
+                        throw new RuntimeException(e);
                     }
                 });
             }
@@ -352,7 +365,7 @@ public class GameController implements FXMLController {
                         loadPlayerHand();
                         infoGame.setText(client.getPlayers(client.getIdGame()).get((client.getIdClientIntoGame() + 1) % client.getnPlayer(client.getIdGame())).getUsername() + " is playing");
                     } catch (IOException | InterruptedException e) {
-                        e.printStackTrace();
+                        throw new RuntimeException(e);
                     }
                 });
             }
