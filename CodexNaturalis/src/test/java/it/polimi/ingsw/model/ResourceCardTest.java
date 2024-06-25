@@ -34,7 +34,7 @@ class ResourceCardTest {
 
         ResourceCard card = new ResourceCard(resourceBack, imageFrontPath, imageBackPath, points, pointType, resourcesFront, corners);
 
-        assertEquals(resourcesFront, card.getFrontSideResources());
+        assertEquals(resourcesFront, card.getBackSideResources());
         assertEquals(resourceBack, card.getBackSideResource());
         assertEquals(pointType, card.getPointType());
         assertEquals(points, card.getPoints());

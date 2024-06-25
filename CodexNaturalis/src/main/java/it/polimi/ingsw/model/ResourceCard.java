@@ -22,7 +22,7 @@ public class ResourceCard extends GameCard {
      * This is the constructor for the ResourceCard class.
      * It initializes the cardResourceFront, backSideResource, pointType, points, frontImagePath, backImagePath from the superclass.
      *
-     * @param frontSideResources The resources on the front of the card
+     * @param backSideResources The resources on the back of the card
      * @param backSideResource   The resource on the back of the card
      * @param pointType          The type that will be used to calculate points
      * @param points             The number of points the card gives
@@ -37,9 +37,9 @@ public class ResourceCard extends GameCard {
             @JsonProperty("backImagePath") String backImagePath,
             @JsonProperty("points") int points,
             @JsonProperty("pointType") PointType pointType,
-            @JsonProperty("frontSideResources") ArrayList<Resource> frontSideResources,
+            @JsonProperty("backSideResources") ArrayList<Resource> backSideResources,
             @JsonProperty("corners") Corner[] corners) {
-        super(backSideResource, frontImagePath, backImagePath, points, pointType, frontSideResources, corners);
+        super(backSideResource, frontImagePath, backImagePath, points, pointType, backSideResources, corners);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class ResourceCard extends GameCard {
                 Objects.equals(getImageFrontPath(), that.getImageFrontPath()) &&
                 Objects.equals(getImageBackPath(), that.getImageBackPath()) &&
                 getPointType() == that.getPointType() &&
-                Objects.equals(getFrontSideResources(), that.getFrontSideResources()) &&
+                Objects.equals(getBackSideResources(), that.getBackSideResources()) &&
                 Arrays.equals(getCorners(), that.getCorners());
     }
 

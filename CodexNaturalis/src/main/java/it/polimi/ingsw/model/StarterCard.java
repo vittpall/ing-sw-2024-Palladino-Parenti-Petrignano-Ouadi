@@ -24,7 +24,7 @@ public class StarterCard extends GameCard {
      * @param backImagePath      The path to the image for the back of the card
      * @param points             The number of points the card gives
      * @param pointType          The type that will be used to calculate points
-     * @param frontSideResources The resources on the front of the card
+     * @param backSideResources The resources on the back of the card
      * @param corners            The corners of the card
      */
     public StarterCard(
@@ -33,16 +33,16 @@ public class StarterCard extends GameCard {
             @JsonProperty("backImagePath") String backImagePath,
             @JsonProperty("points") int points,
             @JsonProperty("pointType") PointType pointType,
-            @JsonProperty("frontSideResources") ArrayList<Resource> frontSideResources,
+            @JsonProperty("backSideResources") ArrayList<Resource> backSideResources,
             @JsonProperty("corners") Corner[] corners) {
-        super(backSideResource, frontImagePath, backImagePath, points, pointType, frontSideResources, corners);
+        super(backSideResource, frontImagePath, backImagePath, points, pointType, backSideResources, corners);
     }
 
     @Override
     protected void printCardDetails(PrintContext context, CardPrinter.Color colorBackground, boolean faceDown) {
         ArrayList<Resource> resources = new ArrayList<>();
-        if (!faceDown) {
-            resources = getFrontSideResources();
+        if (faceDown) {
+            resources = getBackSideResources();
         }
         int y = 1;
         for (Resource resource : resources) {

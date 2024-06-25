@@ -24,7 +24,7 @@ import java.util.Arrays;
 })
 public abstract class GameCard extends Card {
 
-    private final ArrayList<Resource> frontSideResources;
+    private final ArrayList<Resource> backSideResources;
     private final Resource backSideResource;
     private boolean playedFaceDown;
     private final PointType pointType;
@@ -39,12 +39,12 @@ public abstract class GameCard extends Card {
      * @param backImagePath      path to the image of the back of the card
      * @param points             number of points that the card gives if played
      * @param pointType          type of the pattern that is used to calculate the points
-     * @param frontSideResources resources on the front side of the card
+     * @param backSideResources  resources on the back side of the card
      * @param corners            array of corners of the card
      */
-    public GameCard(Resource backSideResource, String frontImagePath, String backImagePath, int points, PointType pointType, ArrayList<Resource> frontSideResources, Corner[] corners) {
+    public GameCard(Resource backSideResource, String frontImagePath, String backImagePath, int points, PointType pointType, ArrayList<Resource> backSideResources, Corner[] corners) {
         super(points, frontImagePath, backImagePath);
-        this.frontSideResources = frontSideResources;
+        this.backSideResources = backSideResources;
         this.backSideResource = backSideResource;
         this.corners = new Corner[8];
         for (int i = 0; i < corners.length; i++) {
@@ -85,10 +85,10 @@ public abstract class GameCard extends Card {
     }
 
     /**
-     * @return the resources on the front side of the card
+     * @return the resources on the back side of the card
      */
-    public ArrayList<Resource> getFrontSideResources() {
-        return frontSideResources;
+    public ArrayList<Resource> getBackSideResources() {
+        return backSideResources;
     }
 
     /**

@@ -5,7 +5,7 @@
     "backImagePath": "img_1_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "FUNGI_KINGDOM",
       "free",
@@ -21,7 +21,7 @@
     "backImagePath": "img_2_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "FUNGI_KINGDOM",
       "FUNGI_KINGDOM",
@@ -37,7 +37,7 @@
     "backImagePath": "img_3_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "hidden",
@@ -53,7 +53,7 @@
     "backImagePath": "img_4_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "FUNGI_KINGDOM",
@@ -69,7 +69,7 @@
     "backImagePath": "img_5_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "QUILL",
@@ -85,7 +85,7 @@
     "backImagePath": "img_6_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "INKWELL",
       "FUNGI_KINGDOM",
@@ -101,7 +101,7 @@
     "backImagePath": "img_7_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "FUNGI_KINGDOM",
       "INSECT_KINGDOM",
@@ -117,7 +117,7 @@
     "backImagePath": "img_8_retro.png",
     "points": 1,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "FUNGI_KINGDOM",
@@ -133,7 +133,7 @@
     "backImagePath": "img_9_retro.png",
     "points": 1,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "FUNGI_KINGDOM",
       "hidden",
@@ -149,7 +149,7 @@
     "backImagePath": "img_10_retro.png",
     "points": 1,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "free",
@@ -165,7 +165,7 @@
     "backImagePath": "img_11_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "PLANT_KINGDOM",
       "free",
@@ -181,7 +181,7 @@
     "backImagePath": "img_12_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "PLANT_KINGDOM",
       "PLANT_KINGDOM",
@@ -197,7 +197,7 @@
     "backImagePath": "img_13_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "hidden",
@@ -213,7 +213,7 @@
     "backImagePath": "img_14_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "PLANT_KINGDOM",
@@ -229,7 +229,7 @@
     "backImagePath": "img_15_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "INSECT_KINGDOM",
@@ -245,7 +245,7 @@
     "backImagePath": "img_16_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "FUNGI_KINGDOM",
       "PLANT_KINGDOM",
@@ -261,7 +261,7 @@
     "backImagePath": "img_17_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "MANUSCRIPT",
       "hidden",
@@ -277,7 +277,7 @@
     "backImagePath": "img_18_retro.png",
     "points": 1,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "free",
@@ -293,7 +293,7 @@
     "backImagePath": "img_19_retro.png",
     "points": 1,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "free",
@@ -309,7 +309,7 @@
     "backImagePath": "img_20_retro.png",
     "points": 1,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "PLANT_KINGDOM",
@@ -325,7 +325,7 @@
     "backImagePath": "img_21_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "ANIMAL_KINGDOM",
       "ANIMAL_KINGDOM",
@@ -341,7 +341,7 @@
     "backImagePath": "img_22_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "free",
@@ -357,7 +357,7 @@
     "backImagePath": "img_23_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "ANIMAL_KINGDOM",
       "hidden",
@@ -373,7 +373,7 @@
     "backImagePath": "img_24_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "ANIMAL_KINGDOM",
@@ -389,7 +389,7 @@
     "backImagePath": "img_25_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "INSECT_KINGDOM",
@@ -405,7 +405,7 @@
     "backImagePath": "img_26_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "PLANT_KINGDOM",
       "ANIMAL_KINGDOM",
@@ -421,7 +421,7 @@
     "backImagePath": "img_27_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "QUILL",
       "hidden",
@@ -437,7 +437,7 @@
     "backImagePath": "img_28_retro.png",
     "points": 1,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "free",
@@ -453,7 +453,7 @@
     "backImagePath": "img_29_retro.png",
     "points": 1,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "hidden",
@@ -469,7 +469,7 @@
     "backImagePath": "img_30_retro.png",
     "points": 1,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "ANIMAL_KINGDOM",
@@ -485,7 +485,7 @@
     "backImagePath": "img_31_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "INSECT_KINGDOM",
       "INSECT_KINGDOM",
@@ -501,7 +501,7 @@
     "backImagePath": "img_32_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "free",
@@ -517,7 +517,7 @@
     "backImagePath": "img_33_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "INSECT_KINGDOM",
       "hidden",
@@ -533,7 +533,7 @@
     "backImagePath": "img_34_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "INSECT_KINGDOM",
@@ -549,7 +549,7 @@
     "backImagePath": "img_35_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "QUILL",
@@ -565,7 +565,7 @@
     "backImagePath": "img_36_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "MANUSCRIPT",
       "INSECT_KINGDOM",
@@ -581,7 +581,7 @@
     "backImagePath": "img_37_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "INSECT_KINGDOM",
       "PLANT_KINGDOM",
@@ -597,7 +597,7 @@
     "backImagePath": "img_38_retro.png",
     "points": 1,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "INSECT_KINGDOM",
       "hidden",
@@ -613,7 +613,7 @@
     "backImagePath": "img_39_retro.png",
     "points": 1,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "free",
@@ -629,7 +629,7 @@
     "backImagePath": "img_40_retro.png",
     "points": 1,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "INSECT_KINGDOM",
@@ -645,7 +645,7 @@
     "backImagePath": "img_41_retro.png",
     "points": 1,
     "pointType": "QUILL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "free",
@@ -664,7 +664,7 @@
     "backImagePath": "img_42_retro.png",
     "points": 1,
     "pointType": "INKWELL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "INKWELL",
@@ -683,7 +683,7 @@
     "backImagePath": "img_43_retro.png",
     "points": 1,
     "pointType": "MANUSCRIPT",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "MANUSCRIPT",
       "free",
@@ -702,7 +702,7 @@
     "backImagePath": "img_44_retro.png",
     "points": 2,
     "pointType": "CORNER",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "free",
@@ -721,7 +721,7 @@
     "backImagePath": "img_45_retro.png",
     "points": 2,
     "pointType": "CORNER",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "free",
@@ -740,7 +740,7 @@
     "backImagePath": "img_46_retro.png",
     "points": 2,
     "pointType": "CORNER",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "hidden",
@@ -759,7 +759,7 @@
     "backImagePath": "img_47_retro.png",
     "points": 3,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "hidden",
@@ -777,7 +777,7 @@
     "backImagePath": "img_48_retro.png",
     "points": 3,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "QUILL",
       "free",
@@ -795,7 +795,7 @@
     "backImagePath": "img_49_retro.png",
     "points": 3,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "MANUSCRIPT",
@@ -813,7 +813,7 @@
     "backImagePath": "img_50_retro.png",
     "points": 5,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "hidden",
@@ -831,7 +831,7 @@
     "backImagePath": "img_51_retro.png",
     "points": 1,
     "pointType": "QUILL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "QUILL",
       "free",
@@ -850,7 +850,7 @@
     "backImagePath": "img_52_retro.png",
     "points": 1,
     "pointType": "MANUSCRIPT",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "MANUSCRIPT",
@@ -869,7 +869,7 @@
     "backImagePath": "img_53_retro.png",
     "points": 1,
     "pointType": "INKWELL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "hidden",
@@ -888,7 +888,7 @@
     "backImagePath": "img_54_retro.png",
     "points": 2,
     "pointType": "CORNER",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "free",
@@ -907,7 +907,7 @@
     "backImagePath": "img_55_retro.png",
     "points": 2,
     "pointType": "CORNER",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "free",
@@ -926,7 +926,7 @@
     "backImagePath": "img_56_retro.png",
     "points": 2,
     "pointType": "CORNER",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "hidden",
@@ -945,7 +945,7 @@
     "backImagePath": "img_57_retro.png",
     "points": 3,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "hidden",
@@ -963,7 +963,7 @@
     "backImagePath": "img_58_retro.png",
     "points": 3,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "MANUSCRIPT",
       "free",
@@ -981,7 +981,7 @@
     "backImagePath": "img_59_retro.png",
     "points": 3,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "INKWELL",
@@ -999,7 +999,7 @@
     "backImagePath": "img_60_retro.png",
     "points": 5,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "free",
@@ -1017,7 +1017,7 @@
     "backImagePath": "img_61_retro.png",
     "points": 1,
     "pointType": "INKWELL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "INKWELL",
       "free",
@@ -1036,7 +1036,7 @@
     "backImagePath": "img_62_retro.png",
     "points": 1,
     "pointType": "MANUSCRIPT",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "free",
@@ -1055,7 +1055,7 @@
     "backImagePath": "img_63_retro.png",
     "points": 1,
     "pointType": "QUILL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "hidden",
@@ -1074,7 +1074,7 @@
     "backImagePath": "img_64_retro.png",
     "points": 2,
     "pointType": "CORNER",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "free",
@@ -1093,7 +1093,7 @@
     "backImagePath": "img_65_retro.png",
     "points": 2,
     "pointType": "CORNER",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "hidden",
@@ -1112,7 +1112,7 @@
     "backImagePath": "img_66_retro.png",
     "points": 2,
     "pointType": "CORNER",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "free",
@@ -1131,7 +1131,7 @@
     "backImagePath": "img_67_retro.png",
     "points": 3,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "hidden",
@@ -1149,7 +1149,7 @@
     "backImagePath": "img_68_retro.png",
     "points": 3,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "INKWELL",
@@ -1167,7 +1167,7 @@
     "backImagePath": "img_69_retro.png",
     "points": 3,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "free",
@@ -1185,7 +1185,7 @@
     "backImagePath": "img_70_retro.png",
     "points": 5,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "free",
@@ -1203,7 +1203,7 @@
     "backImagePath": "img_71_retro.png",
     "points": 1,
     "pointType": "QUILL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "QUILL",
@@ -1222,7 +1222,7 @@
     "backImagePath": "img_72_retro.png",
     "points": 1,
     "pointType": "MANUSCRIPT",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "hidden",
@@ -1241,7 +1241,7 @@
     "backImagePath": "img_73_retro.png",
     "points": 1,
     "pointType": "INKWELL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "free",
@@ -1260,7 +1260,7 @@
     "backImagePath": "img_74_retro.png",
     "points": 2,
     "pointType": "CORNER",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "free",
@@ -1279,7 +1279,7 @@
     "backImagePath": "img_75_retro.png",
     "points": 2,
     "pointType": "CORNER",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "free",
@@ -1298,7 +1298,7 @@
     "backImagePath": "img_76_retro.png",
     "points": 2,
     "pointType": "CORNER",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "hidden",
@@ -1317,7 +1317,7 @@
     "backImagePath": "img_77_retro.png",
     "points": 3,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "INKWELL",
       "hidden",
@@ -1335,7 +1335,7 @@
     "backImagePath": "img_78_retro.png",
     "points": 3,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "MANUSCRIPT",
@@ -1353,7 +1353,7 @@
     "backImagePath": "img_79_retro.png",
     "points": 3,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "hidden",
       "hidden",
@@ -1371,7 +1371,7 @@
     "backImagePath": "img_80_retro.png",
     "points": 5,
     "pointType": "GENERAL",
-    "frontSideResources": [],
+    "backSideResources": [],
     "corners": [
       "free",
       "free",
@@ -1389,17 +1389,17 @@
     "backImagePath": "img_81_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [
+    "backSideResources": [
       "INSECT_KINGDOM"
     ],
     "corners": [
-      "free",
-      "PLANT_KINGDOM",
-      "free",
-      "INSECT_KINGDOM",
       "FUNGI_KINGDOM",
       "PLANT_KINGDOM",
       "ANIMAL_KINGDOM",
+      "INSECT_KINGDOM",
+      "free",
+      "PLANT_KINGDOM",
+      "free",
       "INSECT_KINGDOM"
     ],
     "requirements": {},
@@ -1411,18 +1411,18 @@
     "backImagePath": "img_82_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [
+    "backSideResources": [
       "FUNGI_KINGDOM"
     ],
     "corners": [
-      "ANIMAL_KINGDOM",
-      "free",
-      "FUNGI_KINGDOM",
-      "free",
       "PLANT_KINGDOM",
       "ANIMAL_KINGDOM",
       "INSECT_KINGDOM",
-      "FUNGI_KINGDOM"
+      "FUNGI_KINGDOM",
+      "ANIMAL_KINGDOM",
+      "free",
+      "FUNGI_KINGDOM",
+      "free"
     ],
     "requirements": {},
     "type": "starter"
@@ -1433,19 +1433,19 @@
     "backImagePath": "img_83_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [
+    "backSideResources": [
       "PLANT_KINGDOM",
       "FUNGI_KINGDOM"
     ],
     "corners": [
-      "free",
-      "free",
-      "free",
-      "free",
       "INSECT_KINGDOM",
       "ANIMAL_KINGDOM",
       "PLANT_KINGDOM",
-      "FUNGI_KINGDOM"
+      "FUNGI_KINGDOM",
+      "free",
+      "free",
+      "free",
+      "free"
     ],
     "requirements": {},
     "type": "starter"
@@ -1456,19 +1456,19 @@
     "backImagePath": "img_84_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [
+    "backSideResources": [
       "ANIMAL_KINGDOM",
       "INSECT_KINGDOM"
     ],
     "corners": [
-      "free",
-      "free",
-      "free",
-      "free",
       "PLANT_KINGDOM",
       "INSECT_KINGDOM",
       "FUNGI_KINGDOM",
-      "ANIMAL_KINGDOM"
+      "ANIMAL_KINGDOM",
+      "free",
+      "free",
+      "free",
+      "free"
     ],
     "requirements": {},
     "type": "starter"
@@ -1479,20 +1479,20 @@
     "backImagePath": "img_85_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [
+    "backSideResources": [
       "ANIMAL_KINGDOM",
       "INSECT_KINGDOM",
       "PLANT_KINGDOM"
     ],
     "corners": [
-      "free",
-      "free",
-      "hidden",
-      "hidden",
       "INSECT_KINGDOM",
       "FUNGI_KINGDOM",
       "ANIMAL_KINGDOM",
-      "PLANT_KINGDOM"
+      "PLANT_KINGDOM",
+      "free",
+      "free",
+      "hidden",
+      "hidden"
     ],
     "requirements": {},
     "type": "starter"
@@ -1503,20 +1503,20 @@
     "backImagePath": "img_86_retro.png",
     "points": 0,
     "pointType": "GENERAL",
-    "frontSideResources": [
+    "backSideResources": [
       "PLANT_KINGDOM",
       "ANIMAL_KINGDOM",
       "FUNGI_KINGDOM"
     ],
     "corners": [
-      "free",
-      "free",
-      "hidden",
-      "hidden",
       "FUNGI_KINGDOM",
       "ANIMAL_KINGDOM",
       "INSECT_KINGDOM",
-      "PLANT_KINGDOM"
+      "PLANT_KINGDOM",
+      "free",
+      "free",
+      "hidden",
+      "hidden"
     ],
     "requirements": {},
     "type": "starter"

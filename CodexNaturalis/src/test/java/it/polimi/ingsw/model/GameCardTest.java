@@ -49,7 +49,7 @@ class GameCardTest {
             }
             // Empty implementation for abstract class
         };
-        assertEquals(resources, card.getFrontSideResources());
+        assertEquals(resources, card.getBackSideResources());
     }
 
     @Test
