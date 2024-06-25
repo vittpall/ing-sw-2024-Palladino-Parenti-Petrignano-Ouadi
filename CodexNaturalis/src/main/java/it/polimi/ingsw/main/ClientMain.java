@@ -83,7 +83,6 @@ public class ClientMain extends Application {
             this.client = new RMIClient(server, interfaceType, stage);
             client.run();
         } catch (NotBoundException | IOException e) {
-            e.printStackTrace();
             System.err.println("Something went wrong, restart the game...");
         }
     }
