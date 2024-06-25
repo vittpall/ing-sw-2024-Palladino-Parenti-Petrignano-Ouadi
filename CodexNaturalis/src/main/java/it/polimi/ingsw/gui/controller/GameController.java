@@ -107,7 +107,7 @@ public class GameController implements FXMLController {
         try {
             client.returnToLobby();
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RemoteException();
         }
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
         client.getClientCurrentState().display();
@@ -670,22 +670,22 @@ public class GameController implements FXMLController {
         //I've already handled the message the client send, no need to use this function to display that message
         for (Tab tab : chatGameTabPane.getTabs()) {
             if (message.getReceiver() == null && tab.getText().equals("GlobalChat")) {
-                VBox vbox = (VBox) ((AnchorPane) tab.getContent()).getChildren().getFirst();
-                TextArea textArea = (TextArea) vbox.getChildren().getFirst();
-                textArea.appendText(whoSendTheMessage + ": " + message.getContent() + "\n");
-                if (!tab.isSelected()) {
-                    ((ChatTab) tab).incrementUnreadMessages();
-                }
-                break;
-            } else if (tab.getText().equals(message.getSender())) {
-                VBox vbox = (VBox) ((AnchorPane) tab.getContent()).getChildren().getFirst();
-                TextArea textArea = (TextArea) vbox.getChildren().getFirst();
-                textArea.appendText(whoSendTheMessage + ": " + message.getContent() + "\n");
-                if (!tab.isSelected()) {
-                    ((ChatTab) tab).incrementUnreadMessages();
-                }
+                fillChat(message, whoSendTheMessage, tab);
                 break;
             }
+            if (tab.getText().equals(message.getSender()) && message.getReceiver().equals(client.getUsername())) {
+                fillChat(message, whoSendTheMessage, tab);
+                break;
+            }
+        }
+    }
+
+    private void fillChat(Message message, String whoSendTheMessage, Tab tab) {
+        VBox vbox = (VBox) ((AnchorPane) tab.getContent()).getChildren().getFirst();
+        TextArea textArea = (TextArea) vbox.getChildren().getFirst();
+        textArea.appendText(whoSendTheMessage + ": " + message.getContent() + "\n");
+        if (!tab.isSelected()) {
+            ((ChatTab) tab).incrementUnreadMessages();
         }
     }
 

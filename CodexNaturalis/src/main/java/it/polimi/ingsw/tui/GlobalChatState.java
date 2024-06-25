@@ -32,6 +32,7 @@ public class GlobalChatState implements ClientStateTUI {
     @Override
     public void display() {
         System.out.println("Global chat-------------------");
+        System.out.println("Type 'exit chat' to return to the chat menu");
         try {
             //if the receiver is null it will return the null value
             ArrayList<Message> globalChat = client.getMessages(null);

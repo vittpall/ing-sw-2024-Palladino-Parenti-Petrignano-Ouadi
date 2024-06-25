@@ -1,5 +1,6 @@
 package it.polimi.ingsw.main;
 
+import it.polimi.ingsw.model.UsefulData;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.network.remoteInterfaces.VirtualServer;
 import it.polimi.ingsw.network.rmi.client.RMIClient;
@@ -27,7 +28,6 @@ public class ClientMain extends Application {
 
     @Override
     public void start(Stage stage) {
-        String PATTERN = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter server IP address (empty is 127.0.0.1): ");
 
@@ -35,9 +35,9 @@ public class ClientMain extends Application {
             serverAddress = scanner.nextLine().trim();
             if (serverAddress.isEmpty())
                 serverAddress = "127.0.0.1";
-            else if (!serverAddress.matches(PATTERN))
+            else if (!serverAddress.matches(UsefulData.PATTERN))
                 System.out.println("Invalid IP address");
-        } while (!serverAddress.matches(PATTERN) && !serverAddress.isEmpty());
+        } while (!serverAddress.matches(UsefulData.PATTERN) && !serverAddress.isEmpty());
 
         String[] options = {
                 "TUI + SOCKET",

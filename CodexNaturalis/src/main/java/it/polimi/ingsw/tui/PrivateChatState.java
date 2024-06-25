@@ -40,7 +40,8 @@ public class PrivateChatState implements ClientStateTUI {
     @Override
     public void display() throws RemoteException {
         try {
-            System.out.println("Private chat with " + receiver);
+            System.out.println("Private chat with " + receiver + "-------------------");
+            System.out.println("Type 'exit chat' to return to the chat menu");
             ArrayList<Message> chat = client.getMessages(receiver);
             if (chat == null || chat.isEmpty()) {
                 System.out.println("No messages available");
