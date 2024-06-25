@@ -60,25 +60,25 @@
                     <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </padding>
-                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #e7dfbd; -fx-background-radius: 5;  -fx-border-color: #daae82; -fx-border-radius: 5; -fx-padding: 1;">
                         <ImageView fitHeight="50.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../Images/CN_Plant_kingdom.png" />
                         </ImageView>
                         <Label fx:id="plantLabel" alignment="CENTER" styleClass="little-label" text="PLANT " />
                     </HBox>
-                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #e7dfbd; -fx-background-radius: 5; -fx-border-color: #daae82; -fx-border-radius: 5; -fx-padding: 1;">
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../Images/CN_Animal_kingdom.png" />
                         </ImageView>
                         <Label fx:id="animalLabel" alignment="CENTER" styleClass="little-label" text="ANIMAL" />
                     </HBox>
-                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #e7dfbd; -fx-background-radius: 5; -fx-border-color: #daae82; -fx-border-radius: 5; -fx-padding: 1;">
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../Images/CN_Funghi_kingdom.png" />
                         </ImageView>
                         <Label fx:id="fungiLabel" alignment="CENTER" styleClass="little-label" text="FUNGI" />
                     </HBox>
-                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #e7dfbd; -fx-background-radius: 5; -fx-border-color: #daae82; -fx-border-radius: 5; -fx-padding: 1;">
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../Images/CN_Insect_kingdom.png" />
                         </ImageView>
@@ -89,19 +89,19 @@
                     <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </padding>
-                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #e7dfbd; -fx-background-radius: 5; -fx-border-color: #daae82; -fx-border-radius: 5; -fx-padding: 1;">
                         <ImageView fitHeight="50.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../Images/CN_Manuscript.png" />
                         </ImageView>
                         <Label fx:id="manuscriptLabel" alignment="CENTER" styleClass="little-label" text="MANUSCRIPT" />
                     </HBox>
-                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #e7dfbd; -fx-background-radius: 5; -fx-border-color: #daae82; -fx-border-radius: 5; -fx-padding: 1;">
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../Images/CN_Quill.png" />
                         </ImageView>
                         <Label fx:id="quillLabel" alignment="CENTER" styleClass="little-label" text="QUILL" />
                     </HBox>
-                    <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #e7dfbd; -fx-background-radius: 5;  -fx-border-color: #daae82; -fx-border-radius: 5; -fx-padding: 1;">
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@../Images/CN_inkwell.png" />
                         </ImageView>
