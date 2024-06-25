@@ -38,9 +38,6 @@
         </ListView>
     </VBox>
     <Button alignment="CENTER" layoutX="14.0" layoutY="527.0" minHeight="33.0" minWidth="127.0" onAction="#handleBack" prefHeight="40.0" prefWidth="127.0" style="-fx-background-color: #a6f84b;" styleClass="primary-button" text="Back" textFill="WHITE" AnchorPane.bottomAnchor="233.0" AnchorPane.leftAnchor="14.0">
-        <font>
-            <Font name="Book Antiqua Bold Italic" size="12.0" />
-        </font>
     </Button>
     <Button fx:id="exit" layoutX="14.0" layoutY="576.0" mnemonicParsing="false" onAction="#handleExit" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT" AnchorPane.bottomAnchor="184.0" AnchorPane.leftAnchor="14.0">
     </Button>

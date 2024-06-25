@@ -20,10 +20,7 @@
             <Image url="@../Images/CN_decoration6.png" />
         </ImageView>
         <VBox alignment="CENTER" spacing="10">
-            <Label text="Create A New Game" textAlignment="JUSTIFY">
-                <font>
-                    <Font name="Book Antiqua Bold Italic" size="36.0" />
-                </font>
+            <Label styleClass="big-title-label" text="Create A New Game" textAlignment="JUSTIFY">
             </Label>
             <Label fx:id="feedbackLabel" styleClass="normal-label" text="Select number of players (2-4):" />
             <ChoiceBox fx:id="playerChoiceBox" styleClass="inputs-width">

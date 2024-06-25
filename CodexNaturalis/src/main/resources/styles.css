@@ -6,7 +6,15 @@
     -fx-font-size: 24px;
     -fx-font-family: 'Book Antiqua Bold Italic';
 }
+.medium-title-label {
+    -fx-font-size: 34px;
+    -fx-font-family: 'Book Antiqua Bold Italic';
+}
 
+.big-title-label {
+    -fx-font-size: 36px;
+    -fx-font-family: 'Book Antiqua Bold Italic';
+}
 .normal-label {
     -fx-font-size: 14px;
     -fx-font-family: 'Book Antiqua Bold Italic';
@@ -42,8 +50,8 @@
 
 
 .scene-dimensions {
-    -fx-pref-width: 800px;
-    -fx-pref-height: 800px;
+    -fx-pref-width: 1420px;
+    -fx-pref-height: 850px;
 }
 
 .scene-background {

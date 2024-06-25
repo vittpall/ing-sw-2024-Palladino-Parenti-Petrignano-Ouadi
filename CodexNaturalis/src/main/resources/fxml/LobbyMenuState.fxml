@@ -13,14 +13,9 @@
 <AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.controller.LobbyMenuController">
     <StackPane styleClass="scene-dimensions,scene-background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <VBox alignment="CENTER" spacing="10">
-            <Label prefHeight="75.0" prefWidth="194.0" text="Lobby Menu" textAlignment="JUSTIFY" translateY="10.0">
-            <font>
-               <Font name="Book Antiqua Bold Italic" size="34.0" />
-            </font></Label>
-            <Label prefHeight="25.0" prefWidth="194.0" text="Please select an option:">
-            <font>
-               <Font name="Book Antiqua Bold Italic" size="16.0" />
-            </font></Label>
+            <Label prefHeight="75.0" prefWidth="194.0" styleClass="medium-title-label" text="Lobby Menu"
+                   textAlignment="JUSTIFY" translateY="10.0"/>
+            <Label prefHeight="25.0" prefWidth="194.0" styleClass="normal-label" text="Please select an option:"> </Label>
 
             <Button onAction="#handleCreateGame" style="-fx-background-color: #a2ecbb;" styleClass="primary-button" text="Create a new game" />
             <Button onAction="#handleJoinGame" style="-fx-background-color: #a6f84b;" styleClass="primary-button" text="Join a game " />
