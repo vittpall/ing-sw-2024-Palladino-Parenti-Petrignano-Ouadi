@@ -1,44 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Point3D?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.gui.controller.LobbyMenuController">
     <StackPane styleClass="scene-dimensions,scene-background" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <VBox alignment="CENTER" spacing="10">
-            <Label prefHeight="75.0" prefWidth="194.0" styleClass="medium-title-label" text="Lobby Menu"
-                   textAlignment="JUSTIFY" translateY="10.0"/>
+            <Label prefHeight="75.0" prefWidth="194.0" styleClass="medium-title-label" text="Lobby Menu" textAlignment="JUSTIFY" translateY="10.0" />
             <Label prefHeight="25.0" prefWidth="194.0" styleClass="normal-label" text="Please select an option:"> </Label>
 
             <Button onAction="#handleCreateGame" style="-fx-background-color: #a2ecbb;" styleClass="primary-button" text="Create a new game" />
             <Button onAction="#handleJoinGame" style="-fx-background-color: #a6f84b;" styleClass="primary-button" text="Join a game " />
+         <Button fx:id="exit" mnemonicParsing="false" onAction="#handleExit" prefHeight="38.0" prefWidth="200.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT">
+   </Button>
         </VBox>
     </StackPane>
-    <!-- Top-left Corner -->
-    <ImageView rotate="180" scaleX="-1" styleClass="corner-image" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
-    </ImageView>
-
-    <!-- Top-Right Corner -->
-    <ImageView rotate="180" styleClass="corner-image" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
-    </ImageView>
-
-    <!-- Bottom-Left Corner -->
-    <ImageView styleClass="corner-image" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0">
-    </ImageView>
-
-          <!-- Bottom-Right Corner -->
-    <ImageView scaleX="-1" styleClass="corner-image" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
-    </ImageView>
-   <Button fx:id="exit" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleExit" prefHeight="33.0" prefWidth="128.0" style="-fx-background-color: #a2ecbb;" styleClass="normal-label" text="EXIT" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="40.0">
-   </Button>
-   <BorderPane fx:id="popup" layoutX="600.0" layoutY="271.0" prefHeight="229.0" prefWidth="200.0" styleClass="popup">
+   <BorderPane fx:id="popup" layoutX="600.0" layoutY="271.0" prefHeight="229.0" prefWidth="200.0" styleClass="popup" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0">
       <top>
           <HBox prefHeight="43.0" prefWidth="498.0" style="-fx-background-color: #2E8B57;" BorderPane.alignment="CENTER">
               <Label alignment="CENTER" prefHeight="38.0" prefWidth="374.0" styleClass="normal-label" text="INFO" textFill="#a2ecbb" />
@@ -49,4 +34,52 @@
          <Label fx:id="popupLabel" alignment="CENTER" styleClass="normal-label" text="The game has been closed because Player finished the game " textFill="SEAGREEN" BorderPane.alignment="CENTER" />
       </center>
    </BorderPane>
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="432.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="180.0" AnchorPane.leftAnchor="428.0">
+        <Image url="@../Images/CN_Decoration1.jpg" />
+    </ImageView>
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="839.0" layoutY="574.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.bottomAnchor="180.0" AnchorPane.rightAnchor="428.0">
+        <rotationAxis>
+            <Point3D y="90.0" z="1.0" />
+        </rotationAxis>
+        <Image url="@../Images/CN_Decoration1.jpg" />
+    </ImageView>
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="824.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.rightAnchor="428.0" AnchorPane.topAnchor="154.0">
+        <Image url="@../Images/CN_Decoration1.jpg" />
+    </ImageView>
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="428.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.leftAnchor="428.0" AnchorPane.topAnchor="154.0">
+        <rotationAxis>
+            <Point3D x="90.0" z="1.0" />
+        </rotationAxis>
+        <Image url="@../Images/CN_Decoration1.jpg" />
+    </ImageView>
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="30.0" layoutY="677.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+        <rotationAxis>
+            <Point3D y="90.0" z="1.0" />
+        </rotationAxis>
+        <Image url="@../Images/CN_decoration9.png" />
+    </ImageView>
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="45.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Image url="@../Images/CN_decoration9.png" />
+    </ImageView>
+    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <Image url="@../Images/CN_decoration9.png" />
+    </ImageView>
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <rotationAxis>
+            <Point3D x="90.0" z="1.0" />
+        </rotationAxis>
+        <Image url="@../Images/CN_decoration9.png" />
+    </ImageView>
+    <ImageView fitHeight="111.0" fitWidth="103.0" layoutX="659.0" layoutY="669.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../Images/CN_Funghi_kingdom.png" />
+    </ImageView>
+    <ImageView fitHeight="102.0" fitWidth="103.0" layoutX="325.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../Images/CN_Animal_kingdom.png" />
+    </ImageView>
+    <ImageView fitHeight="102.0" fitWidth="103.0" layoutX="659.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../Images/CN_Plant_kingdom.png" />
+    </ImageView>
+    <ImageView fitHeight="100.0" fitWidth="103.0" layoutX="1002.0" layoutY="367.0" pickOnBounds="true" preserveRatio="true">
+        <Image url="@../Images/CN_Insect_kingdom.png" />
+    </ImageView>
 </AnchorPane>
