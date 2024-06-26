@@ -1,0 +1,68 @@
+package it.polimi.ingsw.model.observer;
+
+import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.network.notifications.ChatNotification;
+import it.polimi.ingsw.network.notifications.ServerNotification;
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class GameListenerTest {
+
+    @Test
+    public void testUpdate() throws IOException {
+        final int[] value = new int[1];
+        GameListener gameListener = new GameListener() {
+            @Override
+            public void update(ServerNotification notification) {
+                value[0] = 1;
+            }
+
+            @Override
+            public String getUsername() throws IOException {
+                return "";
+            }
+        };
+
+        gameListener.update(null);
+        assertEquals(1, value[0]);
+
+    }
+
+    @Test
+    public void testGetUsername() throws IOException {
+        GameListener gameListener = new GameListener() {
+            @Override
+            public void update(ServerNotification notification) {
+            }
+
+            @Override
+            public String getUsername() throws IOException {
+                return "username";
+            }
+        };
+
+        assertEquals("username", gameListener.getUsername());
+    }
+
+    @Test
+    public void testGetUsernameException() {
+        GameListener gameListener = new GameListener() {
+            @Override
+            public void update(ServerNotification notification) {
+            }
+
+            @Override
+            public String getUsername() throws IOException {
+                throw new IOException();
+            }
+        };
+
+        assertThrows(IOException.class, gameListener::getUsername);
+    }
+
+
+}
+
