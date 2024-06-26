@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 
 /**
  * This class is the controller for the MainMenu.fxml file
@@ -16,6 +17,8 @@ import java.io.IOException;
 public class MainMenuStateController implements FXMLController {
 
     public Button playButton;
+
+    public Button exit;
     private BaseClient client;
     private Stage stage;
 
@@ -44,6 +47,15 @@ public class MainMenuStateController implements FXMLController {
             errorLabel.setText("Invalid username, please try again.");
             usernameField.setText("");
         }
+    }
+
+    /**
+     * this method closes the game if the client press EXIT
+     *
+     * @throws RemoteException if there is a problem with the remote connection
+     */
+    public void handleExit() throws RemoteException {
+        client.close();
     }
 
     @Override
