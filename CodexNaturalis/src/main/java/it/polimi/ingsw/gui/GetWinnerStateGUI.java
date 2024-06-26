@@ -14,6 +14,11 @@ public class GetWinnerStateGUI implements ClientState {
     private final Stage stage;
     private GetWinnerController controller;
 
+    /**
+     * Constructor
+     * @param stage is a reference to the class Stage
+     * @param client is a reference to the class BaseClient
+     */
     public GetWinnerStateGUI(Stage stage, BaseClient client) {
         this.client = client;
         this.stage = stage;
@@ -24,11 +29,18 @@ public class GetWinnerStateGUI implements ClientState {
         controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/GetWinnerState.fxml");
     }
 
+    @Override
     public String toString() {
         return "GetWinnerStateGUI";
     }
 
 
+    /**
+     * This method is used to save the winner of the game
+     * @param winner is the username of the winner
+     * @param scores is a HashMap that contains the scores of the players
+     * @param playersTokens is the color of the tokens of the players
+     */
     public void initializeWinner(String winner, HashMap<String, Integer> scores, HashMap<String, TokenColor> playersTokens) {
         display();
         controller.initializeWinner(winner, scores, playersTokens);

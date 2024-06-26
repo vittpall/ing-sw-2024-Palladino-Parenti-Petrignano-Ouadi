@@ -13,6 +13,11 @@ public class LobbyMenuStateGUI implements ClientState {
     public Stage stage;
     private LobbyMenuController controller;
 
+    /**
+     * Constructor
+     * @param stage is a reference to the class Stage
+     * @param client is a reference to the class BaseClient
+     */
     public LobbyMenuStateGUI(Stage stage, BaseClient client) {
         this.client = client;
         this.stage = stage;
@@ -26,10 +31,15 @@ public class LobbyMenuStateGUI implements ClientState {
     }
 
 
+    @Override
     public String toString() {
         return "LobbyMenuStateGUI";
     }
 
+    /**
+     * This method sends a message that the game has been closed
+     * @param msg is the message to be sent
+     */
     public void gameClosedNotification(String msg) {
         Platform.runLater(() -> controller.showGameClosedPopup(msg));
 

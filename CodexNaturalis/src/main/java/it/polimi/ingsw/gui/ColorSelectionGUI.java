@@ -18,10 +18,16 @@ public class ColorSelectionGUI implements ClientState {
     private final Stage stage;
     private ColorSelectionController controller;
 
+    /**
+     * Constructor
+     * @param stage is a reference to the class Stage, it's indicate the scene of the GUI
+     * @param client is a reference to the class stage BaseClient
+     */
     public ColorSelectionGUI(Stage stage, BaseClient client) {
         this.client = client;
         this.stage = stage;
     }
+
 
     @Override
     public void display() {
@@ -35,10 +41,15 @@ public class ColorSelectionGUI implements ClientState {
     }
 
 
+    @Override
     public String toString() {
         return "ColorSelectionGUI";
     }
 
+    /**
+     * call the method to update the available colors
+     * @param availableColor is the list of available colors
+     */
     public void refresh(ArrayList<TokenColor> availableColor) {
     Platform.runLater(() -> controller.updateColorList(availableColor));
     }

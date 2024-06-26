@@ -18,6 +18,10 @@ public class GameBoard {
     private final Map<BoardCoordinate, Integer> tokenPositions;
     private final Map<String, BoardCoordinate> currentPlayerPositions;
 
+    /**
+     * this method creates the game board
+     * @param gameBoardAnchorPane is the place where there is the scoreboard
+     */
     public GameBoard(AnchorPane gameBoardAnchorPane) {
         this.gameBoardAnchorPane = gameBoardAnchorPane;
         this.coordinates = loadCoordinates();
@@ -26,6 +30,11 @@ public class GameBoard {
         this.currentPlayerPositions = new HashMap<>();
     }
 
+    /**
+     * this method add the tokens of the clients to the board. Every client has their chosen color
+     * @param username is the personal username associated to the client
+     * @param imagePath is teh image of the token
+     */
     public void addToken(String username, String imagePath) {
         BoardCoordinate startCoordinate = coordinates.getFirst();
         if (startCoordinate != null) {
@@ -40,6 +49,11 @@ public class GameBoard {
         }
     }
 
+    /**
+     * this method updates the position of the token on the image of the board right after the player has reached some points
+     * @param username is the personal username associated to the client
+     * @param newScore is the updated client's score
+     */
     public void updateTokenPosition(String username, int newScore) {
         BoardCoordinate oldCoordinate = currentPlayerPositions.get(username);
         BoardCoordinate newCoordinate = coordinates.stream().filter(coord -> coord.score() == newScore).findFirst().orElse(null);
@@ -54,6 +68,11 @@ public class GameBoard {
         }
     }
 
+    /**
+     *this method gets the position of the token on the board and changes it
+     * @param coordinate is the position of the token
+     * @return the new coordinates of the token
+     */
     private double[] getTokenLayout(BoardCoordinate coordinate) {
         double baseX = Double.parseDouble(coordinate.x().replace("%", "")) / 100 * gameBoardAnchorPane.getWidth();
         double baseY = Double.parseDouble(coordinate.y().replace("%", "")) / 100 * gameBoardAnchorPane.getHeight();
@@ -77,6 +96,11 @@ public class GameBoard {
         return new double[]{baseX + offsetX, baseY + offsetY};
     }
 
+    /**
+     * this method checks if the token is already on the board
+     * @param username is the personal username associated to the client
+     * @return true if the token is on the board, false otherwise
+     */
     public boolean hasToken(String username) {
         return tokens.containsKey(username);
     }

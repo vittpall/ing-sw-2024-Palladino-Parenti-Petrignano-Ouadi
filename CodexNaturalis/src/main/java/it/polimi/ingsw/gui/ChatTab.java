@@ -9,6 +9,10 @@ public class ChatTab extends Tab {
     private int unreadMessages;
     private final Label counterMessages;
 
+    /**
+     * set the style of the number of unread messages
+     * @param title  refers to the name of the chat, if it is global or private. if it's private, it's the name of the other client
+     */
     public ChatTab(String title) {
         super(title);
         this.unreadMessages = 0;
@@ -24,16 +28,25 @@ public class ChatTab extends Tab {
 
     }
 
+    /**
+     * this method increases the number of unread messages in the global or in the private chat
+     */
     public void incrementUnreadMessages() {
         unreadMessages++;
         updateCounterVisibility();
     }
 
+    /**
+     * this method resets the number of unread messages to zero
+     */
     public void resetUnreadMessages() {
         unreadMessages = 0;
         updateCounterVisibility();
     }
 
+    /**
+     * this method makes the number of unread messages visible only if it's more than zero
+     */
     private void updateCounterVisibility() {
         if (unreadMessages > 0) {
             counterMessages.setText(String.valueOf(unreadMessages));

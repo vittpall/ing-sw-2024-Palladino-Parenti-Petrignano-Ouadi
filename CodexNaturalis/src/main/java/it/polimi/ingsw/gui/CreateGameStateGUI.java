@@ -9,6 +9,11 @@ public class CreateGameStateGUI implements ClientState {
     private final BaseClient client;
     private final Stage stage;
 
+    /**
+     * Constructor
+     * @param stage is a reference to the class Stage
+     * @param client is a reference to the class BaseClient
+     */
     public CreateGameStateGUI(Stage stage, BaseClient client) {
         this.client = client;
         this.stage = stage;
@@ -21,6 +26,7 @@ public class CreateGameStateGUI implements ClientState {
     }
 
 
+    @Override
     public String toString() {
         return "CreateGameStateGUI";
     }

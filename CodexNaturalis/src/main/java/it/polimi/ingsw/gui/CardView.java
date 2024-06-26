@@ -14,11 +14,20 @@ public class CardView extends Pane {
     public static final double CARD_HEIGHT = 95;
     private boolean isPlaceholder;
 
+    /**
+     * this method takes the selected side of the card
+     * @param card is a reference to the Card class
+     * @param showFront boolean, it indicates the side of the card
+     */
     public CardView(Card card, boolean showFront) {
         super();
         initializeView(card, showFront);
     }
 
+    /**
+     *it calls setupPlaceholder if the param is true
+     * @param isPlaceholder boolean, the place where there will be the card
+     */
     public CardView(boolean isPlaceholder) {
         super();
         this.isPlaceholder = isPlaceholder;
@@ -27,16 +36,29 @@ public class CardView extends Pane {
         }
     }
 
+    /**
+     *this method initializes the card and set the side
+     * @param card is a reference to the Card class
+     * @param showFront boolean, it indicates the side of the card
+     */
     private void initializeView(Card card, boolean showFront) {
         loadImage(card);
         setCardVisibility(showFront);
     }
 
 
+    /**
+     *
+     * @return isPlaceholder, the place where there will be the card
+     */
     public boolean isPlaceholder() {
         return isPlaceholder;
     }
 
+    /**
+     * this method loads the card's image, set the width and height and connects the front and the back of the same card
+     * @param card is a reference to the Card class
+     */
     private void loadImage(Card card) {
         String frontImagePath = Objects.requireNonNull(getClass().getResource("/Images/" + card.getImageFrontPath())).toExternalForm();
         Image frontImage = new Image(frontImagePath);
@@ -55,11 +77,18 @@ public class CardView extends Pane {
         this.getChildren().addAll(backImageView, frontImageView);
     }
 
+    /**
+     * this method shows only one side of the same card
+     * @param showFront boolean, it indicates the side of the card
+     */
     public void setCardVisibility(boolean showFront) {
         frontImageView.setVisible(showFront);
         backImageView.setVisible(!showFront);
     }
 
+    /**
+     * this method set up the place where there will be the card
+     */
     private void setupPlaceholder() {
         this.setStyle("-fx-border-color: yellow; -fx-border-width: 2; -fx-background-color: rgba(255, 255, 0, 0.5);");
         this.setPrefSize(CARD_WIDTH, CARD_HEIGHT);

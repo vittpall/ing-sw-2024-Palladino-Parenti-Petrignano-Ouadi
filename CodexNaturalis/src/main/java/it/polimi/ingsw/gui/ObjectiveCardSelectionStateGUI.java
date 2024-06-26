@@ -12,6 +12,11 @@ public class ObjectiveCardSelectionStateGUI implements ClientState {
     private final BaseClient client;
     private final Stage stage;
 
+    /**
+     * Constructor
+     * @param stage is a reference to the class Stage
+     * @param client is a reference to the class BaseClient
+     */
     public ObjectiveCardSelectionStateGUI(Stage stage, BaseClient client) {
         this.client = client;
         this.stage = stage;
@@ -23,6 +28,7 @@ public class ObjectiveCardSelectionStateGUI implements ClientState {
         controller.loadCards();
     }
 
+    @Override
     public String toString() {
         return "ObjectiveCardSelectionStateGUI";
     }

@@ -9,6 +9,11 @@ public class MainMenuStateGUI implements ClientState {
     private final Stage stage;
     private final BaseClient client;
 
+    /**
+     * Constructor
+     * @param stage is a reference to the class Stage
+     * @param client is a reference to the class BaseClient
+     */
     public MainMenuStateGUI(Stage stage, BaseClient client) {
         this.stage = stage;
         this.client = client;
@@ -21,6 +26,7 @@ public class MainMenuStateGUI implements ClientState {
     }
 
 
+    @Override
     public String toString() {
         return "MainMenuStateGUI";
     }

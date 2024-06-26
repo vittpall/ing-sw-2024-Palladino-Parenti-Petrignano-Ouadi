@@ -17,6 +17,11 @@ public class JoinGameMenuStateGUI implements ClientState {
     private final Stage stage;
     private JoinGameMenuController controller;
 
+    /**
+     * Constructor
+     * @param stage is a reference to the class Stage
+     * @param client
+     */
     public JoinGameMenuStateGUI(Stage stage, BaseClient client) {
         this.client = client;
         this.stage = stage;
@@ -36,11 +41,16 @@ public class JoinGameMenuStateGUI implements ClientState {
         }
     }
 
+    /**
+     * This method refreshes the list of available games so other players can join
+     * @param availableGames is the list of available games
+     */
     public void refresh(HashMap<Integer, Integer[]> availableGames) {
         Platform.runLater(() -> controller.updateGamesList(availableGames));
     }
 
 
+    @Override
     public String toString() {
         return "JoinGameMenuStateGUI";
     }
