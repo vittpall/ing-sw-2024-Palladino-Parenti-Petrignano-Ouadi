@@ -8,10 +8,18 @@ import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
 import java.util.ArrayList;
 
+/**
+ * Client to server message sent in socket connection to get the available token colors
+ */
 public class AvailableColorMsg extends ClientToServerMsg {
-
     private final int idGame;
 
+    /**
+     * Class constructor
+     *
+     * @param username String representing the username of the player
+     * @param idGame   Integer representing the id of the specific game
+     */
     public AvailableColorMsg(String username, int idGame) {
         this.username = username;
         this.idGame = idGame;
@@ -28,7 +36,6 @@ public class AvailableColorMsg extends ClientToServerMsg {
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.AVAILABLE_COLORS;
     }
-
 
     @Override
     public int getIdGame() {

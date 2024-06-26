@@ -5,11 +5,21 @@ import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
+/**
+ * Client to server message sent in socket connection to get the points of a specified player
+ */
 public class GetPoints extends ClientToServerMsg {
 
     private final int idGame;
     private final int idClientIntoGame;
 
+    /**
+     * Constructor
+     *
+     * @param username         String representing the username of the user
+     * @param idGame           Integer representing the id of the game
+     * @param idClientIntoGame Integer representing the id of the client into the game
+     */
     public GetPoints(String username, int idGame, int idClientIntoGame) {
         this.username = username;
         this.idGame = idGame;
@@ -27,7 +37,6 @@ public class GetPoints extends ClientToServerMsg {
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.GET_POINTS;
     }
-
 
     @Override
     public int getIdGame() {

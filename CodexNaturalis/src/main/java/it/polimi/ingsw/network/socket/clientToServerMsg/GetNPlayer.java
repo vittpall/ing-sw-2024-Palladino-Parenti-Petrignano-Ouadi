@@ -6,10 +6,18 @@ import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
+/**
+ * Client to server message sent in socket connection to get the number of players of a specified game
+ */
 public class GetNPlayer extends ClientToServerMsg {
 
     private final int idGame;
 
+    /**
+     * Constructor
+     *
+     * @param idGame Integer representing the id of the game
+     */
     public GetNPlayer(int idGame) {
         this.idGame = idGame;
     }

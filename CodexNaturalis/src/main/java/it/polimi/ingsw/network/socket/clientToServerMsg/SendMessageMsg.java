@@ -6,9 +6,17 @@ import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
+/**
+ * Client to server message sent in socket connection to send a message
+ */
 public class SendMessageMsg extends ClientToServerMsg {
     private final Message msg;
 
+    /**
+     * Constructor
+     *
+     * @param msg Message to send
+     */
     public SendMessageMsg(Message msg) {
         this.msg = msg;
     }

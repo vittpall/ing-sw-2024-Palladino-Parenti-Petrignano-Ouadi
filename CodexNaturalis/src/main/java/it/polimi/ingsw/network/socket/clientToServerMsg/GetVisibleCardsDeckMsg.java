@@ -9,11 +9,20 @@ import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
 import java.util.ArrayList;
 
+/**
+ * Client to server message sent in socket connection to get the visible cards of a deck in a specified game
+ */
 public class GetVisibleCardsDeckMsg extends ClientToServerMsg {
 
     private final int deck;
     private final int idGame;
 
+    /**
+     * Constructor
+     *
+     * @param idGame Integer representing the id of the game
+     * @param deck   Integer representing the deck from which to get the cards
+     */
     public GetVisibleCardsDeckMsg(int idGame, int deck) {
         this.deck = deck;
         this.idGame = idGame;

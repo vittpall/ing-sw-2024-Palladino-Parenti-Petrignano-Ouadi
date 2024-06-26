@@ -7,11 +7,20 @@ import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
 import java.io.IOException;
 
+/**
+ * Client to server message sent in socket connection to create a game
+ */
 public class CreateGameMsg extends ClientToServerMsg {
 
     private final int numberOfPlayers;
     private int gameId;
 
+    /**
+     * Constructor
+     *
+     * @param username        String representing the user's username
+     * @param numberOfPlayers Integer representing the number of player of the game
+     */
     public CreateGameMsg(String username, int numberOfPlayers) {
         this.username = username;
         this.numberOfPlayers = numberOfPlayers;
@@ -29,7 +38,6 @@ public class CreateGameMsg extends ClientToServerMsg {
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.CREATED_GAME;
     }
-
 
 
     @Override

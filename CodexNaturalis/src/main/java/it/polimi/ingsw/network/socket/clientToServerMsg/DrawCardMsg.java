@@ -5,13 +5,23 @@ import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
+/**
+ * Client to server message sent in socket connection to draw a card in the specified game
+ */
 public class DrawCardMsg extends ClientToServerMsg {
 
     private final int idGame;
     private final int input;
     private final int inVisible;
 
-    public DrawCardMsg(int idGame, int input, int inVisible, String broadCastMessage) {
+    /**
+     * Constructor
+     *
+     * @param idGame    Integer representing the id of the game
+     * @param input     Integer representing the desk from which to draw
+     * @param inVisible Integer representing the visible or random card to draw
+     */
+    public DrawCardMsg(int idGame, int input, int inVisible) {
         this.idGame = idGame;
         this.input = input;
         this.inVisible = inVisible;

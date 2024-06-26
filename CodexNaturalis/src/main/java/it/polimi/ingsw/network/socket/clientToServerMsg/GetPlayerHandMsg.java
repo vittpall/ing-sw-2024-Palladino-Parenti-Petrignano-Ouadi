@@ -9,10 +9,19 @@ import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
 import java.util.ArrayList;
 
+/**
+ * Client to server message sent in socket connection to get the hand of the specified player
+ */
 public class GetPlayerHandMsg extends ClientToServerMsg {
     private final int idGame;
     private final int idPlayer;
 
+    /**
+     * Constructor
+     *
+     * @param idGame   Integer representing the id of the game
+     * @param idPlayer Integer representing the id of the client into the game
+     */
     public GetPlayerHandMsg(int idGame, int idPlayer) {
         this.idGame = idGame;
         this.idPlayer = idPlayer;
@@ -30,7 +39,6 @@ public class GetPlayerHandMsg extends ClientToServerMsg {
     public TypeServerToClientMsg getType() {
         return TypeServerToClientMsg.GET_PLAYER_HAND;
     }
-
 
     @Override
     public int getIdGame() {

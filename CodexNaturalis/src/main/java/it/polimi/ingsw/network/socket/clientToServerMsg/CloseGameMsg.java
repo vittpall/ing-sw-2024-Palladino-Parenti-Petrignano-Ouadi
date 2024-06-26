@@ -8,9 +8,17 @@ import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
 import java.io.IOException;
 
+/**
+ * Client to server message sent in socket connection to close the game after a client close the game
+ */
 public class CloseGameMsg extends ClientToServerMsg {
     private final int idGame;
 
+    /**
+     * Constructor
+     *
+     * @param idGame Integer representing the id of the game
+     */
     public CloseGameMsg(int idGame) {
         this.idGame = idGame;
     }

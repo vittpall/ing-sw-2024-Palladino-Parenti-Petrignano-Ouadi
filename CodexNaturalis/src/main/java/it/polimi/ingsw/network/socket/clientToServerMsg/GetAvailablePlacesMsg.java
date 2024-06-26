@@ -8,11 +8,20 @@ import it.polimi.ingsw.network.socket.client.ReturnableObject;
 import java.awt.*;
 import java.util.HashSet;
 
+/**
+ * Client to server message sent in socket connection to get the available places of a player's desk
+ */
 public class GetAvailablePlacesMsg extends ClientToServerMsg {
 
     private final int idGame;
     private final int idClientIntoGame;
 
+    /**
+     * Constructor
+     *
+     * @param idGame           Integer representing the id of the game
+     * @param idClientIntoGame Integer representing the id of the client into the game
+     */
     public GetAvailablePlacesMsg(int idGame, int idClientIntoGame) {
         this.idGame = idGame;
         this.idClientIntoGame = idClientIntoGame;

@@ -7,11 +7,19 @@ import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
+/**
+ * Client to server message sent in socket connection to get the secret objective card of a player
+ */
 public class GetObjectiveCardMsg extends ClientToServerMsg {
-
     private final int idGame;
     private final int idClientIntoGame;
 
+    /**
+     * Constructor
+     *
+     * @param idGame           Integer representing the id of the game
+     * @param idClientIntoGame Integer representing the id of the client into the game
+     */
     public GetObjectiveCardMsg(int idGame, int idClientIntoGame) {
         this.idGame = idGame;
         this.idClientIntoGame = idClientIntoGame;
@@ -23,7 +31,6 @@ public class GetObjectiveCardMsg extends ClientToServerMsg {
         response.setResponseReturnable(controller.getObjectiveCard(idGame, idClientIntoGame));
         return response;
     }
-
 
     @Override
     public TypeServerToClientMsg getType() {

@@ -7,11 +7,20 @@ import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
+/**
+ * Client to server message sent in socket connection to get the current state of the user
+ */
 public class GetCurrentPlayerState extends ClientToServerMsg {
 
     private final int idGame;
     private final int idClientIntoGame;
 
+    /**
+     * Constructor
+     *
+     * @param idGame           Integer representing the id of the game
+     * @param idClientIntoGame Integer representing the id of the player into the game
+     */
     public GetCurrentPlayerState(int idGame, int idClientIntoGame) {
         this.idGame = idGame;
         this.idClientIntoGame = idClientIntoGame;

@@ -7,8 +7,13 @@ import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
 import java.util.ArrayList;
 
+/**
+ * Client to server message sent in socket connection to get a list of the games that has not started yet
+ */
 public class GetNotStartedGamesMsg extends ClientToServerMsg {
-
+    /**
+     * Constructor
+     */
     public GetNotStartedGamesMsg() {
         super();
     }

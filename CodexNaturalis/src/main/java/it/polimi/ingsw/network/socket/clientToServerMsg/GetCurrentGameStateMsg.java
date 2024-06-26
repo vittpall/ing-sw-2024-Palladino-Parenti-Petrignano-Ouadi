@@ -8,9 +8,17 @@ import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
 import java.io.IOException;
 
+/**
+ * Client to server message sent in socket connection to get the current state of the specified game
+ */
 public class GetCurrentGameStateMsg extends ClientToServerMsg {
     private final int idGame;
 
+    /**
+     * Constructor
+     *
+     * @param idGame Integer representing the id of the game
+     */
     public GetCurrentGameStateMsg(int idGame) {
         this.idGame = idGame;
     }

@@ -277,7 +277,7 @@ public class SocketClient extends BaseClient {
 
     @Override
     public void drawCard(int input, int inVisible) throws IOException, InterruptedException {
-        DrawCardMsg request = new DrawCardMsg(getIdGame(), input, inVisible, getUsername() + " has drawn a card");
+        DrawCardMsg request = new DrawCardMsg(getIdGame(), input, inVisible);
         sendRequest(request);
     }
 

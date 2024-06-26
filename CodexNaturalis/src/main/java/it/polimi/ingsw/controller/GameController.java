@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * Class that represents the game controller: it manages the setup, rounds and end of a single game
+ */
 public class GameController {
     private final Game model;
     private final int nPlayers;

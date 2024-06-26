@@ -8,11 +8,21 @@ import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
 import java.util.ArrayList;
 
+/**
+ * Client to server message sent in socket connection to get the Messages between a sender and a receiver
+ */
 public class GetMessageMsg extends ClientToServerMsg {
     private final String receiver;
     private final int gameId;
     private final String sender;
 
+    /**
+     * Constructor
+     *
+     * @param receiver String representing the username of the receiver
+     * @param gameId   Integer representing the id of the game
+     * @param sender   String representing the username of the sender
+     */
     public GetMessageMsg(String receiver, int gameId, String sender) {
         this.receiver = receiver;
         this.gameId = gameId;
