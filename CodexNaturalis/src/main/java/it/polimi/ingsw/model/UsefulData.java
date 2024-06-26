@@ -6,13 +6,9 @@ import java.util.ArrayList;
  * This class contains useful data that is used in the game, and it is shared among the clients using the Singleton pattern
  */
 public class UsefulData {
-    public final int MAX_PLAYERS = 4;
-    public final int MIN_PLAYERS = 2;
-    public final int MAX_CARDS = 3;
     public static final String RESET = "\033[0m";
     public static String PATTERN = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
 
-    //...
     public ArrayList<String> quitableStates = new ArrayList<>();
     private static UsefulData instance = null;
 

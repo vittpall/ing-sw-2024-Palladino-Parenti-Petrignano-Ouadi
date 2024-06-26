@@ -27,7 +27,6 @@ public class GameCardLoader {
         mapper.registerModule(module);
         List<GameCard> cards = new ArrayList<>();
         try {
-            //load the game data
             cards = mapper.readValue(GameCardLoader.class.getResource("/Json/gameCard.json"), new TypeReference<>() {
             });
         } catch (IOException e) {

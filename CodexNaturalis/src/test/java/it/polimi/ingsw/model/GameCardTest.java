@@ -32,7 +32,6 @@ class GameCardTest {
             protected void printCardDetails(PrintContext context, CardPrinter.Color colorBackground, boolean faceDown) {
 
             }
-            // Empty implementation for abstract class
         };
         assertFalse(card.isPlayedFaceDown());
         card.flipCard();
@@ -47,7 +46,6 @@ class GameCardTest {
             protected void printCardDetails(PrintContext context, CardPrinter.Color colorBackground, boolean faceDown) {
 
             }
-            // Empty implementation for abstract class
         };
         assertEquals(resources, card.getBackSideResources());
     }
@@ -60,7 +58,6 @@ class GameCardTest {
             protected void printCardDetails(PrintContext context, CardPrinter.Color colorBackground, boolean faceDown) {
 
             }
-            // Empty implementation for abstract class
         };
         assertEquals(resource, card.getBackSideResource());
     }
@@ -73,7 +70,6 @@ class GameCardTest {
             protected void printCardDetails(PrintContext context, CardPrinter.Color colorBackground, boolean faceDown) {
 
             }
-            // Empty implementation for abstract class
         };
 
         assertEquals(pointType, card.getPointType());
@@ -87,7 +83,6 @@ class GameCardTest {
             protected void printCardDetails(PrintContext context, CardPrinter.Color colorBackground, boolean faceDown) {
 
             }
-            // Empty implementation for abstract class
         };
 
         assertEquals(path, card.getImageFrontPath());
@@ -101,8 +96,43 @@ class GameCardTest {
             protected void printCardDetails(PrintContext context, CardPrinter.Color colorBackground, boolean faceDown) {
 
             }
-            // Empty implementation for abstract class
         };
         assertEquals(path, card.getImageBackPath());
+    }
+
+    @Test
+    void getCorner_returnsCorrectCorner() {
+        Corner corner = new Corner(false);
+        GameCard card = new GameCard(null, null, null, 0, null, new ArrayList<>(), corners) {
+            @Override
+            protected void printCardDetails(PrintContext context, CardPrinter.Color colorBackground, boolean faceDown) {
+
+            }
+        };
+        assertEquals(corner, card.getCorner(0));
+    }
+
+    @Test
+    void getCorners_returnsCorrectCorners() {
+        GameCard card = new GameCard(null, null, null, 0, null, new ArrayList<>(), corners) {
+            @Override
+            protected void printCardDetails(PrintContext context, CardPrinter.Color colorBackground, boolean faceDown) {
+
+            }
+        };
+        assertArrayEquals(corners, card.getCorners());
+    }
+
+    @Test
+    void setPlayedFaceDown_changesCardOrientation() {
+        GameCard card = new GameCard(null, null, null, 0, null, new ArrayList<>(), corners) {
+            @Override
+            protected void printCardDetails(PrintContext context, CardPrinter.Color colorBackground, boolean faceDown) {
+
+            }
+        };
+        assertFalse(card.isPlayedFaceDown());
+        card.setPlayedFaceDown(true);
+        assertTrue(card.isPlayedFaceDown());
     }
 }

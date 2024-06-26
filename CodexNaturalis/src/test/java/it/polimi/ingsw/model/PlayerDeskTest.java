@@ -16,6 +16,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerDeskTest {
 
+
+    @Test
+    void copyConstructor() throws PlaceNotAvailableException {
+        PlayerDesk desk = new PlayerDesk();
+        Corner[] corners = new Corner[8];
+        for (int i = 0; i < corners.length; i++) {
+            corners[i] = new Corner(true);
+        }
+        GameCard cardToAdd = new ResourceCard(null, null, null, 0, PointType.GENERAL, null, corners);
+        cardToAdd.setPlayedFaceDown(false);
+        desk.addCard(cardToAdd, new Point(0, 0));
+        PlayerDesk deskCopy = new PlayerDesk(desk);
+        assertEquals(desk.getDesk(), deskCopy.getDesk());
+        assertEquals(desk.getAvailablePlaces(), deskCopy.getAvailablePlaces());
+        assertEquals(desk.getForbiddenPlaces(), deskCopy.getForbiddenPlaces());
+        assertEquals(desk.getTotalResources(), deskCopy.getTotalResources());
+        assertEquals(desk.getTotalObjects(), deskCopy.getTotalObjects());
+    }
+
     @Test
     void getTotalResources_whenDeskIsEmpty() {
         PlayerDesk desk = new PlayerDesk();
