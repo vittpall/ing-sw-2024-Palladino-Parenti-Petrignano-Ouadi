@@ -23,4 +23,13 @@ class ObjectiveCardTest {
     void getStrategy() {
         assertEquals(VerticalPatternStrategy.class, objectiveCard.getStrategy().getClass());
     }
+
+    @Test
+    void copyConstructor_createsCorrectCopy() {
+        ObjectiveCard copy = new ObjectiveCard(objectiveCard);
+        assertEquals(objectiveCard.getStrategy(), copy.getStrategy());
+        assertEquals(objectiveCard.getPoints(), copy.getPoints());
+        assertEquals(objectiveCard.getImageFrontPath(), copy.getImageFrontPath());
+        assertEquals(objectiveCard.getImageBackPath(), copy.getImageBackPath());
+    }
 }

@@ -1,21 +1,30 @@
 package it.polimi.ingsw.model.strategyPatternObjective;
 
 import it.polimi.ingsw.model.Corner;
-import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.PlayerDesk;
 import it.polimi.ingsw.model.ResourceCard;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class VerticalPatternStrategyTest {
 
 
+
+    @Test
+    void fromCoordinates_givenCoordinates_returnOffset() {
+        assertEquals(VerticalPatternStrategy.Offset.BOTTOM_LEFT, VerticalPatternStrategy.Offset.fromCoordinates(-1, -1));
+        assertEquals(VerticalPatternStrategy.Offset.TOP_RIGHT, VerticalPatternStrategy.Offset.fromCoordinates(1, 3));
+        assertEquals(VerticalPatternStrategy.Offset.TOP_LEFT, VerticalPatternStrategy.Offset.fromCoordinates(-1, 3));
+        assertEquals(VerticalPatternStrategy.Offset.BOTTOM_RIGHT, VerticalPatternStrategy.Offset.fromCoordinates(1, -1));
+    }
 
     @Test
     void isSatisfied_givenDeskWithNoResources_returnZero() {
@@ -32,7 +41,7 @@ class VerticalPatternStrategyTest {
     }
 
     @Test
-    void isSatified_givenDeskWithCorrectResourcesRightBottom_returnOne() {
+    void isSatisfied_givenDeskWithCorrectResourcesRightBottom_returnOne() {
         VerticalPatternStrategy verticalPatternStrategy = new VerticalPatternStrategy(Resource.FUNGI_KINGDOM, Resource.PLANT_KINGDOM, VerticalPatternStrategy.Offset.BOTTOM_RIGHT);
         PlayerDesk desk = new PlayerDesk();
 
@@ -56,7 +65,7 @@ class VerticalPatternStrategyTest {
     }
 
     @Test
-    void isSatified_givenDeskWithCorrectResourcesRightUp_returnOne() {
+    void isSatisfied_givenDeskWithCorrectResourcesRightUp_returnOne() {
         VerticalPatternStrategy verticalPatternStrategy = new VerticalPatternStrategy(Resource.FUNGI_KINGDOM, Resource.PLANT_KINGDOM, VerticalPatternStrategy.Offset.TOP_RIGHT);
         PlayerDesk desk = new PlayerDesk();
 
@@ -80,7 +89,7 @@ class VerticalPatternStrategyTest {
     }
 
     @Test
-    void isSatified_givenDeskWithCorrectResourcesLeftUp_returnOne() {
+    void isSatisfied_givenDeskWithCorrectResourcesLeftUp_returnOne() {
         VerticalPatternStrategy verticalPatternStrategy = new VerticalPatternStrategy(Resource.FUNGI_KINGDOM, Resource.PLANT_KINGDOM, VerticalPatternStrategy.Offset.TOP_LEFT);
         PlayerDesk desk = new PlayerDesk();
 
@@ -104,7 +113,7 @@ class VerticalPatternStrategyTest {
     }
 
     @Test
-    void isSatified_givenDeskWithCorrectResourcesLeftBottom_returnOne() {
+    void isSatisfied_givenDeskWithCorrectResourcesLeftBottom_returnOne() {
         VerticalPatternStrategy verticalPatternStrategy = new VerticalPatternStrategy(Resource.FUNGI_KINGDOM, Resource.PLANT_KINGDOM, VerticalPatternStrategy.Offset.BOTTOM_LEFT);
         PlayerDesk desk = new PlayerDesk();
 
@@ -127,7 +136,7 @@ class VerticalPatternStrategyTest {
     }
 
     @Test
-    void isSatified_givenADeterminedStartingPoint_returnOne() {
+    void isSatisfied_givenADeterminedStartingPoint_returnOne() {
         VerticalPatternStrategy verticalPatternStrategy = new VerticalPatternStrategy(Resource.FUNGI_KINGDOM, Resource.PLANT_KINGDOM, VerticalPatternStrategy.Offset.BOTTOM_LEFT);
         PlayerDesk desk = new PlayerDesk();
 
@@ -153,7 +162,7 @@ class VerticalPatternStrategyTest {
     }
 
     @Test
-    void isSatified_givenDeskTopLeft_returnMoreThanOne() {
+    void isSatisfied_givenDeskTopLeft_returnMoreThanOne() {
         VerticalPatternStrategy verticalPatternStrategy = new VerticalPatternStrategy(Resource.FUNGI_KINGDOM, Resource.PLANT_KINGDOM, VerticalPatternStrategy.Offset.TOP_RIGHT);
         PlayerDesk desk = new PlayerDesk();
 

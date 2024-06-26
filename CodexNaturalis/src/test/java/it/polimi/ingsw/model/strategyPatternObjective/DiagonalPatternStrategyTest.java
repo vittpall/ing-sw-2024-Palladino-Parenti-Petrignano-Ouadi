@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.strategyPatternObjective;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DiagonalPatternStrategyTest {
 
-    // Test for the method isSatisfied in DiagonalPatternStrategy
     @Test
     void isSatisfied() {
         DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.ANIMAL_KINGDOM, new Point(1, 1));
@@ -20,7 +19,6 @@ class DiagonalPatternStrategyTest {
         assertEquals(0, diagonalPatternStrategy.isSatisfied(desk));
     }
 
-    // Test for the method CheckDiagonal in DiagonalPatternStrategy
     @Test
     void checkDiagonal_givenDeskMockUp_returnOne() {
 
@@ -325,4 +323,15 @@ class DiagonalPatternStrategyTest {
 
     }
 
+    @Test
+    void primarySource() {
+        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.ANIMAL_KINGDOM, new Point(1, 1));
+        assertEquals(Resource.ANIMAL_KINGDOM, diagonalPatternStrategy.primarySource());
+    }
+
+    @Test
+    void diagonalOffset() {
+        DiagonalPatternStrategy diagonalPatternStrategy = new DiagonalPatternStrategy(Resource.ANIMAL_KINGDOM, new Point(1, 1));
+        assertEquals(new Point(1, 1), diagonalPatternStrategy.diagonalOffset());
+    }
 }
