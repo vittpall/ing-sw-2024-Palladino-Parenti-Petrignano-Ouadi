@@ -1,6 +1,6 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.gui.CardView;
+import it.polimi.ingsw.view.gui.CardView;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Corner;
 import it.polimi.ingsw.model.ResourceCard;

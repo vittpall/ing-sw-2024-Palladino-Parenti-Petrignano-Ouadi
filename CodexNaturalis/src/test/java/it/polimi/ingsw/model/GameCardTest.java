@@ -2,8 +2,8 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
-import it.polimi.ingsw.tui.CardPrinter;
-import it.polimi.ingsw.tui.PrintContext;
+import it.polimi.ingsw.view.tui.CardPrinter;
+import it.polimi.ingsw.view.tui.PrintContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

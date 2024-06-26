@@ -27,15 +27,15 @@ module PSP44 {
     exports it.polimi.ingsw.model.exceptions;
     exports it.polimi.ingsw.model.chat;
     exports it.polimi.ingsw.model.strategyPatternObjective;
-    exports it.polimi.ingsw.gui;
-    exports it.polimi.ingsw.tui;
+    exports it.polimi.ingsw.view.gui;
+    exports it.polimi.ingsw.view.tui;
     exports it.polimi.ingsw.util;
     exports it.polimi.ingsw;
     exports it.polimi.ingsw.model.observer;
     exports it.polimi.ingsw.network;
     exports it.polimi.ingsw.network.notifications;
-    opens it.polimi.ingsw.gui to javafx.fxml;
-    opens it.polimi.ingsw.gui.controller to javafx.fxml;
+    opens it.polimi.ingsw.view.gui to javafx.fxml;
+    opens it.polimi.ingsw.view.gui.controller to javafx.fxml;
     opens it.polimi.ingsw.model to com.fasterxml.jackson.databind;
     exports it.polimi.ingsw.core;
 

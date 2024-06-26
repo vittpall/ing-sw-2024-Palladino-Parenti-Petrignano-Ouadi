@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.strategyPatternObjective;
 
 import it.polimi.ingsw.model.PlayerDesk;
-import it.polimi.ingsw.tui.PrintContext;
+import it.polimi.ingsw.view.tui.PrintContext;
 
 import java.io.Serializable;
 

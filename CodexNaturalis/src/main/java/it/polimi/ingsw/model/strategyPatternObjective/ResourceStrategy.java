@@ -2,8 +2,8 @@ package it.polimi.ingsw.model.strategyPatternObjective;
 
 import it.polimi.ingsw.model.PlayerDesk;
 import it.polimi.ingsw.model.enumeration.Resource;
-import it.polimi.ingsw.tui.CardPrinter;
-import it.polimi.ingsw.tui.PrintContext;
+import it.polimi.ingsw.view.tui.CardPrinter;
+import it.polimi.ingsw.view.tui.PrintContext;
 
 import java.util.EnumMap;
 

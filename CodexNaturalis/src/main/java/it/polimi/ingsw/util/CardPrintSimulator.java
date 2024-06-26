@@ -2,7 +2,7 @@ package it.polimi.ingsw.util;
 
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
-import it.polimi.ingsw.tui.CardPrinter;
+import it.polimi.ingsw.view.tui.CardPrinter;
 
 public class CardPrintSimulator {
     public static void main(String[] args) {

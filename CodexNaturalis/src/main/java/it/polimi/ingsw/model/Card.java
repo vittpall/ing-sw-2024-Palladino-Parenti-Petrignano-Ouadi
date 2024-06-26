@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.tui.PrintContext;
+import it.polimi.ingsw.view.tui.PrintContext;
 
 import java.io.Serializable;
 

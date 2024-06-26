@@ -1,7 +1,6 @@
 package it.polimi.ingsw.network;
 
 import it.polimi.ingsw.core.ClientState;
-import it.polimi.ingsw.gui.*;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.UsefulData;
 import it.polimi.ingsw.model.chat.Message;
@@ -11,7 +10,9 @@ import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.observer.GameListener;
 import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.network.remoteInterfaces.VirtualView;
-import it.polimi.ingsw.tui.*;
+import it.polimi.ingsw.view.gui.*;
+import it.polimi.ingsw.view.tui.*;
+import it.polimi.ingsw.view.tui.*;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
