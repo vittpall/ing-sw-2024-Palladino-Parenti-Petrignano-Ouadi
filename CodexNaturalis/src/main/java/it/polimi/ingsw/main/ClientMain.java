@@ -64,6 +64,13 @@ public class ClientMain extends Application {
         }
     }
 
+    /**
+     * This method initializes the socket client and starts the client thread to communicate with the server.
+     * it shows a message in case of error
+     *
+     * @param interfaceType  it can be TUI or GUI
+     * @param stage          the scene of the client
+     */
     private void setupSocketClient(String interfaceType, Stage stage) {
         try {
             Socket serverSocket = new Socket(serverAddress, 2345);
@@ -76,6 +83,13 @@ public class ClientMain extends Application {
         }
     }
 
+    /**
+     * This method initializes the RMI client and starts the client thread to communicate with the server.
+     * it shows a message in case of error.
+     *
+     * @param interfaceType  it can be TUI or GUI
+     * @param stage          the scene of the client
+     */
     private void setupRMIClient(String interfaceType, Stage stage) {
         try {
             Registry registry = LocateRegistry.getRegistry(serverAddress, 1234);
@@ -87,6 +101,13 @@ public class ClientMain extends Application {
         }
     }
 
+    /**
+     * this method get the client's input and return an error message in case of invalid input.
+     *
+     * @param scanner the scanner to get the input
+     * @param max     the maximum number of choices
+     * @return        the valid choice
+     */
     private static int getValidChoice(Scanner scanner, int max) {
         int choice;
         do {

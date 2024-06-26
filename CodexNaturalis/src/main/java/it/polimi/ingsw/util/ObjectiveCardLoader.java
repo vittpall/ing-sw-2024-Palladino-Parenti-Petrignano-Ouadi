@@ -16,6 +16,15 @@ public class ObjectiveCardLoader {
     private static final Logger LOGGER = Logger.getLogger(ObjectiveCardLoader.class.getName());
 
 
+    /**
+     * Load the objective cards from the json file
+     * The json file is located in the resources folder and is parsed using the Jackson library
+     * The ObjectiveCardDeserializer class is used to deserialize the objective card
+     * The objective cards are returned into a list of ObjectiveCard objects
+     * If an error occurs while loading the objective cards, a log message will be printed
+     *
+     * @return the list of objective cards
+     */
     public List<ObjectiveCard> loadObjectiveCards() {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();

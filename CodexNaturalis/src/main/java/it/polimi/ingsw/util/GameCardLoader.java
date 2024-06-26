@@ -19,6 +19,15 @@ public class GameCardLoader {
     public GameCardLoader() {
     }
 
+    /**
+     * Load the game cards from the json file
+     * The json file is located in the resources folder and is parsed using the Jackson library
+     * The CornerDeserializer class is used to deserialize the corner attribute of the game card
+     * The game cards are returned into a list of GameCard objects
+     * If an error occurs while loading the game cards, a log message will be printed
+     *
+     * @return the list of game cards
+     */
     public List<GameCard> loadGameCards() {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();

@@ -13,6 +13,11 @@ import java.util.logging.Logger;
 public class BoardConfig {
     private static final Logger LOGGER = Logger.getLogger(GameCardLoader.class.getName());
 
+    /**
+     * this method loads the coordinates of the board, so it is possible to know the position of each cell and move the tokens on the board.
+     *
+     * @return the coordinates of the cells of the board
+     */
     public static List<BoardCoordinate> loadCoordinates() {
         ObjectMapper mapper = new ObjectMapper();
         List<BoardCoordinate> coordinates = new ArrayList<>();
