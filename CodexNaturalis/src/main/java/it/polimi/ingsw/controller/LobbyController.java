@@ -368,16 +368,6 @@ public class LobbyController {
     }
 
     /**
-     * Get the username of the player that stopped the specified game
-     *
-     * @param idGame Integer that represent the id of the game
-     * @return String that represent the username of the player that stopped the game
-     */
-    public String getUsernamePlayerThatStoppedTheGame(int idGame) {
-        return gameControllers.get(idGame).getUsernamePlayerThatStoppedTheGame();
-    }
-
-    /**
      * Get the player's desk of the player
      *
      * @param idGame           Integer that represent the id of the game

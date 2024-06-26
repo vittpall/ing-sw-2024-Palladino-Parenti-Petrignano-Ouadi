@@ -5,10 +5,7 @@ import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.chat.Message;
-import it.polimi.ingsw.model.enumeration.CornerObject;
-import it.polimi.ingsw.model.enumeration.PlayerState;
-import it.polimi.ingsw.model.enumeration.Resource;
-import it.polimi.ingsw.model.enumeration.TokenColor;
+import it.polimi.ingsw.model.enumeration.*;
 import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
@@ -190,11 +187,21 @@ public class GameController implements FXMLController {
             loadVisibleCards();
             loadPlayerHand();
             updatePlayerHandInteraction();
-            if (isPlayerTurn()) {
-                infoGame.setText("It's your turn: you should play a card");
-                showAvailablePositions();
-            } else
-                infoGame.setText(client.getPlayers(client.getIdGame()).getFirst().getUsername() + " is playing");
+            if (!(client.getGameState().equals(GameState.SETUP_GAME.toString()))) {
+                if (isPlayerTurn()) {
+                    infoGame.setText("It's your turn: you should play a card");
+                    showAvailablePositions();
+                } else{
+                    for(Player player : players){
+                        if(player.getPlayerState().equals(PlayerState.PLAY_CARD)){
+                            infoGame.setText(player.getUsername() + " is playing");
+                            break;
+                        }
+                    }
+                }
+            } else {
+                infoGame.setText("Waiting for other players to choose their token's color and starter card");
+            }
             initialiseChat();
             updateResourcesObjectsLabels();
         } catch (IOException | InterruptedException e) {
@@ -481,7 +488,6 @@ public class GameController implements FXMLController {
                 }
             }
         } catch (IOException | InterruptedException e) {
-            //TODO Implementare un sistema di gestione degli errori
             throw new RuntimeException(e);
         }
     }
@@ -555,7 +561,20 @@ public class GameController implements FXMLController {
             if (playerDeskShown.equals(username)) {
                 loadOtherPlayerDesk(indexPlayer);
             }
-            if (!(players.get(indexPlayer).getPlayerState().equals(PlayerState.DRAW)))
+            if (!(client.getGameState().equals(GameState.SETUP_GAME.toString())) &&
+                    client.getPlayers(client.getIdGame()).get(indexPlayer).getPlayerDesk().getDesk().size() == 1) {
+                if (isPlayerTurn()) {
+                    infoGame.setText("It's your turn: you should play a card");
+                    showAvailablePositions();
+                } else{
+                    for(Player player : players){
+                        if(player.getPlayerState().equals(PlayerState.PLAY_CARD)){
+                            infoGame.setText(player.getUsername() + " is playing");
+                            break;
+                        }
+                    }
+                }
+            }else if (!(client.getGameState().equals(GameState.SETUP_GAME.toString()))&&!(players.get(indexPlayer).getPlayerState().equals(PlayerState.DRAW)))
                 infoGame.setText(players.get((indexPlayer + 1) % client.getnPlayer(client.getIdGame())).getUsername() + " is playing");
 
             gameBoard.updateTokenPosition(username, playersPoints.get(username));

@@ -72,8 +72,6 @@ public interface VirtualServer extends Remote {
 
     GameCard getLastCardOfUsableCards(int idGame, int deck) throws RemoteException;
 
-    String getUsernamePlayerThatStoppedTheGame(int idGame) throws RemoteException;
-
     HashMap<Point, GameCard> getPlayerDesk(int idGame, int idClientIntoGame) throws RemoteException;
 
     String getWinner(int idGame) throws RemoteException, InterruptedException;
@@ -91,4 +89,5 @@ public interface VirtualServer extends Remote {
     boolean isGameStarted(int idGame) throws RemoteException;
 
     PlayerState getCurrentPlayerState(int idGame, int idClientIntoGame) throws RemoteException;
+    String getGameState(int idGame) throws RemoteException;
 }

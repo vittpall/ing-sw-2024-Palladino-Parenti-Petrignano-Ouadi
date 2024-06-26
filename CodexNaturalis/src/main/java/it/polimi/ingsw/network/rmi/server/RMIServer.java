@@ -98,7 +98,10 @@ public class RMIServer implements VirtualServer {
         }
         return createdGameId;
     }
-
+    @Override
+    public String getGameState(int idGame) throws RemoteException {
+        return lobbyController.getCurrentGameState(idGame);
+    }
 
     @Override
     public boolean isGameStarted(int idGame) throws RemoteException {
@@ -172,12 +175,6 @@ public class RMIServer implements VirtualServer {
     public GameCard getLastCardOfUsableCards(int idGame, int deck) throws RemoteException {
         return lobbyController.getLastCardOfUsableCards(idGame, deck);
     }
-
-    @Override
-    public String getUsernamePlayerThatStoppedTheGame(int idGame) throws RemoteException {
-        return lobbyController.getUsernamePlayerThatStoppedTheGame(idGame);
-    }
-
 
     @Override
     public HashMap<Point, GameCard> getPlayerDesk(int idGame, int idClientIntoGame) throws RemoteException {

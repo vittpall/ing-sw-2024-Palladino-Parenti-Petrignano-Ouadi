@@ -215,16 +215,7 @@ public class SocketClient extends BaseClient {
 
     }
 
-
     @Override
-    public String getUsernamePlayerThatStoppedTheGame() throws InterruptedException {
-        GetUsernamePlayerThatStoppedTheGameMsg request = new GetUsernamePlayerThatStoppedTheGameMsg(getIdGame());
-        ServerToClientMsg response = sendRequest(request);
-        return (String) response.getResponse().getResponseReturnable();
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
     public HashMap<Point, GameCard> getPlayerDesk() throws IOException, InterruptedException {
         GetPlayerDesk request = new GetPlayerDesk(getIdGame(), idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
@@ -312,6 +303,13 @@ public class SocketClient extends BaseClient {
         GetCurrentGameStateMsg request = new GetCurrentGameStateMsg(getIdGame());
         ServerToClientMsg response = sendRequest(request);
         return !(response.getResponse().getResponseReturnable().equals(GameState.WAITING_FOR_PLAYERS.toString()));
+    }
+
+    @Override
+    public String getGameState() throws InterruptedException {
+        GetCurrentGameStateMsg request = new GetCurrentGameStateMsg(getIdGame());
+        ServerToClientMsg response = sendRequest(request);
+        return (String) response.getResponse().getResponseReturnable();
     }
 
     public int getPoints() throws IOException, InterruptedException {

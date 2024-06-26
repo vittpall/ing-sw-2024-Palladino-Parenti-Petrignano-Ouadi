@@ -118,10 +118,6 @@ public class RMIClient extends BaseClient {
         return server.getLastCardOfUsableCards(getIdGame(), deck);
     }
 
-    @Override
-    public String getUsernamePlayerThatStoppedTheGame() throws RemoteException {
-        return server.getUsernamePlayerThatStoppedTheGame(getIdGame());
-    }
 
     public ArrayList<Message> getMessages(String receiver) throws RemoteException {
         return server.getMessages(receiver, this.getIdGame(), getUsername());
@@ -180,6 +176,11 @@ public class RMIClient extends BaseClient {
 
     public boolean isGameStarted() throws IOException {
         return server.isGameStarted(getIdGame());
+    }
+
+    @Override
+    public String getGameState() throws RemoteException {
+        return server.getGameState(getIdGame());
     }
 
     @Override

@@ -71,8 +71,6 @@ public interface VirtualView extends Remote {
 
     GameCard getLastFromUsableCards(int deck) throws IOException, InterruptedException;
 
-    String getUsernamePlayerThatStoppedTheGame() throws IOException, InterruptedException;
-
     String getWinner() throws IOException, InterruptedException;
 
     void closeGame() throws IOException, InterruptedException;
@@ -89,6 +87,7 @@ public interface VirtualView extends Remote {
 
 
     boolean isGameStarted() throws IOException, InterruptedException;
+    String getGameState() throws InterruptedException, RemoteException;
 
     void close() throws RemoteException;
 
