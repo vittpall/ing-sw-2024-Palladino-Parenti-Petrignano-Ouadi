@@ -16,7 +16,8 @@ public class GetWinnerStateGUI implements ClientState {
 
     /**
      * Constructor
-     * @param stage is a reference to the class Stage
+     *
+     * @param stage  is a reference to the class Stage
      * @param client is a reference to the class BaseClient
      */
     public GetWinnerStateGUI(Stage stage, BaseClient client) {
@@ -37,8 +38,9 @@ public class GetWinnerStateGUI implements ClientState {
 
     /**
      * This method is used to save the winner of the game
-     * @param winner is the username of the winner
-     * @param scores is a HashMap that contains the scores of the players
+     *
+     * @param winner        is the username of the winner
+     * @param scores        is a HashMap that contains the scores of the players
      * @param playersTokens is the color of the tokens of the players
      */
     public void initializeWinner(String winner, HashMap<String, Integer> scores, HashMap<String, TokenColor> playersTokens) {

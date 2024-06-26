@@ -20,7 +20,8 @@ public class ColorSelectionGUI implements ClientState {
 
     /**
      * Constructor
-     * @param stage is a reference to the class Stage, it's indicate the scene of the GUI
+     *
+     * @param stage  is a reference to the class Stage, it's indicate the scene of the GUI
      * @param client is a reference to the class stage BaseClient
      */
     public ColorSelectionGUI(Stage stage, BaseClient client) {
@@ -33,9 +34,9 @@ public class ColorSelectionGUI implements ClientState {
     public void display() {
         controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/ColorSelection.fxml");
 
-        try{
+        try {
             controller.updateColorList(client.getAvailableColors());
-        }catch (IOException | InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             controller.handleException(e);
         }
     }
@@ -48,9 +49,10 @@ public class ColorSelectionGUI implements ClientState {
 
     /**
      * call the method to update the available colors
+     *
      * @param availableColor is the list of available colors
      */
     public void refresh(ArrayList<TokenColor> availableColor) {
-    Platform.runLater(() -> controller.updateColorList(availableColor));
+        Platform.runLater(() -> controller.updateColorList(availableColor));
     }
 }

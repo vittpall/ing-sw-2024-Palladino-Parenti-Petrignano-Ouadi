@@ -34,6 +34,9 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.*;
 
+/**
+ * Class GameController represents the controller of the GameState.fxml file
+ */
 public class GameController implements FXMLController {
     public AnchorPane gameDeskContainer;
     public VBox objectiveCardsContainer;
@@ -157,7 +160,7 @@ public class GameController implements FXMLController {
     /**
      * this method scales the content of the desk
      *
-     * @param node the node to scale
+     * @param node        the node to scale
      * @param scaleFactor the factor to scale the node
      */
     private void scaleContent(Node node, double scaleFactor) {
@@ -214,9 +217,9 @@ public class GameController implements FXMLController {
                 if (isPlayerTurn()) {
                     infoGame.setText("It's your turn: you should play a card");
                     showAvailablePositions();
-                } else{
-                    for(Player player : players){
-                        if(player.getPlayerState().equals(PlayerState.PLAY_CARD)){
+                } else {
+                    for (Player player : players) {
+                        if (player.getPlayerState().equals(PlayerState.PLAY_CARD)) {
                             infoGame.setText(player.getUsername() + " is playing");
                             break;
                         }
@@ -235,7 +238,7 @@ public class GameController implements FXMLController {
     /**
      * this method calculates the number of resources and objects on the player's desk and updates the labels
      *
-     * @throws IOException if there is a problem with I/O operations
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     private void updateResourcesObjectsLabels() throws IOException, InterruptedException {
@@ -263,8 +266,8 @@ public class GameController implements FXMLController {
     /**
      * This method creates an ImageView from the image path of the objective cards
      *
-     * @throws IOException  if there is a problem with I/O operations
-     * @throws InterruptedException  if the thread running is interrupted
+     * @throws IOException          if there is a problem with I/O operations
+     * @throws InterruptedException if the thread running is interrupted
      */
     private void loadObjectiveCards() throws IOException, InterruptedException {
         List<ObjectiveCard> objectiveCards = new ArrayList<>(Arrays.asList(client.getSharedObjectiveCards()));
@@ -278,7 +281,7 @@ public class GameController implements FXMLController {
     /**
      * this method loads the usable cards of the player.
      *
-     * @throws IOException if there is a problem with I/O operations
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     private void loadUsableCards() throws IOException, InterruptedException {
@@ -297,7 +300,7 @@ public class GameController implements FXMLController {
     /**
      * this method loads the visible cards of the player
      *
-     * @throws IOException if there is a problem with I/O operations
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     private void loadVisibleCards() throws IOException, InterruptedException {
@@ -308,7 +311,7 @@ public class GameController implements FXMLController {
     /**
      * this method loads the player hand and sets the hover effects on the cards of the player hand
      *
-     * @throws IOException if there is a problem with I/O operations
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     private void loadPlayerHand() throws IOException, InterruptedException {
@@ -329,7 +332,7 @@ public class GameController implements FXMLController {
      * this method initializes the visible cards of the player and sets the hover effects on the cards
      *
      * @param cards the cards to initialize
-     * @param pane the pane where the cards will be added
+     * @param pane  the pane where the cards will be added
      */
     private void initializeVisibleCards(ArrayList<GameCard> cards, HBox pane) {
         CardView card1 = new CardView(cards.get(0), true);
@@ -356,7 +359,7 @@ public class GameController implements FXMLController {
     /**
      * this method shows the available positions where the player can play the card
      *
-     * @throws IOException if there is a problem with I/O operations
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     private void showAvailablePositions() throws IOException, InterruptedException {
@@ -369,7 +372,13 @@ public class GameController implements FXMLController {
         });
     }
 
-
+    /**
+     * this method sets the events on the placeholder of an available position
+     * If the player drops a card on a placeholder, the card is played in that position
+     *
+     * @param placeholder the view of the placeholder
+     * @param point       the position of the placeholder
+     */
     private void setPlaceholderEvents(CardView placeholder, Point point) {
         placeholder.setOnDragOver(event -> {
             if (event.getGestureSource() != placeholder && event.getDragboard().hasString()) {
@@ -398,7 +407,7 @@ public class GameController implements FXMLController {
      * this method checks if it is the player's turn
      *
      * @return true if it is the player's turn, false otherwise
-     * @throws IOException if there is a problem with I/O operations
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     private boolean isPlayerTurn() throws IOException, InterruptedException {
@@ -409,7 +418,7 @@ public class GameController implements FXMLController {
      * this method checks if it's the turn to draw a card for the player
      *
      * @return true if it's the turn to draw a card, false otherwise
-     * @throws IOException if there is a problem with I/O operations
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     private boolean isPlayerStateDraw() throws IOException, InterruptedException {
@@ -420,7 +429,7 @@ public class GameController implements FXMLController {
     /**
      * this method put the drawn card on the player's cards and updates the desk
      *
-     * @throws IOException if there is a problem with I/O operations
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     private void updatePlayerDrawInteraction() throws IOException, InterruptedException {
@@ -477,7 +486,7 @@ public class GameController implements FXMLController {
     /**
      * this method updates the player who has to play the turn
      *
-     * @throws IOException if there is a problem with I/O operations
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     private void updatePlayerHandInteraction() throws IOException, InterruptedException {
@@ -507,8 +516,8 @@ public class GameController implements FXMLController {
      * has to draw a card. Otherwise, the player has to choose another position
      *
      * @param selectedPoint the selected position
-     * @param cardIndex the index of the card to play
-     * @throws IOException if there is a problem with I/O operations
+     * @param cardIndex     the index of the card to play
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     private void handlePositionSelection(Point selectedPoint, int cardIndex) throws IOException, InterruptedException {
@@ -534,7 +543,6 @@ public class GameController implements FXMLController {
             if (client.getIdGame() != null) {
                 clearPlaceholders();
                 loadPlayerHand();
-                System.out.println(client.getIdGame());
                 updatePlayerHandInteraction();
                 loadCurrentPlayerDesk();
                 updatePlayerDrawInteraction();
@@ -553,7 +561,9 @@ public class GameController implements FXMLController {
         }
     }
 
-
+    /**
+     * This method removes the placeholder of the available positions from the desk
+     */
     private void clearPlaceholders() {
         gameDesk.getChildren().removeIf(node -> node instanceof CardView && ((CardView) node).isPlaceholder());
     }
@@ -569,21 +579,12 @@ public class GameController implements FXMLController {
         popUp.setVisible(true);
     }
 
-
-    /**
-     * Constructor
-     *
-     * @param client refers to the call BaseClient
-     */
+    @Override
     public void setClient(BaseClient client) {
         this.client = client;
     }
 
-    /**
-     * Constructor
-     *
-     * @param stage is a reference to the class Stage
-     */
+    @Override
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -591,7 +592,7 @@ public class GameController implements FXMLController {
     /**
      * this method handle the click on the "show back" button to show the back side of the card or the front side
      *
-     * @throws IOException if there is a problem with I/O operations
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     public void handleShowBackButton() throws IOException, InterruptedException {
@@ -630,7 +631,7 @@ public class GameController implements FXMLController {
      * this method allows the player to see other players' desks
      *
      * @param playerIndex the index of the player
-     * @throws IOException if there is a problem with I/O operations
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     private void loadOtherPlayerDesk(int playerIndex) throws IOException, InterruptedException {
@@ -645,7 +646,7 @@ public class GameController implements FXMLController {
     /**
      * this method loads the current player desk
      *
-     * @throws IOException if there is a problem with I/O operations
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     private void loadCurrentPlayerDesk() throws IOException, InterruptedException {
@@ -656,10 +657,10 @@ public class GameController implements FXMLController {
     }
 
     /**
-     * this method loads the desk of the player, showing the cards and the tokens
+     * this method loads the desk of the player, showing the cards and the token
      *
-     * @param deskCards the cards on the player's desk
-     * @param playerIndex the index of the player
+     * @param deskCards           the cards on the player's desk
+     * @param playerIndex         the index of the player
      * @param tokenColorImageName the name of the image of the token color
      */
     private void loadDesk(HashMap<Point, GameCard> deskCards, int playerIndex, String tokenColorImageName) {
@@ -683,7 +684,7 @@ public class GameController implements FXMLController {
 
 
     /**
-     * this method sets the player's turn and shows what player is playing
+     * this method sets the player's turn and updates the desk and the available positions
      *
      * @param usernameCurrentPlayer the username of the player who is on turn
      */
@@ -707,10 +708,9 @@ public class GameController implements FXMLController {
     }
 
     /**
-     * this method updates turns and sets the notification to the player. if it's his turn, the player can play a card,
-     * otherwise the player has to wait. if he gained some points, the player can see the updated points on the board.
+     * this method notify the player that a card has been played by a player and updates the desk and points
      *
-     * @param username the username of the player who is playing
+     * @param username      the username of the player who is playing
      * @param playersPoints the points of the players
      */
     public void cardPlayedNotification(String username, HashMap<String, Integer> playersPoints) {
@@ -731,15 +731,15 @@ public class GameController implements FXMLController {
                 if (isPlayerTurn()) {
                     infoGame.setText("It's your turn: you should play a card");
                     showAvailablePositions();
-                } else{
-                    for(Player player : players){
-                        if(player.getPlayerState().equals(PlayerState.PLAY_CARD)){
+                } else {
+                    for (Player player : players) {
+                        if (player.getPlayerState().equals(PlayerState.PLAY_CARD)) {
                             infoGame.setText(player.getUsername() + " is playing");
                             break;
                         }
                     }
                 }
-            }else if (!(client.getGameState().equals(GameState.SETUP_GAME.toString()))&&!(players.get(indexPlayer).getPlayerState().equals(PlayerState.DRAW)))
+            } else if (!(client.getGameState().equals(GameState.SETUP_GAME.toString())) && !(players.get(indexPlayer).getPlayerState().equals(PlayerState.DRAW)))
                 infoGame.setText(players.get((indexPlayer + 1) % client.getnPlayer(client.getIdGame())).getUsername() + " is playing");
 
             gameBoard.updateTokenPosition(username, playersPoints.get(username));
@@ -750,7 +750,7 @@ public class GameController implements FXMLController {
     }
 
     /**
-     * this method sets the notification that a player has reached 20 points and that there will be the last turn
+     * this method notify the user that a player has reached 20 points and that there will be the last turn
      *
      * @param username the username of the player who has reached 20 points
      */
@@ -768,10 +768,10 @@ public class GameController implements FXMLController {
     }
 
     /**
-     * this method sets the notification that the game is over and shows the winner
+     * this method notify the player that the game is over and shows the winner
      *
-     * @param winner the username of the winner
-     * @param scores the scores of the players
+     * @param winner        the username of the winner
+     * @param scores        the scores of the players
      * @param playersTokens the tokens of the players
      */
     public void endGameNotification(String winner, HashMap<String, Integer> scores, HashMap<String, TokenColor> playersTokens) {
@@ -782,7 +782,7 @@ public class GameController implements FXMLController {
     /**
      * this method initializes the chat
      *
-     * @throws IOException if there is a problem with I/O operations
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     public void initialiseChat() throws IOException, InterruptedException {
@@ -806,9 +806,9 @@ public class GameController implements FXMLController {
 
     /**
      * this method initializes the chat, setting the dimensions of the text area and the message field and the send button.
-     * every players can see all the old messages in every time during the game
+     * every player can see all the old messages in every time during the game
      *
-     * @param username the username of the player
+     * @param username                the username of the player
      * @param alreadyExistingMessages the messages already existing
      */
     public void initialiseSingleChatTab(String username, ArrayList<Message> alreadyExistingMessages) {
@@ -870,11 +870,11 @@ public class GameController implements FXMLController {
     }
 
     /**
-     * this method sends a message to anaother player
+     * this method sends a message to another player
      *
      * @param receiver the player who receives the message
-     * @param input the message to send
-     * @throws IOException if there is a problem with I/O operations
+     * @param input    the message to send
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     public void sendMessage(String receiver, String input) throws IOException, InterruptedException {
@@ -908,9 +908,9 @@ public class GameController implements FXMLController {
     /**
      * this method fills the chat with the message received and shows who sent the message
      *
-     * @param message the message received
+     * @param message           the message received
      * @param whoSendTheMessage the player who sent the message
-     * @param tab the chat, the table where the message is shown
+     * @param tab               the chat, the table where the message is shown
      */
     private void fillChat(Message message, String whoSendTheMessage, Tab tab) {
         VBox vbox = (VBox) ((AnchorPane) tab.getContent()).getChildren().getFirst();
@@ -925,7 +925,7 @@ public class GameController implements FXMLController {
     /**
      * this method sets the notification that the player has to choose the token's color and add the image of the token on the initial card on the desk
      *
-     * @throws IOException if there is a problem with I/O operations
+     * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
     public void colorSelectionNotification() throws IOException, InterruptedException {

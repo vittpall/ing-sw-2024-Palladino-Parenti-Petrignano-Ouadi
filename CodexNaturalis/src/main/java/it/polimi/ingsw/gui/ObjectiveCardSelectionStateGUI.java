@@ -14,7 +14,8 @@ public class ObjectiveCardSelectionStateGUI implements ClientState {
 
     /**
      * Constructor
-     * @param stage is a reference to the class Stage
+     *
+     * @param stage  is a reference to the class Stage
      * @param client is a reference to the class BaseClient
      */
     public ObjectiveCardSelectionStateGUI(Stage stage, BaseClient client) {

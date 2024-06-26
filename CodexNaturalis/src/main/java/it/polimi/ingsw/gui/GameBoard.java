@@ -19,7 +19,8 @@ public class GameBoard {
     private final Map<String, BoardCoordinate> currentPlayerPositions;
 
     /**
-     * this method creates the game board
+     * Constructor
+     *
      * @param gameBoardAnchorPane is the place where there is the scoreboard
      */
     public GameBoard(AnchorPane gameBoardAnchorPane) {
@@ -32,7 +33,8 @@ public class GameBoard {
 
     /**
      * this method add the tokens of the clients to the board. Every client has their chosen color
-     * @param username is the personal username associated to the client
+     *
+     * @param username  is the personal username associated to the client
      * @param imagePath is teh image of the token
      */
     public void addToken(String username, String imagePath) {
@@ -51,6 +53,7 @@ public class GameBoard {
 
     /**
      * this method updates the position of the token on the image of the board right after the player has reached some points
+     *
      * @param username is the personal username associated to the client
      * @param newScore is the updated client's score
      */
@@ -69,7 +72,8 @@ public class GameBoard {
     }
 
     /**
-     *this method gets the position of the token on the board and changes it
+     * this method gets the position of the token on the board and changes it
+     *
      * @param coordinate is the position of the token
      * @return the new coordinates of the token
      */
@@ -98,6 +102,7 @@ public class GameBoard {
 
     /**
      * this method checks if the token is already on the board
+     *
      * @param username is the personal username associated to the client
      * @return true if the token is on the board, false otherwise
      */

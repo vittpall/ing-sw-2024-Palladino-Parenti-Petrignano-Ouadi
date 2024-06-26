@@ -19,8 +19,9 @@ public class JoinGameMenuStateGUI implements ClientState {
 
     /**
      * Constructor
-     * @param stage is a reference to the class Stage
-     * @param client
+     *
+     * @param stage  is a reference to the class Stage
+     * @param client is a reference to the class BaseClient
      */
     public JoinGameMenuStateGUI(Stage stage, BaseClient client) {
         this.client = client;
@@ -43,6 +44,7 @@ public class JoinGameMenuStateGUI implements ClientState {
 
     /**
      * This method refreshes the list of available games so other players can join
+     *
      * @param availableGames is the list of available games
      */
     public void refresh(HashMap<Integer, Integer[]> availableGames) {

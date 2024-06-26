@@ -11,7 +11,8 @@ public class CreateGameStateGUI implements ClientState {
 
     /**
      * Constructor
-     * @param stage is a reference to the class Stage
+     *
+     * @param stage  is a reference to the class Stage
      * @param client is a reference to the class BaseClient
      */
     public CreateGameStateGUI(Stage stage, BaseClient client) {
@@ -19,12 +20,10 @@ public class CreateGameStateGUI implements ClientState {
         this.stage = stage;
     }
 
-
     @Override
     public void display() {
         FXMLLoaderUtility.loadView(stage, client, "/fxml/CreateGameState.fxml");
     }
-
 
     @Override
     public String toString() {

@@ -18,7 +18,8 @@ public class WaitingForPlayersGUI implements ClientState {
 
     /**
      * Constructor
-     * @param stage is a reference to the class Stage
+     *
+     * @param stage  is a reference to the class Stage
      * @param client is a reference to the class BaseClient
      */
     public WaitingForPlayersGUI(Stage stage, BaseClient client) {
@@ -39,7 +40,8 @@ public class WaitingForPlayersGUI implements ClientState {
 
     /**
      * This method refreshes the players and the number of missing players
-     * @param players is the list of players that are entered in the game
+     *
+     * @param players           is the list of players that are entered in the game
      * @param nOfMissingPlayers is the number of missing players
      */
     public void refresh(ArrayList<Player> players, int nOfMissingPlayers) {

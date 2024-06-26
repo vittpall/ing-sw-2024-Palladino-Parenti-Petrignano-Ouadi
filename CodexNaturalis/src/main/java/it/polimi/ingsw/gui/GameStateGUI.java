@@ -20,7 +20,8 @@ public class GameStateGUI implements ClientState {
 
     /**
      * Constructor
-     * @param stage is a reference to the class Stage
+     *
+     * @param stage  is a reference to the class Stage
      * @param client is a reference to the class BaseClient
      */
     public GameStateGUI(Stage stage, BaseClient client) {
@@ -28,13 +29,11 @@ public class GameStateGUI implements ClientState {
         this.stage = stage;
     }
 
-
     @Override
     public void display() {
         controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/GameState.fxml");
         controller.initializeGame();
     }
-
 
     @Override
     public String toString() {
@@ -44,6 +43,7 @@ public class GameStateGUI implements ClientState {
 
     /**
      * This method is used to update the chat when it receives a message
+     *
      * @param msg is the message received
      */
     public void updateChat(Message msg) {
@@ -51,8 +51,9 @@ public class GameStateGUI implements ClientState {
     }
 
     /**
-     *this method is used to update the number of points when a player has played a card
-     * @param username is the username of the player that has played the card
+     * this method is used to update the number of points when a player has played a card
+     *
+     * @param username      is the username of the player that has played the card
      * @param playersPoints is a HashMap that contains the points of the players
      */
     public void cardPlayedRefresh(String username, HashMap<String, Integer> playersPoints) {
@@ -61,6 +62,7 @@ public class GameStateGUI implements ClientState {
 
     /**
      * This method is used to notified that the turn has changed
+     *
      * @param usernameCurrentPlayer is the username of the current player that will be replaced by the next one
      */
     public void changeTurnNotified(String usernameCurrentPlayer) {
@@ -69,6 +71,7 @@ public class GameStateGUI implements ClientState {
 
     /**
      * This method is used to notify that one player has reached 20 points and that the game is ending
+     *
      * @param username is the username of the player that has reached 20 points
      */
     public void lastTurnSetNotification(String username) {
@@ -77,8 +80,9 @@ public class GameStateGUI implements ClientState {
 
     /**
      * This method is used to notify that the game is ended and to show the winner. it also shows the scores of the players on the board
-     * @param winner is the username of the winner
-     * @param scores is a HashMap that contains the scores of the players
+     *
+     * @param winner        is the username of the winner
+     * @param scores        is a HashMap that contains the scores of the players
      * @param playersTokens are the tokens of the players
      */
     public void endGameNotification(String winner, HashMap<String, Integer> scores, HashMap<String, TokenColor> playersTokens) {

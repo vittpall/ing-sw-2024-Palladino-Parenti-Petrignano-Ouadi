@@ -9,6 +9,7 @@ public class WindowCloseHandler {
 
     /**
      * This method sets up the window close request handling
+     *
      * @param stage is a reference to the class Stage
      */
     public static void setUpCloseRequestHandling(Stage stage) {

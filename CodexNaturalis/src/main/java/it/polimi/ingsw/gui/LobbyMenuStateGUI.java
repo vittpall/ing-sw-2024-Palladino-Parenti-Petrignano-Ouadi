@@ -15,7 +15,8 @@ public class LobbyMenuStateGUI implements ClientState {
 
     /**
      * Constructor
-     * @param stage is a reference to the class Stage
+     *
+     * @param stage  is a reference to the class Stage
      * @param client is a reference to the class BaseClient
      */
     public LobbyMenuStateGUI(Stage stage, BaseClient client) {
@@ -38,6 +39,7 @@ public class LobbyMenuStateGUI implements ClientState {
 
     /**
      * This method sends a message that the game has been closed
+     *
      * @param msg is the message to be sent
      */
     public void gameClosedNotification(String msg) {

@@ -15,8 +15,9 @@ public class CardView extends Pane {
     private boolean isPlaceholder;
 
     /**
-     * this method takes the selected side of the card
-     * @param card is a reference to the Card class
+     * Constructor
+     *
+     * @param card      is a reference to the Card class
      * @param showFront boolean, it indicates the side of the card
      */
     public CardView(Card card, boolean showFront) {
@@ -25,7 +26,8 @@ public class CardView extends Pane {
     }
 
     /**
-     *it calls setupPlaceholder if the param is true
+     * it calls setupPlaceholder if the param is true
+     *
      * @param isPlaceholder boolean, the place where there will be the card
      */
     public CardView(boolean isPlaceholder) {
@@ -37,8 +39,9 @@ public class CardView extends Pane {
     }
 
     /**
-     *this method initializes the card and set the side
-     * @param card is a reference to the Card class
+     * this method initializes the card and set the side
+     *
+     * @param card      is a reference to the Card class
      * @param showFront boolean, it indicates the side of the card
      */
     private void initializeView(Card card, boolean showFront) {
@@ -48,8 +51,9 @@ public class CardView extends Pane {
 
 
     /**
+     * this method returns true if the place is a placeholder
      *
-     * @return isPlaceholder, the place where there will be the card
+     * @return a boolean
      */
     public boolean isPlaceholder() {
         return isPlaceholder;
@@ -57,6 +61,7 @@ public class CardView extends Pane {
 
     /**
      * this method loads the card's image, set the width and height and connects the front and the back of the same card
+     *
      * @param card is a reference to the Card class
      */
     private void loadImage(Card card) {
@@ -65,20 +70,19 @@ public class CardView extends Pane {
         frontImageView = new ImageView(frontImage);
         frontImageView.setFitWidth(CARD_WIDTH);
         frontImageView.setFitHeight(CARD_HEIGHT);
-        //frontImageView.setPreserveRatio(true);
 
         String backImagePath = Objects.requireNonNull(getClass().getResource("/Images/" + card.getImageBackPath())).toExternalForm();
         Image backImage = new Image(backImagePath);
         backImageView = new ImageView(backImage);
         backImageView.setFitWidth(CARD_WIDTH);
         backImageView.setFitHeight(CARD_HEIGHT);
-        // backImageView.setPreserveRatio(true);
 
         this.getChildren().addAll(backImageView, frontImageView);
     }
 
     /**
      * this method shows only one side of the same card
+     *
      * @param showFront boolean, it indicates the side of the card
      */
     public void setCardVisibility(boolean showFront) {

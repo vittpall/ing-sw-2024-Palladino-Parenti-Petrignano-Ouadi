@@ -10,8 +10,9 @@ public class ChatTab extends Tab {
     private final Label counterMessages;
 
     /**
-     * set the style of the number of unread messages
-     * @param title  refers to the name of the chat, if it is global or private. if it's private, it's the name of the other client
+     * Constructor
+     *
+     * @param title refers to the name of the chat, if it is global or private. if it's private, it's the name of the other client
      */
     public ChatTab(String title) {
         super(title);

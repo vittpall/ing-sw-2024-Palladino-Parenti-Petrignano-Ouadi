@@ -15,9 +15,10 @@ public class TokenView extends ImageView {
 
     /**
      * Constructor
+     *
      * @param imagePath is the path of the image of the token
-     * @param offsetX is the offset on the x-axis
-     * @param offsetY is the offset on the y-axis
+     * @param offsetX   is the offset on the x-axis
+     * @param offsetY   is the offset on the y-axis
      */
     public TokenView(String imagePath, double offsetX, double offsetY) {
         Image image = new Image(imagePath);
@@ -30,6 +31,7 @@ public class TokenView extends ImageView {
 
     /**
      * This method returns the offset on the x-axis
+     *
      * @return the offset on the x-axis
      */
     public double getOffsetX() {
@@ -38,7 +40,8 @@ public class TokenView extends ImageView {
 
     /**
      * This method returns the offset on the y-axis
-      * @return the offset on the y-axis
+     *
+     * @return the offset on the y-axis
      */
     public double getOffsetY() {
         return offsetY;
