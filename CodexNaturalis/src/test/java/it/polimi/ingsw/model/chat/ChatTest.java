@@ -1,8 +1,6 @@
-package it.polimi.ingsw.model;
+package it.polimi.ingsw.model.chat;
 
 
-import it.polimi.ingsw.model.chat.Chat;
-import it.polimi.ingsw.model.chat.Message;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
