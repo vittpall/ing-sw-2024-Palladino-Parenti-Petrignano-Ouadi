@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.notifications;
 
+import it.polimi.ingsw.model.enumeration.GameState;
 import it.polimi.ingsw.network.BaseClient;
 
 /**
@@ -7,18 +8,21 @@ import it.polimi.ingsw.network.BaseClient;
  */
 public class LastTurnSetNotification implements ServerNotification {
     String username;
+    GameState gameState;
 
     /**
      * Constructor
      *
      * @param username String representing the username of the player that reached 20 points
+     * @param gameState GameState representing the state of the game that caused the notification
      */
-    public LastTurnSetNotification(String username) {
+    public LastTurnSetNotification(String username, GameState gameState) {
         this.username = username;
+        this.gameState = gameState;
     }
 
     @Override
     public void notifyClient(BaseClient client) {
-        client.onLastTurnSet(username);
+        client.onLastTurnSet(username, gameState);
     }
 }

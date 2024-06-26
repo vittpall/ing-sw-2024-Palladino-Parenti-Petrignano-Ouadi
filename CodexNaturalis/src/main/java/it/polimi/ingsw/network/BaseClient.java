@@ -4,6 +4,7 @@ import it.polimi.ingsw.core.ClientState;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.UsefulData;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.GameState;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
@@ -47,7 +48,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * Constructor for the BaseClient class.
-     * @param mode The mode of the client (GUI or TUI).
+     *
+     * @param mode  The mode of the client (GUI or TUI).
      * @param stage The stage for the GUI.
      */
     public BaseClient(String mode, Stage stage) {
@@ -82,6 +84,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * Sets the token color of the user.
+     *
      * @param tokenColor
      */
     public void setUserTokenColor(TokenColor tokenColor) {
@@ -90,6 +93,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * Gets the token color of the user.
+     *
      * @return The token color of the user.
      */
     public TokenColor getTokenColor() {
@@ -98,7 +102,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This method handles the exceptions that occur in the client.
-     * @param thread The thread in which the exception occurred.
+     *
+     * @param thread          The thread in which the exception occurred.
      * @param thrownException The exception that was thrown.
      */
     private static void handleException(Thread thread, Throwable thrownException) {
@@ -112,6 +117,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This is used to unwrap unckecked exceptions that contains the initial cause of the exception.
+     *
      * @param thrownException
      * @return
      */
@@ -125,6 +131,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This method shows the error message when an exception occurs.
+     *
      * @param thrownException The exception that was thrown.
      */
     @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
@@ -152,6 +159,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * Sets the ID of the game.
+     *
      * @param idGame The ID of the game.
      */
     public void setIdGame(int idGame) {
@@ -160,6 +168,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * Sets the mode of the client.
+     *
      * @param GUIMode The mode of the client.
      */
     public void setGUIMode(boolean GUIMode) {
@@ -168,6 +177,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * Gets the mode of the client.
+     *
      * @return The mode of the client.
      */
     public boolean isGUIMode() {
@@ -176,6 +186,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * Sets the username of the client.
+     *
      * @param username The username of the client.
      */
     public void setUsername(String username) {
@@ -184,6 +195,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * Gets the username of the client.
+     *
      * @return The username of the client.
      */
     public String getUsername() {
@@ -192,6 +204,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * Sets the scanner for the client.
+     *
      * @param scan The scanner for the client.
      */
     public void setScan(Scanner scan) {
@@ -200,6 +213,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * Gets the scanner for the client.
+     *
      * @return The scanner for the client.
      */
     public Scanner getScan() {
@@ -208,6 +222,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * Gets the current state of the client.
+     *
      * @return The current state of the client.
      */
     public ClientState getClientCurrentState() {
@@ -216,6 +231,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * Sets the current state of the client.
+     *
      * @param currentState The current state of the client.
      */
     public void setCurrentState(ClientState currentState) {
@@ -224,45 +240,51 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This method checks the state of the client.
+     *
      * @param action The requested action.
      * @return True if the state is valid, false otherwise.
-     * @throws IOException If an I/O error occurs.
-     * @throws InterruptedException If the thread is interrupted.
+     * @throws IOException            If an I/O error occurs.
+     * @throws InterruptedException   If the thread is interrupted.
      * @throws ClassNotFoundException If the class of a serialized object cannot be found.
      */
     protected abstract boolean checkState(RequestedActions action) throws IOException, InterruptedException, ClassNotFoundException;
 
     /**
      * This method displays the current state of the client.
-     * @throws IOException If an I/O error occurs.
+     *
+     * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the thread is interrupted.
      */
     public abstract void close();
 
     /**
      * This method returns the client to the lobby.
-     * @throws IOException If an I/O error occurs.
+     *
+     * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the thread is interrupted.
      */
     public abstract void returnToLobby() throws IOException, InterruptedException;
 
     /**
      * This method displays the current state of the client.
-     * @throws IOException If an I/O error occurs.
+     *
+     * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the thread is interrupted.
      */
     public abstract PlayerState getCurrentPlayerState() throws IOException, InterruptedException;
 
     /**
      * This method displays the current state of the client.
-     * @throws IOException If an I/O error occurs.
+     *
+     * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the thread is interrupted.
      */
     protected abstract String getServerCurrentState() throws IOException, InterruptedException;
 
     /**
      * This method handles token color selected notification.
-     * @throws IOException If an I/O error occurs.
+     *
+     * @throws IOException          If an I/O error occurs.
      * @throws InterruptedException If the thread is interrupted.
      */
     public synchronized void onTokenColorSelected(String msg, ArrayList<TokenColor> availableColors) {
@@ -280,6 +302,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This method handles the game joined notification.
+     *
      * @param players
      * @param nOfMissingPlayers
      */
@@ -294,7 +317,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This method handles the game started notification.
-     * @param message The message to display.
+     *
+     * @param message        The message to display.
      * @param availableGames The available games.
      */
     public synchronized void onGameJoinedAsOutsider(String message, HashMap<Integer, Integer[]> availableGames) {
@@ -308,7 +332,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This method handles the changed turn notification.
-     * @param msg The message to display.
+     *
+     * @param msg                   The message to display.
      * @param currentPlayerUsername The username of the current player.
      */
     public synchronized void onChangeTurn(String msg, String currentPlayerUsername) {
@@ -325,9 +350,10 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This method handles the played card notification.
-     * @param msg The message to display.
+     *
+     * @param msg           The message to display.
      * @param playersPoints The points of the players.
-     * @param username The username of the player.
+     * @param username      The username of the player.
      */
     public synchronized void onPlayedCard(String msg, HashMap<String, Integer> playersPoints, String username) {
         if (!isGUIMode) {
@@ -343,19 +369,27 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This method handles the last turn notification.
-     * @param username
+     *
+     * @param username  String representing the username of the player who just played
+     * @param gameState GameState representing the state of the game that caused the setting of the last turn
      */
-    public synchronized void onLastTurnSet(String username) {
+    public synchronized void onLastTurnSet(String username, GameState gameState) {
         if (!isGUIMode) {
-            System.out.println("\n----------------------------------\n" +
-                    "Player " + username + " reached 20 points\n" +
-                    "The last turn has begun\n");
+            if (gameState.equals(GameState.FINISHING_ROUND_BEFORE_LAST))
+                System.out.println("\n----------------------------------\n" +
+                        "Player " + username + " reached 20 points\n" +
+                        "The last turn has begun\n");
+            else if (gameState.equals(GameState.NO_CARDS_LEFT))
+                System.out.println("\n----------------------------------\n" +
+                        "The cards to draw are finished \n" +
+                        "The last turn has begun\n");
         } else if (getClientCurrentState() instanceof GameStateGUI)
-            ((GameStateGUI) getClientCurrentState()).lastTurnSetNotification(username);
+            ((GameStateGUI) getClientCurrentState()).lastTurnSetNotification(username, gameState);
     }
 
     /**
      * This method handles the end game notification.
+     *
      * @param winner
      * @param scores
      * @param playersTokens
@@ -382,6 +416,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * this method returns the winner of the game
+     *
      * @return the winner of the game
      */
     public String getWinnerForTui() {
@@ -390,6 +425,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * this method returns the scores of the game
+     *
      * @return the scores of the game
      */
     public HashMap<String, Integer> getScoresForTui() {
@@ -398,6 +434,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This method handles the game closed notification.
+     *
      * @param msg The message to display.
      */
     public synchronized void onGameClosed(String msg) {
@@ -420,12 +457,13 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This method handles the chat message received notification.
+     *
      * @param msg The message to display.
      */
     public void onChatMessageReceived(Message msg) {
         if (!isGUIMode) {
             if (!msg.getSender().equals(username)) {
-                if(getClientCurrentState() instanceof GlobalChatState || getClientCurrentState() instanceof PrivateChatState){
+                if (getClientCurrentState() instanceof GlobalChatState || getClientCurrentState() instanceof PrivateChatState) {
                     if (getClientCurrentState() != null) {
                         if (msg.getReceiver() == null && getClientCurrentState() instanceof GlobalChatState) {
                             System.out.println(msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET + ": " + msg.getContent());
@@ -441,13 +479,11 @@ abstract public class BaseClient implements VirtualView, GameListener {
                             if (msg.getReceiver() != null && msg.getReceiver().equals(username) && !(getClientCurrentState() instanceof PrivateChatState) || !((PrivateChatState) getClientCurrentState()).getReceiver().equals(msg.getSender()))
                                 System.out.println("You have received a message from " + msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET);
                         }
-                    }else
-                    {
+                    } else {
                         if (msg.getReceiver() == null)
                             System.out.println("You have received a message from the global chat from " + msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET);
-                        else
-                        {
-                            if(msg.getReceiver().equals(username))
+                        else {
+                            if (msg.getReceiver().equals(username))
                                 System.out.println(msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET + " send you a message");
                         }
                     }
@@ -479,7 +515,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
      */
     public void inputHandler() {
 
-  //      System.err.println("RETURN TO START OF THE GAME");
+        //      System.err.println("RETURN TO START OF THE GAME");
         showWinnerTui = false;
         boolean correctInput;
         do {
@@ -560,14 +596,12 @@ abstract public class BaseClient implements VirtualView, GameListener {
                                     handleTUIInput(Integer.parseInt(input));
                                 } catch (NumberFormatException e) {
                                     System.out.println("Invalid input: Please enter a number.");
-                                } catch (NullPointerException e)
-                                {
+                                } catch (NullPointerException e) {
                                     waitingForCloseGameNotification = false;
                                     setCurrentState(new LobbyMenuState(this, scan));
                                     input = "";
                                     inputHandler();
-                                }
-                                catch (Exception e) {
+                                } catch (Exception e) {
 
                                     System.out.println("The game is closing wait...2");
                                 }
@@ -590,14 +624,12 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid input: Please enter a number.");
-                } catch (NullPointerException e)
-                {
+                } catch (NullPointerException e) {
                     waitingForCloseGameNotification = false;
                     setCurrentState(new LobbyMenuState(this, scan));
                     input = "";
                     inputHandler();
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     //There's too many runtime exceptions to catch so i GOTTA CATCH 'EM ALL
                     System.out.println("The game is closing wait...3");
                 }
@@ -632,6 +664,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This method handles the input from the user in the TUI mode and verify if that input is available in current player's state.
+     *
      * @param i The input from the user.
      * @return True if the input is valid, false otherwise.
      */
@@ -709,6 +742,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This method handles the common input from the user.
+     *
      * @param input The input from the user.
      * @return True if the input is valid, false otherwise. The return could be false both if the input is not valid or if the input is "exit".
      */
@@ -733,7 +767,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
     /**
      * This method handles the notifications from the server.
      * It reads the notifications from the queue and notifies the client.
-     * @throws RemoteException If a remote communication error occurs.
+     *
+     * @throws RemoteException      If a remote communication error occurs.
      * @throws InterruptedException If the thread is interrupted.
      */
     @SuppressWarnings("InfiniteLoopStatement")
@@ -751,10 +786,11 @@ abstract public class BaseClient implements VirtualView, GameListener {
     /**
      * This method handles the input from the user in the TUI mode.
      * It reads the input, validates it, and performs the corresponding action.
+     *
      * @param input The input from the user.
      * @throws ClassNotFoundException If the class of a serialized object cannot be found.
-     * @throws InterruptedException If the thread is interrupted.
-     * @throws IOException If an I/O error occurs.
+     * @throws InterruptedException   If the thread is interrupted.
+     * @throws IOException            If an I/O error occurs.
      */
     public void handleTUIInput(int input) throws ClassNotFoundException, InterruptedException, IOException {
         try {

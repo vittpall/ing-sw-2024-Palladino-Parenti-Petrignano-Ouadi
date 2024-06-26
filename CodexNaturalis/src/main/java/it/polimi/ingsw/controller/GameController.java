@@ -320,6 +320,7 @@ public class GameController {
 
     /**
      * This method plays a card
+     * It also manages the last turn and the end of the game
      *
      * @param idClientIntoGame the id of the player into the game
      * @param chosenCard       the card chosen by the player
@@ -335,7 +336,18 @@ public class GameController {
         model.playCard(chosenCard, faceDown, chosenPosition);
         int points = model.getPlayers().get(idClientIntoGame).getPoints();
         model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.DRAW);
-        if (gameState == GameState.LAST_ROUND) {
+        if (gameState == GameState.NO_CARDS_LEFT) {
+            content = "\n----------------------------------\n" +
+                    "Player " + model.getPlayers().get(idClientIntoGame).getUsername() + " played a card\n" +
+                    "Now is " + model.getPlayers().get(getCurrentPlayer()).getUsername() + " turn.";
+            String usernameSender = model.getPlayers().get(idClientIntoGame).getUsername();
+            if (model.getCurrentPlayerIndex() == nPlayers - 1)
+                gameState = GameState.LAST_ROUND;
+            model.getPlayers().get(idClientIntoGame).setPlayerState(PlayerState.PLAY_CARD);
+            model.advanceToNextPlayer();
+            model.getPlayers().get(model.getCurrentPlayerIndex()).setPlayerState(PlayerState.PLAY_CARD);
+            listeners.get("GameRounds").notifyChangeTurn(content, model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername(), usernameSender);
+        } else if (gameState == GameState.LAST_ROUND) {
             content = "\n----------------------------------\n" +
                     "Player " + model.getPlayers().get(idClientIntoGame).getUsername() + " played his last card\n" +
                     "Now is " + model.getPlayers().get(getCurrentPlayer()).getUsername() + " turn.";
@@ -374,6 +386,7 @@ public class GameController {
     /**
      * This method draws a card from a deck and notifies the other players that a card has been drawn
      * by a player and that it is now the turn of another player
+     * If a player reaches 20 points or a deck is empty, the game state changes and the last turns of the game are set
      *
      * @param deckToChoose the deck to choose
      * @param inVisible    the visibility of the card
@@ -400,8 +413,16 @@ public class GameController {
             else
                 gameState = GameState.FINISHING_ROUND_BEFORE_LAST;
             String username = model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername();
-            listeners.get("GameRounds").notifyLastTurnSet(username);
+            listeners.get("GameRounds").notifyLastTurnSet(username, GameState.FINISHING_ROUND_BEFORE_LAST);
+        } else if (checkIfDecksAreEmpty()) {
+            if (model.getCurrentPlayerIndex() == nPlayers - 1)
+                gameState = GameState.LAST_ROUND;
+            else
+                gameState = GameState.NO_CARDS_LEFT;
+            String username = model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername();
+            listeners.get("GameRounds").notifyLastTurnSet(username, GameState.NO_CARDS_LEFT);
         }
+
         if (gameState == GameState.FINISHING_ROUND_BEFORE_LAST && model.getCurrentPlayerIndex() == nPlayers - 1) {
             gameState = GameState.LAST_ROUND;
         }
@@ -413,6 +434,19 @@ public class GameController {
         message += "\nNow is " + model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername() + " turn.";
         model.getCurrentPlayer().setPlayerState(PlayerState.PLAY_CARD);
         listeners.get("GameRounds").notifyChangeTurn(message, model.getPlayers().get(model.getCurrentPlayerIndex()).getUsername(), usernameSender);
+    }
+
+    /**
+     * Private method that check if the decks are empty
+     *
+     * @return true if the decks are empty, false otherwise
+     */
+    private boolean checkIfDecksAreEmpty() {
+        int nOfCardsNotDrawn = model.getGoldDeck().getUsableCards().size();
+        nOfCardsNotDrawn += model.getGoldDeck().getVisibleCards().size();
+        nOfCardsNotDrawn += model.getResourceDeck().getUsableCards().size();
+        nOfCardsNotDrawn += model.getResourceDeck().getVisibleCards().size();
+        return nOfCardsNotDrawn == 0;
     }
 
     /**
@@ -456,15 +490,6 @@ public class GameController {
         if (deck == 1)
             return model.getResourceDeck().getUsableCards().getLast();
         return model.getGoldDeck().getUsableCards().getLast();
-    }
-
-    /**
-     * This method gets the username of the player that stopped the game
-     *
-     * @return the username of the player that stopped the game
-     */
-    public String getUsernamePlayerThatStoppedTheGame() {
-        return model.getUsernamePlayerThatStoppedTheGame();
     }
 
     /**

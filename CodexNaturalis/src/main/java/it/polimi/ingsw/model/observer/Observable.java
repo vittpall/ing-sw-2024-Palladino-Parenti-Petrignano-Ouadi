@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.observer;
 
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.GameState;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.network.notifications.*;
 
@@ -19,10 +20,6 @@ public class Observable {
 
     public void subscribeListener(GameListener listener) {
         listeners.add(listener);
-    }
-
-    public HashSet<GameListener> getListeners() {
-        return new HashSet<>(listeners);
     }
 
     public void unSubscribeListener(GameListener listener) {
@@ -49,8 +46,8 @@ public class Observable {
         notifyListeners(new PlayedCardNotification(message, playersPoints, username), username);
     }
 
-    public void notifyLastTurnSet(String username) {
-        notifyListeners(new LastTurnSetNotification(username), null);
+    public void notifyLastTurnSet(String username, GameState gameState) {
+        notifyListeners(new LastTurnSetNotification(username, gameState), null);
     }
 
     public void notifyChat(Message msg) {

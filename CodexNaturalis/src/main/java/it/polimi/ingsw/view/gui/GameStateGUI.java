@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.gui;
 
 import it.polimi.ingsw.core.ClientState;
+import it.polimi.ingsw.model.enumeration.GameState;
 import it.polimi.ingsw.view.gui.controller.GameController;
 import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.TokenColor;
@@ -72,10 +73,11 @@ public class GameStateGUI implements ClientState {
     /**
      * This method is used to notify that one player has reached 20 points and that the game is ending
      *
-     * @param username is the username of the player that has reached 20 points
+     * @param username  is the username of the player that has reached 20 points
+     * @param gameState is the state of the game that caused the beginning of the last turn
      */
-    public void lastTurnSetNotification(String username) {
-        Platform.runLater(() -> controller.lastTurnSetNotification(username));
+    public void lastTurnSetNotification(String username, GameState gameState) {
+        Platform.runLater(() -> controller.lastTurnSetNotification(username, gameState));
     }
 
     /**

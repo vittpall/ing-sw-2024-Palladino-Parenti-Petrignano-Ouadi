@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view.gui.controller;
 
-import it.polimi.ingsw.view.tui.*;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
@@ -754,9 +753,13 @@ public class GameController implements FXMLController {
      * this method notify the user that a player has reached 20 points and that there will be the last turn
      *
      * @param username the username of the player who has reached 20 points
+     * @param gameState the state of the game that caused the beginning of last turn
      */
-    public void lastTurnSetNotification(String username) {
-        messagePopUp.setText(username + " has reached 20 points.\n The last turn has begun!");
+    public void lastTurnSetNotification(String username, GameState gameState) {
+        if(gameState.equals(GameState.FINISHING_ROUND_BEFORE_LAST))
+            messagePopUp.setText(username + " has reached 20 points.\n The last turn has begun!");
+        else if(gameState.equals(GameState.NO_CARDS_LEFT))
+            messagePopUp.setText("No cards left in the deck.\n The last turn has begun!");
         titlePopUp.setText("Last Turn!");
         popUp.setVisible(true);
     }
