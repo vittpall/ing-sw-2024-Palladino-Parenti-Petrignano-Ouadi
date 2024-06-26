@@ -661,7 +661,7 @@ public class GameController implements FXMLController {
         });
 
         VBox vbox = new VBox(textArea, messageField, sendButton);
-        vbox.setSpacing(5.0);
+        vbox.setSpacing(0.0);
         vbox.setPadding(new javafx.geometry.Insets(5.0));
 
         AnchorPane anchorPane = new AnchorPane();
