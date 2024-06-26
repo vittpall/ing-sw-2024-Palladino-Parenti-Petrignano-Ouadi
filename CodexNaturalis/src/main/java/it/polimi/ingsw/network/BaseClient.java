@@ -559,7 +559,14 @@ abstract public class BaseClient implements VirtualView, GameListener {
                                     handleTUIInput(Integer.parseInt(input));
                                 } catch (NumberFormatException e) {
                                     System.out.println("Invalid input: Please enter a number.");
-                                } catch (Exception e) {
+                                } catch (NullPointerException e)
+                                {
+                                    waitingForCloseGameNotification = false;
+                                    setCurrentState(new LobbyMenuState(this, scan));
+                                    input = "";
+                                    inputHandler();
+                                }
+                                catch (Exception e) {
 
                                     System.out.println("The game is closing wait...2");
                                 }
@@ -574,13 +581,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                                 input = "";
                                 waitingForCloseGameNotification = false;
                                 inputHandler();
-                            } else
-                                if (waitingForCloseGameNotification) {
-                                    waitingForCloseGameNotification = false;
-                                    setCurrentState(new LobbyMenuState(this, scan));
-                                    input = "";
-                                    inputHandler();
-                                }
+                            }
                         }
                     } else {
                         System.out.println("The input was not valid. You can " + getServerCurrentState());
@@ -588,7 +589,14 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid input: Please enter a number.");
-                } catch (Exception e) {
+                } catch (NullPointerException e)
+                {
+                    waitingForCloseGameNotification = false;
+                    setCurrentState(new LobbyMenuState(this, scan));
+                    input = "";
+                    inputHandler();
+                }
+                catch (Exception e) {
                     //There's too many runtime exceptions to catch so i GOTTA CATCH 'EM ALL
                     System.out.println("The game is closing wait...3");
                 }
