@@ -35,7 +35,7 @@ public class RMIServer implements VirtualServer {
 
     @Override
     public synchronized void connect(VirtualView client) throws RemoteException {
-        System.err.println("New client connected");
+        System.err.println("New RMI client connected");
         clients.put(client, new HeartBeat(client, this));
     }
 

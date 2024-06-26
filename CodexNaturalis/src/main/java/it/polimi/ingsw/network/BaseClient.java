@@ -478,7 +478,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
      */
     public void inputHandler() {
 
-    //    System.err.println("RETURN TO START OF THE GAME");
+  //      System.err.println("RETURN TO START OF THE GAME");
         showWinnerTui = false;
         boolean correctInput;
         do {
@@ -501,7 +501,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid input: Please enter a number.");
                 } catch (Exception e) {
-                    System.out.println("The game is closing wait...");
+
+                    System.out.println("The game is closing wait...1");
                 }
             }
             if (waitingForCloseGameNotification) {
@@ -559,7 +560,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
                                 } catch (NumberFormatException e) {
                                     System.out.println("Invalid input: Please enter a number.");
                                 } catch (Exception e) {
-                                    System.out.println("The game is closing wait...");
+
+                                    System.out.println("The game is closing wait...2");
                                 }
                             }
                         } else {
@@ -573,7 +575,12 @@ abstract public class BaseClient implements VirtualView, GameListener {
                                 waitingForCloseGameNotification = false;
                                 inputHandler();
                             } else
-                                System.out.println("The input was not valid. You can " + getServerCurrentState());
+                                if (waitingForCloseGameNotification) {
+                                    waitingForCloseGameNotification = false;
+                                    setCurrentState(new LobbyMenuState(this, scan));
+                                    input = "";
+                                    inputHandler();
+                                }
                         }
                     } else {
                         System.out.println("The input was not valid. You can " + getServerCurrentState());
@@ -583,10 +590,11 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     System.out.println("Invalid input: Please enter a number.");
                 } catch (Exception e) {
                     //There's too many runtime exceptions to catch so i GOTTA CATCH 'EM ALL
-                    System.out.println("The game is closing wait... Click a button to continue.");
+                    System.out.println("The game is closing wait...3");
                 }
                 if (waitingForCloseGameNotification) {
                     waitingForCloseGameNotification = false;
+                    setCurrentState(new LobbyMenuState(this, scan));
                     input = "";
                     inputHandler();
                 }

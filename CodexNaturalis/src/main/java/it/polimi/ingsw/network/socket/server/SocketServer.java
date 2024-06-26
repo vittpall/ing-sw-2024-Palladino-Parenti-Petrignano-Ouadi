@@ -36,6 +36,7 @@ public class SocketServer implements Remote {
             ClientHandler handler = new ClientHandler(this, socketRx, socketTx, this.lobbyController);
 
             clients.add(handler);
+            System.err.println("New Socket client connected");
             //it's the same as the list of virtual client view
             new Thread(() -> {
                 try {
