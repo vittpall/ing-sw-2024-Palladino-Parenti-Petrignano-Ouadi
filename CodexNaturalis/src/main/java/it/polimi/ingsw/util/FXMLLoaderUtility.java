@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -33,6 +34,11 @@ public class FXMLLoaderUtility {
 
             Scene scene = new Scene(root);
             stage.setTitle("Codex Naturalis");
+
+            Font.loadFont(
+                    Objects.requireNonNull(FXMLLoaderUtility.class.getResource("/Fonts/bookantiquabolditalic.ttf")).toExternalForm(),
+                    10
+            );
 
             Image icon = new Image(Objects.requireNonNull(FXMLLoaderUtility.class.getResourceAsStream("/Images/CodexLogo.jpg")));
             stage.getIcons().add(icon);
