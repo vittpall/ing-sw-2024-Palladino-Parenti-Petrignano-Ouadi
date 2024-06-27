@@ -33,7 +33,7 @@ Palladino Vittorio, Ouadi Marouan, Parenti Carolina, Petrignano Valentina.
   
 ## How to Use
 
-In order to run the application the project was divided into three jar files.
+In order to run the application the project was divided into two jar files.
 client.jar
 server.jar
 
