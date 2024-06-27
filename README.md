@@ -1,6 +1,6 @@
 # Codex Naturalis Academic Year 2023/2024
 
-A brief description of your project.
+Software engeeniering project for the academic year 2023/2024 presented on the 3rd of July 2024.
 
 ## Table of Contents
 
@@ -15,7 +15,7 @@ Introduce your project. Explain what it does, the problem it solves, and any oth
 
 ## Group Members
 
-Palladino Vittorio, Marouan Ouadi, Parenti Carolina, Petrignano Valentina
+Palladino Vittorio, Ouadi Marouan, Parenti Carolina, Petrignano Valentina.
 
 ## Functionalities
 
