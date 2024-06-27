@@ -9,20 +9,38 @@ public class ReturnableObject<T> implements Serializable {
     private ErrorCodes errorCode;
     private String errorMessage;
 
+    /**
+     * Constructor
+     */
     public ReturnableObject() {
         this.errorCode = ErrorCodes.SUCCESS;
     }
 
+    /**
+     * Constructor
+     *
+      * @param response is the response
+     */
     public ReturnableObject(T response) {
         this.response = response;
         this.errorCode = ErrorCodes.SUCCESS;
     }
 
+    /**
+     * Constructor
+     *
+     * @param errorCode    is the code in case of error
+     * @param errorMessage is the notification in case of error
+     */
     public ReturnableObject(ErrorCodes errorCode, String errorMessage) {
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
     }
 
+    /**
+     * Set the response
+     * @param response
+     */
     public void setResponseReturnable(T response) {
         this.response = response;
     }

@@ -54,6 +54,11 @@ public class RMIServer implements VirtualServer {
 
     }
 
+    /**
+     * Remove the username from the list of the players when the player leaves the game
+     *
+     * @param username the username of the player to remove
+     */
     public void removeUsername(String username) {
         lobbyController.removeUsername(username);
     }
@@ -98,6 +103,7 @@ public class RMIServer implements VirtualServer {
         }
         return createdGameId;
     }
+
     @Override
     public String getGameState(int idGame) throws RemoteException {
         return lobbyController.getCurrentGameState(idGame);
@@ -226,6 +232,11 @@ public class RMIServer implements VirtualServer {
         return lobbyController.checkState(idGame, idClientIntoGame, requestedActions);
     }
 
+    /**
+     * this method verifies if the client has been successfully removed or not and sends a message to the console
+     *
+     * @param client the client to remove
+     */
     public synchronized void removeClient(VirtualView client) {
         if (clients.remove(client) != null) {
             System.out.println("Client successfully removed.");

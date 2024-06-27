@@ -27,6 +27,13 @@ public class RMIClient extends BaseClient {
     private int idClientIntoGame;
 
 
+    /**
+     * Constructor
+     * @param server is a reference to the VirtualServer
+     * @param mode   is the mode of the client (TUI or GUI)
+     * @param stage  is the stage of the GUI
+     * @throws RemoteException  if the remote operation fails
+     */
     public RMIClient(VirtualServer server, String mode, Stage stage) throws RemoteException {
         super(mode, stage);
         UnicastRemoteObject.exportObject(this, 0);
@@ -34,6 +41,10 @@ public class RMIClient extends BaseClient {
     }
 
 
+    /**
+     * This method gets the id of the client that joined the game
+     * @return the id of the client
+     */
     public int getIdClientIntoGame() {
         return idClientIntoGame;
     }
@@ -210,6 +221,11 @@ public class RMIClient extends BaseClient {
     }
 
 
+    /**
+     * This method returns the client to the lobby
+     *
+     * @throws IOException if the server is not reachable
+     */
     public void returnToLobby() throws IOException {
         if (getIdGame() != null)
             this.closeGame();
@@ -217,6 +233,11 @@ public class RMIClient extends BaseClient {
     }
 
 
+    /**
+     * This method removes the username from the server
+     *
+     * @throws RemoteException if the remote operation fails
+     */
     public void removeUsername() throws RemoteException {
         server.removeUsername(getUsername());
     }

@@ -21,6 +21,14 @@ public class ClientHandler implements GameListener {
     private String clientUsername;
     private Integer gameId;
 
+    /**
+     * Constructor for the ClientHandler class
+     *
+     * @param server     the server that the client is connected to
+     * @param input      the input stream of the client
+     * @param output     the output stream of the client
+     * @param controller the controller of the lobby
+     */
     public ClientHandler(SocketServer server, ObjectInputStream input, ObjectOutputStream output, LobbyController controller) {
         this.server = server;
         this.input = input;
@@ -29,6 +37,15 @@ public class ClientHandler implements GameListener {
     }
 
     @SuppressWarnings("InfiniteLoopStatement")
+    /**
+     * Method to run the virtual view for the client and handle the communication between the client and the server
+     * it handles the beginning and the end of the game: the creation of the game, the joining of the game, the disconnection of the client
+     *
+     * @throws IOException                if an I/O error occurs when creating the server socket
+     * @throws ClassNotFoundException     if the class of a serialized object cannot be found
+     * @throws InterruptedException       if a thread is interrupted
+     * @throws PlaceNotAvailableException if the place is not available
+     */
     public void runVirtualView() throws IOException, ClassNotFoundException, InterruptedException, PlaceNotAvailableException {
         ClientToServerMsg request;
         ServerToClientMsg response;
@@ -58,6 +75,12 @@ public class ClientHandler implements GameListener {
         }
     }
 
+    /**
+     * this method closes the client after his disconnection, removes the username from the list of the usernames
+     * and closes the game if the client was in a game
+     *
+     * @throws IOException if an I/O error occurs when creating the server socket
+     */
     public void closeClient() throws IOException {
         input.close();
         output.close();
@@ -71,6 +94,12 @@ public class ClientHandler implements GameListener {
     }
 
 
+    /**
+     * this method sends a message from the server to the client
+     *
+     * @param msgToBroadCast the message that the server wants to send to the client
+     * @throws IOException   if an I/O error occurs when creating the server socket
+     */
     public void sendMessage(ServerToClientMsg msgToBroadCast) throws IOException {
         synchronized (output) {
             output.writeObject(msgToBroadCast);
@@ -93,6 +122,11 @@ public class ClientHandler implements GameListener {
         }
     }
 
+    /**
+     * Method to get the username of the client
+     *
+     * @return the username of the client
+     */
     public String getUsername() {
         return clientUsername;
     }

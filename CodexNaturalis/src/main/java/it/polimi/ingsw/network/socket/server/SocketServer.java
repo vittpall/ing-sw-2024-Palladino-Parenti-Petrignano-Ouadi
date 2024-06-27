@@ -19,11 +19,25 @@ public class SocketServer implements Remote {
     final LobbyController lobbyController;
     static final List<ClientHandler> clients = new ArrayList<>();
 
+    /**
+     * Constructor for the SocketServer class
+     *
+     * @param lobbyController the lobby controller of the game
+     * @throws IOException    if an I/O error occurs when creating the server socket
+     */
     public SocketServer(LobbyController lobbyController) throws IOException {
         this.listenSocket = new ServerSocket(2345);
         this.lobbyController = lobbyController;
     }
 
+    /**
+     * Method to run the server and accept incoming connections
+     * It creates a new ClientHandler for each client that connects and starts a new thread for each of them
+     * The ClientHandler is responsible for the communication with the client and the VirtualView
+     * It also starts the VirtualView for the client and catches exceptions that can be thrown during the execution of the method
+     *
+     * @throws IOException  if an I/O error occurs when creating the server socket
+     */
     public void runServer() throws IOException {
         Socket clientSocket;
         while ((clientSocket = this.listenSocket.accept()) != null) {
