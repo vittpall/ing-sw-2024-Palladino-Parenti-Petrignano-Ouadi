@@ -7,6 +7,8 @@ import it.polimi.ingsw.network.BaseClient;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,6 +22,15 @@ public class GetWinnerController implements FXMLController {
     public Label usernameWinner;
     public Button returnToLobbyButton;
     public AnchorPane gameBoardAnchorPane;
+    public Label playerYellow;
+    public Label playerBlue;
+    public Label playerGreen;
+    public Label playerRed;
+    public HBox hBoxYellow;
+    public HBox hBoxBlue;
+    public HBox hBoxGreen;
+    public HBox hBoxRed;
+    public VBox tokenColorBox;
     BaseClient client;
     Stage stage;
 
@@ -48,6 +59,60 @@ public class GetWinnerController implements FXMLController {
             String imagePath = "/Images/" + playersTokens.get(username).getImageName();
             gameBoard.addToken(username, Objects.requireNonNull(getClass().getResource(imagePath)).toExternalForm());
             gameBoard.updateTokenPosition(username, scores.get(username));
+        }
+        boolean present;
+        for(TokenColor color : TokenColor.values()){
+            present=false;
+            switch (color){
+                case YELLOW:
+                    for(String username : playersTokens.keySet()){
+                        if(playersTokens.get(username).equals(TokenColor.YELLOW)){
+                            playerYellow.setText(username);
+                            present=true;
+                        }
+                    }
+                    if(!present){
+                        hBoxYellow.getChildren().clear();
+                        tokenColorBox.getChildren().remove(hBoxYellow);
+                    }
+                    break;
+                case BLUE:
+                    for(String username : playersTokens.keySet()){
+                        if(playersTokens.get(username).equals(TokenColor.BLUE)){
+                            playerBlue.setText(username);
+                            present=true;
+                        }
+                    }
+                    if(!present){
+                        hBoxBlue.getChildren().clear();
+                        tokenColorBox.getChildren().remove(hBoxBlue);
+                    }
+                    break;
+                case GREEN:
+                    for(String username : playersTokens.keySet()){
+                        if(playersTokens.get(username).equals(TokenColor.GREEN)){
+                            playerGreen.setText(username);
+                            present=true;
+                        }
+                    }
+                    if(!present){
+                        hBoxGreen.getChildren().clear();
+                        tokenColorBox.getChildren().remove(hBoxGreen);
+                    }
+                    break;
+                case RED:
+                    for(String username : playersTokens.keySet()){
+                        if(playersTokens.get(username).equals(TokenColor.RED)){
+                            playerRed.setText(username);
+                            present=true;
+                        }
+                    }
+                    if(!present){
+                        hBoxRed.getChildren().clear();
+                        tokenColorBox.getChildren().remove(hBoxRed);
+                    }
+                    break;
+            }
         }
     }
 

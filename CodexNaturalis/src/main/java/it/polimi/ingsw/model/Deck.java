@@ -53,7 +53,8 @@ public class Deck {
      */
     public GameCard drawVisibleCard(GameCard card) {
         visibleCards.remove(card);
-        visibleCards.add(usableCards.removeLast());
+        if(!usableCards.isEmpty())
+            visibleCards.add(usableCards.removeLast());
         return card;
     }
 
@@ -63,6 +64,8 @@ public class Deck {
      * @return the drawn card
      */
     public GameCard drawDeckCard() {
+        if(usableCards.isEmpty())
+            return null;
         GameCard lastCard;
         lastCard = usableCards.getLast();
         usableCards.remove(lastCard);

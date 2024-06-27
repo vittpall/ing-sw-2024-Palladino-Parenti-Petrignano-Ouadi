@@ -285,16 +285,14 @@ public class GameController implements FXMLController {
      * @throws InterruptedException if the thread running is interrupted
      */
     private void loadUsableCards() throws IOException, InterruptedException {
-        Card usableCard1 = client.getLastFromUsableCards(1);
-        Card usableCard2 = client.getLastFromUsableCards(2);
-        CardView usableCardBackView1 = new CardView(usableCard1, false);
-        CardView usableCardBackView2 = new CardView(usableCard2, false);
-
-        applyHoverEffects(usableCardBackView1);
-        applyHoverEffects(usableCardBackView2);
-
-        resourceDeck.getChildren().add(usableCardBackView1);
-        goldenDeck.getChildren().add(usableCardBackView2);
+            Card usableCard1 = client.getLastFromUsableCards(1);
+            CardView usableCardBackView1 = new CardView(usableCard1, false);
+            applyHoverEffects(usableCardBackView1);
+            resourceDeck.getChildren().add(usableCardBackView1);
+            Card usableCard2 = client.getLastFromUsableCards(2);
+            CardView usableCardBackView2 = new CardView(usableCard2, false);
+            applyHoverEffects(usableCardBackView2);
+            goldenDeck.getChildren().add(usableCardBackView2);
     }
 
     /**
@@ -334,14 +332,17 @@ public class GameController implements FXMLController {
      * @param cards the cards to initialize
      * @param pane  the pane where the cards will be added
      */
-    private void initializeVisibleCards(ArrayList<GameCard> cards, HBox pane) {
-        CardView card1 = new CardView(cards.get(0), true);
-        CardView card2 = new CardView(cards.get(1), true);
-
+    private void initializeVisibleCards(ArrayList<GameCard> cards, HBox pane) throws NullPointerException {
+        if(cards.isEmpty())
+            return;
+        GameCard card = cards.getFirst();
+        CardView card1 = new CardView(card, true);
         applyHoverEffects(card1);
-        applyHoverEffects(card2);
-
         pane.getChildren().add(card1);
+        if(cards.size()<2)
+            return;
+        CardView card2 = new CardView(cards.get(1), true);
+        applyHoverEffects(card2);
         pane.getChildren().add(card2);
     }
 
@@ -434,6 +435,8 @@ public class GameController implements FXMLController {
      */
     private void updatePlayerDrawInteraction() throws IOException, InterruptedException {
         int index = 3;
+        if(client.getLastFromUsableCards(1) == null)
+            index=1;
         for (Node cardNode : resourceDeck.getChildren()) {
             cardNode.setDisable(!isPlayerStateDraw());
             if (isPlayerStateDraw()) {
@@ -458,6 +461,8 @@ public class GameController implements FXMLController {
                 index++;
         }
         index = 3;
+        if(client.getLastFromUsableCards(2)==null)
+            index=1;
         for (Node cardNode : goldenDeck.getChildren()) {
             cardNode.setDisable(!isPlayerStateDraw());
             if (isPlayerStateDraw()) {

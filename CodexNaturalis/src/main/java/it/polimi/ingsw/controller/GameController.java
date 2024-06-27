@@ -487,8 +487,14 @@ public class GameController {
      * @return the last card of the usable cards of a deck
      */
     public GameCard getLastCardOfUsableCards(int deck) {
-        if (deck == 1)
+        if (deck == 1){
+            if(model.getResourceDeck().getUsableCards().isEmpty())
+                return null;
             return model.getResourceDeck().getUsableCards().getLast();
+
+        }
+        if(model.getGoldDeck().getUsableCards().isEmpty())
+            return null;
         return model.getGoldDeck().getUsableCards().getLast();
     }
 

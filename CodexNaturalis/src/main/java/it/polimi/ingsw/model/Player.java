@@ -192,7 +192,8 @@ public class Player implements Serializable {
     public void draw(Deck chosenDeck) {
         GameCard card;
         card = chosenDeck.drawDeckCard();
-        playerHand.add(card);
+        if(card!=null)
+            playerHand.add(card);
     }
 
     /**

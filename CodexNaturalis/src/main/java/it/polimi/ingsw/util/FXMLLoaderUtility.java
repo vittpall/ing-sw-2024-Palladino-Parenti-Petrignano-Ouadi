@@ -32,6 +32,7 @@ public class FXMLLoaderUtility {
             controller.setStage(stage);
 
             Scene scene = new Scene(root);
+            stage.setTitle("Codex Naturalis");
 
             Image icon = new Image(Objects.requireNonNull(FXMLLoaderUtility.class.getResourceAsStream("/Images/CodexLogo.jpg")));
             stage.getIcons().add(icon);

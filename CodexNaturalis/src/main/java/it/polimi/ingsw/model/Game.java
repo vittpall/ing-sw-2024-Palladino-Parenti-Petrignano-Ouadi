@@ -281,17 +281,13 @@ public class Game {
                 nObjectiveMetWinner = nObjectiveMetPlayer;
                 winner = currentPlayer.getUsername();
             } else if (currentPlayerPoints == pointsMax && nObjectiveMetPlayer == nObjectiveMetWinner) {
-                winner = winner + " and " + currentPlayer.getUsername();
+                if(winner==null)
+                    winner= currentPlayer.getUsername();
+                else
+                    winner += " and " + currentPlayer.getUsername();
             }
         }
         if (winner == null) return "No winner";
         return winner;
-    }
-
-    /**
-     * @return username of the player who first achieved 20 points
-     */
-    public String getUsernamePlayerThatStoppedTheGame() {
-        return players.get(playerWhoStoppedTheGame).getUsername();
     }
 }
