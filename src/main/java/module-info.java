@@ -24,14 +24,14 @@ module PSP44 {
     exports it.polimi.ingsw.network.socket.server;
     exports it.polimi.ingsw.network.socket.clientToServerMsg;
     exports it.polimi.ingsw.network.socket.serverToClientMsg;
-    exports it.polimi.ingsw.controller.exceptions;
+    exports it.polimi.ingsw.model.exceptions;
     exports it.polimi.ingsw.model.chat;
     exports it.polimi.ingsw.model.strategyPatternObjective;
     exports it.polimi.ingsw.view.gui;
     exports it.polimi.ingsw.view.tui;
     exports it.polimi.ingsw.util;
     exports it.polimi.ingsw;
-    exports it.polimi.ingsw.model.observer;
+    exports it.polimi.ingsw.controller.observer;
     exports it.polimi.ingsw.network;
     exports it.polimi.ingsw.network.notifications;
     opens it.polimi.ingsw.view.gui.controller to javafx.fxml;

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.controller.exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.controller.exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.CornerObject;
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;

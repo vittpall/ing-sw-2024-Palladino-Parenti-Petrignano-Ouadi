@@ -3,8 +3,8 @@ package it.polimi.ingsw.view.tui;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.enumeration.PlayerState;
-import it.polimi.ingsw.controller.exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.controller.exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.BaseClient;
 

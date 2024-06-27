@@ -3,7 +3,7 @@ package it.polimi.ingsw.network.socket.clientToServerMsg;
 import it.polimi.ingsw.controller.LobbyController;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
-import it.polimi.ingsw.model.observer.GameListener;
+import it.polimi.ingsw.controller.observer.GameListener;
 import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
 import java.io.IOException;

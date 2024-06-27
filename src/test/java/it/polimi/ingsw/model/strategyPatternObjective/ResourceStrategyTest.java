@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model.strategyPatternObjective;
 
 import it.polimi.ingsw.model.Corner;
-import it.polimi.ingsw.controller.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.PlayerDesk;
 import it.polimi.ingsw.model.ResourceCard;
 import it.polimi.ingsw.model.StarterCard;

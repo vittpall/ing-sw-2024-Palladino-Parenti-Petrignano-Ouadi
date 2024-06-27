@@ -1,4 +1,4 @@
-package it.polimi.ingsw.controller.exceptions;
+package it.polimi.ingsw.model.exceptions;
 
 /**
  * This exception is thrown when the user tries to add a card in his playerDesk in a position that is not available

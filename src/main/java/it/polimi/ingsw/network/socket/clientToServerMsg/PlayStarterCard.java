@@ -1,11 +1,11 @@
 package it.polimi.ingsw.network.socket.clientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
-import it.polimi.ingsw.controller.exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.controller.exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.enumeration.ErrorCodes;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
-import it.polimi.ingsw.model.observer.GameListener;
+import it.polimi.ingsw.controller.observer.GameListener;
 import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
 /**

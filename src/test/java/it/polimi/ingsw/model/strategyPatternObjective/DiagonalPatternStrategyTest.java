@@ -3,7 +3,7 @@ package it.polimi.ingsw.model.strategyPatternObjective;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
-import it.polimi.ingsw.controller.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.model.observer;
+package it.polimi.ingsw.controller.observer;
 
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.chat.Message;

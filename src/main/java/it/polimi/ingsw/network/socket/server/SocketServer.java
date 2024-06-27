@@ -2,7 +2,7 @@ package it.polimi.ingsw.network.socket.server;
 
 
 import it.polimi.ingsw.controller.LobbyController;
-import it.polimi.ingsw.controller.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

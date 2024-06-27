@@ -2,8 +2,8 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.TokenColor;
-import it.polimi.ingsw.controller.exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.controller.exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;

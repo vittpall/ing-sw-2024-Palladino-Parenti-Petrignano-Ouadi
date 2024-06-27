@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.ResourceCard;
 import it.polimi.ingsw.model.StarterCard;
 import it.polimi.ingsw.model.enumeration.PointType;
 import it.polimi.ingsw.model.enumeration.Resource;
-import it.polimi.ingsw.controller.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;

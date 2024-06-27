@@ -1,4 +1,4 @@
-package it.polimi.ingsw.controller.exceptions;
+package it.polimi.ingsw.model.exceptions;
 
 /**
  * This exception is thrown when the player tries to put a card in his PlayerDesk, but he does not have the requirements to do it

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.observer;
 
+import it.polimi.ingsw.controller.observer.GameListener;
 import it.polimi.ingsw.network.notifications.ServerNotification;
 import org.junit.jupiter.api.Test;
 

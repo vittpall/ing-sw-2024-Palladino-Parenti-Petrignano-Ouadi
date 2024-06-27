@@ -1,7 +1,7 @@
 package it.polimi.ingsw.view.gui.controller;
 
-import it.polimi.ingsw.controller.exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.controller.exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;

@@ -2,8 +2,8 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.chat.Chat;
 import it.polimi.ingsw.model.enumeration.TokenColor;
-import it.polimi.ingsw.controller.exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.controller.exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.util.GameCardLoader;
 import it.polimi.ingsw.util.ObjectiveCardLoader;

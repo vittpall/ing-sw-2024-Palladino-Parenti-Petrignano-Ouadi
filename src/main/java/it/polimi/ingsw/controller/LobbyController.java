@@ -7,10 +7,10 @@ import it.polimi.ingsw.model.chat.Message;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
-import it.polimi.ingsw.controller.exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.controller.exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.model.observer.GameListener;
-import it.polimi.ingsw.model.observer.Observable;
+import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
+import it.polimi.ingsw.controller.observer.GameListener;
+import it.polimi.ingsw.controller.observer.Observable;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;

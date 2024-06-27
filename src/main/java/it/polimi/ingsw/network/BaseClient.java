@@ -8,7 +8,7 @@ import it.polimi.ingsw.model.enumeration.GameState;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
-import it.polimi.ingsw.model.observer.GameListener;
+import it.polimi.ingsw.controller.observer.GameListener;
 import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.network.remoteInterfaces.VirtualView;
 import it.polimi.ingsw.view.gui.*;
