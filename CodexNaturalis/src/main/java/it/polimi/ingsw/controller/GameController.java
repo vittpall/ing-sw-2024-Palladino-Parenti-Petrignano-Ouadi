@@ -449,14 +449,6 @@ public class GameController {
         return nOfCardsNotDrawn == 0;
     }
 
-    /**
-     * This method tells if the last round has started
-     *
-     * @return true if the last round has started, false otherwise
-     */
-    public boolean getIsLastRoundStarted() {
-        return model.getIsLastRoundStarted();
-    }
 
     /**
      * This method gets the available places for the player

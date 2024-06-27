@@ -33,14 +33,14 @@ public class DrawCardState implements ClientStateTUI {
         //mostrare i deck e mostrare le carte da poter scegliere
         try {
             System.out.println("|-------Resource deck: last hidden card--------|");
-            if(client.getLastFromUsableCards(1) != null)
+            if (client.getLastFromUsableCards(1) != null)
                 printer.printCard(client.getLastFromUsableCards(1), true);
             System.out.println("|-------Resource deck: visible cards--------|");
             for (GameCard card : client.getVisibleCardsDeck(1)) {
                 printer.printCard(card, false);
             }
             System.out.println("|-------Gold deck: last hidden card--------|");
-            if(client.getLastFromUsableCards(2) != null)
+            if (client.getLastFromUsableCards(2) != null)
                 printer.printCard(client.getLastFromUsableCards(2), true);
             System.out.println("|-------Gold deck: visible cards--------|");
             for (GameCard card : client.getVisibleCardsDeck(2)) {
@@ -59,7 +59,7 @@ public class DrawCardState implements ClientStateTUI {
         switch (input) {
             case 1:
             case 2:
-                if(client.getVisibleCardsDeck(input).isEmpty() && client.getLastFromUsableCards(input) == null) {
+                if (client.getVisibleCardsDeck(input).isEmpty() && client.getLastFromUsableCards(input) == null) {
                     System.out.println("No cards in this deck");
                     break;
                 }
@@ -73,23 +73,27 @@ public class DrawCardState implements ClientStateTUI {
         }
     }
 
+
     /**
      * Private method
      * Gets the client's input that represents which card he wants to draw
      *
+     * @param deck the deck from which the user wants to draw a card
      * @return an integer that identify the specific or generic card the user wants to draw
+     * @throws IOException          if there is a I/O error
+     * @throws InterruptedException if the thread is interrupted
      */
     private int chooseWhichCardToDraw(int deck) throws IOException, InterruptedException {
         ArrayList<GameCard> visibleCards = client.getVisibleCardsDeck(deck);
-        if(visibleCards.isEmpty()) {
+        if (visibleCards.isEmpty()) {
             System.out.println("No visible cards in the deck");
-        }else if(visibleCards.size() == 1) {
+        } else if (visibleCards.size() == 1) {
             System.out.println("1. Draw first visible card of the deck chosen");
-        }else{
+        } else {
             System.out.println("1. Draw first visible card of the deck chosen");
             System.out.println("2. Draw second visible card of the deck chosen");
         }
-        if(client.getLastFromUsableCards(deck) != null)
+        if (client.getLastFromUsableCards(deck) != null)
             System.out.println("3. Draw hidden card of the deck chosen");
         String input;
         do {

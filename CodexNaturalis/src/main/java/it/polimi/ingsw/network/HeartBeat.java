@@ -21,6 +21,7 @@ public class HeartBeat {
 
     /**
      * Constructor for the HeartBeat class.
+     *
      * @param rmiClient The client to which the heartbeat will be sent.
      * @param rmiServer The server from which the heartbeat is sent.
      */
@@ -49,6 +50,7 @@ public class HeartBeat {
 
     /**
      * This method sets the username of the client.
+     *
      * @param username The username of the client.
      */
     public void setUsername(String username) {
@@ -57,6 +59,7 @@ public class HeartBeat {
 
     /**
      * This method sets the game ID.
+     *
      * @param gameId The ID of the game.
      */
     public void setGameId(Integer gameId) {

@@ -59,14 +59,19 @@ public class SocketClient extends BaseClient {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public ArrayList<Player> getAllPlayers() throws IOException, InterruptedException {
         GetAllPlayersMsg request = new GetAllPlayersMsg(getIdGame());
         ServerToClientMsg response = sendRequest(request);
         return (ArrayList<Player>) response.getResponse().getResponseReturnable();
     }
 
-
+    /**
+     * This method sends a request to the server and adds the response to the response queue.
+     *
+     * @param request The request to be sent to the server.
+     * @return The response from the server.
+     * @throws InterruptedException if the thread running is interrupted
+     */
     private ServerToClientMsg sendRequest(ClientToServerMsg request) throws InterruptedException {
         TypeServerToClientMsg expectedResponse = request.getType();
         try {
@@ -330,7 +335,9 @@ public class SocketClient extends BaseClient {
         }
     }
 
-
+    /**
+     * This method runs the virtual server, which listens for incoming messages from the server and adds them to the response queue.
+     */
     private void runVirtualServer() {
         try {
             while (true) {
@@ -350,6 +357,7 @@ public class SocketClient extends BaseClient {
         }
     }
 
+    @Override
     public String getServerCurrentState() throws InterruptedException {
         GetCurrentStateMsg request = new GetCurrentStateMsg(getIdGame(), idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
@@ -363,14 +371,14 @@ public class SocketClient extends BaseClient {
         return (PlayerState) response.getResponse().getResponseReturnable();
     }
 
-
+    @Override
     public boolean checkState(RequestedActions requestedActions) throws InterruptedException {
         CheckStateMsg request = new CheckStateMsg(getIdGame(), idClientIntoGame, requestedActions);
         ServerToClientMsg response = sendRequest(request);
         return (boolean) response.getResponse().getResponseReturnable();
     }
 
-
+    @Override
     public boolean checkUsername(String username) throws InterruptedException {
         CheckUsernameMsg request = new CheckUsernameMsg(username);
         ServerToClientMsg response = sendRequest(request);

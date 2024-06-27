@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+/**
+ * Class used to test the print of the cards in GUI mode
+ */
 public class TestCards extends Application {
 
     @Override

@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * This interface is used to define the methods that can be called remotely by the client
+ */
 public interface VirtualServer extends Remote {
 
     /**
@@ -141,7 +144,7 @@ public interface VirtualServer extends Remote {
     StarterCard getStarterCard(int idGame, int idClientIntoGame) throws RemoteException;
 
     /**
-     * placed the stared card on the desk, face up or face down
+     * placed the starer card on the desk, face up or face down
      *
      * @param idGame             the id of the game
      * @param idClientIntoGame   the id of the player
@@ -178,7 +181,7 @@ public interface VirtualServer extends Remote {
      * get the objective cards the same for all the players in the same game
      *
      * @param idGame the id of the game
-     * @return the list of the objective cards
+     * @return the array of the objective cards
      * @throws RemoteException if there is a connection error
      */
     ObjectiveCard[] getSharedObjectiveCards(int idGame) throws RemoteException;
@@ -273,11 +276,11 @@ public interface VirtualServer extends Remote {
     GameCard getLastCardOfUsableCards(int idGame, int deck) throws RemoteException;
 
     /**
-     *
-     * @param idGame
-     * @param idClientIntoGame
-     * @return
-     * @throws RemoteException
+     * Get the desk of the player
+     * @param idGame Integer representing the id of the game
+     * @param idClientIntoGame Integer representing the id of the player into the game
+     * @return HashMap<Point, GameCard> representing the desk of the player
+     * @throws RemoteException if there is a connection error
      */
     HashMap<Point, GameCard> getPlayerDesk(int idGame, int idClientIntoGame) throws RemoteException;
 
@@ -319,11 +322,11 @@ public interface VirtualServer extends Remote {
     ArrayList<Player> getPlayers(int idGame) throws RemoteException;
 
     /**
-     * ping the server to check the connection with the client
+     * get the current state of the player in the game and of the game
      *
      * @param idGame           is the id of the game
      * @param idClientIntoGame is the id of the player
-     * @return true if the connection is active, false otherwise
+     * @return String representing the current state of the game and of the player
      * @throws RemoteException if there is a connection error
      */
     String getServerCurrentState(int idGame, int idClientIntoGame) throws RemoteException;

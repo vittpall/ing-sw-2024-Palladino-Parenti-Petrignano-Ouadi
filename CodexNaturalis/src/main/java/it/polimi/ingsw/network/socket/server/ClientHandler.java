@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+/**
+ * The class is used to handle the communication between the server and the client
+ */
 public class ClientHandler implements GameListener {
     final SocketServer server;
     final transient ObjectInputStream input;
@@ -36,7 +39,6 @@ public class ClientHandler implements GameListener {
         this.output = output;
     }
 
-    @SuppressWarnings("InfiniteLoopStatement")
     /**
      * Method to run the virtual view for the client and handle the communication between the client and the server
      * it handles the beginning and the end of the game: the creation of the game, the joining of the game, the disconnection of the client
@@ -98,7 +100,7 @@ public class ClientHandler implements GameListener {
      * this method sends a message from the server to the client
      *
      * @param msgToBroadCast the message that the server wants to send to the client
-     * @throws IOException   if an I/O error occurs when creating the server socket
+     * @throws IOException if an I/O error occurs when creating the server socket
      */
     public void sendMessage(ServerToClientMsg msgToBroadCast) throws IOException {
         synchronized (output) {

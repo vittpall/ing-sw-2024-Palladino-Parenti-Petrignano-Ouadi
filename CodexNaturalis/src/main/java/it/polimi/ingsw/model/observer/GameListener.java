@@ -5,6 +5,9 @@ import it.polimi.ingsw.network.notifications.ServerNotification;
 import java.io.IOException;
 import java.rmi.Remote;
 
+/**
+ * This interface is used to define the methods that a listener must implement to be notified by the observable
+ */
 public interface GameListener extends Remote {
 
     /**

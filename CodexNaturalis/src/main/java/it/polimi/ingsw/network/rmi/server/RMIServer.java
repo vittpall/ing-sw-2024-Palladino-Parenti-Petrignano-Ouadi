@@ -24,10 +24,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * This class is the RMI server that implements the VirtualServer interface
+ */
 public class RMIServer implements VirtualServer {
     final HashMap<VirtualView, HeartBeat> clients = new HashMap<>();
     private final LobbyController lobbyController;
 
+    /**
+     * Constructor of the class RMIServer
+     *
+     * @param lobbyController the instance of lobby controller to connect
+     * @throws RemoteException if there is an error in the connection
+     */
     public RMIServer(LobbyController lobbyController) throws RemoteException {
         super();
         this.lobbyController = lobbyController;
@@ -54,11 +63,7 @@ public class RMIServer implements VirtualServer {
 
     }
 
-    /**
-     * Remove the username from the list of the players when the player leaves the game
-     *
-     * @param username the username of the player to remove
-     */
+    @Override
     public void removeUsername(String username) {
         lobbyController.removeUsername(username);
     }
@@ -82,7 +87,6 @@ public class RMIServer implements VirtualServer {
     public void sendMessage(int idGame, Message msg) throws RemoteException {
         lobbyController.sendMessage(idGame, msg);
     }
-
 
     @Override
     public int joinGame(int gameId, String username, GameListener playerListener) throws IOException, InterruptedException {
@@ -155,7 +159,6 @@ public class RMIServer implements VirtualServer {
         return lobbyController.getSharedObjectiveCards(idGame);
     }
 
-
     @Override
     public int playCard(int idGame, int idClientIntoGame, int chosenCard, boolean faceDown, Point chosenPosition)
             throws RemoteException, PlaceNotAvailableException, RequirementsNotMetException {
@@ -198,6 +201,7 @@ public class RMIServer implements VirtualServer {
         return lobbyController.setTokenColor(idGame, idClientIntoGame, tokenColor);
     }
 
+    @Override
     public int getPoints(int idGame, int idClientIntoGame) throws RemoteException {
         return lobbyController.getPoints(idGame, idClientIntoGame);
     }

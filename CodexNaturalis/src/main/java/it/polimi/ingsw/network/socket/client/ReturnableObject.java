@@ -7,6 +7,7 @@ import java.io.Serializable;
 /**
  * The class is used to pass an object over the network.
  * It's a generic class then it's not necessary to create a custom attribute for each object that needs to be passed (i.g. HashMap ...).
+ *
  * @param <T>
  */
 public class ReturnableObject<T> implements Serializable {
@@ -24,7 +25,7 @@ public class ReturnableObject<T> implements Serializable {
     /**
      * Constructor
      *
-      * @param response is the response
+     * @param response is the response
      */
     public ReturnableObject(T response) {
         this.response = response;
@@ -43,6 +44,8 @@ public class ReturnableObject<T> implements Serializable {
     }
 
     /**
+     * Set the response
+     *
      * @param response is the response to set
      */
     public void setResponseReturnable(T response) {
@@ -50,6 +53,8 @@ public class ReturnableObject<T> implements Serializable {
     }
 
     /**
+     * Getter of the response
+     *
      * @return the response
      */
     public T getResponseReturnable() {
@@ -57,6 +62,8 @@ public class ReturnableObject<T> implements Serializable {
     }
 
     /**
+     * Getter of the error code
+     *
      * @return the error code
      */
     public ErrorCodes getErrorCode() {
@@ -65,6 +72,7 @@ public class ReturnableObject<T> implements Serializable {
 
     /**
      * This method sets the error code
+     *
      * @param errorCode is the error code
      */
     public void setErrorCode(ErrorCodes errorCode) {
@@ -72,6 +80,8 @@ public class ReturnableObject<T> implements Serializable {
     }
 
     /**
+     * getter of the error message
+     *
      * @return the error message
      */
     public String getErrorMessage() {
@@ -80,6 +90,7 @@ public class ReturnableObject<T> implements Serializable {
 
     /**
      * This method sets the error message
+     *
      * @param errorMessage is the error message
      */
     public void setErrorMessage(String errorMessage) {
@@ -88,6 +99,7 @@ public class ReturnableObject<T> implements Serializable {
 
     /**
      * This method checks if the operation was successful
+     *
      * @return true if the operation was successful, false otherwise
      */
     public boolean isSuccess() {

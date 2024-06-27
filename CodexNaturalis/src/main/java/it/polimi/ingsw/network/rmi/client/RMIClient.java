@@ -22,17 +22,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * This class is the RMI client that extends the BaseClient class and implements the Remote interface
+ */
 public class RMIClient extends BaseClient {
     public final VirtualServer server;
     private int idClientIntoGame;
 
-
     /**
      * Constructor
+     *
      * @param server is a reference to the VirtualServer
      * @param mode   is the mode of the client (TUI or GUI)
      * @param stage  is the stage of the GUI
-     * @throws RemoteException  if the remote operation fails
+     * @throws RemoteException if the remote operation fails
      */
     public RMIClient(VirtualServer server, String mode, Stage stage) throws RemoteException {
         super(mode, stage);
@@ -40,11 +43,7 @@ public class RMIClient extends BaseClient {
         this.server = server;
     }
 
-
-    /**
-     * This method gets the id of the client that joined the game
-     * @return the id of the client
-     */
+    @Override
     public int getIdClientIntoGame() {
         return idClientIntoGame;
     }
@@ -129,11 +128,12 @@ public class RMIClient extends BaseClient {
         return server.getLastCardOfUsableCards(getIdGame(), deck);
     }
 
-
+    @Override
     public ArrayList<Message> getMessages(String receiver) throws RemoteException {
         return server.getMessages(receiver, this.getIdGame(), getUsername());
     }
 
+    @Override
     public void sendMessage(String receiver, String message) throws RemoteException {
         Message msg = new Message(getUsername(), receiver, message, getIdGame(), userTokenColor);
         server.sendMessage(getIdGame(), msg);
@@ -167,6 +167,7 @@ public class RMIClient extends BaseClient {
         setUserTokenColor(token);
     }
 
+    @Override
     public int getPoints() throws RemoteException {
         return server.getPoints(getIdGame(), idClientIntoGame);
     }
@@ -185,6 +186,7 @@ public class RMIClient extends BaseClient {
             getClientCurrentState().display();
     }
 
+    @Override
     public boolean isGameStarted() throws IOException {
         return server.isGameStarted(getIdGame());
     }
@@ -209,7 +211,7 @@ public class RMIClient extends BaseClient {
         return server.checkState(getIdGame(), idClientIntoGame, requestedActions);
     }
 
-
+    @Override
     public void close() {
         try {
             removeUsername();

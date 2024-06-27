@@ -315,16 +315,6 @@ public class LobbyController {
     }
 
     /**
-     * Get if the last round is started
-     *
-     * @param idGame Integer that represent the id of the game
-     * @return true if the last round is started, false otherwise
-     */
-    public boolean getIsLastRoundStarted(int idGame) {
-        return gameControllers.get(idGame).getIsLastRoundStarted();
-    }
-
-    /**
      * Send a message in the specified game
      *
      * @param idGame Integer representing the id of the game

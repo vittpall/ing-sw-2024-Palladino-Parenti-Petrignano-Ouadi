@@ -13,6 +13,9 @@ import java.rmi.Remote;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class is used to handle the server in a socket connection
+ */
 public class SocketServer implements Remote {
 
     final ServerSocket listenSocket;
@@ -23,7 +26,7 @@ public class SocketServer implements Remote {
      * Constructor for the SocketServer class
      *
      * @param lobbyController the lobby controller of the game
-     * @throws IOException    if an I/O error occurs when creating the server socket
+     * @throws IOException if an I/O error occurs when creating the server socket
      */
     public SocketServer(LobbyController lobbyController) throws IOException {
         this.listenSocket = new ServerSocket(2345);
@@ -36,7 +39,7 @@ public class SocketServer implements Remote {
      * The ClientHandler is responsible for the communication with the client and the VirtualView
      * It also starts the VirtualView for the client and catches exceptions that can be thrown during the execution of the method
      *
-     * @throws IOException  if an I/O error occurs when creating the server socket
+     * @throws IOException if an I/O error occurs when creating the server socket
      */
     public void runServer() throws IOException {
         Socket clientSocket;

@@ -13,7 +13,6 @@ import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.network.remoteInterfaces.VirtualView;
 import it.polimi.ingsw.view.gui.*;
 import it.polimi.ingsw.view.tui.*;
-import it.polimi.ingsw.view.tui.*;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -85,7 +84,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
     /**
      * Sets the token color of the user.
      *
-     * @param tokenColor
+     * @param tokenColor the token color chose from the user
      */
     public void setUserTokenColor(TokenColor tokenColor) {
         this.userTokenColor = tokenColor;
@@ -116,10 +115,10 @@ abstract public class BaseClient implements VirtualView, GameListener {
     }
 
     /**
-     * This is used to unwrap unckecked exceptions that contains the initial cause of the exception.
+     * This is used to unwrap unchecked exceptions that contains the initial cause of the exception.
      *
-     * @param thrownException
-     * @return
+     * @param thrownException The exception that was thrown.
+     * @return The initial cause of the exception.
      */
     private static Throwable getInitialCause(Throwable thrownException) {
         Throwable thrownExceptionReserched;
@@ -249,9 +248,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This method displays the current state of the client.
-     *
-     * @throws IOException          If an I/O error occurs.
-     * @throws InterruptedException If the thread is interrupted.
      */
     public abstract void close();
 
@@ -281,9 +277,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
 
     /**
      * This method handles token color selected notification.
-     *
-     * @throws IOException          If an I/O error occurs.
-     * @throws InterruptedException If the thread is interrupted.
      */
     public synchronized void onTokenColorSelected(String msg, ArrayList<TokenColor> availableColors) {
         if (!isGUIMode) {
@@ -301,8 +294,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
     /**
      * This method handles the game joined notification.
      *
-     * @param players
-     * @param nOfMissingPlayers
+     * @param players ArrayList of alla the players
+     * @param nOfMissingPlayers number of missing players
      */
     public synchronized void onGameJoined(ArrayList<Player> players, int nOfMissingPlayers) {
         if (!isGUIMode) {
@@ -378,9 +371,12 @@ abstract public class BaseClient implements VirtualView, GameListener {
                         "Player " + username + " reached 20 points\n" +
                         "The last turn has begun\n");
             else if (gameState.equals(GameState.NO_CARDS_LEFT))
-                System.out.println("\n----------------------------------\n" +
-                        "The cards to draw are finished \n" +
-                        "The last turn has begun\n");
+                System.out.println("""
+
+                        ----------------------------------
+                        The cards to draw are finished\s
+                        The last turn has begun
+                        """);
         } else if (getClientCurrentState() instanceof GameStateGUI)
             ((GameStateGUI) getClientCurrentState()).lastTurnSetNotification(username, gameState);
     }
@@ -388,9 +384,9 @@ abstract public class BaseClient implements VirtualView, GameListener {
     /**
      * This method handles the end game notification.
      *
-     * @param winner
-     * @param scores
-     * @param playersTokens
+     * @param winner      The winner of the game.
+     * @param scores HashMap containing the scores of the players
+     * @param playersTokens HashMap containing the tokens of the players
      */
     public synchronized void onEndGame(String winner, HashMap<String, Integer> scores, HashMap<String, TokenColor> playersTokens) {
         if (!isGUIMode) {
@@ -769,7 +765,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
      * @throws RemoteException      If a remote communication error occurs.
      * @throws InterruptedException If the thread is interrupted.
      */
-    @SuppressWarnings("InfiniteLoopStatement")
     public void notificationsHandler() throws RemoteException, InterruptedException {
         while (true) {
             ServerNotification msg = notificationsQueue.take();
@@ -786,11 +781,10 @@ abstract public class BaseClient implements VirtualView, GameListener {
      * It reads the input, validates it, and performs the corresponding action.
      *
      * @param input The input from the user.
-     * @throws ClassNotFoundException If the class of a serialized object cannot be found.
      * @throws InterruptedException   If the thread is interrupted.
      * @throws IOException            If an I/O error occurs.
      */
-    public void handleTUIInput(int input) throws ClassNotFoundException, InterruptedException, IOException {
+    public void handleTUIInput(int input) throws InterruptedException, IOException {
         try {
             if (currentState instanceof ClientStateTUI tuiState)
                 tuiState.inputHandler(input);

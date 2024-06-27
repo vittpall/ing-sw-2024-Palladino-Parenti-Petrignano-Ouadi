@@ -19,8 +19,6 @@ import java.util.Arrays;
  * sharedObjectiveCards an array containing the shared ObjectiveCard that all the player can meet.
  * resourceDeck and GoldDeck represents the decks of the game
  * currentPlayerIndex the index of the player who is playing.
- * isLastRoundStarted a boolean indicating if the last round has started.
- * playerWhoStoppedTheGame the index the player who achieved 20 points first.
  * starterCards and objectiveCards are lists of all the possible starter and objective cards that are not played or drawn yet.
  * chats are the chats of the game
  */
@@ -31,8 +29,6 @@ public class Game {
     private Deck resourceDeck;
     private Deck goldDeck;
     private int currentPlayerIndex;
-    private boolean isLastRoundStarted;
-    private int playerWhoStoppedTheGame;
     private final ArrayList<StarterCard> starterCards;
     private final ArrayList<ObjectiveCard> objectiveCards;
     private final Chat chats;
@@ -44,9 +40,7 @@ public class Game {
      */
     public Game(int n) {
         nPlayer = n;
-        isLastRoundStarted = false;
         currentPlayerIndex = 0;
-        playerWhoStoppedTheGame = 0;
         starterCards = new ArrayList<>();
         players = new ArrayList<>();
         objectiveCards = new ArrayList<>();
@@ -181,13 +175,6 @@ public class Game {
     }
 
     /**
-     * @return isLastRoundStarted
-     */
-    public boolean getIsLastRoundStarted() {
-        return isLastRoundStarted;
-    }
-
-    /**
      * @return player who is playing
      */
     public Player getCurrentPlayer() {
@@ -237,10 +224,6 @@ public class Game {
      */
     public void drawCard(Deck deck) {
         players.get(currentPlayerIndex).draw(deck);
-        if (players.get(currentPlayerIndex).getPoints() >= 20) {
-            isLastRoundStarted = true;
-            playerWhoStoppedTheGame = currentPlayerIndex;
-        }
     }
 
     /**
@@ -251,8 +234,6 @@ public class Game {
      */
     public void drawVisibleCard(Deck deck, GameCard card) {
         players.get(currentPlayerIndex).drawVisible(deck, card);
-        if (players.get(currentPlayerIndex).getPoints() >= 20)
-            isLastRoundStarted = true;
     }
 
     /**

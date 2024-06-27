@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * This class is the Observable class of the Observer pattern.
+ */
 public class Observable {
     private final HashSet<GameListener> listeners;
 
@@ -22,7 +25,7 @@ public class Observable {
     }
 
     /**
-     * Constructor
+     * Method that subscribes a listener to the observable
      *
      * @param listener is the listener that will receive the notifications
      */
@@ -31,7 +34,7 @@ public class Observable {
     }
 
     /**
-     * Constructor
+     * Method that unsubscribes a listener from the observable
      *
      * @param listener is the listener that will no longer receive the notifications
      */
