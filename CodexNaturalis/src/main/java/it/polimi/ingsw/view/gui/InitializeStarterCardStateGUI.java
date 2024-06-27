@@ -10,6 +10,8 @@ import javafx.stage.Stage;
  * This class manages the GUI for the starter card initialization.
  * It shows the player the starter card (front and back) and after that it saves the player's choice.
  */
+import java.rmi.RemoteException;
+
 public class InitializeStarterCardStateGUI implements ClientState {
 
 
@@ -28,7 +30,7 @@ public class InitializeStarterCardStateGUI implements ClientState {
     }
 
     @Override
-    public void display() {
+    public void display() throws RemoteException {
         InitializeStarterCardController controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/InitializeStarterCard.fxml");
         controller.initializeStarterCard();
     }

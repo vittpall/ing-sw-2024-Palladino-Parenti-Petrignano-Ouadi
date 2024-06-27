@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 
 /**
@@ -36,7 +37,7 @@ public class GameStateGUI implements ClientState {
     }
 
     @Override
-    public void display() {
+    public void display() throws RemoteException {
         controller = FXMLLoaderUtility.loadView(stage, client, "/fxml/GameState.fxml");
         controller.initializeGame();
     }
@@ -62,8 +63,18 @@ public class GameStateGUI implements ClientState {
      * @param username      is the username of the player that has played the card
      * @param playersPoints is a HashMap that contains the points of the players
      */
-    public void cardPlayedRefresh(String username, HashMap<String, Integer> playersPoints) {
-        Platform.runLater(() -> controller.cardPlayedNotification(username, playersPoints));
+    public void cardPlayedRefresh(String username, HashMap<String, Integer> playersPoints) throws RemoteException{
+        Platform.runLater(() -> {
+            try {
+                controller.cardPlayedNotification(username, playersPoints);
+            } catch (RemoteException e) {
+                try {
+                    throw new RemoteException();
+                } catch (RemoteException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
     }
 
     /**
@@ -72,7 +83,17 @@ public class GameStateGUI implements ClientState {
      * @param usernameCurrentPlayer is the username of the current player that will be replaced by the next one
      */
     public void changeTurnNotified(String usernameCurrentPlayer) {
-        Platform.runLater(() -> controller.setMyTurn(usernameCurrentPlayer));
+        Platform.runLater(() -> {
+            try {
+                controller.setMyTurn(usernameCurrentPlayer);
+            } catch (RemoteException e) {
+                try {
+                    throw new RemoteException();
+                } catch (RemoteException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
     }
 
     /**

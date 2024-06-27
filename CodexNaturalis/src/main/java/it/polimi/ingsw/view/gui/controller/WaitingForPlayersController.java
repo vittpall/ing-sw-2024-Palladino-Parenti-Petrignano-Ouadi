@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.gui.controller;
 
+import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
 import it.polimi.ingsw.view.gui.ColorSelectionGUI;
 import it.polimi.ingsw.view.gui.LobbyMenuStateGUI;
 import it.polimi.ingsw.model.Player;
@@ -10,7 +11,9 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.rmi.server.RemoteObject;
 import java.util.ArrayList;
 
 /**
@@ -89,14 +92,14 @@ public class WaitingForPlayersController implements FXMLController {
     /**
      * if the client press the button "start game", he will go on to ColorSelection stage
      */
-    public void handleStartGame() {
+    public void handleStartGame() throws RemoteException {
         try {
             if (client.isGameStarted()) {
                 client.setCurrentState(new ColorSelectionGUI(stage, client));
                 client.getClientCurrentState().display();
             }
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new RemoteException();
         }
     }
 
@@ -109,7 +112,7 @@ public class WaitingForPlayersController implements FXMLController {
         try {
             client.returnToLobby();
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RemoteException();
         }
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
         client.getClientCurrentState().display();

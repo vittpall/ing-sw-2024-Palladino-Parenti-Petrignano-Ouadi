@@ -101,7 +101,7 @@ public class ObjectiveCardSelectionController implements FXMLController {
         try {
             client.returnToLobby();
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RemoteException();
         }
         client.setCurrentState(new LobbyMenuStateGUI(stage, client));
         client.getClientCurrentState().display();

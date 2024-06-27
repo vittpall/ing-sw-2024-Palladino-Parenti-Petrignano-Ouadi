@@ -2,6 +2,7 @@ package it.polimi.ingsw.network.notifications;
 
 import it.polimi.ingsw.network.BaseClient;
 
+import java.rmi.RemoteException;
 import java.util.HashMap;
 
 /**
@@ -26,7 +27,7 @@ public class PlayedCardNotification implements ServerNotification {
     }
 
     @Override
-    public void notifyClient(BaseClient client) {
+    public void notifyClient(BaseClient client) throws RemoteException {
         client.onPlayedCard(message, playersPoints, username);
     }
 }

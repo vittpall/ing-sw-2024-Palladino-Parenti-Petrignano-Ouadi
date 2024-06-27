@@ -353,7 +353,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
      * @param playersPoints The points of the players.
      * @param username      The username of the player.
      */
-    public synchronized void onPlayedCard(String msg, HashMap<String, Integer> playersPoints, String username) {
+    public synchronized void onPlayedCard(String msg, HashMap<String, Integer> playersPoints, String username) throws RemoteException {
         if (!isGUIMode) {
             System.out.println(msg);
             if (getClientCurrentState() instanceof ShowPointsState) {

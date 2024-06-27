@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -120,13 +121,13 @@ public class GetWinnerController implements FXMLController {
     /**
      * This method returns the client to the lobby menu state if the client press the button return to lobby at the end of the game
      */
-    public void handleReturnToLobby() {
+    public void handleReturnToLobby() throws RemoteException {
         try {
             client.returnToLobby();
             client.setCurrentState(new LobbyMenuStateGUI(stage, client));
             client.getClientCurrentState().display();
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RemoteException();
         }
     }
 }

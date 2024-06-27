@@ -53,7 +53,7 @@ public class JoinGameMenuState implements ClientStateTUI {
                 }
             }
         } catch (RemoteException ex) {
-            System.out.println(ex.getMessage());
+            throw new RuntimeException(ex);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 /**
@@ -30,7 +31,7 @@ public class InitializeStarterCardController implements FXMLController {
     /**
      * his method gets the front and the back of the initialise card to print. the client has to choose which side he will play
      */
-    public void initializeStarterCard() {
+    public void initializeStarterCard() throws RemoteException {
         try {
             StarterCard starterCard = client.getStarterCard();
             CardView frontCardView = new CardView(starterCard, true);
@@ -41,7 +42,7 @@ public class InitializeStarterCardController implements FXMLController {
         } catch (RemoteException ex) {
             System.out.println("Error loading card images: " + ex.getMessage());
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RemoteException();
         }
     }
 

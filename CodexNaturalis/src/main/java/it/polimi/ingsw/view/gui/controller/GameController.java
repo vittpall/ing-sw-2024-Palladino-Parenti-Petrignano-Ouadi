@@ -30,6 +30,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.io.IOException;
+import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.*;
@@ -87,7 +88,15 @@ public class GameController implements FXMLController {
         playerDeskTabPane.getSelectionModel().selectedItemProperty().addListener((obs, oldTab, newTab) -> {
             if (newTab.getText() != null && !newTab.getText().isEmpty()) {
                 int selectedIndex = playerDeskTabPane.getSelectionModel().getSelectedIndex();
-                handleShowPlayerDesk(selectedIndex);
+                try {
+                    handleShowPlayerDesk(selectedIndex);
+                } catch (RemoteException e) {
+                    try {
+                        throw new RemoteException();
+                    } catch (RemoteException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
             }
         });
 
@@ -177,7 +186,7 @@ public class GameController implements FXMLController {
     /**
      * This method initializes the game scene: sets the players desks, the objective cards, the usable cards, the visible cards, the player hand, the chat
      */
-    public void initializeGame() {
+    public void initializeGame() throws RemoteException {
         try {
             String username = client.getUsername();
             ArrayList<Player> players = client.getPlayers(client.getIdGame());
@@ -231,7 +240,7 @@ public class GameController implements FXMLController {
             initialiseChat();
             updateResourcesObjectsLabels();
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RemoteException();
         }
     }
 
@@ -433,7 +442,7 @@ public class GameController implements FXMLController {
      * @throws IOException          if there is a problem with I/O operations
      * @throws InterruptedException if the thread running is interrupted
      */
-    private void updatePlayerDrawInteraction() throws IOException, InterruptedException {
+    private void updatePlayerDrawInteraction() throws RemoteException, IOException, InterruptedException {
         int index = 3;
         if(client.getLastFromUsableCards(1) == null)
             index=1;
@@ -451,7 +460,11 @@ public class GameController implements FXMLController {
                         loadPlayerHand();
                         infoGame.setText(client.getPlayers(client.getIdGame()).get((client.getIdClientIntoGame() + 1) % client.getnPlayer(client.getIdGame())).getUsername() + " is playing");
                     } catch (IOException | InterruptedException e) {
-                        throw new RuntimeException(e);
+                        try {
+                            throw new RemoteException();
+                        } catch (RemoteException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 });
             }
@@ -477,7 +490,11 @@ public class GameController implements FXMLController {
                         loadPlayerHand();
                         infoGame.setText(client.getPlayers(client.getIdGame()).get((client.getIdClientIntoGame() + 1) % client.getnPlayer(client.getIdGame())).getUsername() + " is playing");
                     } catch (IOException | InterruptedException e) {
-                        throw new RuntimeException(e);
+                        try {
+                            throw new RemoteException();
+                        } catch (RemoteException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
                 });
             }
@@ -613,7 +630,7 @@ public class GameController implements FXMLController {
      *
      * @param playerIndex the index of the player
      */
-    public void handleShowPlayerDesk(int playerIndex) {
+    public void handleShowPlayerDesk(int playerIndex) throws RemoteException {
         try {
             if (playerDeskShown == null || !playerDeskShown.equals(client.getPlayers(client.getIdGame()).get(playerIndex).getUsername())) {
                 if (client.getUsername().equals(client.getPlayers(client.getIdGame()).get(playerIndex).getUsername())) {
@@ -627,7 +644,7 @@ public class GameController implements FXMLController {
                 }
             }
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RemoteException();
         }
     }
 
@@ -693,7 +710,7 @@ public class GameController implements FXMLController {
      *
      * @param usernameCurrentPlayer the username of the player who is on turn
      */
-    public void setMyTurn(String usernameCurrentPlayer) {
+    public void setMyTurn(String usernameCurrentPlayer) throws RemoteException {
         try {
             resourceDeck.getChildren().clear();
             goldenDeck.getChildren().clear();
@@ -708,7 +725,7 @@ public class GameController implements FXMLController {
             } else
                 infoGame.setText(usernameCurrentPlayer + " is playing");
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RemoteException();
         }
     }
 
@@ -718,7 +735,7 @@ public class GameController implements FXMLController {
      * @param username      the username of the player who is playing
      * @param playersPoints the points of the players
      */
-    public void cardPlayedNotification(String username, HashMap<String, Integer> playersPoints) {
+    public void cardPlayedNotification(String username, HashMap<String, Integer> playersPoints) throws RemoteException {
         int indexPlayer = 0;
         try {
             ArrayList<Player> players = client.getPlayers(client.getIdGame());
@@ -750,7 +767,7 @@ public class GameController implements FXMLController {
             gameBoard.updateTokenPosition(username, playersPoints.get(username));
 
         } catch (IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RemoteException();
         }
     }
 
@@ -850,7 +867,15 @@ public class GameController implements FXMLController {
                         sendMessage(null, message);
                     else
                         sendMessage(username, message);
-                } catch (IOException | InterruptedException e) {
+                } catch(RemoteException e)
+                {
+                    try {
+                        throw new RemoteException();
+                    } catch (RemoteException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                catch (IOException | InterruptedException e) {
                     System.err.println("Error while sending message, retry later");
                 }
             }
