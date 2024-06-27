@@ -34,8 +34,7 @@ Palladino Vittorio, Ouadi Marouan, Parenti Carolina, Petrignano Valentina.
 ## How to Use
 
 In order to run the application the project was divided into three jar files.
-clientWIN.jar
-clientMAC.jar
+client.jar
 server.jar
 
 ### Running the Server
@@ -71,15 +70,6 @@ You can choose between:
 
 Then follow the instructions on the screen and you're ready to go.
 
-## Installation
-
-Instructions on how to install and set up your project.
-
-# Clone the repository
-git clone https://github.com/yourusername/yourprojectname.git
-
-# Change to the project directory
-cd yourprojectname
 
 
 
