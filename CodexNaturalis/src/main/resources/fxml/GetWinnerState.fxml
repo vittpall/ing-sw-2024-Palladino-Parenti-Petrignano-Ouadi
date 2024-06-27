@@ -23,25 +23,25 @@
                 <VBox alignment="CENTER" spacing="5.0">
                     <HBox fx:id="hBoxRed" alignment="CENTER" spacing="5.0">
                         <ImageView fitHeight="40.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../Images/Board.jpg"/>
+                            <Image url="@../Images/CODEX_pion_rouge.png"/>
                         </ImageView>
                         <Label fx:id="playerRed" alignment="CENTER" styleClass="normal-label" text="Player1"/>
                     </HBox>
                     <HBox fx:id="hBoxGreen" alignment="CENTER" spacing="5.0">
                         <ImageView fitHeight="40.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../Images/Board.jpg"/>
+                            <Image url="@../Images/CODEX_pion_vert.png"/>
                         </ImageView>
                         <Label fx:id="playerGreen" alignment="CENTER" styleClass="normal-label" text="Player2"/>
                     </HBox>
                     <HBox fx:id="hBoxBlue" alignment="CENTER" spacing="5.0">
                         <ImageView fitHeight="40.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../Images/Board.jpg"/>
+                            <Image url="@../Images/CODEX_pion_bleu.png"/>
                         </ImageView>
                         <Label fx:id="playerBlue" alignment="CENTER" styleClass="normal-label" text="Player3"/>
                     </HBox>
                     <HBox fx:id="hBoxYellow" alignment="CENTER" spacing="5.0">
                         <ImageView fitHeight="40.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                            <Image url="@../Images/Board.jpg"/>
+                            <Image url="@../Images/CODEX_pion_jaune.png"/>
                         </ImageView>
                         <Label fx:id="playerYellow" alignment="CENTER" styleClass="normal-label" text="Player4"/>
                     </HBox>
