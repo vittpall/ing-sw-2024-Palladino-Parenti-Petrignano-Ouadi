@@ -1,14 +1,13 @@
 package it.polimi.ingsw.view.gui.controller;
 
+import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.view.gui.CreateGameStateGUI;
 import it.polimi.ingsw.view.gui.JoinGameMenuStateGUI;
-import it.polimi.ingsw.network.BaseClient;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
 
 import java.rmi.RemoteException;
 
@@ -73,18 +72,6 @@ public class LobbyMenuController implements FXMLController {
         client.close();
     }
 
-    /**
-     * set the error message
-     *
-     * @param content content of the message error
-     */
-    private void showAlert(String content) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
 
     /**
      * this method set the PopUp invisible after the client close it

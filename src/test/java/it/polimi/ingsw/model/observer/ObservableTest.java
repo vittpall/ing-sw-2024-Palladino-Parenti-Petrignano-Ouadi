@@ -1,15 +1,10 @@
 package it.polimi.ingsw.model.observer;
 
 
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.network.notifications.ServerNotification;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-import java.util.Observer;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 
 public class ObservableTest {
@@ -20,12 +15,12 @@ public class ObservableTest {
         Observable observable = new Observable();
         GameListener gameListener = new GameListener() {
             @Override
-            public void update(ServerNotification notification) throws IOException {
+            public void update(ServerNotification notification) {
 
             }
 
             @Override
-            public String getUsername() throws IOException {
+            public String getUsername() {
                 return "";
             }
         };
@@ -40,24 +35,24 @@ public class ObservableTest {
         Observable observable = new Observable();
         GameListener gameListener = new GameListener() {
             @Override
-            public void update(ServerNotification notification) throws IOException {
+            public void update(ServerNotification notification) {
 
             }
 
             @Override
-            public String getUsername() throws IOException {
+            public String getUsername() {
                 return "";
             }
         };
 
         GameListener gameListener2 = new GameListener() {
             @Override
-            public void update(ServerNotification notification) throws IOException {
+            public void update(ServerNotification notification) {
 
             }
 
             @Override
-            public String getUsername() throws IOException {
+            public String getUsername() {
                 return "";
             }
         };
@@ -75,12 +70,12 @@ public class ObservableTest {
         Observable observable = new Observable();
         GameListener gameListener = new GameListener() {
             @Override
-            public void update(ServerNotification notification) throws IOException {
+            public void update(ServerNotification notification) {
                 assertNull(notification);
             }
 
             @Override
-            public String getUsername() throws IOException {
+            public String getUsername() {
                 return "";
             }
         };

@@ -7,13 +7,10 @@ import it.polimi.ingsw.network.rmi.server.RMIServer;
 import it.polimi.ingsw.network.socket.server.SocketServer;
 
 import java.io.IOException;
-import java.net.*;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Scanner;
 
 /**

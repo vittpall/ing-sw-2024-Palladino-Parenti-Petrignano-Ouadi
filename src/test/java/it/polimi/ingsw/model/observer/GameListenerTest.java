@@ -1,13 +1,12 @@
 package it.polimi.ingsw.model.observer;
 
-import it.polimi.ingsw.model.chat.Message;
-import it.polimi.ingsw.network.notifications.ChatNotification;
 import it.polimi.ingsw.network.notifications.ServerNotification;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class GameListenerTest {
 
@@ -21,7 +20,7 @@ public class GameListenerTest {
             }
 
             @Override
-            public String getUsername() throws IOException {
+            public String getUsername() {
                 return "";
             }
         };
@@ -39,7 +38,7 @@ public class GameListenerTest {
             }
 
             @Override
-            public String getUsername() throws IOException {
+            public String getUsername() {
                 return "username";
             }
         };

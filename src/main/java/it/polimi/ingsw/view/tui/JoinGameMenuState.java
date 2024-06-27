@@ -52,8 +52,6 @@ public class JoinGameMenuState implements ClientStateTUI {
                     positionGameAvailable++;
                 }
             }
-        } catch (RemoteException ex) {
-            throw new RuntimeException(ex);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
