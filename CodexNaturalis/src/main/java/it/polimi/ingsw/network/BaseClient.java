@@ -533,7 +533,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     System.out.println("Invalid input: Please enter a number.");
                 } catch (Exception e) {
 
-                    System.out.println("The game is closing wait...");
+                    System.out.println("The game has been closed. Click a button to continue");
                 }
             }
             if (waitingForCloseGameNotification) {
@@ -597,12 +597,12 @@ abstract public class BaseClient implements VirtualView, GameListener {
                                     inputHandler();
                                 } catch (Exception e) {
 
-                                    System.out.println("The game is closing wait...");
+                                    System.out.println("The game has been closed. Click a button to continue");
                                 }
                             }
                         } else {
                             if (input.equals("exit")) {
-                                System.out.println("The game is closing, please wait...");
+                                System.out.println("The game has been closed. Click a button to continue");
                                 while (!waitingForCloseGameNotification)
                                     Thread.onSpinWait();
 
@@ -625,7 +625,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     inputHandler();
                 } catch (Exception e) {
                     //There's too many runtime exceptions to catch so i GOTTA CATCH 'EM ALL
-                    System.out.println("The game is closing wait...");
+                    System.out.println("The game has been closed. Click a button to continue");
                 }
                 if (waitingForCloseGameNotification) {
                     waitingForCloseGameNotification = false;
@@ -636,7 +636,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
             } else {
                 //to avoid doing the else branch before the close notification has arrived
                 if (input.equals("exit")) {
-                    System.out.println("The game is closing, please wait...");
+                    System.out.println("The game has been closed. Click a button to continue");
                     while (!waitingForCloseGameNotification) {
                         Thread.onSpinWait();
                     }
