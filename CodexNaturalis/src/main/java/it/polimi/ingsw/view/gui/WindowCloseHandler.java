@@ -5,6 +5,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
+/**
+ * This class manages the window close request handling that is used in the GUI.
+ * In every state of the GUI, the client can exit the game pressing the x. after that is asked to confirm the exit before closing the application.
+ */
 public class WindowCloseHandler {
 
     /**

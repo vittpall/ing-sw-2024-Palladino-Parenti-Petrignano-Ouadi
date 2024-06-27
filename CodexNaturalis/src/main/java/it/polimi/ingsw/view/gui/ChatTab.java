@@ -4,6 +4,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.StackPane;
 
+/**
+ * This class manages the view of the chat table in the GUI.
+ * It initializes the chat tab and updates the number of unread messages
+ */
 public class ChatTab extends Tab {
 
     private int unreadMessages;

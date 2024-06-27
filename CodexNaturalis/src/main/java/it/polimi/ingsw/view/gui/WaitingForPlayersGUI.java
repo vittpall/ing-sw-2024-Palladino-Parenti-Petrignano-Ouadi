@@ -11,6 +11,11 @@ import javafx.stage.Stage;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 
+/**
+ * This class manages the GUI for the waiting for players state.
+ * In this state the player has to wait for other players to join the game. Meanwhile, the player can see the list
+ * of players that are entered in the game and the number of missing players.
+ */
 public class WaitingForPlayersGUI implements ClientState {
     public final BaseClient client;
     public Stage stage;

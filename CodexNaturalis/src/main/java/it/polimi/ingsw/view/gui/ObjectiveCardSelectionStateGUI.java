@@ -8,6 +8,10 @@ import javafx.stage.Stage;
 
 import java.rmi.RemoteException;
 
+/**
+ * This class manages the GUI for the private objective card selection state.
+ * In this state it is shown 2 objective cards and the player has to choose the objective cards he wants to keep.
+ */
 public class ObjectiveCardSelectionStateGUI implements ClientState {
     private final BaseClient client;
     private final Stage stage;

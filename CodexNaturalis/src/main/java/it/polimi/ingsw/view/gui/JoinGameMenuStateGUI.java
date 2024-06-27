@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * This class manages the GUI for the join game menu state.
+ * It shows the list of available games, the number of missing players for each game and allows the player to join a game.
+ */
 public class JoinGameMenuStateGUI implements ClientState {
 
 

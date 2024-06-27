@@ -5,6 +5,10 @@ import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.stage.Stage;
 
+/**
+ * This class manages the GUI for the main menu state.
+ * In this state the client has to choose a username before starting a game.
+ */
 public class MainMenuStateGUI implements ClientState {
     private final Stage stage;
     private final BaseClient client;

@@ -6,6 +6,10 @@ import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.stage.Stage;
 
+/**
+ * This class manages the GUI for the starter card initialization.
+ * It shows the player the starter card (front and back) and after that it saves the player's choice.
+ */
 public class InitializeStarterCardStateGUI implements ClientState {
 
 

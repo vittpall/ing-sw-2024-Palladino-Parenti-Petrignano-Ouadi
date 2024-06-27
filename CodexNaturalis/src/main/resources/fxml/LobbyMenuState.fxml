@@ -82,30 +82,26 @@
     <ImageView fitHeight="100.0" fitWidth="103.0" layoutX="1002.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="975.0" AnchorPane.topAnchor="367.0">
         <Image url="@../Images/CN_Insect_kingdom.png" />
     </ImageView>
-    <ImageView fitHeight="132.0" fitWidth="200.0" layoutX="781.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="428.0" AnchorPane.topAnchor="62.0">
-        <image>
-            <Image url="@../Images/CN_Decoration1.jpg" />
-        </image>
+    <ImageView fitHeight="132.0" fitWidth="200.0" layoutX="781.0" layoutY="62.0" pickOnBounds="true"
+               preserveRatio="true" AnchorPane.rightAnchor="428.0" AnchorPane.topAnchor="62.0">
+        <Image url="@../Images/CN_Decoration1.jpg"/>
     </ImageView>
-    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="428.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.leftAnchor="428.0" AnchorPane.topAnchor="62.0">
-        <image>
-            <Image url="@../Images/CN_Decoration1.jpg" />
-        </image>
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="428.0" layoutY="62.0" pickOnBounds="true"
+               preserveRatio="true" rotate="180.0" AnchorPane.leftAnchor="428.0" AnchorPane.topAnchor="62.0">
         <rotationAxis>
-            <Point3D y="90.0" z="1.0" />
+            <Point3D y="90.0" z="1.0"/>
         </rotationAxis>
+        <Image url="@../Images/CN_Decoration1.jpg"/>
     </ImageView>
-    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="781.0" layoutY="665.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.bottomAnchor="62.0" AnchorPane.rightAnchor="428.0">
-        <image>
-            <Image url="@../Images/CN_Decoration1.jpg" />
-        </image>
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="781.0" layoutY="665.0" pickOnBounds="true"
+               preserveRatio="true" rotate="180.0" AnchorPane.bottomAnchor="62.0" AnchorPane.rightAnchor="428.0">
         <rotationAxis>
-            <Point3D x="90.0" z="1.0" />
+            <Point3D x="90.0" z="1.0"/>
         </rotationAxis>
+        <Image url="@../Images/CN_Decoration1.jpg"/>
     </ImageView>
-    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="434.0" layoutY="665.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="428.0">
-        <image>
-            <Image url="@../Images/CN_Decoration1.jpg" />
-        </image>
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="434.0" layoutY="665.0" pickOnBounds="true"
+               preserveRatio="true" rotate="180.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="428.0">
+        <Image url="@../Images/CN_Decoration1.jpg"/>
     </ImageView>
 </AnchorPane>

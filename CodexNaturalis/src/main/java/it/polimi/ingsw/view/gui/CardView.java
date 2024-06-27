@@ -7,6 +7,10 @@ import javafx.scene.layout.Pane;
 
 import java.util.Objects;
 
+/**
+ * This class manages the GUI for the card.
+ * It shows the card's image and the back of the card, checks if the position is a placeholder and sets the card's visibility.
+ */
 public class CardView extends Pane {
     private ImageView frontImageView;
     private ImageView backImageView;

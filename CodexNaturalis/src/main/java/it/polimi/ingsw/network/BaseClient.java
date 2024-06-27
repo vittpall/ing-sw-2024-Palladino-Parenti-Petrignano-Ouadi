@@ -145,8 +145,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
             //other catched exceptions
             throwableToDispatch.printStackTrace();
         }
-
-
     }
 
 
@@ -539,7 +537,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     System.out.println("Invalid input: Please enter a number.");
                 } catch (Exception e) {
 
-                    System.out.println("The game is closing wait...1");
+                    System.out.println("The game is closing wait...");
                 }
             }
             if (waitingForCloseGameNotification) {
@@ -603,7 +601,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                                     inputHandler();
                                 } catch (Exception e) {
 
-                                    System.out.println("The game is closing wait...2");
+                                    System.out.println("The game is closing wait...");
                                 }
                             }
                         } else {
@@ -631,7 +629,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     inputHandler();
                 } catch (Exception e) {
                     //There's too many runtime exceptions to catch so i GOTTA CATCH 'EM ALL
-                    System.out.println("The game is closing wait...3");
+                    System.out.println("The game is closing wait...");
                 }
                 if (waitingForCloseGameNotification) {
                     waitingForCloseGameNotification = false;

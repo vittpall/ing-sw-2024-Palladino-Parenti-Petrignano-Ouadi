@@ -4,6 +4,10 @@ package it.polimi.ingsw.view.gui;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+/**
+ * This class manages the GUI for the token view.
+ * It shows the token on the screen and sets its position.
+ */
 public class TokenView extends ImageView {
     public static final double BLACK_TOKEN_X = 0.70;
     public static final double BLACK_TOKEN_Y = 0.47;

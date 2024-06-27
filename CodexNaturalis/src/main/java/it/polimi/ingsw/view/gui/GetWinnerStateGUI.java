@@ -9,6 +9,11 @@ import javafx.stage.Stage;
 
 import java.util.HashMap;
 
+/**
+ * This class manages the GUI for the winner state.
+ * It shows the winner of the game and the scores of the players.
+ * It is also shown the tokens of the players and their scores on the board.
+ */
 public class GetWinnerStateGUI implements ClientState {
     private final BaseClient client;
     private final Stage stage;

@@ -13,6 +13,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * This class manages the GUI for the game state.
+ * It shows the game board, the chat, the cards and the players' points.
+ * There is also a notification to indicates the turns and another one for the end of the game and the winner.
+ */
 public class GameStateGUI implements ClientState {
 
     private final BaseClient client;

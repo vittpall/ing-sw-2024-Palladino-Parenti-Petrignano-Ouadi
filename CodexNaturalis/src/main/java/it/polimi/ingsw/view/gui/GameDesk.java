@@ -7,6 +7,10 @@ import javafx.scene.layout.Pane;
 import java.awt.*;
 import java.util.HashMap;
 
+/**
+ * This class manages the GUI for the game desk.
+ * It shows the cards played by the clients and the tokens on the cards.
+ */
 public class GameDesk extends Pane {
     private final HashMap<Point, CardView> cards = new HashMap<>();
     private static final double HORIZONTAL_SPACING_FACTOR = CardView.CARD_WIDTH * 0.2214;

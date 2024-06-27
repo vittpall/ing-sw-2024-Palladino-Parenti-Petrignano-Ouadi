@@ -5,6 +5,10 @@ import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.stage.Stage;
 
+/**
+ * This class manages the GUI for the createGame state.
+ * It allows the player to create a new game and choose the number of players.
+ */
 public class CreateGameStateGUI implements ClientState {
     private final BaseClient client;
     private final Stage stage;

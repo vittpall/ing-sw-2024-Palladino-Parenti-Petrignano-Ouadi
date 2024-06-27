@@ -10,6 +10,10 @@ import java.util.Map;
 
 import static it.polimi.ingsw.util.BoardConfig.loadCoordinates;
 
+/**
+ * This class manages the GUI for the game board.
+ * It shows the board, the tokens of the players and updates the player's score.
+ */
 public class GameBoard {
 
     private final List<BoardCoordinate> coordinates;

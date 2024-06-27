@@ -7,6 +7,10 @@ import it.polimi.ingsw.util.FXMLLoaderUtility;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
+/**
+ * This class manages the GUI for the lobby menu state.
+ * In this state the player can create a new game or join an existing one.
+ */
 public class LobbyMenuStateGUI implements ClientState {
 
     public final BaseClient client;

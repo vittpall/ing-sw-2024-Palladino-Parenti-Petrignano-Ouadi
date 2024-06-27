@@ -11,6 +11,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * This class manages the GUI for the color selection.
+ * It selects and shows the available colors so the player can choose one.
+ */
 public class ColorSelectionGUI implements ClientState {
 
 

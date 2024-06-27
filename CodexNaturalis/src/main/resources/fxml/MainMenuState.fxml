@@ -14,33 +14,35 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane styleClass="scene-dimensions,scene-background" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.gui.controller.MainMenuStateController">
-    <StackPane layoutX="527.0" layoutY="27.0" prefHeight="595.0" prefWidth="400.0" styleClass="scene-background" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0">
-      <children>
-           <VBox alignment="CENTER" prefHeight="566.0" prefWidth="400.0" spacing="10">
-               <ImageView fitHeight="235.0" fitWidth="251.0" pickOnBounds="true" smooth="false" translateY="50.0">
-                   <Image url="@../Images/LogoCodexNaturalis.jpg" />
-                   <VBox.margin>
-                       <Insets /> <!-- Negative margin to move the image a bit higher than center -->
-                   </VBox.margin>
-               </ImageView>
-               <Label fx:id="errorLabel" prefHeight="40.0" prefWidth="223.0" styleClass="normal-label" textFill="#f80300">
+    <StackPane layoutX="527.0" layoutY="27.0" prefHeight="595.0" prefWidth="400.0" styleClass="scene-background"
+               AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="500.0">
+        <VBox alignment="CENTER" prefHeight="566.0" prefWidth="400.0" spacing="10">
+            <ImageView fitHeight="235.0" fitWidth="251.0" pickOnBounds="true" smooth="false" translateY="50.0">
+                <Image url="@../Images/LogoCodexNaturalis.jpg"/>
+                <VBox.margin>
+                    <Insets/> <!-- Negative margin to move the image a bit higher than center -->
+                </VBox.margin>
+            </ImageView>
+            <Label fx:id="errorLabel" prefHeight="40.0" prefWidth="223.0" styleClass="normal-label" textFill="#f80300">
+         </Label>
+            <Label styleClass="normal-label" text="Before playing, choose a username">
+                <font>
+                    <Font name="Book Antiqua Bold Italic" size="14.0"/>
+                </font>
             </Label>
-               <Label styleClass="normal-label" text="Before playing, choose a username">
-                   <font>
-                       <Font name="Book Antiqua Bold Italic" size="14.0" />
-                   </font>
-               </Label>
-               <TextField fx:id="usernameField" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" promptText="Enter your username here" styleClass="little-label" />
+            <TextField fx:id="usernameField" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0"
+                       prefWidth="220.0" promptText="Enter your username here" styleClass="little-label"/>
 
-               <Button fx:id="playButton" onAction="#handlePlayButton" prefHeight="40.0" prefWidth="220.0" styleClass="primary-button" text="Play" />
-            <Button fx:id="exit" mnemonicParsing="false" onAction="#handleExit" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: #6bf8f3; -fx-background-radius: 5;" text="EXIT">
-               <styleClass>
-                  <String fx:value="button" />
-                  <String fx:value="normal-label" />
-               </styleClass>
-            </Button>
-           </VBox>
-      </children>
+            <Button fx:id="playButton" onAction="#handlePlayButton" prefHeight="40.0" prefWidth="220.0"
+                    styleClass="primary-button" text="Play"/>
+         <Button fx:id="exit" mnemonicParsing="false" onAction="#handleExit" prefHeight="40.0" prefWidth="220.0"
+                 style="-fx-background-color: #6bf8f3; -fx-background-radius: 5;" text="EXIT">
+             <styleClass>
+                 <String fx:value="button"/>
+                 <String fx:value="normal-label"/>
+             </styleClass>
+         </Button>
+        </VBox>
     </StackPane>
     <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="432.0" layoutY="581.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="160.0" AnchorPane.leftAnchor="428.0">
         <Image url="@../Images/CN_Decoration1.jpg" />
@@ -90,30 +92,26 @@
     <ImageView fitHeight="100.0" fitWidth="103.0" layoutX="1002.0" layoutY="347.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="975.0">
         <Image url="@../Images/CN_Insect_kingdom.png" />
     </ImageView>
-   <ImageView fitHeight="132.0" fitWidth="200.0" layoutX="781.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="428.0" AnchorPane.topAnchor="62.0">
-      <image>
-         <Image url="@../Images/CN_Decoration1.jpg" />
-      </image>
-   </ImageView>
-   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="428.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.leftAnchor="428.0" AnchorPane.topAnchor="62.0">
-      <image>
-         <Image url="@../Images/CN_Decoration1.jpg" />
-      </image>
-      <rotationAxis>
-         <Point3D y="90.0" z="1.0" />
-      </rotationAxis>
-   </ImageView>
-   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="781.0" layoutY="665.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.bottomAnchor="62.0" AnchorPane.rightAnchor="428.0">
-      <image>
-         <Image url="@../Images/CN_Decoration1.jpg" />
-      </image>
-      <rotationAxis>
-         <Point3D x="90.0" z="1.0" />
-      </rotationAxis>
-   </ImageView>
-   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="434.0" layoutY="665.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="428.0">
-      <image>
-         <Image url="@../Images/CN_Decoration1.jpg" />
-      </image>
-   </ImageView>
+    <ImageView fitHeight="132.0" fitWidth="200.0" layoutX="781.0" layoutY="62.0" pickOnBounds="true"
+               preserveRatio="true" AnchorPane.rightAnchor="428.0" AnchorPane.topAnchor="62.0">
+        <Image url="@../Images/CN_Decoration1.jpg"/>
+    </ImageView>
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="428.0" layoutY="62.0" pickOnBounds="true"
+               preserveRatio="true" rotate="180.0" AnchorPane.leftAnchor="428.0" AnchorPane.topAnchor="62.0">
+        <rotationAxis>
+            <Point3D y="90.0" z="1.0"/>
+        </rotationAxis>
+        <Image url="@../Images/CN_Decoration1.jpg"/>
+    </ImageView>
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="781.0" layoutY="665.0" pickOnBounds="true"
+               preserveRatio="true" rotate="180.0" AnchorPane.bottomAnchor="62.0" AnchorPane.rightAnchor="428.0">
+        <rotationAxis>
+            <Point3D x="90.0" z="1.0"/>
+        </rotationAxis>
+        <Image url="@../Images/CN_Decoration1.jpg"/>
+    </ImageView>
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="434.0" layoutY="665.0" pickOnBounds="true"
+               preserveRatio="true" rotate="180.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="428.0">
+        <Image url="@../Images/CN_Decoration1.jpg"/>
+    </ImageView>
 </AnchorPane>
