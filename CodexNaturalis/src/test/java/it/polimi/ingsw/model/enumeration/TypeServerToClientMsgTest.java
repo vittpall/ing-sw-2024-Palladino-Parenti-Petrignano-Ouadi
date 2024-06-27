@@ -112,11 +112,6 @@ class TypeServerToClientMsgTest {
     }
 
     @Test
-    void get_returnsCorrectTextForGetUsernamePlayerThatStoppedTheGame() {
-        assertEquals("GetUsernamePlayerThatStoppedTheGame", TypeServerToClientMsg.GET_USERNAME_PLAYER_THAT_STOPPED_THE_GAME.get());
-    }
-
-    @Test
     void get_returnsCorrectTextForGetVisibleCardsDeck() {
         assertEquals("GetVisibleCardsDeck", TypeServerToClientMsg.GET_VISIBLE_CARDS_DECK.get());
     }
@@ -126,10 +121,6 @@ class TypeServerToClientMsgTest {
         assertEquals("GetWinner", TypeServerToClientMsg.GET_WINNER.get());
     }
 
-    @Test
-    void get_returnsCorrectTextForIsLastRoundStarted() {
-        assertEquals("IsLastRoundStarted", TypeServerToClientMsg.IS_LAST_ROUND_STARTED.get());
-    }
 
     @Test
     void get_returnsCorrectTextForJoinGame() {
