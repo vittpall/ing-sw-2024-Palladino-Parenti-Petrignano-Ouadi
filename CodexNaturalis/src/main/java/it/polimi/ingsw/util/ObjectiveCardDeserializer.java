@@ -12,6 +12,14 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.EnumMap;
 
+/**
+ * This class is responsible for deserializing the objective cards from JSON format by an ObjectMapper.
+ + the ObjectiveCards are deserialize into:
+    + - VerticalPatternStrategy (with two cards of the same resource and one of another resource)
+    + - DiagonalPatternStrategy (with tree cards of the same resource, put in diagonal)
+    + - ResourceStrategy (based on the number of the same resources)
+    + - ObjectStrategy (based on the number of the same objects)
+ */
 public class ObjectiveCardDeserializer extends StdDeserializer<ObjectiveCard> {
 
     protected ObjectiveCardDeserializer() {

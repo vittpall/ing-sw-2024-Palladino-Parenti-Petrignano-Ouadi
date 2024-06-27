@@ -16,6 +16,10 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Scanner;
 
+/**
+ * This class is the main class of the server side.
+ * The server has to input the server IP address and starts the RMI server and the socket server.
+ */
 public class ServerMain {
 
     /**

@@ -11,6 +11,10 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
+/**
+ * This class loads the view of the FXML file.
+ * It is used by the controllers to load the view of the FXML file and to set the client and the new stage.
+ */
 public class FXMLLoaderUtility {
 
     /**

@@ -12,6 +12,16 @@ import it.polimi.ingsw.model.enumeration.Resource;
 
 import java.io.IOException;
 
+/**
+ * This class is responsible for deserializing the corners of a card from JSON format by an ObjectMapper.
+ * The JSON representation of a card is an array of strings, where each string represents a corner of the card.
+ * The string can be one of the following values:
+ * - "hidden" if the corner is hidden
+ * - "free" if the corner is free
+ * - the name of a resource if the corner has a resource
+ * - the name of an object if the corner has an object
+ * The deserialize method converts the JSON representation of a card into an array of Corner objects and make sure there are exactly 8 corners.
+ */
 public class CornerDeserializer extends JsonDeserializer<Corner[]> {
     @Override
     public Corner[] deserialize(JsonParser jp, DeserializationContext context) throws IOException {

@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This class is responsible for loading the coordinates of the board, stored in a JSON file.
+ * The coordinates are used to know the position of each cell and move the tokens on the board.
+ */
 public class BoardConfig {
     private static final Logger LOGGER = Logger.getLogger(GameCardLoader.class.getName());
 

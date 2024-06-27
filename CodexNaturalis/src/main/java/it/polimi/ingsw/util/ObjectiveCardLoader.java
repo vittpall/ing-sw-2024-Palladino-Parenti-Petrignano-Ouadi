@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This class is responsible for loading the objective cards from a JSON file using the Jackson library.
+ * If an error occurs while loading the objective cards, a message will be printed.
+ */
 public class ObjectiveCardLoader {
     private static final Logger LOGGER = Logger.getLogger(ObjectiveCardLoader.class.getName());
 

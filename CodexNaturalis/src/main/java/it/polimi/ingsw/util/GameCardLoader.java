@@ -13,6 +13,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * This class is responsible for loading the game cards from a JSON file using the Jackson library.
+ * The CornerDeserializer class is used to deserialize the corner attribute of the game card.
+ * The game cards are returned into a list of GameCard objects.
+ * If an error occurs while loading the game cards, a message will be printed.
+ */
 public class GameCardLoader {
     private static final Logger LOGGER = Logger.getLogger(GameCardLoader.class.getName());
 

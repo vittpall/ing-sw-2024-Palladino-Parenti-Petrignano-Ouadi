@@ -4,6 +4,9 @@ import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.view.tui.CardPrinter;
 
+/**
+ * this class is used to simulate the printing of the cards and checks if the cards are loaded correctly.
+ */
 public class CardPrintSimulator {
     /**
      * this method simulates the printing of the cards. It is used to check if the cards are loaded correctly.

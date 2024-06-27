@@ -17,6 +17,11 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Scanner;
 
+/**
+ * This class is the main class of the client side.
+ * The client has to input the server IP address and the type of interface (TUI or GUI) he wants to use.
+ * This is responsible for starting the client application and initializing the client based on the user's choice.
+ */
 public class ClientMain extends Application {
 
     private BaseClient client;
