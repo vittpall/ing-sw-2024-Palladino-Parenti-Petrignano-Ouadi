@@ -25,7 +25,7 @@
                </ImageView>
                <Label fx:id="errorLabel" prefHeight="40.0" prefWidth="223.0" styleClass="normal-label" textFill="#f80300">
             </Label>
-               <Label text="Before playing, choose a username">
+               <Label styleClass="normal-label" text="Before playing, choose a username">
                    <font>
                        <Font name="Book Antiqua Bold Italic" size="14.0" />
                    </font>
@@ -33,7 +33,7 @@
                <TextField fx:id="usernameField" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" promptText="Enter your username here" styleClass="little-label" />
 
                <Button fx:id="playButton" onAction="#handlePlayButton" prefHeight="40.0" prefWidth="220.0" styleClass="primary-button" text="Play" />
-            <Button fx:id="exit" mnemonicParsing="false" onAction="#handleExit" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: #6bf8f3;" text="EXIT">
+            <Button fx:id="exit" mnemonicParsing="false" onAction="#handleExit" prefHeight="40.0" prefWidth="220.0" style="-fx-background-color: #6bf8f3; -fx-background-radius: 5;" text="EXIT">
                <styleClass>
                   <String fx:value="button" />
                   <String fx:value="normal-label" />

@@ -10,7 +10,7 @@ public class ChatTab extends Tab {
     private final Label counterMessages;
 
     /**
-     * Constructor
+     * Constructor for the ChatTab class. It creates a new chat tab with the given title.
      *
      * @param title refers to the name of the chat, if it is global or private. if it's private, it's the name of the other client
      */
@@ -19,7 +19,7 @@ public class ChatTab extends Tab {
         this.unreadMessages = 0;
 
         counterMessages = new Label();
-        counterMessages.setStyle("-fx-background-color: #198d19; -fx-text-fill: white; -fx-padding: 2px 5px; -fx-background-radius: 50%;");
+        counterMessages.setStyle("-fx-background-color: #369b78; -fx-text-fill: white; -fx-padding: 2px 5px; -fx-background-radius: 50%;");
         counterMessages.setVisible(false);
 
         StackPane stackPane = new StackPane();
