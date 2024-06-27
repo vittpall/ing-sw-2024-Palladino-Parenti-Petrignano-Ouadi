@@ -4,6 +4,11 @@ import it.polimi.ingsw.model.enumeration.ErrorCodes;
 
 import java.io.Serializable;
 
+/**
+ * The class is used to pass an object over the network.
+ * It's a generic class then it's not necessary to create a custom attribute for each object that needs to be passed (i.g. HashMap ...).
+ * @param <T>
+ */
 public class ReturnableObject<T> implements Serializable {
     private T response;
     private ErrorCodes errorCode;
@@ -38,33 +43,53 @@ public class ReturnableObject<T> implements Serializable {
     }
 
     /**
-     * Set the response
-     * @param response
+     * @param response is the response to set
      */
     public void setResponseReturnable(T response) {
         this.response = response;
     }
 
+    /**
+     * @return the response
+     */
     public T getResponseReturnable() {
         return this.response;
     }
 
+    /**
+     * @return the error code
+     */
     public ErrorCodes getErrorCode() {
         return errorCode;
     }
 
+    /**
+     * This method sets the error code
+     * @param errorCode is the error code
+     */
     public void setErrorCode(ErrorCodes errorCode) {
         this.errorCode = errorCode;
     }
 
+    /**
+     * @return the error message
+     */
     public String getErrorMessage() {
         return errorMessage;
     }
 
+    /**
+     * This method sets the error message
+     * @param errorMessage is the error message
+     */
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
 
+    /**
+     * This method checks if the operation was successful
+     * @return true if the operation was successful, false otherwise
+     */
     public boolean isSuccess() {
         return errorCode == ErrorCodes.SUCCESS;
     }
