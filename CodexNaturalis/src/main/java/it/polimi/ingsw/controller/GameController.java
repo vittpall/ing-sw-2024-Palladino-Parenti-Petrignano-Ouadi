@@ -54,7 +54,7 @@ public class GameController {
                     (gameState == GameState.ROUNDS || gameState == GameState.FINISHING_ROUND_BEFORE_LAST)
                             && getPlayerState(idPlayerIntoGame) == PlayerState.DRAW;
             case RequestedActions.PLAY_CARD ->
-                    (gameState == GameState.ROUNDS || gameState == GameState.LAST_ROUND || gameState == GameState.FINISHING_ROUND_BEFORE_LAST)
+                    (gameState == GameState.ROUNDS || gameState == GameState.LAST_ROUND || gameState == GameState.FINISHING_ROUND_BEFORE_LAST || gameState == GameState.NO_CARDS_LEFT)
                             && getPlayerState(idPlayerIntoGame) == PlayerState.PLAY_CARD;
             case RequestedActions.SHOW_WINNER -> gameState == GameState.ENDGAME;
             case RequestedActions.SHOW_DESKS, RequestedActions.SHOW_OBJ_CARDS,
