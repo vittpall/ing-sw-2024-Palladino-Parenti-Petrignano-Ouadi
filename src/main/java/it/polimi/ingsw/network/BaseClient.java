@@ -620,7 +620,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     input = "";
                     inputHandler();
                 } catch (Exception e) {
-                    //There's too many runtime exceptions to catch so i GOTTA CATCH 'EM ALL
                     System.out.println("The game has been closed. Click a button to continue");
                 }
                 if (waitingForCloseGameNotification) {

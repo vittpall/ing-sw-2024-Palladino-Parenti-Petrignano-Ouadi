@@ -111,7 +111,7 @@ public class ClientHandler implements GameListener {
 
     @Override
     public void update(ServerNotification notification) throws IOException {
-        //i need to remove the gameId to avoid the server the close a game that is already closed
+        //I need to remove the gameId to avoid the server the close a game that is already closed
         if (notification instanceof CloseGameNotification)
             gameId = null;
         synchronized (output) {

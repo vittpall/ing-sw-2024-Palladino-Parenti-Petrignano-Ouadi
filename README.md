@@ -5,7 +5,7 @@ Software engeeniering project for the academic year 2023/2024 presented on the 3
 ## Table of Contents
 
 - [Introduction](#Introduction)
-- [Group Members](#GroupMembers)
+- [Group Members](#Group Members)
 - [Functionalities](#Functionality)
 - [How to use](#HowToUse)
 
@@ -21,15 +21,15 @@ Palladino Vittorio, Ouadi Marouan, Parenti Carolina, Petrignano Valentina.
 
 2 out of 4 AF (Advanced functionalites) implemented
 
-   | Feature | Implemented  |
-|:--------|:----|
-| Multiple Games   | :heavy_check_mark:    |
-| Chat  | :heavy_check_mark:    |
-| Socket and RMI  | :heavy_check_mark:    |
-| Complete rules  | :heavy_check_mark:    |
-| TUI + GUI  | :heavy_check_mark:    |
-| Server disconnections  | :x:    |
-| Resilience to clients disconnections  | :x:    |
+   | Feature                              | Implemented        |
+|:-------------------------------------|:-------------------|
+| Multiple Games                       | :heavy_check_mark: |
+| Chat                                 | :heavy_check_mark: |
+| Socket and RMI                       | :heavy_check_mark: |
+| Complete rules                       | :heavy_check_mark: |
+| TUI + GUI                            | :heavy_check_mark: |
+| Server disconnections                | :x:                |
+| Resilience to clients disconnections | :x:                |
   
 ## How to Use
 
@@ -61,12 +61,12 @@ This format ensures clear instructions and helps maintain the proper structure w
 Once the client is running enter the server ip that you retrieve before, then choose the game mode. 
 You can choose between: 
 
-   | Game Mode| Value to enter  |
-|:--------|:--------|
-| TUI + RMI     | 1 |
-| TUI + SOCKET  | 2 |
-| GUI + RMI     | 3 |
-| GUI + SOCKET  | 4 |
+   | Game Mode    | Value to enter |
+|:-------------|:---------------|
+| TUI + RMI    | 1              |
+| TUI + SOCKET | 2              |
+| GUI + RMI    | 3              |
+| GUI + SOCKET | 4              |
 
 Then follow the instructions on the screen and you're ready to go.
 
