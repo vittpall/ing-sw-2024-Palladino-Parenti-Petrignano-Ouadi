@@ -151,7 +151,7 @@ public class VerticalPatternStrategy implements ObjectiveStrategy {
      * @param startingPoint the starting point for the check
      * @return true if the pattern is satisfied, false otherwise
      */
-    boolean CheckCorner(HashMap<Point, GameCard> deskToUse, Point startingPoint) {
+    public boolean CheckCorner(HashMap<Point, GameCard> deskToUse, Point startingPoint) {
         int i = 0;
         Point starterCardLocation = new Point(0, 0);
         deskToUse.remove(starterCardLocation);
