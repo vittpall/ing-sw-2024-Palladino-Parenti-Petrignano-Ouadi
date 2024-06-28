@@ -180,7 +180,7 @@ public class Player implements Serializable {
      *
      * @param pointsToAdd is the number of points to add
      */
-    private void setPoints(int pointsToAdd) {
+    public void setPoints(int pointsToAdd) {
         points += pointsToAdd;
     }
 

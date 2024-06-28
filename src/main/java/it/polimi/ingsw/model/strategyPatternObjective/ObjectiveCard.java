@@ -2,10 +2,13 @@ package it.polimi.ingsw.model.strategyPatternObjective;
 
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.PlayerDesk;
+import it.polimi.ingsw.model.ResourceCard;
 import it.polimi.ingsw.view.tui.CardPrinter;
 import it.polimi.ingsw.view.tui.PrintContext;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Contains a reference to the possible objectives (strategies) in the game
@@ -58,5 +61,14 @@ public class ObjectiveCard extends Card implements Serializable {
         System.out.println();
     }
 
-
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ObjectiveCard that = (ObjectiveCard) o;
+        return getPoints() == that.getPoints() &&
+                Objects.equals(strategy, that.getStrategy()) &&
+                Objects.equals(getImageFrontPath(), that.getImageFrontPath()) &&
+                Objects.equals(getImageBackPath(), that.getImageBackPath());
+    }
 }
