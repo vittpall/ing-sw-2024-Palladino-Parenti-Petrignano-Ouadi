@@ -46,6 +46,10 @@ public class PlayCardMsg extends ClientToServerMsg {
             response.setErrorCode(ErrorCodes.REQUIREMENTS_NOT_MET);
             response.setErrorMessage(e.getMessage());
             return response;
+        } catch (NullPointerException e){
+            response.setErrorCode(ErrorCodes.GAME_NOT_FOUND);
+            response.setErrorMessage(e.getMessage());
+            return response;
         }
         return response;
     }

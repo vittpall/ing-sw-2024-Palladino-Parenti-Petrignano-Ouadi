@@ -5,7 +5,7 @@ package it.polimi.ingsw.model.enumeration;
  */
 public enum ErrorCodes {
     SUCCESS(0),
-    REQUIREMENTS_NOT_MET(2);
+    REQUIREMENTS_NOT_MET(2), GAME_NOT_FOUND(3);
 
     private final int code;
 
