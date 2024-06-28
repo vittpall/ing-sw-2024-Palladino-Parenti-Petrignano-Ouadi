@@ -11,7 +11,7 @@ import java.io.Serializable;
  * Contains a reference to the possible objectives (strategies) in the game
  */
 public class ObjectiveCard extends Card implements Serializable {
-    ObjectiveStrategy strategy;
+    private final ObjectiveStrategy strategy;
     /**
      * Constructor
      *

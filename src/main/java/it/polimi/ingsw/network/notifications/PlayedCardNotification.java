@@ -9,9 +9,9 @@ import java.util.HashMap;
  * Server notification used to notify the players of a specific game that a card has been played by one user
  */
 public class PlayedCardNotification implements ServerNotification {
-    String message;
-    HashMap<String, Integer> playersPoints;
-    String username;
+    private final String message;
+    private final HashMap<String, Integer> playersPoints;
+    private final String username;
 
     /**
      * Constructor

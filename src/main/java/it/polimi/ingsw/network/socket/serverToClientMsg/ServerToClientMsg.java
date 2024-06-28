@@ -10,9 +10,8 @@ import java.io.Serializable;
  */
 public class ServerToClientMsg implements Serializable {
 
-    protected ReturnableObject response;
-    protected TypeServerToClientMsg type;
-    protected int idGame;
+    private ReturnableObject response;
+    private final TypeServerToClientMsg type;
 
     /**
      * Constructor

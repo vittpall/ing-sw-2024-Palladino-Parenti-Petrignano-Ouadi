@@ -7,13 +7,13 @@ import it.polimi.ingsw.network.BaseClient;
  * Server notification used to notify the players of a specific game that one player reached 20 points and the last turn has been set
  */
 public class LastTurnSetNotification implements ServerNotification {
-    String username;
-    GameState gameState;
+    private final String username;
+    private final GameState gameState;
 
     /**
      * Constructor
      *
-     * @param username String representing the username of the player that reached 20 points
+     * @param username  String representing the username of the player that reached 20 points
      * @param gameState GameState representing the state of the game that caused the notification
      */
     public LastTurnSetNotification(String username, GameState gameState) {

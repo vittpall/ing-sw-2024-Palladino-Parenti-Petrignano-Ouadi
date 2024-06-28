@@ -7,9 +7,9 @@ import java.util.ArrayList;
  */
 public class UsefulData {
     public static final String RESET = "\033[0m";
-    public static String PATTERN = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
+    public static final String PATTERN = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
 
-    public ArrayList<String> quitableStates = new ArrayList<>();
+    public final  ArrayList<String> quitableStates = new ArrayList<>();
     private static UsefulData instance = null;
 
     private UsefulData() {

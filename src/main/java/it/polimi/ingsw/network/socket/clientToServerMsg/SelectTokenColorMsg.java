@@ -14,7 +14,7 @@ import java.io.IOException;
 public class SelectTokenColorMsg extends ClientToServerMsg {
     private final int idGame;
     private final int idClientIntoGame;
-    public TokenColor tokenColor;
+    private final TokenColor tokenColor;
 
     /**
      * Constructor

@@ -1,10 +1,10 @@
 package it.polimi.ingsw.view.gui;
 
-import it.polimi.ingsw.view.ClientState;
-import it.polimi.ingsw.view.gui.controller.WaitingForPlayersController;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.BaseClient;
 import it.polimi.ingsw.util.FXMLLoaderUtility;
+import it.polimi.ingsw.view.ClientState;
+import it.polimi.ingsw.view.gui.controller.WaitingForPlayersController;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
@@ -17,8 +17,8 @@ import java.util.ArrayList;
  * of players that are entered in the game and the number of missing players.
  */
 public class WaitingForPlayersGUI implements ClientState {
-    public final BaseClient client;
-    public Stage stage;
+    private final BaseClient client;
+    private final Stage stage;
     private WaitingForPlayersController controller;
 
     /**

@@ -11,8 +11,8 @@ import java.util.ArrayList;
  */
 public class TokenColorTakenNotification implements ServerNotification {
 
-    String message;
-    ArrayList<TokenColor> availableColors;
+    private final String message;
+    private final ArrayList<TokenColor> availableColors;
 
     /**
      * Constructor
