@@ -21,6 +21,9 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * This class is the RMI client that extends the BaseClient class and implements the Remote interface
@@ -28,6 +31,7 @@ import java.util.HashSet;
 public class RMIClient extends BaseClient {
     public final VirtualServer server;
     private int idClientIntoGame;
+    private static final int MAX_RETRIES = 2; // Maximum number of retries
 
     /**
      * Constructor
@@ -180,10 +184,32 @@ public class RMIClient extends BaseClient {
     @Override
     public void run() throws IOException {
         this.server.connect(this);
+        AtomicInteger retryCount = new AtomicInteger(0);
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+        executorService.scheduleAtFixedRate(() -> {
+            try {
+                if (server.isAlive()) {
+                    retryCount.set(0);
+                } else {
+                    retryCount.incrementAndGet();
+                }
+
+            } catch (RemoteException e) {
+                if (retryCount.incrementAndGet() >= MAX_RETRIES) {
+                    closeClient();
+                }
+            }
+        }, 0, 5000, java.util.concurrent.TimeUnit.MILLISECONDS);
+
         if (!isGUIMode())
             inputHandler();
         else
             getClientCurrentState().display();
+    }
+
+    void closeClient() {
+        System.out.println("The server has crashed, thanks for playing");
+        System.exit(0);
     }
 
     @Override

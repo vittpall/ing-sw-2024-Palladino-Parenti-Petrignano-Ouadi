@@ -67,8 +67,8 @@ public class PlayCardState implements ClientStateTUI {
                 }
                 client.setCurrentState(null);
             } catch (RemoteException ex) {
-                System.out.println(ex.getMessage());
-                ex.printStackTrace();
+                System.out.println("The server has crashed, thanks for playing");
+                System.exit(0);
             } catch (PlaceNotAvailableException ex) {
                 System.out.println("Place not available");
             } catch (RequirementsNotMetException ex) {

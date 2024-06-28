@@ -1,9 +1,9 @@
 package it.polimi.ingsw.network.socket.server;
 
 import it.polimi.ingsw.controller.LobbyController;
+import it.polimi.ingsw.controller.observer.GameListener;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.controller.observer.GameListener;
 import it.polimi.ingsw.network.notifications.CloseGameNotification;
 import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.network.socket.clientToServerMsg.ClientToServerMsg;
@@ -69,11 +69,8 @@ public class ClientHandler implements GameListener {
                 }
                 sendMessage(response);
             }
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException | InterruptedException | PlaceNotAvailableException e) {
             closeClient();
-        } catch (ClassNotFoundException | InterruptedException |
-                 PlaceNotAvailableException e) {
-            e.printStackTrace();
         }
     }
 

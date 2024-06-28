@@ -1,5 +1,6 @@
 package it.polimi.ingsw.network.remoteInterfaces;
 
+import it.polimi.ingsw.controller.observer.GameListener;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
@@ -9,7 +10,6 @@ import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.controller.observer.GameListener;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 
 import java.awt.*;
@@ -74,6 +74,7 @@ public interface VirtualServer extends Remote {
 
     /**
      * Send a message during the game
+     *
      * @param idGame is the id of the game
      * @param msg    is the message to send
      * @throws RemoteException if there is a connection error
@@ -83,9 +84,9 @@ public interface VirtualServer extends Remote {
     /**
      * this method puts the player into the game
      *
-     * @param id                is the id of the game
-     * @param username          is the name of the player that wants to join the game
-     * @param playerListener    is the listener of the player
+     * @param id             is the id of the game
+     * @param username       is the name of the player that wants to join the game
+     * @param playerListener is the listener of the player
      * @return the id of the player into the game
      * @throws IOException          if there is an I/O error
      * @throws InterruptedException if there is an interruption error
@@ -99,7 +100,7 @@ public interface VirtualServer extends Remote {
      * @param nPlayers       is the number of players that the player wants in the game
      * @param playerListener is the listener of the player
      * @return the id of the created game
-     * @throws IOException if there is an I/O error
+     * @throws IOException          if there is an I/O error
      * @throws InterruptedException if there is an interruption error
      */
     int createGame(String username, int nPlayers, GameListener playerListener) throws IOException, InterruptedException;
@@ -146,11 +147,11 @@ public interface VirtualServer extends Remote {
     /**
      * placed the starer card on the desk, face up or face down
      *
-     * @param idGame             the id of the game
-     * @param idClientIntoGame   the id of the player
-     * @param playedFacedDown    true if the card is played face down, false otherwise
-     * @param playerListener     the listener of the player
-     * @throws RemoteException if there is a connection error
+     * @param idGame           the id of the game
+     * @param idClientIntoGame the id of the player
+     * @param playedFacedDown  true if the card is played face down, false otherwise
+     * @param playerListener   the listener of the player
+     * @throws RemoteException             if there is a connection error
      * @throws RequirementsNotMetException if the requirements are not met
      * @throws PlaceNotAvailableException  if the place is not available
      */
@@ -189,11 +190,11 @@ public interface VirtualServer extends Remote {
     /**
      * handles the play of a card
      *
-     * @param idGame            the id of the game
-     * @param idClientIntoGame  the id of the player that wants to play the card
-     * @param chosenCard        the id of the card chosen by the player
-     * @param faceDown          true if the card is played face down, false otherwise
-     * @param chosenPosition    the position chosen by the player
+     * @param idGame           the id of the game
+     * @param idClientIntoGame the id of the player that wants to play the card
+     * @param chosenCard       the id of the card chosen by the player
+     * @param faceDown         true if the card is played face down, false otherwise
+     * @param chosenPosition   the position chosen by the player
      * @return the id of the card played
      * @throws RemoteException             if there is a connection error
      * @throws PlaceNotAvailableException  if the place is not available
@@ -205,11 +206,11 @@ public interface VirtualServer extends Remote {
     /**
      * draw a card from one of the two decks
      *
-     * @param idGame            the id of the game
-     * @param idClientIntoGame  the id of the player that wants to draw the card
-     * @param deckToChoose      the deck to choose: Resources Deck or Gold Deck
-     * @param inVisible         1 if the card is drawn face down, 0 otherwise (if the player can see the card)
-     * @throws IOException      if there is an I/O error
+     * @param idGame           the id of the game
+     * @param idClientIntoGame the id of the player that wants to draw the card
+     * @param deckToChoose     the deck to choose: Resources Deck or Gold Deck
+     * @param inVisible        1 if the card is drawn face down, 0 otherwise (if the player can see the card)
+     * @throws IOException          if there is an I/O error
      * @throws InterruptedException if there is an interruption error
      */
     void drawCard(int idGame, int idClientIntoGame, int deckToChoose, int inVisible) throws IOException, InterruptedException;
@@ -237,9 +238,9 @@ public interface VirtualServer extends Remote {
     /**
      * associates the token color for the player
      *
-     * @param idGame            the id of the game
-     * @param idClientIntoGame  the id of the player
-     * @param tokenColor        the token color chosen by the player
+     * @param idGame           the id of the game
+     * @param idClientIntoGame the id of the player
+     * @param tokenColor       the token color chosen by the player
      * @return the token color chosen by the player
      * @throws IOException if there is an I/O error
      */
@@ -268,8 +269,8 @@ public interface VirtualServer extends Remote {
     /**
      * Recognize the last card of the usable cards
      *
-     * @param idGame  the id of the game
-     * @param deck    the deck to choose: Resources Deck or Gold Deck
+     * @param idGame the id of the game
+     * @param deck   the deck to choose: Resources Deck or Gold Deck
      * @return the last card of the usable cards
      * @throws RemoteException if there is a connection error
      */
@@ -277,7 +278,8 @@ public interface VirtualServer extends Remote {
 
     /**
      * Get the desk of the player
-     * @param idGame Integer representing the id of the game
+     *
+     * @param idGame           Integer representing the id of the game
      * @param idClientIntoGame Integer representing the id of the player into the game
      * @return HashMap<Point, GameCard> representing the desk of the player
      * @throws RemoteException if there is a connection error
@@ -333,9 +335,10 @@ public interface VirtualServer extends Remote {
 
     /**
      * check the state of the game to know if the player can do the requested action
-     * @param idGame            is the id of the game
-     * @param idClientIntoGame  is the id of the player
-     * @param requestedActions  is the action requested by the player
+     *
+     * @param idGame           is the id of the game
+     * @param idClientIntoGame is the id of the player
+     * @param requestedActions is the action requested by the player
      * @return true if the player can do the requested action, false otherwise
      * @throws RemoteException if there is a connection error
      */
@@ -353,8 +356,8 @@ public interface VirtualServer extends Remote {
     /**
      * get the current state of the player in the game
      *
-     * @param idGame            is the id of the game
-     * @param idClientIntoGame  is the id of the player
+     * @param idGame           is the id of the game
+     * @param idClientIntoGame is the id of the player
      * @return the current state of the player in the game
      * @throws RemoteException if there is a connection error
      */
@@ -368,4 +371,6 @@ public interface VirtualServer extends Remote {
      * @throws RemoteException if there is a connection error
      */
     String getGameState(int idGame) throws RemoteException;
+
+    boolean isAlive() throws RemoteException;
 }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.network.rmi.server;
 
 import it.polimi.ingsw.controller.LobbyController;
+import it.polimi.ingsw.controller.observer.GameListener;
 import it.polimi.ingsw.model.GameCard;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.StarterCard;
@@ -11,7 +12,6 @@ import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
 import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
 import it.polimi.ingsw.model.exceptions.RequirementsNotMetException;
-import it.polimi.ingsw.controller.observer.GameListener;
 import it.polimi.ingsw.model.strategyPatternObjective.ObjectiveCard;
 import it.polimi.ingsw.network.HeartBeat;
 import it.polimi.ingsw.network.remoteInterfaces.VirtualServer;
@@ -111,6 +111,11 @@ public class RMIServer implements VirtualServer {
     @Override
     public String getGameState(int idGame) throws RemoteException {
         return lobbyController.getCurrentGameState(idGame);
+    }
+
+    @Override
+    public boolean isAlive() throws RemoteException {
+        return true;
     }
 
     @Override

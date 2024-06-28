@@ -47,8 +47,8 @@ public class GlobalChatState implements ClientStateTUI {
                 }
             }
             inputHandler(scanner.nextLine());
-        } catch (IOException | ClassNotFoundException | InterruptedException e) {
-            e.printStackTrace();
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Error while retrieving data: ");
         }
     }
 
@@ -61,11 +61,10 @@ public class GlobalChatState implements ClientStateTUI {
      * Defines how to handle the user's input in a specific way for this class
      *
      * @param input String representing the user's input
-     * @throws IOException            when an I/O operation fails
-     * @throws ClassNotFoundException when the class loaded can not be found
-     * @throws InterruptedException   when the thread running is interrupted
+     * @throws IOException          when an I/O operation fails
+     * @throws InterruptedException when the thread running is interrupted
      */
-    public void inputHandler(String input) throws IOException, ClassNotFoundException, InterruptedException {
+    public void inputHandler(String input) throws IOException, InterruptedException {
         while (!input.equals("exit chat")) {
             client.sendMessage(null, input);
             input = scanner.nextLine();

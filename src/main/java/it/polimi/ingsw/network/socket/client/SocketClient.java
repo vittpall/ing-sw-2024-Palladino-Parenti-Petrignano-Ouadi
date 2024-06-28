@@ -162,7 +162,6 @@ public class SocketClient extends BaseClient {
         try {
             returnToLobby();
         } catch (NullPointerException | InterruptedException e) {
-            e.printStackTrace();
             System.out.println("Something went wrong, restart the game...");
         }
         System.exit(0);

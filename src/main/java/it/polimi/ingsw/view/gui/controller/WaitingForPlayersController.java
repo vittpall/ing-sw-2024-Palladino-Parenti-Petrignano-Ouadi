@@ -1,9 +1,9 @@
 package it.polimi.ingsw.view.gui.controller;
 
-import it.polimi.ingsw.view.gui.ColorSelectionGUI;
-import it.polimi.ingsw.view.gui.LobbyMenuStateGUI;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.network.BaseClient;
+import it.polimi.ingsw.view.gui.ColorSelectionGUI;
+import it.polimi.ingsw.view.gui.LobbyMenuStateGUI;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -79,10 +79,8 @@ public class WaitingForPlayersController implements FXMLController {
                 StartGameButton.setVisible(false);
                 waitingForNPlayersLabel.setText("Waiting for " + (client.getnPlayer(client.getIdGame()) - size) + " players to join the game...");
             }
-        } catch (RemoteException e) {
-            throw new RemoteException();
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            throw new RemoteException();
         }
     }
 

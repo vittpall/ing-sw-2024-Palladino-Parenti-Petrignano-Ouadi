@@ -1,6 +1,6 @@
 package it.polimi.ingsw.network;
 
-import it.polimi.ingsw.view.ClientState;
+import it.polimi.ingsw.controller.observer.GameListener;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.UsefulData;
 import it.polimi.ingsw.model.chat.Message;
@@ -8,9 +8,9 @@ import it.polimi.ingsw.model.enumeration.GameState;
 import it.polimi.ingsw.model.enumeration.PlayerState;
 import it.polimi.ingsw.model.enumeration.RequestedActions;
 import it.polimi.ingsw.model.enumeration.TokenColor;
-import it.polimi.ingsw.controller.observer.GameListener;
 import it.polimi.ingsw.network.notifications.ServerNotification;
 import it.polimi.ingsw.network.remoteInterfaces.VirtualView;
+import it.polimi.ingsw.view.ClientState;
 import it.polimi.ingsw.view.gui.*;
 import it.polimi.ingsw.view.tui.*;
 import javafx.application.Platform;
@@ -110,7 +110,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
             showExceptionError(thrownException);
         } else {
             System.out.println("An error occurred: " + thrownException.getMessage() + thrownException.getCause());
-            thrownException.printStackTrace();
         }
     }
 
@@ -140,9 +139,6 @@ abstract public class BaseClient implements VirtualView, GameListener {
         if (throwableToDispatch instanceof RemoteException) {
             System.out.println("The server has crashed, thanks for playing");
             System.exit(0);
-        } else {
-            //other catched exceptions
-            throwableToDispatch.printStackTrace();
         }
     }
 
@@ -294,7 +290,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
     /**
      * This method handles the game joined notification.
      *
-     * @param players ArrayList of alla the players
+     * @param players           ArrayList of alla the players
      * @param nOfMissingPlayers number of missing players
      */
     public synchronized void onGameJoined(ArrayList<Player> players, int nOfMissingPlayers) {
@@ -384,8 +380,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
     /**
      * This method handles the end game notification.
      *
-     * @param winner      The winner of the game.
-     * @param scores HashMap containing the scores of the players
+     * @param winner        The winner of the game.
+     * @param scores        HashMap containing the scores of the players
      * @param playersTokens HashMap containing the tokens of the players
      */
     public synchronized void onEndGame(String winner, HashMap<String, Integer> scores, HashMap<String, TokenColor> playersTokens) {
@@ -470,7 +466,7 @@ abstract public class BaseClient implements VirtualView, GameListener {
                         if (msg.getReceiver() != null && msg.getReceiver().equals(username) && getClientCurrentState() instanceof PrivateChatState && ((PrivateChatState) getClientCurrentState()).getReceiver().equals(msg.getSender())) {
                             System.out.println(msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET + ": " + msg.getContent());
                         } else {
-                            if (msg.getReceiver() != null && msg.getReceiver().equals(username) && !(getClientCurrentState() instanceof PrivateChatState) || !((PrivateChatState) getClientCurrentState()).getReceiver().equals(msg.getSender()))
+                            if (msg.getReceiver() != null && msg.getReceiver().equals(username) && !(getClientCurrentState() instanceof PrivateChatState) || (getClientCurrentState() instanceof PrivateChatState) && !((PrivateChatState) getClientCurrentState()).getReceiver().equals(msg.getSender()))
                                 System.out.println("You have received a message from " + msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET);
                         }
                     } else {
@@ -647,8 +643,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
                     try {
                         System.out.println("The input was not valid. You can " + getServerCurrentState());
                     } catch (IOException | InterruptedException e) {
-                        System.out.println("Server unreachable");
-                        e.printStackTrace();
+                        System.out.println("The server has crashed, thanks for playing");
+                        System.exit(0);
                     }
 
             }
@@ -781,8 +777,8 @@ abstract public class BaseClient implements VirtualView, GameListener {
      * It reads the input, validates it, and performs the corresponding action.
      *
      * @param input The input from the user.
-     * @throws InterruptedException   If the thread is interrupted.
-     * @throws IOException            If an I/O error occurs.
+     * @throws InterruptedException If the thread is interrupted.
+     * @throws IOException          If an I/O error occurs.
      */
     public void handleTUIInput(int input) throws InterruptedException, IOException {
         try {
