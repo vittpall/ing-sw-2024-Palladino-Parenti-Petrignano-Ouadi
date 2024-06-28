@@ -1,8 +1,9 @@
 package it.polimi.ingsw.network.socket.clientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
-import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.controller.observer.GameListener;
+import it.polimi.ingsw.model.enumeration.ErrorCodes;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
 /**
@@ -30,9 +31,15 @@ public class DrawCardMsg extends ClientToServerMsg {
     @Override
     public ReturnableObject<Integer> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException {
         ReturnableObject<Integer> response = new ReturnableObject<>();
-        controller.drawCard(idGame, input, inVisible);
-        response.setResponseReturnable(-1);
-        return response;
+        try {
+            controller.drawCard(idGame, input, inVisible);
+            response.setResponseReturnable(-1);
+            return response;
+        } catch (NullPointerException e) {
+            response.setErrorCode(ErrorCodes.GAME_NOT_FOUND);
+            response.setErrorMessage(e.getMessage());
+            return response;
+        }
     }
 
     @Override

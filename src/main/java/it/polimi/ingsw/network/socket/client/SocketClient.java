@@ -190,6 +190,11 @@ public class SocketClient extends BaseClient {
     public GameCard getLastFromUsableCards(int deck) throws InterruptedException {
         GetLastFromUsableCards request = new GetLastFromUsableCards(getIdGame(), deck);
         ServerToClientMsg response = sendRequest(request);
+        if (!response.getResponse().isSuccess()) {
+            if (response.getResponse().getErrorCode() == ErrorCodes.GAME_NOT_FOUND) {
+                throw new NullPointerException(response.getResponse().getErrorMessage());
+            }
+        }
         return (GameCard) response.getResponse().getResponseReturnable();
     }
 
@@ -295,7 +300,12 @@ public class SocketClient extends BaseClient {
     @Override
     public void drawCard(int input, int inVisible) throws IOException, InterruptedException {
         DrawCardMsg request = new DrawCardMsg(getIdGame(), input, inVisible);
-        sendRequest(request);
+        ServerToClientMsg response = sendRequest(request);
+        if (!response.getResponse().isSuccess()) {
+            if (response.getResponse().getErrorCode() == ErrorCodes.GAME_NOT_FOUND) {
+                throw new NullPointerException(response.getResponse().getErrorMessage());
+            }
+        }
     }
 
 

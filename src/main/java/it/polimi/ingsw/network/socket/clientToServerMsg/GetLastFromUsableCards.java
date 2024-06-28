@@ -1,10 +1,11 @@
 package it.polimi.ingsw.network.socket.clientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
+import it.polimi.ingsw.controller.observer.GameListener;
 import it.polimi.ingsw.model.GameCard;
+import it.polimi.ingsw.model.enumeration.ErrorCodes;
 import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.model.exceptions.PlaceNotAvailableException;
-import it.polimi.ingsw.controller.observer.GameListener;
 import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
 import java.io.IOException;
@@ -31,8 +32,14 @@ public class GetLastFromUsableCards extends ClientToServerMsg {
     @Override
     public ReturnableObject<GameCard> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException, PlaceNotAvailableException, IOException {
         ReturnableObject<GameCard> response = new ReturnableObject<>();
-        response.setResponseReturnable(controller.getLastCardOfUsableCards(idGame, deck));
-        return response;
+        try {
+            response.setResponseReturnable(controller.getLastCardOfUsableCards(idGame, deck));
+            return response;
+        } catch (NullPointerException e) {
+            response.setErrorCode(ErrorCodes.GAME_NOT_FOUND);
+            response.setErrorMessage(e.getMessage());
+            return response;
+        }
     }
 
     @Override
