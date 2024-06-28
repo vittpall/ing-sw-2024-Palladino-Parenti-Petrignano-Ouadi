@@ -154,6 +154,11 @@ public class SocketClient extends BaseClient {
     public ArrayList<GameCard> getVisibleCardsDeck(int deck) throws IOException, InterruptedException {
         GetVisibleCardsDeckMsg request = new GetVisibleCardsDeckMsg(getIdGame(), deck);
         ServerToClientMsg response = sendRequest(request);
+        if (!response.getResponse().isSuccess()) {
+            if (response.getResponse().getErrorCode() == ErrorCodes.GAME_NOT_FOUND) {
+                throw new NullPointerException(response.getResponse().getErrorMessage());
+            }
+        }
         return (ArrayList<GameCard>) response.getResponse().getResponseReturnable();
     }
 
@@ -274,7 +279,7 @@ public class SocketClient extends BaseClient {
             if (response.getResponse().getErrorCode() == ErrorCodes.REQUIREMENTS_NOT_MET) {
                 throw new RequirementsNotMetException(response.getResponse().getErrorMessage());
             }
-            if(response.getResponse().getErrorCode() == ErrorCodes.GAME_NOT_FOUND){
+            if (response.getResponse().getErrorCode() == ErrorCodes.GAME_NOT_FOUND) {
                 throw new NullPointerException(response.getResponse().getErrorMessage());
             }
         }
