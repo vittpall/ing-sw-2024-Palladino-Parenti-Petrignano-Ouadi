@@ -1,9 +1,10 @@
 package it.polimi.ingsw.network.socket.clientToServerMsg;
 
 import it.polimi.ingsw.controller.LobbyController;
-import it.polimi.ingsw.model.chat.Message;
-import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.controller.observer.GameListener;
+import it.polimi.ingsw.model.chat.Message;
+import it.polimi.ingsw.model.enumeration.ErrorCodes;
+import it.polimi.ingsw.model.enumeration.TypeServerToClientMsg;
 import it.polimi.ingsw.network.socket.client.ReturnableObject;
 
 /**
@@ -24,9 +25,15 @@ public class SendMessageMsg extends ClientToServerMsg {
     @Override
     public ReturnableObject<Message> functionToCall(LobbyController controller, GameListener playerListener) throws InterruptedException {
         ReturnableObject<Message> response = new ReturnableObject<>();
-        controller.sendMessage(msg.getGameId(), msg);
-        response.setResponseReturnable(msg);
-        return response;
+        try {
+            controller.sendMessage(msg.getGameId(), msg);
+            response.setResponseReturnable(msg);
+            return response;
+        } catch (NullPointerException e) {
+            response.setErrorCode(ErrorCodes.GAME_NOT_FOUND);
+            response.setErrorMessage(e.getMessage());
+            return response;
+        }
     }
 
     @Override

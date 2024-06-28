@@ -138,7 +138,12 @@ public class SocketClient extends BaseClient {
     public void sendMessage(String receiver, String message) throws IOException, InterruptedException {
         Message msg = new Message(getUsername(), receiver, message, getIdGame(), userTokenColor);
         SendMessageMsg request = new SendMessageMsg(msg);
-        sendRequest(request);
+        ServerToClientMsg response = sendRequest(request);
+        if (!response.getResponse().isSuccess()) {
+            if (response.getResponse().getErrorCode() == ErrorCodes.GAME_NOT_FOUND) {
+                throw new NullPointerException(response.getResponse().getErrorMessage());
+            }
+        }
     }
 
     @Override
