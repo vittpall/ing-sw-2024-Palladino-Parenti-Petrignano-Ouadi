@@ -1,76 +1,69 @@
+
 # Codex Naturalis Academic Year 2023/2024
 
-Software engeeniering project for the academic year 2023/2024 presented on the 3rd of July 2024.
+This is a software engineering project for the academic year 2023/2024, presented on July 3, 2024.
 
 ## Table of Contents
 
-- [Introduction](#Introduction)
-- [Group Members](#Group Members)
-- [Functionalities](#Functionality)
-- [How to use](#HowToUse)
+- [Group Members](#group-members)
+- [Functionalities](#functionalities)
+- [How to Use](#how-to-use)
 
-## Introduction
-
-Introduce your project. Explain what it does, the problem it solves, and any other relevant information. 
 
 ## Group Members
 
-Palladino Vittorio, Ouadi Marouan, Parenti Carolina, Petrignano Valentina.
+- Vittorio Palladino
+- Marouan Ouadi
+- Carolina Parenti
+- Valentina Petrignano
 
 ## Functionalities
 
-2 out of 4 AF (Advanced functionalites) implemented
+This project has implemented 2 out of 4 advanced functionalities:
 
-   | Feature                              | Implemented        |
+| Feature                              | Implemented        |
 |:-------------------------------------|:-------------------|
 | Multiple Games                       | :heavy_check_mark: |
 | Chat                                 | :heavy_check_mark: |
-| Socket and RMI                       | :heavy_check_mark: |
-| Complete rules                       | :heavy_check_mark: |
-| TUI + GUI                            | :heavy_check_mark: |
-| Server disconnections                | :x:                |
-| Resilience to clients disconnections | :x:                |
-  
+| Socket and RMI Communication         | :heavy_check_mark: |
+| Complete Rules                       | :heavy_check_mark: |
+| TUI + GUI Interfaces                 | :heavy_check_mark: |
+| Server Disconnections Handling       | :x:                |
+| Resilience to Client Disconnections  | :x:                |
+
 ## How to Use
 
-In order to run the application the project was divided into two jar files.
-client.jar
-server.jar
+The application is divided into two executable JAR files: `client.jar` and `server.jar`.
 
 ### Running the Server
 
-Once you've download them go into the directory, where they'd been downloaded, type
-`java -jar server.jar`
-Once the server is running, insert your Personal ip (press enter to play in local on the same machine) that you could find typing
-`ipconfing` (in WinOS)
-`ipconfig getifaddr en0` (in MacOS)
+1. Download the JAR files to your local machine.
+2. Navigate to the directory containing the downloads.
+3. Launch the server with the following command:
+   ```shell
+   java -jar server.jar
+   ```
+4. When prompted, enter your IP address (or press Enter to use localhost for local play).
+   - To find your IP address:
+      - On Windows: `ipconfig`
+      - On MacOS: `ipconfig getifaddr en0`
 
 ### Running the Client with JavaFX Configuration
 
-Before executing the client application, it is crucial to configure JavaFX to prevent warnings regarding unsupported configurations. If JavaFX is not correctly set up, you may encounter the following warning:
+To avoid JavaFX warnings, configure your environment as follows before starting the client:
 
-```plaintext
-WARNING: Unsupported JavaFX configuration: classes were loaded from 'unnamed module @1e2010df'
-```
-To configure JavaFX properly and avoid this warning, use the command below, making sure to update the module path to reflect the location of your JavaFX installation on your computer:
-Then use the previous command to run also all the client
+1. Set the module path to the location of your JavaFX SDK installation:
+   ```shell
+   java --module-path "path\to\your\javafx-sdk\lib" --add-modules javafx.controls -jar client-app.jar
+   ```
 
-java --module-path "C:\Users\YourUsername\Desktop\openjfx-22.0.1_windows-x64_bin-sdk\javafx-sdk-22.0.1\lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,java.desktop,java.logging -jar clientWIN.jar
-This format ensures clear instructions and helps maintain the proper structure within your Markdown document.
+2. After starting the client, enter the server IP address obtained earlier.
+3. Select your preferred game mode:
+   | Game Mode    | Value to Enter |
+   |--------------|----------------|
+   | TUI + RMI    | 1              |
+   | TUI + SOCKET | 2              |
+   | GUI + RMI    | 3              |
+   | GUI + SOCKET | 4              |
 
-Once the client is running enter the server ip that you retrieve before, then choose the game mode. 
-You can choose between: 
-
-   | Game Mode    | Value to enter |
-|:-------------|:---------------|
-| TUI + RMI    | 1              |
-| TUI + SOCKET | 2              |
-| GUI + RMI    | 3              |
-| GUI + SOCKET | 4              |
-
-Then follow the instructions on the screen and you're ready to go.
-
-
-
-
-
+4. Follow the on-screen instructions to begin playing.
