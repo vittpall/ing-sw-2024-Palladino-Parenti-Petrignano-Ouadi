@@ -54,7 +54,7 @@ To avoid JavaFX warnings, configure your environment as follows before starting 
 
 1. Set the module path to the location of your JavaFX SDK installation:
    ```shell
-   java --module-path "path\to\your\javafx-sdk\lib" --add-modules javafx.controls -jar client-app.jar
+   java --module-path "path\to\your\javafx-sdk\lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,java.desktop,java.logging -jar clientWIN.jar
    ```
 
 2. After starting the client, enter the server IP address obtained earlier.
@@ -67,3 +67,15 @@ To avoid JavaFX warnings, configure your environment as follows before starting 
    | GUI + SOCKET | 4              |
 
 4. Follow the on-screen instructions to begin playing.
+
+### Additional Instructions for Other Interfaces
+
+For interfaces other than Windows, you will need to clone the repository and build the project yourself. Follow these steps:
+
+1. Clone the repository to your local machine.
+2. Navigate to the repository directory.
+3. Run the following Maven command to clean the project and package it into JAR files:
+   ```shell
+   mvn clean package
+   ```
+4. This process will generate the necessary JAR files in the `target` class directory.
