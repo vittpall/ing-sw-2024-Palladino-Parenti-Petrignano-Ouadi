@@ -73,10 +73,10 @@ Select your preferred game mode:
 
    | Game Mode    | Value to Enter |
    |--------------|----------------|
-   | TUI + RMI    | 1              |
-   | TUI + SOCKET | 2              |
-   | GUI + RMI    | 3              |
-   | GUI + SOCKET | 4              |
+   | TUI + SOCKET | 1              |
+   | TUI + RMI    | 2              |
+   | GUI + SOCKET | 3              |
+   | GUI + RMI    | 4              |
 
 Follow the on-screen instructions to begin playing.
 
