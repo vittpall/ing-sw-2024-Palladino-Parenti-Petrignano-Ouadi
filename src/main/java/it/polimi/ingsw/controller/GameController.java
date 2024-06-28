@@ -58,7 +58,8 @@ public class GameController {
                             && getPlayerState(idPlayerIntoGame) == PlayerState.PLAY_CARD;
             case RequestedActions.SHOW_WINNER -> gameState == GameState.ENDGAME;
             case RequestedActions.SHOW_DESKS, RequestedActions.SHOW_OBJ_CARDS,
-                    RequestedActions.SHOW_POINTS, RequestedActions.CHAT -> true;
+                    RequestedActions.SHOW_POINTS -> true;
+            case RequestedActions.CHAT -> (gameState!=GameState.SETUP_GAME && gameState!=GameState.ENDGAME);
         };
     }
 

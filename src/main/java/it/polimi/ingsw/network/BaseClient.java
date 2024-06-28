@@ -454,30 +454,21 @@ abstract public class BaseClient implements VirtualView, GameListener {
         if (!isGUIMode) {
             if (!msg.getSender().equals(username)) {
                 if (getClientCurrentState() instanceof GlobalChatState || getClientCurrentState() instanceof PrivateChatState) {
-                    if (getClientCurrentState() != null) {
-                        if (msg.getReceiver() == null && getClientCurrentState() instanceof GlobalChatState) {
-                            System.out.println(msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET + ": " + msg.getContent());
-                        } else {
-                            if (!(getClientCurrentState() instanceof GlobalChatState) && msg.getReceiver() == null) {
-                                System.out.println("You have received a message from the global chat from" + msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET);
-                            }
-                        }
-
-                        if (msg.getReceiver() != null && msg.getReceiver().equals(username) && getClientCurrentState() instanceof PrivateChatState && ((PrivateChatState) getClientCurrentState()).getReceiver().equals(msg.getSender())) {
-                            System.out.println(msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET + ": " + msg.getContent());
-                        } else {
-                            if (msg.getReceiver() != null && msg.getReceiver().equals(username) && !(getClientCurrentState() instanceof PrivateChatState) || (getClientCurrentState() instanceof PrivateChatState) && !((PrivateChatState) getClientCurrentState()).getReceiver().equals(msg.getSender()))
-                                System.out.println("You have received a message from " + msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET);
-                        }
+                    if (msg.getReceiver() == null && getClientCurrentState() instanceof GlobalChatState) {
+                        System.out.println(msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET + ": " + msg.getContent());
                     } else {
-                        if (msg.getReceiver() == null)
-                            System.out.println("You have received a message from the global chat from " + msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET);
-                        else {
-                            if (msg.getReceiver().equals(username))
-                                System.out.println(msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET + " send you a message");
+                        if (!(getClientCurrentState() instanceof GlobalChatState) && msg.getReceiver() == null) {
+                            System.out.println("You have received a message from the global chat from" + msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET);
                         }
                     }
 
+                    if (msg.getReceiver() != null && msg.getReceiver().equals(username) && getClientCurrentState() instanceof PrivateChatState && ((PrivateChatState) getClientCurrentState()).getReceiver().equals(msg.getSender())) {
+                        System.out.println(msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET + ": " + msg.getContent());
+                    } else {
+                        if (msg.getReceiver() != null && msg.getReceiver().equals(username) &&
+                                (!(getClientCurrentState() instanceof PrivateChatState) || ((getClientCurrentState() instanceof PrivateChatState) && !((PrivateChatState) getClientCurrentState()).getReceiver().equals(msg.getSender()))))
+                            System.out.println("You have received a message from " + msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET);
+                    }
                 } else {
                     if (msg.getReceiver() == null)
                         System.out.println("You have received a message from the global chat from " + msg.getSenderColor().getColorValueANSII() + msg.getSender() + UsefulData.RESET);
