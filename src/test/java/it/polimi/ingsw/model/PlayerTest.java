@@ -109,7 +109,7 @@ class PlayerTest {
         player.setDrawnObjectiveCards(objCards);
         ObjectiveCard objCard = objCards.getFirst();
         player.setObjectiveCard(0);
-        assertNotEquals(objCard, player.getObjectiveCard());
+        assertEquals(objCard, player.getObjectiveCard());
         assertEquals(objCard.getStrategy(), player.getObjectiveCard().getStrategy());
         assertEquals(objCard.getPoints(), player.getObjectiveCard().getPoints());
         assertEquals(objCard.getImageFrontPath(), player.getObjectiveCard().getImageFrontPath());
