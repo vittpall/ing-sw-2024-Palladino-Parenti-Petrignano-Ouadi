@@ -41,24 +41,36 @@ The application is divided into two executable JAR files: `client.jar` and `serv
 2. Navigate to the directory containing the downloads.
 3. Launch the server with the following command:
    ```shell
-   java -jar server.jar
+   java -jar server-app.jar
    ```
 4. When prompted, enter your IP address (or press Enter to use localhost for local play).
    - To find your IP address:
       - On Windows: `ipconfig`
       - On MacOS: `ipconfig getifaddr en0`
 
+### Running the Client
+
+1. Download the JAR files to your local machine.
+2. Navigate to the directory containing the downloads.
+3. Launch the server with the following command:
+   ```shell
+   java -jar client-app.jar
+   ```
+4. When prompted, enter your IP address (or press Enter to use localhost for local play).
+    - Insert the same IP address as the server.
+
 ### Running the Client with JavaFX Configuration
 
 To avoid JavaFX warnings, configure your environment as follows before starting the client:
 
-1. Set the module path to the location of your JavaFX SDK installation:
+Set the module path to the location of your JavaFX SDK installation:
    ```shell
    java --module-path "path\to\your\javafx-sdk\lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.media,java.desktop,java.logging -jar clientWIN.jar
    ```
 
-2. After starting the client, enter the server IP address obtained earlier.
-3. Select your preferred game mode:
+After starting the client, enter the server IP address obtained earlier.
+Select your preferred game mode:
+
    | Game Mode    | Value to Enter |
    |--------------|----------------|
    | TUI + RMI    | 1              |
@@ -66,7 +78,7 @@ To avoid JavaFX warnings, configure your environment as follows before starting 
    | GUI + RMI    | 3              |
    | GUI + SOCKET | 4              |
 
-4. Follow the on-screen instructions to begin playing.
+Follow the on-screen instructions to begin playing.
 
 ### Additional Instructions for Other Interfaces
 
