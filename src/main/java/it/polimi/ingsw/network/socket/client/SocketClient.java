@@ -390,6 +390,11 @@ public class SocketClient extends BaseClient {
     public PlayerState getCurrentPlayerState() throws IOException, InterruptedException {
         GetCurrentPlayerState request = new GetCurrentPlayerState(getIdGame(), idClientIntoGame);
         ServerToClientMsg response = sendRequest(request);
+        if (!response.getResponse().isSuccess()) {
+            if (response.getResponse().getErrorCode() == ErrorCodes.GAME_NOT_FOUND) {
+                throw new NullPointerException(response.getResponse().getErrorMessage());
+            }
+        }
         return (PlayerState) response.getResponse().getResponseReturnable();
     }
 
